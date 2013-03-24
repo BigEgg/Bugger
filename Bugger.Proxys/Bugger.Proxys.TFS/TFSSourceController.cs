@@ -1,8 +1,10 @@
 ﻿using Bugger.Proxys.Models;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Net;
 
 namespace Bugger.Proxys.TFS
@@ -24,23 +26,27 @@ namespace Bugger.Proxys.TFS
             : base(serverName, port, virtualPath)
         {
             this.queryFields = new List<string>();
-            this.queryFields.Add("[System.Id]");
-            this.queryFields.Add("[System.WorkItemType]");
-            this.queryFields.Add("[System.Title]");
-            this.queryFields.Add("[System.Description]");
-            this.queryFields.Add("[System.AssignedTo]");
-            this.queryFields.Add("[System.State]");
-            this.queryFields.Add("[System.ChangedDate]");
-            this.queryFields.Add("[System.CreatedBy]");
+            this.queryFields.Add("[ID]");
+            this.queryFields.Add("[Title]");
+            this.queryFields.Add("[Description]");
+            this.queryFields.Add("[Assigned To]");
+            this.queryFields.Add("[State]");
+            this.queryFields.Add("[Changed Date]");
+            this.queryFields.Add("[Created By]");
         }
 
         #region Methods
         #region Protected Methods
         /// <summary>
-        /// The core function of query the work items with the specified user name.
+        /// The core functionality query the bugs with the specified user name which should be query.
         /// </summary>
-        /// <param name="userName">The user name.</param>
-        protected override List<Bug> QueryCore(NetworkCredential credential, string userName)
+        /// <param name="credential">The credential information.</param>
+        /// <param name="userName">The user name which should be query.</param>
+        /// <param name="workItemFilter">The string to filter the bugs.</param>
+        /// <returns>
+        /// The bugs.
+        /// </returns>
+        protected override List<Bug> QueryCore(NetworkCredential credential, string userName, string workItemFilter)
         {
             TfsTeamProjectCollection tpc = new TfsTeamProjectCollection(this.ConnectUri, credential);
             tpc.EnsureAuthenticated();
@@ -51,6 +57,10 @@ namespace Bugger.Proxys.TFS
             string filter = this.IsFilterCreatedByFilter ?
                 "[System.AssignedTo] = '" + userName + "' OR [System.CreatedBy] = '" + userName + "'" :
                 "[System.AssignedTo] = '" + userName + "'";
+            if (!string.IsNullOrWhiteSpace(workItemFilter))
+            {
+                filter = "[WorkItemType] = '" + workItemFilter + "' And " + filter;
+            }
             string queryString = "Select " + fields + " From WorkItems Where " + filter;
 
             Query query = new Query(workItemStore, queryString);
@@ -61,16 +71,15 @@ namespace Bugger.Proxys.TFS
             {
                 result.Add(new Bug()
                 {
-                    ID           = item.Id,
-                    WorkItemType = item.Type == null ? string.Empty : item.Type.Name,
-                    Title        = item.Title,
-                    Description  = item.Description,
-                    AssignedTo   = item.Fields["Assigned To"].Value.ToString(),
-                    State        = item.State,
-                    ChangedDate  = item.ChangedDate,
-                    CreatedBy    = item.CreatedBy,
-                    Priority     = item.Fields["Priority"].Value.ToString(),
-                    Severity     = item.Fields.Contains("Severity") ? 
+                    ID          = (int)item.Fields["ID"].Value,
+                    Title       = item.Fields["Title"].Value.ToString(),
+                    Description = item.Fields["Description"].Value.ToString(),
+                    AssignedTo  = item.Fields["Assigned To"].Value.ToString(),
+                    State       = item.Fields["State"].Value.ToString(),
+                    ChangedDate = (DateTime)item.Fields["Changed Date"].Value,
+                    CreatedBy   = item.Fields["Created By"].Value.ToString(),
+                    Priority    = item.Fields["Code Studio Rank"].Value.ToString(),
+                    Severity    = item.Fields.Contains("Severity") ?
                                         item.Fields["Severity"].Value.ToString() : string.Empty
                 });
             }

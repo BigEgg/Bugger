@@ -40,10 +40,11 @@ namespace Bugger.Proxys
         /// </summary>
         /// <param name="credential">The credential information.</param>
         /// <param name="userName">The user name which should be query..</param>
+        /// <param name="workItemFilter">The string to filter the bugs.</param>
         /// <returns>
         /// The bugs.
         /// </returns>
-        List<Bug> Query(NetworkCredential credential, string userName);
+        List<Bug> Query(NetworkCredential credential, string userName, string workItemFilter);
         #endregion
     }
 }

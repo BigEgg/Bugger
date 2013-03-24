@@ -17,9 +17,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxys", "Bugger.Pro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxys.TFS", "Bugger.Proxys\Bugger.Proxys.TFS\Bugger.Proxys.TFS.csproj", "{5714B0C6-82F3-4CC6-B33E-E3F8835C38FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxys.Test", "Bugger.Proxys\Bugger.Proxys.Test\Bugger.Proxys.Test.csproj", "{71760CC4-83EF-4043-9DC5-8E8A40A9C765}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxys.TFS.Test", "Bugger.Proxys\Bugger.Proxys.TFS.Test\Bugger.Proxys.TFS.Test.csproj", "{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 7
+		SccNumberOfProjects = 9
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs12
 		SccLocalPath0 = .
@@ -46,6 +50,14 @@ Global
 		SccProjectTopLevelParentUniqueName6 = Bugger.sln
 		SccProjectName6 = Bugger.Proxys/Bugger.Proxys.TFS
 		SccLocalPath6 = Bugger.Proxys\\Bugger.Proxys.TFS
+		SccProjectUniqueName7 = Bugger.Proxys\\Bugger.Proxys.Test\\Bugger.Proxys.Test.csproj
+		SccProjectTopLevelParentUniqueName7 = Bugger.sln
+		SccProjectName7 = Bugger.Proxys/Bugger.Proxys.Test
+		SccLocalPath7 = Bugger.Proxys\\Bugger.Proxys.Test
+		SccProjectUniqueName8 = Bugger.Proxys\\Bugger.Proxys.TFS.Test\\Bugger.Proxys.TFS.Test.csproj
+		SccProjectTopLevelParentUniqueName8 = Bugger.sln
+		SccProjectName8 = Bugger.Proxys/Bugger.Proxys.TFS.Test
+		SccLocalPath8 = Bugger.Proxys\\Bugger.Proxys.TFS.Test
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +88,14 @@ Global
 		{5714B0C6-82F3-4CC6-B33E-E3F8835C38FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5714B0C6-82F3-4CC6-B33E-E3F8835C38FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5714B0C6-82F3-4CC6-B33E-E3F8835C38FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71760CC4-83EF-4043-9DC5-8E8A40A9C765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71760CC4-83EF-4043-9DC5-8E8A40A9C765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71760CC4-83EF-4043-9DC5-8E8A40A9C765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71760CC4-83EF-4043-9DC5-8E8A40A9C765}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,5 +106,7 @@ Global
 		{4ECBABE4-6EAB-47DB-9AD1-EAD9F6C655A0} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
 		{E8727087-75F2-435F-BD11-78B4DFF59A40} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 		{5714B0C6-82F3-4CC6-B33E-E3F8835C38FC} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
+		{71760CC4-83EF-4043-9DC5-8E8A40A9C765} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
+		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 	EndGlobalSection
 EndGlobal

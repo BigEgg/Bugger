@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Bugger.Proxys.Models
 {
@@ -10,14 +7,13 @@ namespace Bugger.Proxys.Models
         #region Fields
         private int id;
         private string title;
-        private string workItemType;
         private string description;
         private string assignedTo;
         private string state;
         private DateTime changedDate;
         private string createdBy;
-        private Level priority;
-        private Level severity;        
+        private string priority;
+        private string severity;        
         #endregion
 
         #region Properties
@@ -43,18 +39,6 @@ namespace Bugger.Proxys.Models
         {
             get { return this.title; }
             internal set { this.title = value; }
-        }
-
-        /// <summary>
-        /// Gets a string that represents the type of this bug.
-        /// </summary>
-        /// <value>
-        /// A string that represents the type of this bug.
-        /// </value>
-        public string WorkItemType
-        {
-            get { return this.workItemType; }
-            internal set { this.workItemType = value; }
         }
 
         /// <summary>

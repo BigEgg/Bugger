@@ -18,6 +18,13 @@ namespace Bugger.Proxys
         /// <param name="serverName">The name of the server that is running the application tier for source control system.</param>
         /// <param name="port">The port that source control system uses.</param>
         /// <param name="virtualPath">the virtual path to the source control system application.</param>
+        /// <exception cref="System.ArgumentException">
+        /// serverName
+        /// or
+        /// virtualPath
+        /// or
+        /// Please Enter the right Uri name
+        /// </exception>
         public SourceController(string serverName, uint port, string virtualPath)
         {
             SetConnectUri(serverName, port, virtualPath);
@@ -57,7 +64,14 @@ namespace Bugger.Proxys
         /// </summary>
         /// <param name="serverName">The name of the server that is running the application tier for source control system.</param>
         /// <param name="port">The port that source control system uses.</param>
-        /// <param name="virualPath">the virtual path to the source control system application.</param>
+        /// <param name="virtualPath"></param>
+        /// <exception cref="System.ArgumentException">
+        /// serverName
+        /// or
+        /// virtualPath
+        /// or
+        /// Please Enter the right Uri name
+        /// </exception>
         public void SetConnectUri(string serverName, uint port, string virtualPath)
         {
             if (string.IsNullOrWhiteSpace(serverName)) { throw new ArgumentException("serverName"); }
@@ -79,17 +93,18 @@ namespace Bugger.Proxys
         /// </summary>
         /// <param name="credential">The credential information.</param>
         /// <param name="userName">The user name which should be query..</param>
+        /// <param name="workItemFilter">The string to filter the bugs.</param>
         /// <returns>
         /// The bugs.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">credential</exception>
         /// <exception cref="System.ArgumentException">userName</exception>
-        public List<Bug> Query(NetworkCredential credential, string userName)
+        public List<Bug> Query(NetworkCredential credential, string userName, string workItemFilter)
         {
             if (credential == null) { throw new ArgumentNullException("credential"); }
             if (string.IsNullOrWhiteSpace(userName)) { throw new ArgumentException("userName"); }
 
-            return QueryCore(credential, userName);
+            return QueryCore(credential, userName, workItemFilter);
         }
         #endregion
 
@@ -99,9 +114,12 @@ namespace Bugger.Proxys
         /// </summary>
         /// <param name="credential">The credential information.</param>
         /// <param name="userName">The user name which should be query.</param>
-        /// <returns>The bugs.</returns>
+        /// <param name="workItemFilter">The string to filter the bugs.</param>
+        /// <returns>
+        /// The bugs.
+        /// </returns>
         /// <exception cref="System.NotSupportedException">The Query Method not support in the base class.</exception>
-        protected virtual List<Bug> QueryCore(NetworkCredential credential, string userName)
+        protected virtual List<Bug> QueryCore(NetworkCredential credential, string userName, string workItemFilter)
         {
             throw new NotSupportedException("The Query Method not support in the base class.");
         }
