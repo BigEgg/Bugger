@@ -33,5 +33,51 @@ namespace Bugger.Proxys.Test.Models
             Assert.AreEqual("High", item.Priority);
             Assert.AreEqual("1", item.Severity);
         }
+
+        [TestMethod]
+        public void EqualsTest()
+        {
+            Bug item1 = new Bug()
+            {
+                ID = 123,
+                Title = "Bug A",
+                Description = "Bug Description.",
+                AssignedTo = "BigEgg",
+                State = "Active",
+                ChangedDate = DateTime.Today,
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = "1"
+            };
+
+            Bug item2 = new Bug()
+            {
+                ID = 124,
+                Title = "Bug A",
+                Description = "Bug Description.",
+                AssignedTo = "BigEgg",
+                State = "Active",
+                ChangedDate = DateTime.Today,
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = "1"
+            };
+
+            Bug item3 = new Bug()
+            {
+                ID = 124,
+                Title = "Bug A",
+                Description = "Bug Description.",
+                AssignedTo = "BigEgg",
+                State = "Active",
+                ChangedDate = DateTime.Today,
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = "1"
+            };
+
+            Assert.IsFalse(item1.Equals(item2));
+            Assert.IsTrue(item2.Equals(item3));
+        }
     }
 }

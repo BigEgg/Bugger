@@ -1,8 +1,12 @@
-﻿using System;
+﻿using BigEgg.Framework.Foundation;
+using System;
 
 namespace Bugger.Proxys.Models
 {
-    public class Bug
+    /// <summary>
+    /// The model class use to shows in the UI.
+    /// </summary>
+    public class Bug : IEquatable<Bug>
     {
         #region Fields
         private int id;
@@ -14,6 +18,21 @@ namespace Bugger.Proxys.Models
         private string createdBy;
         private string priority;
         private string severity;        
+        #endregion
+
+        #region Implement IEquatable interface
+        public bool Equals(Bug other)
+        {
+            return this.ID == other.ID
+                && this.Title == other.Title
+                && this.Description == other.Description
+                && this.AssignedTo == other.AssignedTo
+                && this.State == other.State
+                && this.ChangedDate == other.ChangedDate
+                && this.CreatedBy == other.CreatedBy
+                && this.Priority == other.Priority
+                && this.Severity == other.Severity;
+        }
         #endregion
 
         #region Properties
