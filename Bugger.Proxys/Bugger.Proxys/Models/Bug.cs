@@ -1,5 +1,4 @@
-﻿using BigEgg.Framework.Foundation;
-using System;
+﻿using System;
 
 namespace Bugger.Proxys.Models
 {

@@ -2,6 +2,7 @@
 using Bugger.Proxys.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Bugger.Proxys
 {
@@ -71,7 +72,7 @@ namespace Bugger.Proxys
         /// </returns>
         /// <exception cref="System.ArgumentException">userName</exception>
         /// <exception cref="System.NotSupportedException">The Query operation is not supported. CanQuery returned false.</exception>
-        public List<Bug> Query(string userName, bool isFilterCreatedBy = true)
+        public ReadOnlyCollection<Bug> Query(string userName, bool isFilterCreatedBy = true)
         {
             if (string.IsNullOrWhiteSpace(userName)) { throw new ArgumentException("userName"); }
             if (!CanQuery()) { throw new NotSupportedException("The Query operation is not supported. CanQuery returned false."); }
@@ -89,13 +90,13 @@ namespace Bugger.Proxys
         /// </returns>
         /// <exception cref="System.ArgumentException">teamMembers</exception>
         /// <exception cref="System.NotSupportedException">The Query operation is not supported. CanQuery returned false.</exception>
-        public List<Bug> Query(List<string> teamMembers, bool isFilterCreatedBy = true)
+        public ReadOnlyCollection<Bug> Query(List<string> teamMembers, bool isFilterCreatedBy = true)
         {
             if (teamMembers == null) { throw new ArgumentException("teamMembers"); }
             if (!CanQuery()) { throw new NotSupportedException("The Query operation is not supported. CanQuery returned false."); }
 
             if (teamMembers.Count == 0)
-                return new List<Bug>();
+                return new ReadOnlyCollection<Bug>(new List<Bug>());
 
             return QueryCore(teamMembers, isFilterCreatedBy);
         }
@@ -111,7 +112,7 @@ namespace Bugger.Proxys
         /// The bugs.
         /// </returns>
         /// <exception cref="System.NotImplementedException">The Query Method not implemented in the base class.</exception>
-        protected virtual List<Bug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
+        protected virtual ReadOnlyCollection<Bug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
         {
             throw new NotImplementedException("The Query Method not implemented in the base class.");
         }

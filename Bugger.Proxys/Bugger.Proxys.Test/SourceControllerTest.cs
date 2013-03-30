@@ -4,7 +4,7 @@ using Bugger.Proxys.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Collections.ObjectModel;
 
 namespace Bugger.Proxys.Test
 {
@@ -53,7 +53,7 @@ namespace Bugger.Proxys.Test
 
             controller.CanQueryValue = true;
 
-            List<Bug> bugs = controller.Query(new List<string>());
+            ReadOnlyCollection<Bug> bugs = controller.Query(new List<string>());
             Assert.AreEqual(0, bugs.Count);
         }
 
@@ -75,7 +75,7 @@ namespace Bugger.Proxys.Test
 
             public override bool CanQuery() { return CanQueryValue; }
 
-            public List<Bug> CallQueryCore(List<string> userNames, bool isFilterCreatedBy)
+            public ReadOnlyCollection<Bug> CallQueryCore(List<string> userNames, bool isFilterCreatedBy)
             {
                 return base.QueryCore(userNames, isFilterCreatedBy);
             }

@@ -1,6 +1,7 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Proxys.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Bugger.Proxys
 {
@@ -44,7 +45,7 @@ namespace Bugger.Proxys
         /// <returns>
         /// The bugs.
         /// </returns>
-        List<Bug> Query(string userName, bool isFilterCreatedBy = true);
+        ReadOnlyCollection<Bug> Query(string userName, bool isFilterCreatedBy = true);
 
         /// <summary>
         /// Query the bugs with the specified team members name list which the bug assign to.
@@ -54,7 +55,7 @@ namespace Bugger.Proxys
         /// <returns>
         /// The bugs.
         /// </returns>
-        List<Bug> Query(List<string> teamMembers, bool isFilterCreatedBy = false);
+        ReadOnlyCollection<Bug> Query(List<string> teamMembers, bool isFilterCreatedBy = false);
         #endregion
     }
 }
