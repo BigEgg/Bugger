@@ -3,6 +3,7 @@ using Bugger.Proxys.Models;
 using Bugger.Proxys.TFS.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
@@ -11,7 +12,7 @@ namespace Bugger.Proxys.TFS.Documents
     internal class SettingDocument : DataModel
     {
         #region Fields
-        private readonly List<MappingPair> propertyMappingList;
+        private readonly ReadOnlyCollection<MappingPair> propertyMappingList;
         private Uri connectUri;
         private string userName;
         private string password;
@@ -22,22 +23,23 @@ namespace Bugger.Proxys.TFS.Documents
 
         public SettingDocument()
         {
-            this.propertyMappingList = new List<MappingPair>();
+            List<MappingPair> mappingList = new List<MappingPair>();
 
             PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(Bug));
             foreach (PropertyDescriptor propertyDescriptor in propertyDescriptorCollection)
             {
                 MappingPair mappingPair = new MappingPair(propertyDescriptor.Name);
                 AddWeakEventListener(mappingPair, MappingPairPropertyChanged);
-                this.propertyMappingList.Add(mappingPair);
+                mappingList.Add(mappingPair);
             }
+
+            this.propertyMappingList = new ReadOnlyCollection<MappingPair>(mappingList);
+
         }
 
         #region Properties
-        [XmlElement(Order = 7)]
-        public List<MappingPair> PropertyMappingList { get { return this.propertyMappingList; } }
+        public ReadOnlyCollection<MappingPair> PropertyMappingList { get { return this.propertyMappingList; } }
 
-        [XmlElement(Order = 1)]
         public Uri ConnectUri
         {
             get { return this.connectUri; }
@@ -48,7 +50,6 @@ namespace Bugger.Proxys.TFS.Documents
             }
         }
 
-        [XmlElement(Order = 2)]
         public string UserName
         {
             get { return this.userName; }
@@ -62,7 +63,6 @@ namespace Bugger.Proxys.TFS.Documents
             }
         }
 
-        [XmlElement(Order = 3)]
         public string Password
         {
             get { return this.password; }
@@ -76,7 +76,6 @@ namespace Bugger.Proxys.TFS.Documents
             }
         }
 
-        [XmlElement(Order = 4)]
         public string BugFilterField
         {
             get { return this.bugFilterField; }
@@ -90,7 +89,6 @@ namespace Bugger.Proxys.TFS.Documents
             }
         }
 
-        [XmlElement(Order = 5)]
         public string BugFilterValue
         {
             get { return this.bugFilterValue; }
@@ -104,7 +102,6 @@ namespace Bugger.Proxys.TFS.Documents
             }
         }
 
-        [XmlElement(Order = 6)]
         public string PriorityRed
         {
             get { return this.priorityRed; }

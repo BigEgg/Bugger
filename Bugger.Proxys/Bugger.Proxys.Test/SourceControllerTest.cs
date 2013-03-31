@@ -12,7 +12,7 @@ namespace Bugger.Proxys.Test
     public class SourceControllerTest
     {
         [TestMethod]
-        public void ContructorTest()
+        public void ConstructorTest()
         {
             AssertHelper.ExpectedException<ArgumentException>(() => new MockSourceController("  "));
             AssertHelper.ExpectedException<ArgumentException>(() => new MockSourceController(null));

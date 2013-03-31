@@ -43,8 +43,6 @@ namespace Bugger.Proxys.TFS.ViewModels
             this.readonlyTFSFields = new ReadOnlyCollection<string>(this.tfsFields);
 
             this.testConnectionCommand = new DelegateCommand(TestConnectionExcute, CanTestConnectionExcute);
-            this.uriHelpCommand =
-
             this.uriHelpCommand = new DelegateCommand(OpenUriHelpExcute);
         }
 
@@ -54,14 +52,7 @@ namespace Bugger.Proxys.TFS.ViewModels
         internal SettingDocument Settings
         {
             get { return this.settings; }
-            set
-            {
-                if (this.settings != value)
-                {
-                    this.settings = value;
-                    RaisePropertyChanged("Settings");
-                }
-            }
+            set { this.settings = value; }
         }
 
         public ICommand UriHelpCommand { get { return this.uriHelpCommand; } }
@@ -84,7 +75,7 @@ namespace Bugger.Proxys.TFS.ViewModels
         public bool CanConnect
         {
             get { return this.canConnect; }
-            set
+            private set
             {
                 if (this.canConnect != value)
                 {
@@ -99,7 +90,7 @@ namespace Bugger.Proxys.TFS.ViewModels
         #region Private Commands Methods
         private bool CanTestConnectionExcute()
         {
-            return this.settings.ConnectUri.IsWellFormedOriginalString();
+            return this.settings.ConnectUri != null && this.settings.ConnectUri.IsAbsoluteUri;
         }
 
         private void TestConnectionExcute()
@@ -125,8 +116,8 @@ namespace Bugger.Proxys.TFS.ViewModels
             try
             {
                 WorkItemStore workItemStore = (WorkItemStore)tpc.GetService(typeof(WorkItemStore));
-                WorkItem workItem = workItemStore.GetWorkItem(1);
-                foreach (Field field in workItem.Fields)
+                FieldDefinitionCollection collection = workItemStore.FieldDefinitions;
+                foreach (FieldDefinition field in collection)
                 {
                     this.tfsFields.Add(field.Name);
                 }
@@ -165,7 +156,6 @@ namespace Bugger.Proxys.TFS.ViewModels
         private void UpdateCommands()
         {
             this.testConnectionCommand.RaiseCanExecuteChanged();
-            this.uriHelpCommand.RaiseCanExecuteChanged();
         }
         #endregion
         #endregion

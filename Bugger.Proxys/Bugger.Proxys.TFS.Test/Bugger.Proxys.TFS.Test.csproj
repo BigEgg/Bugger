@@ -43,7 +43,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Microsoft Visual Studio 11.0\Common7\IDE\ReferenceAssemblies\v2.0\Microsoft.TeamFoundation.Common.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -61,8 +63,19 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Documents\SettingDocumentTest.cs" />
+    <Compile Include="Documents\SettingDocumentTypeTest.cs" />
+    <Compile Include="Models\MappingPairTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\MockMessageService.cs" />
+    <Compile Include="TestClassBase.cs" />
     <Compile Include="TFSSourceControllerTest.cs" />
+    <Compile Include="ViewModels\SettingViewModelTest.cs" />
+    <Compile Include="ViewModels\UriHelpViewModelTest.cs" />
+    <Compile Include="Views\MockDialogViewBase.cs" />
+    <Compile Include="Views\MockUriHelpView.cs" />
+    <Compile Include="Views\MockSettingView.cs" />
+    <Compile Include="Views\MockView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework.UnitTesting\BigEgg.Framework.UnitTesting.csproj">
@@ -82,6 +95,7 @@
       <Name>Bugger.Proxys %28Bugger.Proxys\Bugger.Proxys%29</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

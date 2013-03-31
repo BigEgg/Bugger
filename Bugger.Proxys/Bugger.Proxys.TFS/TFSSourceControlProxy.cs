@@ -27,7 +27,6 @@ namespace Bugger.Proxys.TFS
         private readonly IMessageService messageService;
         private readonly DelegateCommand saveCommand;
 
-        private SettingDocumentType documentType;
         private SettingDocument document;
         private SettingViewModel settingViewModel;
         #endregion
@@ -42,12 +41,9 @@ namespace Bugger.Proxys.TFS
             this.container = container;
             this.messageService = messageService;
             this.saveCommand = new DelegateCommand(SaveExcute, CanQuery);
-            this.documentType = new SettingDocumentType();
 
             this.settingViewModel = this.container.GetExportedValue<SettingViewModel>();
             this.settingViewModel.SaveCommand = this.saveCommand;
-
-            AddWeakEventListener(this.document, DocumentPropertyChanged);
         }
 
         #region Properties
@@ -61,10 +57,10 @@ namespace Bugger.Proxys.TFS
             return this.settingViewModel.TestConnectionCommand.CanExecute(null)
                 && string.IsNullOrWhiteSpace(this.document.BugFilterField)
                 && string.IsNullOrWhiteSpace(this.document.BugFilterValue)
-                && !this.document.PropertyMappingList.Any(x => 
+                && !this.document.PropertyMappingList.Any(x =>
                     {
-                        if (x.FieldName != "Severity")
-                            return string.IsNullOrWhiteSpace(x.PropertyName);
+                        if (x.PropertyName != "Severity")
+                            return string.IsNullOrWhiteSpace(x.FieldName);
                         else
                             return true;
                     });
@@ -74,23 +70,24 @@ namespace Bugger.Proxys.TFS
         #region Protected Methods
         protected override void OnInitialize()
         {
-            if (File.Exists(this.documentType.FilePath))
+            if (File.Exists(SettingDocumentType.FilePath))
             {
                 try
                 {
-                    this.document = this.documentType.Open();
+                    this.document = SettingDocumentType.Open();
                 }
                 catch
                 {
                     this.messageService.ShowError(Resources.CannotOpenFile);
-                    this.document = this.documentType.New();
+                    this.document = SettingDocumentType.New();
                 }
             }
             else
             {
-                this.document = this.documentType.New();
+                this.document = SettingDocumentType.New();
             }
 
+            AddWeakEventListener(this.document, DocumentPropertyChanged);
             this.settingViewModel.Settings = document;
         }
 
@@ -114,10 +111,18 @@ namespace Bugger.Proxys.TFS
             List<Bug> bugs = new List<Bug>();
             foreach (string userName in userNames)
             {
-                string fields = string.Join(", ", this.document.PropertyMappingList.Select(x => x.PropertyName));
-                string filter = isFilterCreatedBy ?
-                    "([System.AssignedTo] = '" + userName + "' OR [System.CreatedBy] = '" + userName + "')" :
-                    "[System.AssignedTo] = '" + userName + "'";
+                string fields = string.Join(", ", this.document.PropertyMappingList.Select(x => "[" + x.FieldName + "]"));
+                string filter = "["
+                    + this.document.PropertyMappingList.First(x => x.PropertyName == "AssignedTo").FieldName
+                    + "] = '" + userName + "'";
+
+                if (isFilterCreatedBy)
+                {
+                    filter = "(" + filter + "' OR ["
+                        + this.document.PropertyMappingList.First(x => x.PropertyName == "CreatedBy").FieldName
+                        + "] = '" + userName + "')";
+                }
+
                 filter = this.document.BugFilterField + " = '" + this.document.BugFilterValue + "' And " + filter;
                 string queryString = "Select " + fields + " From WorkItems Where " + filter;
 
@@ -129,23 +134,23 @@ namespace Bugger.Proxys.TFS
                     bugs.Add(new Bug()
                     {
                         ID          = (int)item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.FieldName == "ID").PropertyName].Value,
+                                            x => x.PropertyName == "ID").FieldName].Value,
                         Title       = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.FieldName == "Title").PropertyName].Value.ToString(),
+                                            x => x.PropertyName == "Title").FieldName].Value.ToString(),
                         Description = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.FieldName == "Description").PropertyName].Value.ToString(),
+                                            x => x.PropertyName == "Description").FieldName].Value.ToString(),
                         AssignedTo  = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.FieldName == "AssignedTo").PropertyName].Value.ToString(),
+                                            x => x.PropertyName == "AssignedTo").FieldName].Value.ToString(),
                         State       = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.FieldName == "State").PropertyName].Value.ToString(),
+                                            x => x.PropertyName == "State").FieldName].Value.ToString(),
                         ChangedDate = (DateTime)item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.FieldName == "ChangedDate").PropertyName].Value,
+                                            x => x.PropertyName == "ChangedDate").FieldName].Value,
                         CreatedBy   = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.FieldName == "CreatedBy").PropertyName].Value.ToString(),
+                                            x => x.PropertyName == "CreatedBy").FieldName].Value.ToString(),
                         Priority    = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.FieldName == "Priority").PropertyName].Value.ToString(),
+                                            x => x.PropertyName == "Priority").FieldName].Value.ToString(),
                         Severity    = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.FieldName == "Severity").PropertyName].Value.ToString() 
+                                            x => x.PropertyName == "Severity").FieldName].Value.ToString()
                                             ?? string.Empty
                     });
                 }
@@ -158,7 +163,7 @@ namespace Bugger.Proxys.TFS
         #region Commands Mehods
         private void SaveExcute()
         {
-            this.documentType.Save(this.document);
+            SettingDocumentType.Save(this.document);
         }
         #endregion
 

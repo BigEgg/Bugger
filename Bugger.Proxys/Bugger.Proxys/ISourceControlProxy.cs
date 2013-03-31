@@ -29,6 +29,8 @@ namespace Bugger.Proxys
         #endregion
 
         #region Methods
+        void Initialize();
+
         /// <summary>
         /// Determines whether this source control proxy can query the bugs.
         /// </summary>
