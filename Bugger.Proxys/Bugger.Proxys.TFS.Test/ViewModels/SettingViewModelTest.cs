@@ -100,7 +100,8 @@ namespace Bugger.Proxys.TFS.Test.ViewModels
             Assert.AreEqual(MessageType.Message, messageService.MessageType);
 
             this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
-            this.viewModel.Settings.Password = "asdf1234";
+            //  Replace the [Password] with real password.
+            this.viewModel.Settings.Password = "[Password]";
             this.viewModel.TestConnectionCommand.Execute(null);
             Assert.IsTrue(this.viewModel.CanConnect);
             Assert.IsTrue(this.viewModel.TFSFields.Any());
