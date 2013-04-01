@@ -1,5 +1,7 @@
 ﻿using BigEgg.Framework.Applications.Services;
 using BigEgg.Framework.Applications.Views;
+using BigEgg.Framework.UnitTesting;
+using Bugger.Proxys.TFS.Documents;
 using Bugger.Proxys.TFS.Properties;
 using Bugger.Proxys.TFS.Test.Services;
 using Bugger.Proxys.TFS.Test.Views;
@@ -7,6 +9,7 @@ using Bugger.Proxys.TFS.ViewModels;
 using Bugger.Proxys.TFS.Views;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace Bugger.Proxys.TFS.Test.ViewModels
@@ -19,6 +22,11 @@ namespace Bugger.Proxys.TFS.Test.ViewModels
 
         protected override void OnTestInitialize()
         {
+            if (File.Exists(SettingDocumentType.FilePath))
+            {
+                File.Delete(SettingDocumentType.FilePath);
+            }
+
             this.viewModel = Container.GetExportedValue<SettingViewModel>();
             this.messageService = Container.GetExportedValue<IMessageService>() as MockMessageService;
         }
@@ -100,11 +108,32 @@ namespace Bugger.Proxys.TFS.Test.ViewModels
             Assert.AreEqual(MessageType.Message, messageService.MessageType);
 
             this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
-            //  Replace the [Password] with real password.
-            this.viewModel.Settings.Password = "[Password]";
+            this.viewModel.Settings.Password = password;
             this.viewModel.TestConnectionCommand.Execute(null);
             Assert.IsTrue(this.viewModel.CanConnect);
             Assert.IsTrue(this.viewModel.TFSFields.Any());
+        }
+
+        [TestMethod]
+        public void PropertiesWithNotification()
+        {
+            MockUriHelpView view = Container.GetExportedValue<IUriHelpView>() as MockUriHelpView;
+            view.ShowDialogAction = (x) =>
+            {
+                UriHelpViewModel uriHelpViewModel = x.GetViewModel<UriHelpViewModel>();
+                uriHelpViewModel.ServerName = "https://tfs.codeplex.com:443/tfs/TFS12";
+                uriHelpViewModel.SubmitCommand.Execute(null);
+            };
+            this.viewModel.UriHelpCommand.Execute(null);
+            this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
+            this.viewModel.Settings.Password = password;
+            AssertHelper.PropertyChangedEvent(this.viewModel, x => x.TFSFields, () => this.viewModel.TestConnectionCommand.Execute(null));
+
+            this.viewModel.Settings.Password = "password";
+            AssertHelper.PropertyChangedEvent(this.viewModel, x => x.CanConnect, () => this.viewModel.TestConnectionCommand.Execute(null));
+
+            this.viewModel.Settings.Password = password;
+            AssertHelper.PropertyChangedEvent(this.viewModel, x => x.CanConnect, () => this.viewModel.TestConnectionCommand.Execute(null));
         }
     }
 }

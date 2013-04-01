@@ -55,15 +55,14 @@ namespace Bugger.Proxys.TFS
         public override bool CanQuery()
         {
             return this.settingViewModel.TestConnectionCommand.CanExecute(null)
-                && string.IsNullOrWhiteSpace(this.document.BugFilterField)
-                && string.IsNullOrWhiteSpace(this.document.BugFilterValue)
-                && !this.document.PropertyMappingList.Any(x =>
-                    {
-                        if (x.PropertyName != "Severity")
-                            return string.IsNullOrWhiteSpace(x.FieldName);
-                        else
-                            return true;
-                    });
+                && !string.IsNullOrWhiteSpace(this.document.BugFilterField)
+                && !string.IsNullOrWhiteSpace(this.document.BugFilterValue)
+                && this.document.PropertyMappingList
+                        .Where(x=>x.PropertyName!="Severity")
+                        .Any(x =>
+                        {
+                            return !string.IsNullOrWhiteSpace(x.FieldName);
+                        });
         }
         #endregion
 
@@ -111,20 +110,22 @@ namespace Bugger.Proxys.TFS
             List<Bug> bugs = new List<Bug>();
             foreach (string userName in userNames)
             {
-                string fields = string.Join(", ", this.document.PropertyMappingList.Select(x => "[" + x.FieldName + "]"));
+                string fields = string.Join(", ", this.document.PropertyMappingList
+                    .Where(x => !string.IsNullOrWhiteSpace(x.FieldName))
+                    .Select(x => "[" + x.FieldName + "]"));
                 string filter = "["
                     + this.document.PropertyMappingList.First(x => x.PropertyName == "AssignedTo").FieldName
                     + "] = '" + userName + "'";
 
                 if (isFilterCreatedBy)
                 {
-                    filter = "(" + filter + "' OR ["
+                    filter = "( " + filter + " OR ["
                         + this.document.PropertyMappingList.First(x => x.PropertyName == "CreatedBy").FieldName
-                        + "] = '" + userName + "')";
+                        + "] = '" + userName + "' )";
                 }
 
-                filter = this.document.BugFilterField + " = '" + this.document.BugFilterValue + "' And " + filter;
-                string queryString = "Select " + fields + " From WorkItems Where " + filter;
+                filter = "[" + this.document.BugFilterField + "] = '" + this.document.BugFilterValue + "' And " + filter;
+                string queryString = "SELECT " + fields + " FROM WorkItems WHERE " + filter;
 
                 Query query = new Query(workItemStore, queryString);
                 WorkItemCollection collection = query.RunQuery();
@@ -134,24 +135,25 @@ namespace Bugger.Proxys.TFS
                     bugs.Add(new Bug()
                     {
                         ID          = (int)item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.PropertyName == "ID").FieldName].Value,
+                                          x => x.PropertyName == "ID").FieldName].Value,
                         Title       = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.PropertyName == "Title").FieldName].Value.ToString(),
+                                          x => x.PropertyName == "Title").FieldName].Value.ToString(),
                         Description = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.PropertyName == "Description").FieldName].Value.ToString(),
+                                          x => x.PropertyName == "Description").FieldName].Value.ToString(),
                         AssignedTo  = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.PropertyName == "AssignedTo").FieldName].Value.ToString(),
+                                          x => x.PropertyName == "AssignedTo").FieldName].Value.ToString(),
                         State       = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.PropertyName == "State").FieldName].Value.ToString(),
+                                          x => x.PropertyName == "State").FieldName].Value.ToString(),
                         ChangedDate = (DateTime)item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.PropertyName == "ChangedDate").FieldName].Value,
+                                          x => x.PropertyName == "ChangedDate").FieldName].Value,
                         CreatedBy   = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.PropertyName == "CreatedBy").FieldName].Value.ToString(),
+                                          x => x.PropertyName == "CreatedBy").FieldName].Value.ToString(),
                         Priority    = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.PropertyName == "Priority").FieldName].Value.ToString(),
-                        Severity    = item.Fields[this.document.PropertyMappingList.First(
-                                            x => x.PropertyName == "Severity").FieldName].Value.ToString()
-                                            ?? string.Empty
+                                          x => x.PropertyName == "Priority").FieldName].Value.ToString(),
+                        Severity    = string.IsNullOrWhiteSpace(this.document.PropertyMappingList.First(x => x.PropertyName == "Severity").FieldName) ?
+                                      string.Empty :
+                                      item.Fields[this.document.PropertyMappingList.First(
+                                          x => x.PropertyName == "Severity").FieldName].Value.ToString()
                     });
                 }
             }

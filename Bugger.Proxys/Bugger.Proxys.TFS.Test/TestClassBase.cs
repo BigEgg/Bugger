@@ -11,6 +11,8 @@ namespace Bugger.Proxys.TFS.Test
     public abstract class TestClassBase
     {
         private readonly CompositionContainer container;
+        //  Replace the [Password] with real password.
+        protected const string password = "[Password]";
 
         
         protected TestClassBase()

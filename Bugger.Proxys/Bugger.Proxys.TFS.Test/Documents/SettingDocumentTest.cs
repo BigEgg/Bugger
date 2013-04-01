@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
+﻿using BigEgg.Framework.UnitTesting;
 using Bugger.Proxys.TFS.Documents;
-using BigEgg.Framework.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 
 namespace Bugger.Proxys.TFS.Test.Documents
