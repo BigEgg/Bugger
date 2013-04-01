@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security;
+using System.Security.Cryptography;
+using System.Text;
 using System.Xml.Linq;
 
 namespace Bugger.Proxys.TFS.Documents
@@ -31,7 +34,7 @@ namespace Bugger.Proxys.TFS.Documents
         #region Public Methods
         public static SettingDocument New()
         {
-            return new SettingDocument();
+            return new SettingDocument();;
         }
 
         public static SettingDocument Open()
@@ -39,9 +42,11 @@ namespace Bugger.Proxys.TFS.Documents
             SettingDocument document = new SettingDocument();
 
             XElement root = XDocument.Load(filePath).Root;
+            byte[] entropy = Convert.FromBase64String(root.Attribute("entropy").Value);
+
             document.ConnectUri = new Uri(root.Element("Uri").Value);
-            document.UserName = root.Element("UserName").Value;
-            document.Password = root.Element("Password").Value;
+            document.UserName = Decrypt(entropy, root.Element("UserName").Value);
+            document.Password = Decrypt(entropy, root.Element("Password").Value);
             document.BugFilterField = root.Element("BugFilterField").Value;
             document.BugFilterValue = root.Element("BugFilterValue").Value;
             document.PriorityRed = root.Element("PriorityRed").Value;
@@ -57,6 +62,13 @@ namespace Bugger.Proxys.TFS.Documents
 
         public static void Save(SettingDocument document)
         {
+            // Generate additional entropy (will be used as the Initialization vector)
+            byte[] entropy = new byte[20];
+            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(entropy);
+            }
+
             XElement propertyMappingElement = new XElement("PropertyMappings");
             foreach (MappingPair pair in document.PropertyMappingList)
             {
@@ -66,9 +78,10 @@ namespace Bugger.Proxys.TFS.Documents
             XDocument settingDocument = new XDocument(
                 new XComment("TFS Proxy Settings"),
                 new XElement("Settings",
+                    new XAttribute("entropy", Convert.ToBase64String(entropy)),
                     new XElement("Uri", document.ConnectUri.AbsoluteUri),
-                    new XElement("UserName", document.UserName),
-                    new XElement("Password", document.Password),
+                    new XElement("UserName", Encrypt(entropy, document.UserName)),
+                    new XElement("Password", Encrypt(entropy, document.Password)),
                     new XElement("BugFilterField", document.BugFilterField),
                     new XElement("BugFilterValue", document.BugFilterValue),
                     new XElement("PriorityRed", document.PriorityRed),
@@ -77,6 +90,30 @@ namespace Bugger.Proxys.TFS.Documents
             );
 
             settingDocument.Save(FilePath);
+        }
+        #endregion
+
+        #region Private Methods
+        private static string Decrypt(byte[] entropy, string cipherString)
+        {
+            if (entropy == null) { throw new ArgumentException("entropy"); }
+            if (string.IsNullOrEmpty(cipherString)) { throw new ArgumentException("cipherString"); }
+
+            byte[] cipherText = Convert.FromBase64String(cipherString);
+            byte[] plainText = ProtectedData.Unprotect(cipherText, entropy, DataProtectionScope.CurrentUser);
+
+            return Encoding.Default.GetString(plainText);
+        }
+
+        private static string Encrypt(byte[] entropy, string plainString)
+        {
+            if (entropy == null) { throw new ArgumentException("entropy"); }
+            if (string.IsNullOrEmpty(plainString)) { throw new ArgumentException("plainString"); }
+
+            byte[] plainText = Encoding.Default.GetBytes(plainString);
+            byte[] cipherText = ProtectedData.Protect(plainText, entropy, DataProtectionScope.CurrentUser);
+
+            return Convert.ToBase64String(cipherText);
         }
         #endregion
         #endregion
