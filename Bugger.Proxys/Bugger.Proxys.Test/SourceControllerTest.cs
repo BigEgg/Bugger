@@ -1,6 +1,6 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
 using BigEgg.Framework.UnitTesting;
-using Bugger.Proxys.Models;
+using Bugger.Domain.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

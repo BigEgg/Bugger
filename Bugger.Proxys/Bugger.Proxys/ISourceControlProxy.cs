@@ -1,5 +1,5 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Proxys.Models;
+using Bugger.Domain.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 

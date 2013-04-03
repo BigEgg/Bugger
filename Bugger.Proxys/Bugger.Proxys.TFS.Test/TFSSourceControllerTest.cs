@@ -1,5 +1,5 @@
 ﻿using BigEgg.Framework.UnitTesting;
-using Bugger.Proxys.Models;
+using Bugger.Domain.Models;
 using Bugger.Proxys.TFS.Documents;
 using Bugger.Proxys.TFS.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

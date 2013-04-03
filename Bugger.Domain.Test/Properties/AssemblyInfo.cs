@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Bugger Proxys Base")]
+[assembly: AssemblyTitle("Bugger.Domain.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Bugger")]
+[assembly: AssemblyProduct("Bugger.Domain.Test")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1e118657-a2fd-4f59-86cf-08577a1c3447")]
+[assembly: Guid("6ef13415-c565-4a1f-b275-ddae098939b6")]
 
 // Version information for an assembly consists of the following four values:
 //

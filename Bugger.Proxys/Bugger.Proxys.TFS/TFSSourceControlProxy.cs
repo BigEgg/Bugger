@@ -1,7 +1,7 @@
 ﻿using BigEgg.Framework.Applications.Commands;
 using BigEgg.Framework.Applications.Services;
 using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Proxys.Models;
+using Bugger.Domain.Models;
 using Bugger.Proxys.TFS.Documents;
 using Bugger.Proxys.TFS.Properties;
 using Bugger.Proxys.TFS.ViewModels;

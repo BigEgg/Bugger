@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bugger.Proxys.Models
+namespace Bugger.Domain.Models
 {
     /// <summary>
     /// The model class use to shows in the UI.
@@ -44,7 +44,7 @@ namespace Bugger.Proxys.Models
         public int ID
         {
             get { return this.id; }
-            internal set { this.id = value; }
+            set { this.id = value; }
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Bugger.Proxys.Models
         public string Title
         {
             get { return this.title; }
-            internal set { this.title = value; }
+            set { this.title = value; }
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Bugger.Proxys.Models
         public string Description
         {
             get { return this.description; }
-            internal set { this.description = value; }
+            set { this.description = value; }
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Bugger.Proxys.Models
         public string AssignedTo
         {
             get { return this.assignedTo; }
-            internal set { this.assignedTo = value; }
+            set { this.assignedTo = value; }
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Bugger.Proxys.Models
         public string State
         {
             get { return this.state; }
-            internal set { this.state = value; }
+            set { this.state = value; }
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Bugger.Proxys.Models
         public DateTime ChangedDate
         {
             get { return this.changedDate; }
-            internal set { this.changedDate = value; }
+            set { this.changedDate = value; }
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Bugger.Proxys.Models
         public string CreatedBy
         {
             get { return this.createdBy; }
-            internal set { this.createdBy = value; }
+            set { this.createdBy = value; }
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Bugger.Proxys.Models
         public string Priority
         {
             get { return priority; }
-            internal set { priority = value; }
+            set { priority = value; }
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Bugger.Proxys.Models
         public string Severity
         {
             get { return severity; }
-            internal set { severity = value; }
+            set { severity = value; }
         }
         #endregion
     }
