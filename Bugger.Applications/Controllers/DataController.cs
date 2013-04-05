@@ -1,15 +1,12 @@
-﻿using BigEgg.Framework.Applications.Services;
+﻿using System;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System.Threading;
+using System.Threading.Tasks;
+using BigEgg.Framework.Applications.Services;
 using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Applications.Properties;
 using Bugger.Applications.Services;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Bugger.Applications.Controllers
 {
@@ -52,24 +49,6 @@ namespace Bugger.Applications.Controllers
 
         #region Methods
         #region Public Methods
-        public void RefreshBugs()
-        {
-            Task queryUserTask = null;
-            if (!string.IsNullOrWhiteSpace(Settings.Default.UserName))
-            {
-                queryUserTask = new Task(
-                    () => this.proxyService.ActiveProxy.Query(
-                        Settings.Default.UserName, 
-                        Settings.Default.IsFilterCreatedBy));
-                queryUserTask.Start();
-            }
-            
-
-            this.dataService.RefreshTime = DateTime.Now;
-        }
-        #endregion
-
-        #region Private Methods
         private void TimerStart()
         {
             if (this.timerStarted)
@@ -99,7 +78,9 @@ namespace Bugger.Applications.Controllers
 
             this.timerStarted = false;
         }
+        #endregion
 
+        #region Private Methods
         // This method is called by the timer delegate.
         private void TimerCallbackMethods(Object obj)
         {
@@ -111,6 +92,25 @@ namespace Bugger.Applications.Controllers
             {
                 throw;
             }
+        }
+
+        public void RefreshBugs()
+        {
+            if (this.proxyService.ActiveProxy == null)
+                return;
+
+            Task queryUserTask = null;
+            if (!string.IsNullOrWhiteSpace(Settings.Default.UserName))
+            {
+                queryUserTask = new Task(
+                    () => this.proxyService.ActiveProxy.Query(
+                        Settings.Default.UserName,
+                        Settings.Default.IsFilterCreatedBy));
+                queryUserTask.Start();
+            }
+
+
+            this.dataService.RefreshTime = DateTime.Now;
         }
         #endregion
         #endregion

@@ -10,12 +10,11 @@ using Bugger.Applications.Views;
 namespace Bugger.Applications.ViewModels
 {
     [Export]
-    public class FloatingViewModel : ViewModel<IFloatingView>
+    public class MainViewModel : ViewModel<IMainView>
     {
         #region Fields
         private readonly IDataService dataService;
 
-        private ICommand showMainWindowCommand;
         private ICommand englishCommand;
         private ICommand chineseCommand;
         private ICommand aboutCommand;
@@ -23,8 +22,9 @@ namespace Bugger.Applications.ViewModels
         private ICommand exitCommand;
         #endregion
 
+
         [ImportingConstructor]
-        public FloatingViewModel(IFloatingView view, IDataService dataService, IPresentationService presentationService)
+        public MainViewModel(IMainView view, IDataService dataService, IPresentationService presentationService)
             : base(view)
         {
             this.dataService = dataService;
@@ -32,32 +32,20 @@ namespace Bugger.Applications.ViewModels
             view.Closed += ViewClosed;
 
             // Restore the window size when the values are valid.
-            if (Settings.Default.FloatingWindowLeft >= 0 && Settings.Default.FloatingWindowTop >= 0 && Settings.Default.FloatingWindowWidth > 0 && Settings.Default.FloatingWindowHeight > 0
-                && Settings.Default.FloatingWindowLeft + Settings.Default.FloatingWindowWidth <= presentationService.VirtualScreenWidth
-                && Settings.Default.FloatingWindowTop + Settings.Default.FloatingWindowHeight <= presentationService.VirtualScreenHeight)
+            if (Settings.Default.MainWindowLeft >= 0 && Settings.Default.MainWindowTop >= 0 && Settings.Default.MainWindowWidth > 0 && Settings.Default.MainWindowHeight > 0
+                && Settings.Default.MainWindowLeft + Settings.Default.MainWindowWidth <= presentationService.VirtualScreenWidth
+                && Settings.Default.MainWindowTop + Settings.Default.MainWindowHeight <= presentationService.VirtualScreenHeight)
             {
-                ViewCore.Left = Settings.Default.FloatingWindowLeft;
-                ViewCore.Top = Settings.Default.FloatingWindowTop;
-                ViewCore.Height = Settings.Default.FloatingWindowHeight;
-                ViewCore.Width = Settings.Default.FloatingWindowWidth;
+                ViewCore.Left = Settings.Default.MainWindowLeft;
+                ViewCore.Top = Settings.Default.MainWindowTop;
+                ViewCore.Height = Settings.Default.MainWindowHeight;
+                ViewCore.Width = Settings.Default.MainWindowWidth;
             }
+
         }
 
         #region Properties
         public IDataService DataService { get { return this.dataService; } }
-
-        public ICommand ShowMainWindowCommand
-        {
-            get { return this.showMainWindowCommand; }
-            set
-            {
-                if (this.showMainWindowCommand != value)
-                {
-                    this.showMainWindowCommand = value;
-                    RaisePropertyChanged("ShowMainWindowCommand");
-                }
-            }
-        }
 
         public ICommand ExitCommand
         {
@@ -151,10 +139,10 @@ namespace Bugger.Applications.ViewModels
 
         private void ViewClosed(object sender, EventArgs e)
         {
-            Settings.Default.FloatingWindowLeft = ViewCore.Left;
-            Settings.Default.FloatingWindowTop = ViewCore.Top;
-            Settings.Default.FloatingWindowHeight = ViewCore.Height;
-            Settings.Default.FloatingWindowWidth = ViewCore.Width;
+            Settings.Default.MainWindowLeft = ViewCore.Left;
+            Settings.Default.MainWindowTop = ViewCore.Top;
+            Settings.Default.MainWindowHeight = ViewCore.Height;
+            Settings.Default.MainWindowWidth = ViewCore.Width;
         }
         #endregion
         #endregion

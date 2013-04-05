@@ -37,6 +37,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
@@ -59,7 +60,13 @@
     <Compile Include="Services\IProxyService.cs" />
     <Compile Include="Services\ProxyService.cs" />
     <Compile Include="ViewModels\FloatingViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\SettingDialogViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\IFloatingView.cs" />
+    <Compile Include="Views\IMainView.cs" />
+    <Compile Include="Views\ISettingDialogView.cs" />
+    <Compile Include="Views\ISettingsView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">
