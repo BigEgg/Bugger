@@ -32,7 +32,7 @@ namespace Bugger.Proxys.TFS.Test
         {
             Assert.IsTrue(this.proxy.IsInitialized);
             Assert.IsFalse(this.proxy.CanQuery());
-            Assert.IsNotNull(this.proxy.SettingViewModel);
+            Assert.IsNotNull(this.proxy.SettingView);
 
             Assert.IsNotNull(this.viewModel.SaveCommand);
             Assert.IsNotNull(this.viewModel.Settings);

@@ -40,29 +40,27 @@ namespace Bugger.Proxys.TFS
         {
             this.container = container;
             this.messageService = messageService;
-            this.saveCommand = new DelegateCommand(SaveExcute, CanQuery);
+            this.saveCommand = new DelegateCommand(SaveExcute, CanSaveExcute);
 
             this.settingViewModel = this.container.GetExportedValue<SettingViewModel>();
             this.settingViewModel.SaveCommand = this.saveCommand;
         }
 
         #region Properties
-        public override ViewModel SettingViewModel { get { return this.settingViewModel; } }
+        public override object SettingView { get { return this.settingViewModel.View; } }
         #endregion
 
         #region Methods
         #region Public Methods
         public override bool CanQuery()
         {
-            return this.settingViewModel.TestConnectionCommand.CanExecute(null)
-                && !string.IsNullOrWhiteSpace(this.document.BugFilterField)
-                && !string.IsNullOrWhiteSpace(this.document.BugFilterValue)
-                && this.document.PropertyMappingList
-                        .Where(x=>x.PropertyName!="Severity")
-                        .Any(x =>
-                        {
-                            return !string.IsNullOrWhiteSpace(x.FieldName);
-                        });
+            bool canQuery = this.saveCommand.CanExecute();
+
+            if (this.saveCommand.CanExecute())
+            {
+                this.saveCommand.Execute();
+            }
+            return canQuery;
         }
         #endregion
 
@@ -166,6 +164,19 @@ namespace Bugger.Proxys.TFS
         private void SaveExcute()
         {
             SettingDocumentType.Save(this.document);
+        }
+
+        private bool CanSaveExcute()
+        {
+            return this.settingViewModel.TestConnectionCommand.CanExecute(null)
+                && !string.IsNullOrWhiteSpace(this.document.BugFilterField)
+                && !string.IsNullOrWhiteSpace(this.document.BugFilterValue)
+                && this.document.PropertyMappingList
+                        .Where(x => x.PropertyName != "Severity")
+                        .Any(x =>
+                        {
+                            return !string.IsNullOrWhiteSpace(x.FieldName);
+                        });
         }
         #endregion
 

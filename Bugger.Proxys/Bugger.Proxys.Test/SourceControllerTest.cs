@@ -59,17 +59,11 @@ namespace Bugger.Proxys.Test
 
         private class MockSourceController : SourceControlProxy
         {
-            private ViewModel settingViewModel;
-
             public MockSourceController(string proxyName)
                 : base(proxyName)
             {
                 this.CanQueryValue = false;
-
-                settingViewModel = null; 
             }
-
-            public override ViewModel SettingViewModel { get { return this.settingViewModel; } }
 
             public bool CanQueryValue { get; set; }
 

@@ -44,12 +44,12 @@ namespace Bugger.Proxys
         }
 
         /// <summary>
-        /// Gets the setting view model.
+        /// Gets the setting view.
         /// </summary>
         /// <value>
-        /// The setting view model.
+        /// The setting view.
         /// </value>
-        public abstract ViewModel SettingViewModel { get; }
+        public virtual object SettingView { get { return null; } }
         #endregion
 
         #region Methods

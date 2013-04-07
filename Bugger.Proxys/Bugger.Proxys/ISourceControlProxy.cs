@@ -20,12 +20,12 @@ namespace Bugger.Proxys
         string ProxyName { get; }
 
         /// <summary>
-        /// Gets the setting view model.
+        /// Gets the setting view.
         /// </summary>
         /// <value>
-        /// The setting view model.
+        /// The setting view.
         /// </value>
-        ViewModel SettingViewModel { get; }
+        object SettingView { get; }
         #endregion
 
         #region Methods
