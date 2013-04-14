@@ -1,11 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using System.ComponentModel.Composition;
-using System.Windows.Input;
-using BigEgg.Framework.Applications.ViewModels;
+﻿using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Applications.Properties;
 using Bugger.Applications.Services;
 using Bugger.Applications.Views;
+using System;
+using System.ComponentModel;
+using System.ComponentModel.Composition;
+using System.Windows.Input;
 
 namespace Bugger.Applications.ViewModels
 {

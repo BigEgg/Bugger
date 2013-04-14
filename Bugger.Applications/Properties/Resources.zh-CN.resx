@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActiveProxyMandatory" xml:space="preserve">
-    <value>The active proxy is mandatory.</value>
+    <value>必须选中一个Bug管理借口。</value>
   </data>
   <data name="ApplicationName" xml:space="preserve">
     <value>Bugger</value>
@@ -127,9 +127,9 @@
     <value>The refresh minutes must be between {1} and {2}.</value>
   </data>
   <data name="RestartApplication" xml:space="preserve">
-    <value>Please restart the application so that the configuration changes take effect.</value>
+    <value>要使新的配置生效，需要重新程序。</value>
   </data>
   <data name="UserNameMandatory" xml:space="preserve">
-    <value>The user name is mandatory.</value>
+    <value>用户名是必须的。</value>
   </data>
 </root>

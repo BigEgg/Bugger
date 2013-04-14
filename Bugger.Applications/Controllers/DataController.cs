@@ -1,12 +1,12 @@
-﻿using System;
+﻿using BigEgg.Framework.Applications.Services;
+using BigEgg.Framework.Applications.ViewModels;
+using Bugger.Applications.Properties;
+using Bugger.Applications.Services;
+using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Threading;
 using System.Threading.Tasks;
-using BigEgg.Framework.Applications.Services;
-using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Applications.Properties;
-using Bugger.Applications.Services;
 
 namespace Bugger.Applications.Controllers
 {

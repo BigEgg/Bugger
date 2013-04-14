@@ -1,6 +1,6 @@
-﻿using System;
+﻿using BigEgg.Framework.Applications.Views;
+using System;
 using System.ComponentModel;
-using BigEgg.Framework.Applications.Views;
 
 namespace Bugger.Applications.Views
 {

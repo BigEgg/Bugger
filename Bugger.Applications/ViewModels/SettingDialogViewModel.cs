@@ -1,13 +1,13 @@
-﻿using System.ComponentModel;
-using System.Windows.Input;
-using System.Linq;
-using BigEgg.Framework.Applications.Commands;
+﻿using BigEgg.Framework.Applications.Commands;
 using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Applications.Services;
-using Bugger.Applications.Views;
 using BigEgg.Framework.Foundation;
 using Bugger.Applications.Properties;
+using Bugger.Applications.Services;
+using Bugger.Applications.Views;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Input;
 
 namespace Bugger.Applications.ViewModels
 {
@@ -61,7 +61,8 @@ namespace Bugger.Applications.ViewModels
         #region Private Methods
         private bool CanSubmitSetting()
         {
-            return false;
+            return string.IsNullOrEmpty(this.settingsViewModel.Validate()) 
+                && this.proxyService.ActiveProxy.CanQuery();
         }
 
         private void SettingsViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -41,6 +41,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollectionHelper.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\IApplicationController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,10 +61,12 @@
     <Compile Include="Services\IPresentationService.cs" />
     <Compile Include="Services\IProxyService.cs" />
     <Compile Include="Services\ProxyService.cs" />
+    <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\FloatingViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingDialogViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Views\IAboutDialogView.cs" />
     <Compile Include="Views\IFloatingView.cs" />
     <Compile Include="Views\IMainView.cs" />
     <Compile Include="Views\ISettingDialogView.cs" />
@@ -90,6 +94,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.zh-CN.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
