@@ -7,6 +7,7 @@ using Bugger.Applications.Services;
 using Bugger.Applications.Views;
 using BigEgg.Framework.Foundation;
 using Bugger.Applications.Properties;
+using System.Collections.ObjectModel;
 
 namespace Bugger.Applications.ViewModels
 {
@@ -16,6 +17,7 @@ namespace Bugger.Applications.ViewModels
         private readonly IProxyService proxyService;
         private readonly DelegateCommand submitCommand;
         private readonly DelegateCommand cancelCommand;
+        private readonly ObservableCollection<object> views;
         private SettingsViewModel settingsViewModel;
         #endregion
 
@@ -27,6 +29,9 @@ namespace Bugger.Applications.ViewModels
             this.submitCommand = new DelegateCommand(() => Close(true), CanSubmitSetting);
             this.cancelCommand = new DelegateCommand(() => Close(false));
 
+            this.views = new ObservableCollection<object>();
+            this.views.Add(SettingsView);
+
             AddWeakEventListener(settingsViewModel, SettingsViewModelPropertyChanged);
         }
 
@@ -37,14 +42,18 @@ namespace Bugger.Applications.ViewModels
 
         public ICommand CancelCommand { get { return this.cancelCommand; } }
 
-        public object SettingsView
+        public ObservableCollection<object> Views { get { return this.views; } }
+        #endregion
+
+        #region Private Properties
+        private object SettingsView
         {
             get { return this.settingsViewModel.View; }
         }
 
-        public object ProxySettingView
+        private object ProxySettingView
         {
-            get { return this.proxyService.ActiveProxy.SettingViewModel.View; }
+            get { return this.proxyService.ActiveProxy.SettingView; }
         }
         #endregion
 
@@ -59,9 +68,14 @@ namespace Bugger.Applications.ViewModels
         {
             if (e.PropertyName == "ActiveProxy")
             {
+                if (ProxySettingView != null)
+                    this.views.Remove(ProxySettingView);
+
                 this.proxyService.ActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
 
-                RaisePropertyChanged("ProxySettingView");
+                this.views.Add(ProxySettingView);
+
+                RaisePropertyChanged("Views");
             }
             UpdateCommands();
         }
