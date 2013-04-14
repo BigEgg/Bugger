@@ -25,9 +25,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Domain", "Bugger.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Domain.Test", "Bugger.Domain.Test\Bugger.Domain.Test.csproj", "{DEA49F08-2AA4-4711-AE20-8D380F1D47F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxys.FakeProxy", "Bugger.Proxys\Bugger.Proxys.FakeProxy\Bugger.Proxys.FakeProxy.csproj", "{9D384026-D73B-4BA9-9AE3-7D2172C438CE}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 11
+		SccNumberOfProjects = 12
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs12
 		SccLocalPath0 = .
@@ -68,6 +70,10 @@ Global
 		SccProjectUniqueName10 = Bugger.Domain.Test\\Bugger.Domain.Test.csproj
 		SccProjectName10 = Bugger.Domain.Test
 		SccLocalPath10 = Bugger.Domain.Test
+		SccProjectUniqueName11 = Bugger.Proxys\\Bugger.Proxys.FakeProxy\\Bugger.Proxys.FakeProxy.csproj
+		SccProjectTopLevelParentUniqueName11 = Bugger.sln
+		SccProjectName11 = Bugger.Proxys/Bugger.Proxys.FakeProxy
+		SccLocalPath11 = Bugger.Proxys\\Bugger.Proxys.FakeProxy
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,11 +91,9 @@ Global
 		{0CC7A8DA-A50B-405F-B14C-8B6BBAEA42CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0CC7A8DA-A50B-405F-B14C-8B6BBAEA42CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CC7A8DA-A50B-405F-B14C-8B6BBAEA42CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CC7A8DA-A50B-405F-B14C-8B6BBAEA42CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4ECBABE4-6EAB-47DB-9AD1-EAD9F6C655A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4ECBABE4-6EAB-47DB-9AD1-EAD9F6C655A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4ECBABE4-6EAB-47DB-9AD1-EAD9F6C655A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4ECBABE4-6EAB-47DB-9AD1-EAD9F6C655A0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E8727087-75F2-435F-BD11-78B4DFF59A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E8727087-75F2-435F-BD11-78B4DFF59A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8727087-75F2-435F-BD11-78B4DFF59A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -101,11 +105,9 @@ Global
 		{71760CC4-83EF-4043-9DC5-8E8A40A9C765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{71760CC4-83EF-4043-9DC5-8E8A40A9C765}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71760CC4-83EF-4043-9DC5-8E8A40A9C765}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71760CC4-83EF-4043-9DC5-8E8A40A9C765}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3DCFFAF0-D1E5-4FC1-B37B-4A6A27AE5E4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3DCFFAF0-D1E5-4FC1-B37B-4A6A27AE5E4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DCFFAF0-D1E5-4FC1-B37B-4A6A27AE5E4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -113,7 +115,9 @@ Global
 		{DEA49F08-2AA4-4711-AE20-8D380F1D47F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DEA49F08-2AA4-4711-AE20-8D380F1D47F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEA49F08-2AA4-4711-AE20-8D380F1D47F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DEA49F08-2AA4-4711-AE20-8D380F1D47F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D384026-D73B-4BA9-9AE3-7D2172C438CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D384026-D73B-4BA9-9AE3-7D2172C438CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D384026-D73B-4BA9-9AE3-7D2172C438CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,5 +130,6 @@ Global
 		{5714B0C6-82F3-4CC6-B33E-E3F8835C38FC} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 		{71760CC4-83EF-4043-9DC5-8E8A40A9C765} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
+		{9D384026-D73B-4BA9-9AE3-7D2172C438CE} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 	EndGlobalSection
 EndGlobal
