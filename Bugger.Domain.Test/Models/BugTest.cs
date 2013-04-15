@@ -15,6 +15,7 @@ namespace Bugger.Domain.Test.Models
                 ID           = 123,
                 Title        = "Bug A",
                 Description  = "Bug Description.",
+                Type         = BugType.Red,
                 AssignedTo   = "BigEgg",
                 State        = "Active",
                 ChangedDate  = DateTime.Today,
@@ -26,12 +27,16 @@ namespace Bugger.Domain.Test.Models
             Assert.AreEqual(123, item.ID);
             Assert.AreEqual("Bug A", item.Title);
             Assert.AreEqual("Bug Description.", item.Description);
+            Assert.AreEqual(BugType.Red, item.Type);
             Assert.AreEqual("BigEgg", item.AssignedTo);
             Assert.AreEqual("Active", item.State);
             Assert.AreEqual(DateTime.Today, item.ChangedDate);
             Assert.AreEqual("BigEgg", item.CreatedBy);
             Assert.AreEqual("High", item.Priority);
             Assert.AreEqual("1", item.Severity);
+
+            Bug item2 = new Bug();
+            Assert.AreEqual(BugType.Yellow, item2.Type);
         }
 
         [TestMethod]
@@ -42,6 +47,7 @@ namespace Bugger.Domain.Test.Models
                 ID = 123,
                 Title = "Bug A",
                 Description = "Bug Description.",
+                Type = BugType.Red,
                 AssignedTo = "BigEgg",
                 State = "Active",
                 ChangedDate = DateTime.Today,
@@ -55,6 +61,7 @@ namespace Bugger.Domain.Test.Models
                 ID = 124,
                 Title = "Bug A",
                 Description = "Bug Description.",
+                Type = BugType.Red,
                 AssignedTo = "BigEgg",
                 State = "Active",
                 ChangedDate = DateTime.Today,
@@ -68,6 +75,7 @@ namespace Bugger.Domain.Test.Models
                 ID = 124,
                 Title = "Bug A",
                 Description = "Bug Description.",
+                Type = BugType.Red,
                 AssignedTo = "BigEgg",
                 State = "Active",
                 ChangedDate = DateTime.Today,

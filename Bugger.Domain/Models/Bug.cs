@@ -11,6 +11,7 @@ namespace Bugger.Domain.Models
         private int id;
         private string title;
         private string description;
+        private BugType type;
         private string assignedTo;
         private string state;
         private DateTime changedDate;
@@ -18,6 +19,11 @@ namespace Bugger.Domain.Models
         private string priority;
         private string severity;        
         #endregion
+
+        public Bug()
+        {
+            this.type = BugType.Yellow;
+        }
 
         #region Implement IEquatable interface
         public bool Equals(Bug other)
@@ -69,6 +75,18 @@ namespace Bugger.Domain.Models
         {
             get { return this.description; }
             set { this.description = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the type of this bug..
+        /// </summary>
+        /// <value>
+        /// The type of this bug.
+        /// </value>
+        public BugType Type
+        {
+            get { return type; }
+            set { type = value; }
         }
 
         /// <summary>
