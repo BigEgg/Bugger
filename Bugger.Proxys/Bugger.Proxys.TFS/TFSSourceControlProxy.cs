@@ -1,6 +1,5 @@
 ﻿using BigEgg.Framework.Applications.Commands;
 using BigEgg.Framework.Applications.Services;
-using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Domain.Models;
 using Bugger.Proxys.TFS.Documents;
 using Bugger.Proxys.TFS.Properties;
@@ -106,6 +105,7 @@ namespace Bugger.Proxys.TFS
             WorkItemStore workItemStore = (WorkItemStore)tpc.GetService(typeof(WorkItemStore));
 
             List<Bug> bugs = new List<Bug>();
+            List<string> redFilter = this.document.PriorityRed.Split(';').Select(x => x.Trim()).ToList();
             foreach (string userName in userNames)
             {
                 string fields = string.Join(", ", this.document.PropertyMappingList
@@ -151,7 +151,10 @@ namespace Bugger.Proxys.TFS
                         Severity    = string.IsNullOrWhiteSpace(this.document.PropertyMappingList.First(x => x.PropertyName == "Severity").FieldName) ?
                                       string.Empty :
                                       item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "Severity").FieldName].Value.ToString()
+                                          x => x.PropertyName == "Severity").FieldName].Value.ToString(),
+                        Type        = redFilter.Contains(item.Fields[this.document.PropertyMappingList.First(
+                                          x => x.PropertyName == "Priority").FieldName].Value.ToString()) 
+                                          ? BugType.Red : BugType.Yellow
                     });
                 }
             }
