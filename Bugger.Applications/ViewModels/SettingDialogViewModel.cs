@@ -38,6 +38,8 @@ namespace Bugger.Applications.ViewModels
         #region Properties
         public override string Title { get { return Resources.ApplicationName; } }
 
+        public IProxyService ProxyService { get { return this.proxyService; } }
+
         public ICommand SubmitCommand { get { return this.submitCommand; } }
 
         public ICommand CancelCommand { get { return this.cancelCommand; } }

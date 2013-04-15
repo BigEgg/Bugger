@@ -15,13 +15,13 @@ namespace Bugger.Applications.ViewModels
         #region Fields
         private readonly IDataService dataService;
 
+        private ICommand refreshBugsCommand;
         private ICommand englishCommand;
         private ICommand chineseCommand;
         private ICommand aboutCommand;
         private ICommand settingCommand;
         private ICommand exitCommand;
         #endregion
-
 
         [ImportingConstructor]
         public MainViewModel(IMainView view, IDataService dataService, IPresentationService presentationService)
@@ -46,6 +46,19 @@ namespace Bugger.Applications.ViewModels
 
         #region Properties
         public IDataService DataService { get { return this.dataService; } }
+
+        public ICommand RefreshBugsCommand
+        {
+            get { return this.refreshBugsCommand; }
+            set
+            {
+                if (this.refreshBugsCommand != value)
+                {
+                    this.refreshBugsCommand = value;
+                    RaisePropertyChanged("RefreshBugsCommand");
+                }
+            }
+        }
 
         public ICommand ExitCommand
         {

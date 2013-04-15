@@ -7,9 +7,9 @@ namespace Bugger.Applications.Services
 {
     public interface IDataService : INotifyPropertyChanged
     {
-        MultiThreadingObservableCollection<Bug> RedBugs { get; }
+        MultiThreadingObservableCollection<Bug> UserBugs { get; }
 
-        MultiThreadingObservableCollection<Bug> YellowBugs { get; }
+        MultiThreadingObservableCollection<Bug> TeamBugs { get; }
 
         DateTime RefreshTime { get; set; }
     }

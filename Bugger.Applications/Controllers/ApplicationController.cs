@@ -6,6 +6,7 @@ using Bugger.Applications.Services;
 using Bugger.Applications.ViewModels;
 using Bugger.Applications.Views;
 using System;
+using System.Linq;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -137,7 +138,7 @@ namespace Bugger.Applications.Controllers
             IProxyService proxyService = container.GetExportedValue<IProxyService>();
 
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsView, proxyService, Settings.Default.TeamMembers);
-            settingsViewModel.ActiveProxy = Settings.Default.ActiveProxy;
+            settingsViewModel.ActiveProxy = proxyService.ActiveProxy.ProxyName;
             settingsViewModel.UserName = Settings.Default.UserName;
             settingsViewModel.RefreshMinutes = Settings.Default.RefreshMinutes;
             settingsViewModel.IsFilterCreatedBy = Settings.Default.IsFilterCreatedBy;
@@ -148,6 +149,8 @@ namespace Bugger.Applications.Controllers
 
             if (result == true)
             {
+                proxyService.ActiveProxy = proxyService.Proxys.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
+
                 Settings.Default.ActiveProxy = settingsViewModel.ActiveProxy;
                 Settings.Default.UserName = settingsViewModel.UserName;
                 Settings.Default.RefreshMinutes = settingsViewModel.RefreshMinutes;

@@ -1,8 +1,12 @@
-﻿using BigEgg.Framework.Applications.Services;
+﻿using BigEgg.Framework.Applications.Commands;
+using BigEgg.Framework.Applications.Services;
 using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Applications.Properties;
 using Bugger.Applications.Services;
+using Bugger.Applications.ViewModels;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Threading;
@@ -19,6 +23,8 @@ namespace Bugger.Applications.Controllers
         private readonly DataService dataService;
         private readonly ProxyService proxyService;
 
+        private readonly DelegateCommand refreshBugsCommand;
+
         private Timer autoRefreshTimer = null;
         private bool timerStarted;
         #endregion
@@ -32,12 +38,22 @@ namespace Bugger.Applications.Controllers
             this.dataService = dataService;
             this.proxyService = proxyService;
 
+            this.refreshBugsCommand = new DelegateCommand(RefreshBugsCommandExecute, CanRefreshBugsCommandExecute);
+
             this.timerStarted = false;
+
+            AddWeakEventListener(this.proxyService, ProxyServicePropertyChanged);
         }
 
         #region Implement Controller base class
         protected override void OnInitialize()
         {
+            FloatingViewModel floatingViewModel = this.container.GetExportedValue<FloatingViewModel>();
+            MainViewModel mainViewModel = this.container.GetExportedValue<MainViewModel>();
+
+            floatingViewModel.RefreshBugsCommand = this.refreshBugsCommand;
+            mainViewModel.RefreshBugsCommand = this.refreshBugsCommand;
+
             TimerStart();
         }
 
@@ -48,13 +64,55 @@ namespace Bugger.Applications.Controllers
         #endregion
 
         #region Methods
-        #region Public Methods
+        #region Private Methods
+        #region Commands Methods
+        private bool CanRefreshBugsCommandExecute()
+        {
+            return this.proxyService.ActiveProxy != null || this.proxyService.ActiveProxy.CanQuery();
+        }
+
+        private void RefreshBugsCommandExecute()
+        {
+            if (!string.IsNullOrWhiteSpace(Settings.Default.UserName))
+            {
+                Task.Factory.StartNew(
+                    () => this.proxyService.ActiveProxy.Query(
+                        Settings.Default.UserName,
+                        Settings.Default.IsFilterCreatedBy))
+                .ContinueWith((result) =>
+                {
+                    this.dataService.UserBugs.Clear();
+                    foreach (var bug in result.Result)
+                        this.dataService.UserBugs.Add(bug);
+                }, TaskContinuationOptions.OnlyOnRanToCompletion);
+            }
+
+            if (!string.IsNullOrWhiteSpace(Settings.Default.TeamMembers))
+            {
+                Task.Factory.StartNew(
+                    () => this.proxyService.ActiveProxy.Query(
+                        Settings.Default.TeamMembers,
+                        Settings.Default.IsFilterCreatedBy))
+                .ContinueWith((result) =>
+                {
+                    this.dataService.TeamBugs.Clear();
+                    foreach (var bug in result.Result)
+                        this.dataService.TeamBugs.Add(bug);
+                }, TaskContinuationOptions.OnlyOnRanToCompletion);
+            }
+
+            Task.WaitAll();
+
+            this.dataService.RefreshTime = DateTime.Now;
+        }
+        #endregion
+
         private void TimerStart()
         {
             if (this.timerStarted)
                 return;
 
-            if (this.proxyService.ActiveProxy == null)
+            if (!CanRefreshBugsCommandExecute())
                 return;
 
             // Create an inferred delegate that invokes methods for the timer.
@@ -78,15 +136,16 @@ namespace Bugger.Applications.Controllers
 
             this.timerStarted = false;
         }
-        #endregion
 
-        #region Private Methods
         // This method is called by the timer delegate.
         private void TimerCallbackMethods(Object obj)
         {
             try
             {
-                RefreshBugs();
+                if (this.refreshBugsCommand.CanExecute())
+                {
+                    this.refreshBugsCommand.Execute();
+                }
             }
             catch
             {
@@ -94,23 +153,23 @@ namespace Bugger.Applications.Controllers
             }
         }
 
-        public void RefreshBugs()
+        private void ProxyServicePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (this.proxyService.ActiveProxy == null)
-                return;
-
-            Task queryUserTask = null;
-            if (!string.IsNullOrWhiteSpace(Settings.Default.UserName))
+            if (e.PropertyName == "ActiveProxy")
             {
-                queryUserTask = new Task(
-                    () => this.proxyService.ActiveProxy.Query(
-                        Settings.Default.UserName,
-                        Settings.Default.IsFilterCreatedBy));
-                queryUserTask.Start();
+                UpdateCommands();
+
+                TimerStop();
+                if (CanRefreshBugsCommandExecute() && !this.timerStarted)
+                {
+                    TimerStart();
+                }
             }
+        }
 
-
-            this.dataService.RefreshTime = DateTime.Now;
+        private void UpdateCommands()
+        {
+            this.refreshBugsCommand.RaiseCanExecuteChanged();
         }
         #endregion
         #endregion

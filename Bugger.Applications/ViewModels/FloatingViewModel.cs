@@ -16,6 +16,7 @@ namespace Bugger.Applications.ViewModels
         private readonly IDataService dataService;
 
         private ICommand showMainWindowCommand;
+        private ICommand refreshBugsCommand;
         private ICommand englishCommand;
         private ICommand chineseCommand;
         private ICommand aboutCommand;
@@ -55,6 +56,19 @@ namespace Bugger.Applications.ViewModels
                 {
                     this.showMainWindowCommand = value;
                     RaisePropertyChanged("ShowMainWindowCommand");
+                }
+            }
+        }
+
+        public ICommand RefreshBugsCommand
+        {
+            get { return this.refreshBugsCommand; }
+            set
+            {
+                if (this.refreshBugsCommand != value)
+                {
+                    this.refreshBugsCommand = value;
+                    RaisePropertyChanged("RefreshBugsCommand");
                 }
             }
         }
