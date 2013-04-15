@@ -27,6 +27,9 @@ namespace Bugger.Proxys.TFS.Documents
             PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(Bug));
             foreach (PropertyDescriptor propertyDescriptor in propertyDescriptorCollection)
             {
+                if (propertyDescriptor.Name == "Type")
+                    continue;
+
                 MappingPair mappingPair = new MappingPair(propertyDescriptor.Name);
                 AddWeakEventListener(mappingPair, MappingPairPropertyChanged);
                 mappingList.Add(mappingPair);
