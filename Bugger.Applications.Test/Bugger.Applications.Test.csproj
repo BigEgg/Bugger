@@ -62,7 +62,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MockMessageService.cs" />
     <Compile Include="Services\MockPresentationService.cs" />
+    <Compile Include="Views\MockAboutDialogView.cs" />
+    <Compile Include="Views\MockDialogViewBase.cs" />
+    <Compile Include="Views\MockMainView.cs" />
+    <Compile Include="Views\MockFloatingView.cs" />
+    <Compile Include="Views\MockSettingDialogView.cs" />
     <Compile Include="Views\MockView.cs" />
+    <Compile Include="Views\MockSettingsView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BigEggCore\Framework\BigEgg.Framework.UnitTesting\BigEgg.Framework.UnitTesting.csproj">
