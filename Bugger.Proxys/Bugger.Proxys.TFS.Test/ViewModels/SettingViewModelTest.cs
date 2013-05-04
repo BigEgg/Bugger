@@ -2,9 +2,9 @@
 using BigEgg.Framework.Applications.Views;
 using BigEgg.Framework.UnitTesting;
 using Bugger.Proxys.TFS.Documents;
+using Bugger.Proxys.TFS.Presentation.Fake.Views;
 using Bugger.Proxys.TFS.Properties;
 using Bugger.Proxys.TFS.Test.Services;
-using Bugger.Proxys.TFS.Test.Views;
 using Bugger.Proxys.TFS.ViewModels;
 using Bugger.Proxys.TFS.Views;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

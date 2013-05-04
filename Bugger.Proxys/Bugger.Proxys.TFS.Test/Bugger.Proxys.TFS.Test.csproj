@@ -72,10 +72,6 @@
     <Compile Include="TFSSourceControllerTest.cs" />
     <Compile Include="ViewModels\SettingViewModelTest.cs" />
     <Compile Include="ViewModels\UriHelpViewModelTest.cs" />
-    <Compile Include="Views\MockDialogViewBase.cs" />
-    <Compile Include="Views\MockUriHelpView.cs" />
-    <Compile Include="Views\MockSettingView.cs" />
-    <Compile Include="Views\MockView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework.UnitTesting\BigEgg.Framework.UnitTesting.csproj">
@@ -89,6 +85,10 @@
     <ProjectReference Include="..\..\Bugger.Domain\Bugger.Domain.csproj">
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
       <Name>Bugger.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bugger.Proxys.TFS.Presentation.Fake\Bugger.Proxys.TFS.Presentation.Fake.csproj">
+      <Project>{02ab8e76-2073-4f30-b891-1a1b60ae5101}</Project>
+      <Name>Bugger.Proxys.TFS.Presentation.Fake</Name>
     </ProjectReference>
     <ProjectReference Include="..\Bugger.Proxys.TFS\Bugger.Proxys.TFS.csproj">
       <Project>{5714b0c6-82f3-4cc6-b33e-e3f8835c38fc}</Project>
