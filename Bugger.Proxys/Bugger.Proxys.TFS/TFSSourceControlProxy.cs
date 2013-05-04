@@ -27,7 +27,7 @@ namespace Bugger.Proxys.TFS
         private readonly DelegateCommand saveCommand;
 
         private SettingDocument document;
-        private SettingViewModel settingViewModel;
+        private TFSSettingViewModel settingViewModel;
         #endregion
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Bugger.Proxys.TFS
             this.messageService = messageService;
             this.saveCommand = new DelegateCommand(SaveExcute, CanSaveExcute);
 
-            this.settingViewModel = this.container.GetExportedValue<SettingViewModel>();
+            this.settingViewModel = this.container.GetExportedValue<TFSSettingViewModel>();
             this.settingViewModel.SaveCommand = this.saveCommand;
         }
 

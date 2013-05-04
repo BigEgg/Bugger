@@ -4,8 +4,8 @@ using System.ComponentModel.Composition;
 
 namespace Bugger.Proxys.TFS.Presentation.Fake.Views
 {
-    [Export(typeof(ISettingView))]
-    public class MockSettingView : MockView, ISettingView
+    [Export(typeof(ITFSSettingView))]
+    public class MockTFSSettingView : MockView, ITFSSettingView
     {
     }
 }

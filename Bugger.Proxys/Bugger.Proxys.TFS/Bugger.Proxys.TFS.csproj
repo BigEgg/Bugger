@@ -67,9 +67,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TFSSourceControlProxy.cs" />
-    <Compile Include="ViewModels\SettingViewModel.cs" />
+    <Compile Include="ViewModels\TFSSettingViewModel.cs" />
     <Compile Include="ViewModels\UriHelpViewModel.cs" />
-    <Compile Include="Views\ISettingView.cs" />
+    <Compile Include="Views\ITFSSettingView.cs" />
     <Compile Include="Views\IUriHelpView.cs" />
   </ItemGroup>
   <ItemGroup>

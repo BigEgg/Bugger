@@ -20,11 +20,11 @@ namespace Bugger.Proxys.TFS.Test
             AggregateCatalog catalog = new AggregateCatalog();
             catalog.Catalogs.Add(new TypeCatalog(
                 typeof(TFSSourceControlProxy),
-                typeof(SettingViewModel)
+                typeof(TFSSettingViewModel)
             ));
             catalog.Catalogs.Add(new TypeCatalog(
                 typeof(MockMessageService),
-                typeof(MockSettingView), typeof(MockUriHelpView)
+                typeof(MockTFSSettingView), typeof(MockUriHelpView)
             ));
             container = new CompositionContainer(catalog);
             CompositionBatch batch = new CompositionBatch();

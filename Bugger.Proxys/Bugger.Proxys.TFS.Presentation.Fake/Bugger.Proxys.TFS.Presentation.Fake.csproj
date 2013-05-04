@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\MockSettingView.cs" />
+    <Compile Include="Views\MockTFSSettingView.cs" />
     <Compile Include="Views\MockUriHelpView.cs" />
   </ItemGroup>
   <ItemGroup>

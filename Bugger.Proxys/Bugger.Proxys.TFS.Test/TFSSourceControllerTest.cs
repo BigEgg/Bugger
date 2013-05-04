@@ -14,7 +14,7 @@ namespace Bugger.Proxys.TFS.Test
     public class TFSSourceControllerTest : TestClassBase
     {
         private TFSSourceControlProxy proxy;
-        private SettingViewModel viewModel;
+        private TFSSettingViewModel viewModel;
 
         protected override void OnTestInitialize()
         {
@@ -24,7 +24,7 @@ namespace Bugger.Proxys.TFS.Test
             }
 
             this.proxy = Container.GetExportedValue<ISourceControlProxy>() as TFSSourceControlProxy;
-            this.viewModel = Container.GetExportedValue<SettingViewModel>();
+            this.viewModel = Container.GetExportedValue<TFSSettingViewModel>();
         }
 
         [TestMethod]

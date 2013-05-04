@@ -18,7 +18,7 @@ using System.Windows.Input;
 namespace Bugger.Proxys.TFS.ViewModels
 {
     [Export]
-    public class SettingViewModel : ViewModel<ISettingView>
+    public class TFSSettingViewModel : ViewModel<ITFSSettingView>
     {
         #region Fields
         private readonly CompositionContainer container;
@@ -33,7 +33,7 @@ namespace Bugger.Proxys.TFS.ViewModels
         #endregion
 
         [ImportingConstructor]
-        public SettingViewModel(ISettingView view, CompositionContainer container)
+        public TFSSettingViewModel(ITFSSettingView view, CompositionContainer container)
             : base(view)
         {
             this.container = container;

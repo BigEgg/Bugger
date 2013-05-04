@@ -15,9 +15,9 @@ using System.Linq;
 namespace Bugger.Proxys.TFS.Test.ViewModels
 {
     [TestClass]
-    public class SettingViewModelTest : TestClassBase
+    public class TFSSettingViewModelTest : TestClassBase
     {
-        private SettingViewModel viewModel;
+        private TFSSettingViewModel viewModel;
         private MockMessageService messageService;
 
         protected override void OnTestInitialize()
@@ -27,7 +27,7 @@ namespace Bugger.Proxys.TFS.Test.ViewModels
                 File.Delete(SettingDocumentType.FilePath);
             }
 
-            this.viewModel = Container.GetExportedValue<SettingViewModel>();
+            this.viewModel = Container.GetExportedValue<TFSSettingViewModel>();
             this.messageService = Container.GetExportedValue<IMessageService>() as MockMessageService;
         }
 

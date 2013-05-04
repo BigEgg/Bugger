@@ -2,7 +2,7 @@
 
 namespace Bugger.Proxys.TFS.Views
 {
-    public interface ISettingView : IView
+    public interface ITFSSettingView : IView
     {
     }
 }
