@@ -5,15 +5,13 @@ using System.ComponentModel.Composition;
 
 namespace Bugger.Applications.Services
 {
-    [Export(typeof(IProxyService)), Export]
-    public class ProxyService : DataModel, IProxyService
+    internal class ProxyService : DataModel, IProxyService
     {
         #region Fields
         private readonly IEnumerable<ISourceControlProxy> proxys;
         private ISourceControlProxy activeProxy;
         #endregion
 
-        [ImportingConstructor]
         public ProxyService(IEnumerable<ISourceControlProxy> proxys)
         {
             this.proxys = proxys;

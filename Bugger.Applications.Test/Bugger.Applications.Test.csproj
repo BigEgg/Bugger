@@ -60,8 +60,11 @@
   <ItemGroup>
     <Compile Include="CollectionHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DataServiceTest.cs" />
     <Compile Include="Services\MockMessageService.cs" />
     <Compile Include="Services\MockPresentationService.cs" />
+    <Compile Include="Services\ProxyServiceTest.cs" />
+    <Compile Include="TestClassBase.cs" />
     <Compile Include="Views\MockAboutDialogView.cs" />
     <Compile Include="Views\MockMainView.cs" />
     <Compile Include="Views\MockFloatingView.cs" />
@@ -96,6 +99,10 @@
     <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxys.TFS\Bugger.Proxys.TFS.csproj">
       <Project>{5714b0c6-82f3-4cc6-b33e-e3f8835c38fc}</Project>
       <Name>Bugger.Proxys.TFS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxys\Bugger.Proxys.csproj">
+      <Project>{e8727087-75f2-435f-bd11-78b4dff59a40}</Project>
+      <Name>Bugger.Proxys %28Bugger.Proxys\Bugger.Proxys%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

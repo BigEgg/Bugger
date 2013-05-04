@@ -6,11 +6,11 @@ using Bugger.Applications.Services;
 using Bugger.Applications.ViewModels;
 using Bugger.Applications.Views;
 using System;
-using System.Linq;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 
 namespace Bugger.Applications.Controllers
@@ -21,7 +21,7 @@ namespace Bugger.Applications.Controllers
         #region Fields
         private readonly CompositionContainer container;
         private readonly DataController dataController;
-        private readonly ProxyService proxyService;
+        private readonly ProxyController proxyController;
         private readonly IMessageService messageService;
 
         private readonly FloatingViewModel floatingViewModel;
@@ -40,14 +40,14 @@ namespace Bugger.Applications.Controllers
 
         [ImportingConstructor]
         public ApplicationController(CompositionContainer container, IPresentationService presentationService,
-            IMessageService messageService, ProxyService proxyService, DataController dataController)
+            IMessageService messageService, ProxyController proxyController, DataController dataController)
         {
             InitializeCultures();
             presentationService.InitializeCultures();
 
             this.container = container;
             this.dataController = dataController;
-            this.proxyService = proxyService;
+            this.proxyController = proxyController;
             this.messageService = messageService;
 
             this.floatingViewModel = container.GetExportedValue<FloatingViewModel>();
@@ -80,6 +80,7 @@ namespace Bugger.Applications.Controllers
             this.mainViewModel.AboutCommand = this.aboutCommand;
             this.mainViewModel.ExitCommand = this.exitCommand;
 
+            this.proxyController.Initialize();
             this.dataController.Initialize();
         }
 

@@ -38,18 +38,18 @@ namespace Bugger.Proxys.FakeProxy
         protected override void OnInitialize()
         {
             this.bugs.Add(new Bug()
-                {
-                    ID = 1,
-                    Title = "Bug1",
-                    Description = "Description for Bug1.",
-                    Type = BugType.Red,
-                    AssignedTo = "BigEgg",
-                    State = "Implement",
-                    ChangedDate = new DateTime(2013,4,10),
-                    CreatedBy = "BigEgg",
-                    Priority = "High",
-                    Severity = ""
-                });
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Implement",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            });
             this.bugs.Add(new Bug()
             {
                 ID = 2,

@@ -5,7 +5,6 @@ using Bugger.Applications.Properties;
 using Bugger.Applications.Services;
 using Bugger.Applications.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -21,7 +20,7 @@ namespace Bugger.Applications.Controllers
         private readonly CompositionContainer container;
         private readonly IMessageService messageService;
         private readonly DataService dataService;
-        private readonly ProxyService proxyService;
+        private readonly ProxyController proxyController;
 
         private readonly DelegateCommand refreshBugsCommand;
 
@@ -31,18 +30,18 @@ namespace Bugger.Applications.Controllers
 
         [ImportingConstructor]
         public DataController(CompositionContainer container, IMessageService messageService,
-            DataService dataService, ProxyService proxyService)
+            DataService dataService, ProxyController proxyController)
         {
             this.container = container;
             this.messageService = messageService;
             this.dataService = dataService;
-            this.proxyService = proxyService;
+            this.proxyController = proxyController;
 
             this.refreshBugsCommand = new DelegateCommand(RefreshBugsCommandExecute, CanRefreshBugsCommandExecute);
 
             this.timerStarted = false;
 
-            AddWeakEventListener(this.proxyService, ProxyServicePropertyChanged);
+            AddWeakEventListener(this.proxyController.ProxyService, ProxyServicePropertyChanged);
         }
 
         #region Implement Controller base class
@@ -63,12 +62,19 @@ namespace Bugger.Applications.Controllers
         }
         #endregion
 
+        #region Properties
+        private ProxyService ProxyService
+        {
+            get { return this.proxyController.ProxyService; }
+        }
+        #endregion
+
         #region Methods
         #region Private Methods
         #region Commands Methods
         private bool CanRefreshBugsCommandExecute()
         {
-            return this.proxyService.ActiveProxy != null || this.proxyService.ActiveProxy.CanQuery();
+            return this.ProxyService.ActiveProxy != null || this.ProxyService.ActiveProxy.CanQuery();
         }
 
         private void RefreshBugsCommandExecute()
@@ -76,7 +82,7 @@ namespace Bugger.Applications.Controllers
             if (!string.IsNullOrWhiteSpace(Settings.Default.UserName))
             {
                 Task.Factory.StartNew(
-                    () => this.proxyService.ActiveProxy.Query(
+                    () => this.ProxyService.ActiveProxy.Query(
                         Settings.Default.UserName,
                         Settings.Default.IsFilterCreatedBy))
                 .ContinueWith((result) =>
@@ -90,7 +96,7 @@ namespace Bugger.Applications.Controllers
             if (!string.IsNullOrWhiteSpace(Settings.Default.TeamMembers))
             {
                 Task.Factory.StartNew(
-                    () => this.proxyService.ActiveProxy.Query(
+                    () => this.ProxyService.ActiveProxy.Query(
                         Settings.Default.TeamMembers,
                         Settings.Default.IsFilterCreatedBy))
                 .ContinueWith((result) =>

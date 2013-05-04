@@ -20,6 +20,7 @@ namespace Bugger.Applications.Services
         {
             this.userBugs = new MultiThreadingObservableCollection<Bug>();
             this.teamBugs = new MultiThreadingObservableCollection<Bug>();
+            this.refreshTime = DateTime.Now;
         }
 
         #region Properties
