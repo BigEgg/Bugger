@@ -63,11 +63,9 @@
     <Compile Include="Services\MockMessageService.cs" />
     <Compile Include="Services\MockPresentationService.cs" />
     <Compile Include="Views\MockAboutDialogView.cs" />
-    <Compile Include="Views\MockDialogViewBase.cs" />
     <Compile Include="Views\MockMainView.cs" />
     <Compile Include="Views\MockFloatingView.cs" />
     <Compile Include="Views\MockSettingDialogView.cs" />
-    <Compile Include="Views\MockView.cs" />
     <Compile Include="Views\MockSettingsView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +88,14 @@
     <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxys.FakeProxy\Bugger.Proxys.FakeProxy.csproj">
       <Project>{9d384026-d73b-4ba9-9ae3-7d2172c438ce}</Project>
       <Name>Bugger.Proxys.FakeProxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxys.TFS.Presentation.Fake\Bugger.Proxys.TFS.Presentation.Fake.csproj">
+      <Project>{02ab8e76-2073-4f30-b891-1a1b60ae5101}</Project>
+      <Name>Bugger.Proxys.TFS.Presentation.Fake</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxys.TFS\Bugger.Proxys.TFS.csproj">
+      <Project>{5714b0c6-82f3-4cc6-b33e-e3f8835c38fc}</Project>
+      <Name>Bugger.Proxys.TFS</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

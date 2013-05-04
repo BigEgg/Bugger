@@ -1,4 +1,5 @@
 ﻿using BigEgg.Framework.Applications.Views;
+using BigEgg.Framework.UnitTesting.Views;
 using Bugger.Applications.ViewModels;
 using Bugger.Applications.Views;
 using System;

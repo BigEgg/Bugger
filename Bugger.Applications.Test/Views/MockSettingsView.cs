@@ -1,4 +1,5 @@
-﻿using Bugger.Applications.Views;
+﻿using BigEgg.Framework.UnitTesting.Views;
+using Bugger.Applications.Views;
 
 namespace Bugger.Applications.Test.Views
 {
