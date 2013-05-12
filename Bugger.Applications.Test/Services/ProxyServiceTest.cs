@@ -12,26 +12,29 @@ namespace Bugger.Applications.Test.Services
     [TestClass]
     public class ProxyServiceTest : TestClassBase
     {
+        private IEnumerable<ISourceControlProxy> proxys;
+        private IProxyService proxyService;
+
+        protected override void OnTestInitialize()
+        {
+            this.proxys = Container.GetExportedValues<ISourceControlProxy>();
+            this.proxyService = new ProxyService(proxys);
+        }
+
         [TestMethod]
         public void GeneralProxyServiceTest()
         {
-            IEnumerable<ISourceControlProxy> proxys = Container.GetExportedValues<ISourceControlProxy>();
-            IProxyService proxyService = new ProxyService(proxys);
-
-            Assert.AreEqual(proxys.Count(), proxyService.Proxys.Count());
-            Assert.IsNull(proxyService.ActiveProxy);
+            Assert.AreEqual(this.proxys.Count(), this.proxyService.Proxys.Count());
+            Assert.IsNull(this.proxyService.ActiveProxy);
         }
 
         [TestMethod]
         public void PropertiesWithNotification()
         {
-            IEnumerable<ISourceControlProxy> proxys = Container.GetExportedValues<ISourceControlProxy>();
-            IProxyService proxyService = new ProxyService(proxys);
-
-            AssertHelper.PropertyChangedEvent(proxyService, x => x.ActiveProxy, () =>
-                proxyService.ActiveProxy = proxys.First()
+            AssertHelper.PropertyChangedEvent(this.proxyService, x => x.ActiveProxy, () =>
+                this.proxyService.ActiveProxy = this.proxys.First()
             );
-            Assert.AreEqual(proxys.First(), proxyService.ActiveProxy);
+            Assert.AreEqual(this.proxys.First(), this.proxyService.ActiveProxy);
         }
     }
 }

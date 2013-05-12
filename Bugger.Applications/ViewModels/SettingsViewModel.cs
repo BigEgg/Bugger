@@ -17,7 +17,7 @@ namespace Bugger.Applications.ViewModels
     public class SettingsViewModel : ViewModel<ISettingsView>, IDataErrorInfo
     {
         #region Fields
-        private const char TeamMemberSplitChar = ';';
+        private const string TeamMemberSplitString = "; ";
 
         private readonly ObservableCollection<string> teamMembers;
         private readonly ObservableCollection<string> selectedTeamMembers;
@@ -38,15 +38,20 @@ namespace Bugger.Applications.ViewModels
         {
             this.dataErrorInfoSupport = new DataErrorInfoSupport(this);
 
-            this.teamMembers = new ObservableCollection<string>(teamMembers.Split(TeamMemberSplitChar));
-            this.proxys = new ReadOnlyCollection<string>(proxyService.Proxys.Select(x => x.ProxyName).ToList());
-            this.activeProxy = proxyService.ActiveProxy.ProxyName;
+            this.teamMembers = new ObservableCollection<string>(
+                teamMembers.Split(TeamMemberSplitString.ToArray(), StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => x.Trim()));
+            this.proxys = new ReadOnlyCollection<string>(
+                proxyService.Proxys.Select(x => x.ProxyName).ToList());
+            this.activeProxy = 
+                proxyService.ActiveProxy == null ? string.Empty : proxyService.ActiveProxy.ProxyName;
 
-            this.addNewTeamMemberCommand = new DelegateCommand(AddNewTeamMemberCommandExecute);
+            this.addNewTeamMemberCommand = new DelegateCommand(AddNewTeamMemberCommandExecute, CanAddNewTeamMemberCommandExecute);
             this.removeTeamMemberCommand = new DelegateCommand(RemoveTeamMemberCommandExecute, CanRemoveTeamMemberCommandExecute);
 
-            this.selectedTeamMembers = new ObservableCollection<string>();
             this.selectedTeamMember = this.teamMembers.FirstOrDefault();
+            this.selectedTeamMembers = new ObservableCollection<string>();
+            this.selectedTeamMembers.Add(selectedTeamMember);
             this.newTeamMember = string.Empty;
         }
 
@@ -63,9 +68,11 @@ namespace Bugger.Applications.ViewModels
 
         public ICommand RemoveTeamMemberCommand { get { return this.removeTeamMemberCommand; } }
 
+        public ReadOnlyCollection<string> Proxys { get { return this.proxys; } }
+
         public ObservableCollection<string> TeamMembers { get { return this.teamMembers; } }
 
-        public string TeamMembersString { get { return String.Join(";", this.teamMembers); } }
+        public string TeamMembersString { get { return String.Join(TeamMemberSplitString, this.teamMembers); } }
 
         public ObservableCollection<string> SelectedTeamMembers { get { return this.selectedTeamMembers; } }
 
@@ -118,6 +125,7 @@ namespace Bugger.Applications.ViewModels
                 if (this.newTeamMember != value)
                 {
                     this.newTeamMember = value;
+                    UpdateCommands();
                     RaisePropertyChanged("NewTeamMember");
                 }
             }
@@ -151,7 +159,7 @@ namespace Bugger.Applications.ViewModels
         }
         #endregion
 
-        #region Private
+        #region Private Methods
         private void AddNewTeamMemberCommandExecute()
         {
             if (!this.TeamMembers.Contains(this.newTeamMember))
@@ -161,9 +169,14 @@ namespace Bugger.Applications.ViewModels
             this.SelectedTeamMembers.Clear();
             this.SelectedTeamMembers.Add(this.newTeamMember);
             this.SelectedTeamMember = this.newTeamMember;
-            this.newTeamMember = string.Empty;
+            this.NewTeamMember = string.Empty;
 
             UpdateCommands();
+        }
+
+        private bool CanAddNewTeamMemberCommandExecute()
+        {
+            return !string.IsNullOrWhiteSpace(this.NewTeamMember);
         }
 
         private void RemoveTeamMemberCommandExecute()
@@ -172,12 +185,16 @@ namespace Bugger.Applications.ViewModels
             string nextBranch = CollectionHelper.GetNextElementOrDefault(this.TeamMembers.Except(itemsToExclude),
                 this.SelectedTeamMember);
 
-            foreach (string item in this.SelectedTeamMembers.ToArray())
+            foreach (string item in this.SelectedTeamMembers)
             {
                 this.TeamMembers.Remove(item);
             }
 
+
             this.SelectedTeamMember = nextBranch ?? this.TeamMembers.LastOrDefault();
+            this.SelectedTeamMembers.Clear();
+            if (this.SelectedTeamMember != null)
+                this.SelectedTeamMembers.Add(this.SelectedTeamMember);
 
             UpdateCommands();
         }

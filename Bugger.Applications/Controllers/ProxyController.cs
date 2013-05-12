@@ -33,6 +33,19 @@ namespace Bugger.Applications.Controllers
             {
                 this.proxyService.ActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == Settings.Default.ActiveProxy);
             }
+            else if (this.ProxyService.Proxys.Any())
+            {
+                this.proxyService.ActiveProxy = this.proxyService.Proxys.First();
+            }
+            else
+            {
+                this.proxyService.ActiveProxy = null;
+            }
+
+            foreach (var proxy in this.proxyService.Proxys)
+            {
+                proxy.Initialize();
+            }
         }
 
         public void Shutdown()

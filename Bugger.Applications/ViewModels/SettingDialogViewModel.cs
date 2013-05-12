@@ -38,13 +38,13 @@ namespace Bugger.Applications.ViewModels
         #region Properties
         public override string Title { get { return Resources.ApplicationName; } }
 
-        public IProxyService ProxyService { get { return this.proxyService; } }
-
         public ICommand SubmitCommand { get { return this.submitCommand; } }
 
         public ICommand CancelCommand { get { return this.cancelCommand; } }
 
         public ObservableCollection<object> Views { get { return this.views; } }
+
+        protected IProxyService ProxyService { get { return this.proxyService; } }
         #endregion
 
         #region Private Properties
@@ -76,10 +76,12 @@ namespace Bugger.Applications.ViewModels
 
                 this.proxyService.ActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
 
-                this.views.Add(ProxySettingView);
+                if (ProxySettingView != null)
+                    this.views.Add(ProxySettingView);
 
                 RaisePropertyChanged("Views");
             }
+
             UpdateCommands();
         }
 
