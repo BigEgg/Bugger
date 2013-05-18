@@ -66,6 +66,8 @@
     <Compile Include="Services\MockPresentationService.cs" />
     <Compile Include="Services\ProxyServiceTest.cs" />
     <Compile Include="TestClassBase.cs" />
+    <Compile Include="ViewModels\FloatingViewModelTest.cs" />
+    <Compile Include="ViewModels\MainViewModelTest.cs" />
     <Compile Include="ViewModels\SettingDialogViewModelTest.cs" />
     <Compile Include="ViewModels\SettingsViewModelTest.cs" />
     <Compile Include="Views\MockAboutDialogView.cs" />

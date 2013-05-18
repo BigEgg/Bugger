@@ -24,12 +24,12 @@ namespace Bugger.Applications.Test
             AggregateCatalog catalog = new AggregateCatalog();
             catalog.Catalogs.Add(new TypeCatalog(
                 typeof(ApplicationController), typeof(DataController),
-                typeof(ProxyService), typeof(DataService),
+                typeof(DataService),
                 typeof(FloatingViewModel), typeof(MainViewModel)
             ));
             catalog.Catalogs.Add(new TypeCatalog(
                 typeof(MockPresentationService), typeof(MockMessageService),
-                typeof(MockFloatingView), typeof(MockAboutDialogView), typeof(MockSettingsView),
+                typeof(MockFloatingView), typeof(MockMainView), typeof(MockSettingsView),
                 typeof(MockAboutDialogView), typeof(MockSettingDialogView)
             ));
             catalog.Catalogs.Add(new TypeCatalog(

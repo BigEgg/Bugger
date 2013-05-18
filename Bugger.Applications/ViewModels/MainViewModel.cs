@@ -45,6 +45,8 @@ namespace Bugger.Applications.ViewModels
         }
 
         #region Properties
+        public string Title { get { return Resources.ApplicationName; } }
+
         public IDataService DataService { get { return this.dataService; } }
 
         public ICommand RefreshBugsCommand
