@@ -22,7 +22,7 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Bugger.Proxys.TFS.Presentation.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        internal static string Cancel {
+        public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Connection Details.
         /// </summary>
-        internal static string ConnectionDetails {
+        public static string ConnectionDetails {
             get {
                 return ResourceManager.GetString("ConnectionDetails", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         /// <summary>
         ///   Looks up a localized string similar to HTTP.
         /// </summary>
-        internal static string HTTP {
+        public static string HTTP {
             get {
                 return ResourceManager.GetString("HTTP", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         /// <summary>
         ///   Looks up a localized string similar to HTTPS.
         /// </summary>
-        internal static string HTTPS {
+        public static string HTTPS {
             get {
                 return ResourceManager.GetString("HTTPS", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Name or Uri of _Team Foundation Server:.
         /// </summary>
-        internal static string NameOrURIofTFS {
+        public static string NameOrURIofTFS {
             get {
                 return ResourceManager.GetString("NameOrURIofTFS", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
-        internal static string OK {
+        public static string OK {
             get {
                 return ResourceManager.GetString("OK", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Pat_h:.
         /// </summary>
-        internal static string Path {
+        public static string Path {
             get {
                 return ResourceManager.GetString("Path", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Port _number:.
         /// </summary>
-        internal static string PortNumber {
+        public static string PortNumber {
             get {
                 return ResourceManager.GetString("PortNumber", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Pre_view:.
         /// </summary>
-        internal static string Preview {
+        public static string Preview {
             get {
                 return ResourceManager.GetString("Preview", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         /// <summary>
         ///   Looks up a localized string similar to _Protocol:.
         /// </summary>
-        internal static string Protocal {
+        public static string Protocal {
             get {
                 return ResourceManager.GetString("Protocal", resourceCulture);
             }
