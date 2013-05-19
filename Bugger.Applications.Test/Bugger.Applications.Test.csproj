@@ -60,6 +60,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CollectionHelperTest.cs" />
+    <Compile Include="Controllers\ApplicationControllerTest.cs" />
+    <Compile Include="Controllers\ProxyControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataServiceTest.cs" />
     <Compile Include="Services\MockMessageService.cs" />

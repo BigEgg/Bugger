@@ -23,7 +23,7 @@ namespace Bugger.Applications.Test
         {
             AggregateCatalog catalog = new AggregateCatalog();
             catalog.Catalogs.Add(new TypeCatalog(
-                typeof(ApplicationController), typeof(DataController),
+                typeof(ApplicationController), typeof(DataController), typeof(ProxyController),
                 typeof(DataService),
                 typeof(FloatingViewModel), typeof(MainViewModel)
             ));

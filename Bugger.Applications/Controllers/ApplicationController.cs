@@ -26,7 +26,6 @@ namespace Bugger.Applications.Controllers
 
         private readonly FloatingViewModel floatingViewModel;
         private readonly MainViewModel mainViewModel;
-        private readonly SettingDialogViewModel settingDialogViewModel;
 
         private readonly DelegateCommand showMainWindowCommand;
         private readonly DelegateCommand englishCommand;
@@ -52,7 +51,6 @@ namespace Bugger.Applications.Controllers
 
             this.floatingViewModel = container.GetExportedValue<FloatingViewModel>();
             this.mainViewModel = container.GetExportedValue<MainViewModel>();
-            this.settingDialogViewModel = container.GetExportedValue<SettingDialogViewModel>();
 
             this.floatingViewModel.Closing += FloatingViewModelClosing;
 
@@ -108,6 +106,13 @@ namespace Bugger.Applications.Controllers
         public void Run()
         {
             this.floatingViewModel.Show();
+        }
+        #endregion
+
+        #region Properties
+        internal CultureInfo NewLanguage
+        {
+            get { return this.newLanguage; }
         }
         #endregion
 
