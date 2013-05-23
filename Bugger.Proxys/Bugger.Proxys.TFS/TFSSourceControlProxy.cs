@@ -4,6 +4,7 @@ using Bugger.Domain.Models;
 using Bugger.Proxys.TFS.Documents;
 using Bugger.Proxys.TFS.Properties;
 using Bugger.Proxys.TFS.ViewModels;
+using Bugger.Proxys.TFS.Views;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using System;
@@ -25,6 +26,7 @@ namespace Bugger.Proxys.TFS
         private readonly CompositionContainer container;
         private readonly IMessageService messageService;
         private readonly DelegateCommand saveCommand;
+        private readonly DelegateCommand uriHelpCommand;
 
         private SettingDocument document;
         private TFSSettingViewModel settingViewModel;
@@ -40,9 +42,11 @@ namespace Bugger.Proxys.TFS
             this.container = container;
             this.messageService = messageService;
             this.saveCommand = new DelegateCommand(SaveExcute, CanSaveExcute);
+            this.uriHelpCommand = new DelegateCommand(OpenUriHelpExcute);
 
             this.settingViewModel = this.container.GetExportedValue<TFSSettingViewModel>();
             this.settingViewModel.SaveCommand = this.saveCommand;
+            this.settingViewModel.UriHelpCommand = this.uriHelpCommand;
         }
 
         #region Properties
@@ -178,6 +182,19 @@ namespace Bugger.Proxys.TFS
                         {
                             return !string.IsNullOrWhiteSpace(x.FieldName);
                         });
+        }
+
+        private void OpenUriHelpExcute()
+        {
+            IUriHelpView view = this.container.GetExportedValue<IUriHelpView>();
+            UriHelpViewModel viewModel = new UriHelpViewModel(view);
+
+            viewModel.ShowDialog(this);
+
+            if (viewModel.UriPreview == Resources.InvalidUrl)
+                this.document.ConnectUri = null;
+            else
+                this.document.ConnectUri = new Uri(viewModel.UriPreview);
         }
         #endregion
 

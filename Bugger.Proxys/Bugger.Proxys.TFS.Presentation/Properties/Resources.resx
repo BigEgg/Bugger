@@ -123,6 +123,12 @@
   <data name="ConnectionDetails" xml:space="preserve">
     <value>Connection Details</value>
   </data>
+  <data name="ConnectSettings" xml:space="preserve">
+    <value>Connect Settings</value>
+  </data>
+  <data name="GenerateUri" xml:space="preserve">
+    <value>_Generate Uri</value>
+  </data>
   <data name="HTTP" xml:space="preserve">
     <value>HTTP</value>
   </data>
@@ -135,6 +141,9 @@
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>_Password</value>
+  </data>
   <data name="Path" xml:space="preserve">
     <value>Pat_h:</value>
   </data>
@@ -146,5 +155,11 @@
   </data>
   <data name="Protocal" xml:space="preserve">
     <value>_Protocol:</value>
+  </data>
+  <data name="TestConnection" xml:space="preserve">
+    <value>_Test Connection</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>User _name</value>
   </data>
 </root>

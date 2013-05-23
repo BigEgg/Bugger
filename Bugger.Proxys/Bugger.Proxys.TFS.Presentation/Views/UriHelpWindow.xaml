@@ -43,18 +43,18 @@
                     <ColumnDefinition Width="80"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="{x:Static p:Resources.Path}" VerticalAlignment="Center"/>
-                <Label Content="{x:Static p:Resources.PortNumber}" VerticalAlignment="Center" Grid.Row="1"/>
-                <Label Content="{x:Static p:Resources.Protocal}" VerticalAlignment="Center" Grid.Row="2"/>
+                <Label Content="{x:Static p:Resources.Path}" VerticalAlignment="Center" Target="{Binding ElementName=TFSPath}"/>
+                <Label Content="{x:Static p:Resources.PortNumber}" VerticalAlignment="Center" Grid.Row="1" Target="{Binding ElementName=TFSPort}"/>
+                <Label Content="{x:Static p:Resources.Protocal}" VerticalAlignment="Center" Grid.Row="2" Target="{Binding ElementName=httpRadioButton}"/>
                 <TextBox x:Name="TFSPath" Grid.ColumnSpan="2" Grid.Column="1" Text="{Binding Path}" VerticalAlignment="Center"/>
                 <TextBox x:Name="TFSPort" Grid.Column="1" Margin="0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Port}" VerticalAlignment="Center"/>
-                <RadioButton Content="{x:Static p:Resources.HTTP}" Grid.Column="1" HorizontalAlignment="Left" Margin="0" Grid.Row="2" VerticalAlignment="Center" IsChecked="{Binding IsHttpsProtocal, Converter={StaticResource InvertBooleanConverter}}"/>
+                <RadioButton x:Name="httpRadioButton" Content="{x:Static p:Resources.HTTP}" Grid.Column="1" HorizontalAlignment="Left" Margin="0" Grid.Row="2" VerticalAlignment="Center" IsChecked="{Binding IsHttpsProtocal, Converter={StaticResource InvertBooleanConverter}}"/>
                 <RadioButton Content="{x:Static p:Resources.HTTPS}" Grid.Column="2" HorizontalAlignment="Left" Margin="0" Grid.Row="2" VerticalAlignment="Center" IsChecked="{Binding IsHttpsProtocal}"/>
             </Grid>
         </GroupBox>
         <Label Content="{x:Static p:Resources.Preview}" Grid.Row="3" VerticalAlignment="Center" Target="{Binding ElementName=PreviewString}"/>
         <TextBox x:Name="PreviewString" Grid.ColumnSpan="3" Grid.Column="1" Height="23" Margin="0" Grid.Row="3" TextWrapping="Wrap" Text="{Binding UriPreview, Mode=OneWay}" VerticalAlignment="Center"/>
-        <Button Content="{x:Static p:Resources.OK}" Grid.Column="2" HorizontalAlignment="Right" Margin="0" Grid.Row="4" VerticalAlignment="Bottom" Width="75" Height="25" Command="{Binding SubmitCommand, Mode=OneWay}"/>
-        <Button Content="{x:Static p:Resources.Cancel}" Grid.Column="3" HorizontalAlignment="Right" Margin="0" Grid.Row="4" VerticalAlignment="Bottom" Width="75" Height="25" Command="{Binding CancelCommand, Mode=OneWay}"/>
+        <Button Content="{x:Static p:Resources.OK}" Grid.Column="2" HorizontalAlignment="Right" Margin="0" Grid.Row="4" VerticalAlignment="Bottom" Width="75" Height="25" Command="{Binding SubmitCommand, Mode=OneWay}" IsDefault="True"/>
+        <Button Content="{x:Static p:Resources.Cancel}" Grid.Column="3" HorizontalAlignment="Right" Margin="0" Grid.Row="4" VerticalAlignment="Bottom" Width="75" Height="25" Command="{Binding CancelCommand, Mode=OneWay}" IsCancel="True"/>
     </Grid>
 </Window>

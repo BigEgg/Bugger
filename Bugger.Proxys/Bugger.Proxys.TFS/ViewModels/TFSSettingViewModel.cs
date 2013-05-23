@@ -21,41 +21,51 @@ namespace Bugger.Proxys.TFS.ViewModels
     public class TFSSettingViewModel : ViewModel<ITFSSettingView>
     {
         #region Fields
-        private readonly CompositionContainer container;
+        private readonly IMessageService messageService;
         private readonly DelegateCommand testConnectionCommand;
-        private readonly DelegateCommand uriHelpCommand;
 
         private SettingDocument settings;
         private ICommand saveCommand;
+        private ICommand uriHelpCommand;
         private bool canConnect;
         private ReadOnlyCollection<string> readonlyTFSFields;
         private List<string> tfsFields;
         #endregion
 
         [ImportingConstructor]
-        public TFSSettingViewModel(ITFSSettingView view, CompositionContainer container)
+        public TFSSettingViewModel(ITFSSettingView view, IMessageService messageService)
             : base(view)
         {
-            this.container = container;
+            this.messageService = messageService;
 
             this.canConnect = false;
             this.tfsFields = new List<string>();
             this.readonlyTFSFields = new ReadOnlyCollection<string>(this.tfsFields);
 
             this.testConnectionCommand = new DelegateCommand(TestConnectionExcute, CanTestConnectionExcute);
-            this.uriHelpCommand = new DelegateCommand(OpenUriHelpExcute);
         }
 
         #region Properties
         public ReadOnlyCollection<string> TFSFields { get { return this.readonlyTFSFields; } }
 
-        internal SettingDocument Settings
+        public SettingDocument Settings
         {
             get { return this.settings; }
-            set { this.settings = value; }
+            internal set { this.settings = value; }
         }
 
-        public ICommand UriHelpCommand { get { return this.uriHelpCommand; } }
+        public ICommand UriHelpCommand 
+        { 
+            get { return this.uriHelpCommand; }
+            set
+            {
+                if (this.uriHelpCommand != value)
+                {
+                    this.uriHelpCommand = value;
+                    RaisePropertyChanged("UriHelpCommand");
+                }
+            }
+        }
 
         public ICommand SaveCommand
         {
@@ -97,7 +107,6 @@ namespace Bugger.Proxys.TFS.ViewModels
         {
             this.CanConnect = false;
 
-            IMessageService messageService = this.container.GetExportedValue<IMessageService>();
             TfsTeamProjectCollection tpc = null;
 
             try
@@ -129,19 +138,6 @@ namespace Bugger.Proxys.TFS.ViewModels
             {
                 messageService.ShowMessage(Resources.CannotQueryFields);
             }
-        }
-
-        private void OpenUriHelpExcute()
-        {
-            IUriHelpView view = this.container.GetExportedValue<IUriHelpView>();
-            UriHelpViewModel viewModel = new UriHelpViewModel(view);
-
-            viewModel.ShowDialog(this);
-
-            if (viewModel.UriPreview == Resources.InvalidUrl)
-                this.settings.ConnectUri = null;
-            else
-                this.settings.ConnectUri = new Uri(viewModel.UriPreview);
         }
         #endregion
         #region Private Methods

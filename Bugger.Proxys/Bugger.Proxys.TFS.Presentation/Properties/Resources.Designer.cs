@@ -79,6 +79,24 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connect Settings.
+        /// </summary>
+        public static string ConnectSettings {
+            get {
+                return ResourceManager.GetString("ConnectSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Generate Uri.
+        /// </summary>
+        public static string GenerateUri {
+            get {
+                return ResourceManager.GetString("GenerateUri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to HTTP.
         /// </summary>
         public static string HTTP {
@@ -115,6 +133,15 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pat_h:.
         /// </summary>
         public static string Path {
@@ -147,6 +174,24 @@ namespace Bugger.Proxys.TFS.Presentation.Properties {
         public static string Protocal {
             get {
                 return ResourceManager.GetString("Protocal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Test Connection.
+        /// </summary>
+        public static string TestConnection {
+            get {
+                return ResourceManager.GetString("TestConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User _name.
+        /// </summary>
+        public static string UserName {
+            get {
+                return ResourceManager.GetString("UserName", resourceCulture);
             }
         }
     }

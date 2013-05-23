@@ -3,7 +3,7 @@ using System;
 
 namespace Bugger.Proxys.TFS.Models
 {
-    internal class MappingPair : Model
+    public class MappingPair : Model
     {
         #region Fields
         private readonly string propertyName;

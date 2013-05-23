@@ -53,6 +53,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DesignData\MockView.cs" />
+    <Compile Include="DesignData\SampleTFSSettingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -60,6 +62,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TFSSettingView.xaml.cs">
+      <DependentUpon>TFSSettingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UriHelpWindow.xaml.cs">
       <DependentUpon>UriHelpWindow.xaml</DependentUpon>
@@ -71,6 +76,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\TFSSettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UriHelpWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

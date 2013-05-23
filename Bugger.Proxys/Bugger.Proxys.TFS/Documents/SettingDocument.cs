@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace Bugger.Proxys.TFS.Documents
 {
-    internal class SettingDocument : DataModel
+    public class SettingDocument : DataModel
     {
         #region Fields
         private readonly ReadOnlyCollection<MappingPair> propertyMappingList;
@@ -36,7 +36,6 @@ namespace Bugger.Proxys.TFS.Documents
             }
 
             this.propertyMappingList = new ReadOnlyCollection<MappingPair>(mappingList);
-
         }
 
         #region Properties
