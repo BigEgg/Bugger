@@ -12,6 +12,9 @@ namespace Bugger.Presentation.DesignData
         }
 
 
+        public new string Version { get { return "1.0.0.0 (Design Time)"; } }
+
+
         private class MockAboutDialog : MockDialogView, IAboutDialogView
         {
         }

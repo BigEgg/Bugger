@@ -4,6 +4,7 @@ using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Applications.Properties;
 using Bugger.Applications.Services;
 using Bugger.Applications.ViewModels;
+using Bugger.Domain.Models;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
@@ -87,9 +88,15 @@ namespace Bugger.Applications.Controllers
                         Settings.Default.IsFilterCreatedBy))
                 .ContinueWith((result) =>
                 {
-                    this.dataService.UserBugs.Clear();
+                    this.dataService.UserRedBugs.Clear();
+                    this.dataService.UserYellowBugs.Clear();
                     foreach (var bug in result.Result)
-                        this.dataService.UserBugs.Add(bug);
+                    {
+                        if (bug.Type == BugType.Red)
+                            this.dataService.UserRedBugs.Add(bug);
+                        else
+                            this.dataService.UserYellowBugs.Add(bug);
+                    }
                 }, TaskContinuationOptions.OnlyOnRanToCompletion);
             }
 

@@ -60,6 +60,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DesignData\MockDataService.cs" />
     <Compile Include="DesignData\SampleAboutDialogViewModel.cs" />
     <Compile Include="Services\PresentationService.cs" />
     <Compile Include="Views\AboutDialogWindow.xaml.cs">
@@ -98,6 +99,10 @@
     <ProjectReference Include="..\Bugger.Applications\Bugger.Applications.csproj">
       <Project>{398d1756-2c56-454a-a7ec-e996bb146c2e}</Project>
       <Name>Bugger.Applications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bugger.Domain\Bugger.Domain.csproj">
+      <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
+      <Name>Bugger.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

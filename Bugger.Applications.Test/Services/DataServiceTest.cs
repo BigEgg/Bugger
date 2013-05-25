@@ -14,10 +14,11 @@ namespace Bugger.Applications.Test.Services
         {
             IDataService dataService = Container.GetExportedValue<IDataService>();
 
-            Assert.AreEqual(dataService.UserBugs.Count, 0);
+            Assert.AreEqual(dataService.UserRedBugs.Count, 0);
+            Assert.AreEqual(dataService.UserYellowBugs.Count, 0);
             Assert.AreEqual(dataService.TeamBugs.Count, 0);
 
-            dataService.UserBugs.Add(
+            dataService.UserRedBugs.Add(
                 new Bug()
                 {
                     ID = 1,
@@ -33,8 +34,24 @@ namespace Bugger.Applications.Test.Services
                 }
             );
 
-            Assert.AreEqual(dataService.UserBugs.Count, 1);
-            Assert.AreEqual(dataService.TeamBugs.Count, 0);
+            Assert.AreEqual(dataService.UserRedBugs.Count, 1);
+
+            dataService.UserYellowBugs.Add(
+                new Bug()
+                {
+                    ID = 6,
+                    Title = "Bug6",
+                    Description = "Description for Bug6.",
+                    AssignedTo = "Pupil",
+                    State = "Closed",
+                    ChangedDate = new DateTime(2013, 4, 11),
+                    CreatedBy = "Pupil",
+                    Priority = "High",
+                    Severity = "High"
+                }
+            );
+
+            Assert.AreEqual(dataService.UserYellowBugs.Count, 1);
 
             dataService.TeamBugs.Add(
                 new Bug()
@@ -52,7 +69,6 @@ namespace Bugger.Applications.Test.Services
                 }
             );
 
-            Assert.AreEqual(dataService.UserBugs.Count, 1);
             Assert.AreEqual(dataService.TeamBugs.Count, 1);
 
             DateTime time = new DateTime(2013, 5, 8, 11, 00, 00);
