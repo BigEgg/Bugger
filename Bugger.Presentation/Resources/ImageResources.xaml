@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <BitmapSource x:Key="BuggerImageSource">Images/Bugger.ico</BitmapSource>
+
+    <ImageSource x:Key="RedGiftboxImageSource">Images/RedGiftbox.png</ImageSource>
+    <ImageSource x:Key="YellowGiftboxImageSource">Images/YellowGiftbox.png</ImageSource>
+
+    <ImageSource x:Key="FlagEnImageSource">Images/FlagEn.png</ImageSource>
+    <ImageSource x:Key="FlagCNImageSource">Images/FlagCN.png</ImageSource>
+
+</ResourceDictionary>

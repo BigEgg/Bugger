@@ -1,10 +1,7 @@
-﻿using Bugger.Proxy.TFS.ViewModels;
+﻿using BigEgg.Framework.Presentation;
+using Bugger.Proxy.TFS.ViewModels;
 using Bugger.Proxy.TFS.Views;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 
 namespace Bugger.Proxy.TFS.Presentation.DesignData
 {

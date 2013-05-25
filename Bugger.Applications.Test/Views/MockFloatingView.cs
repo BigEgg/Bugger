@@ -1,4 +1,4 @@
-﻿using BigEgg.Framework.UnitTesting.Views;
+﻿using BigEgg.Framework.Presentation;
 using Bugger.Applications.Views;
 using System;
 using System.ComponentModel;

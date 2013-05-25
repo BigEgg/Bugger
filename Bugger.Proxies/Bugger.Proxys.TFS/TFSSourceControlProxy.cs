@@ -57,11 +57,13 @@ namespace Bugger.Proxy.TFS
         #region Public Methods
         public override bool CanQuery()
         {
-            if (this.saveCommand.CanExecute())
+            bool canQuery = this.saveCommand.CanExecute();
+
+            if (canQuery)
             {
                 this.saveCommand.Execute();
             }
-            return this.saveCommand.CanExecute();
+            return canQuery;
         }
         #endregion
 

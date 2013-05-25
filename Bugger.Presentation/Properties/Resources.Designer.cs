@@ -61,6 +61,71 @@ namespace Bugger.Presentation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to For any good idea, please contact:.
+        /// </summary>
+        internal static string AboutEmailMessage {
+            get {
+                return ResourceManager.GetString("AboutEmailMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is a small tool for give a simple overview of bugs assigned to anyone (or team) in the source control system and show all their status, severity.
+        ///It will like the bugger tool for Product Studio in MS. Can helped people a lot in efficiently tracking bugs assigned to he or she.
+        ///For anyone want to have a gadget as a simple dashboard for bugs, this is what he want..
+        /// </summary>
+        internal static string AboutMessage {
+            get {
+                return ResourceManager.GetString("AboutMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        internal static string AboutOK {
+            get {
+                return ResourceManager.GetString("AboutOK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If any one want to see the source code, please go to:.
+        /// </summary>
+        internal static string AboutSourceCodeMessage {
+            get {
+                return ResourceManager.GetString("AboutSourceCodeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CodePlex.
+        /// </summary>
+        internal static string CodePlex {
+            get {
+                return ResourceManager.GetString("CodePlex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cd_bigegg@hotamil.com.
+        /// </summary>
+        internal static string EmailAddress {
+            get {
+                return ResourceManager.GetString("EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GitHub.
+        /// </summary>
+        internal static string GitHub {
+            get {
+                return ResourceManager.GetString("GitHub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknown Application Error
         ///
         ///{0}.

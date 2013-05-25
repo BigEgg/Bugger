@@ -37,6 +37,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Images\Bugger.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -56,6 +59,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DesignData\SampleAboutDialogViewModel.cs" />
+    <Compile Include="Services\PresentationService.cs" />
+    <Compile Include="Views\AboutDialogWindow.xaml.cs">
+      <DependentUpon>AboutDialogWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -92,9 +100,25 @@
       <Name>Bugger.Applications</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="DesignData\" />
-    <Folder Include="Views\" />
+    <Page Include="Resources\ImageResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AboutDialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Bugger.ico" />
+    <Resource Include="Resources\Images\RedGiftbox.png" />
+    <Resource Include="Resources\Images\YellowGiftbox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\FlagCN.png" />
+    <Resource Include="Resources\Images\FlagEn.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

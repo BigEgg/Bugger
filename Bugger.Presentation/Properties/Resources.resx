@@ -117,6 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutEmailMessage" xml:space="preserve">
+    <value>For any good idea, please contact:</value>
+  </data>
+  <data name="AboutMessage" xml:space="preserve">
+    <value>This is a small tool for give a simple overview of bugs assigned to anyone (or team) in the source control system and show all their status, severity.
+It will like the bugger tool for Product Studio in MS. Can helped people a lot in efficiently tracking bugs assigned to he or she.
+For anyone want to have a gadget as a simple dashboard for bugs, this is what he want.</value>
+  </data>
+  <data name="AboutOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AboutSourceCodeMessage" xml:space="preserve">
+    <value>If any one want to see the source code, please go to:</value>
+  </data>
+  <data name="CodePlex" xml:space="preserve">
+    <value>CodePlex</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>cd_bigegg@hotamil.com</value>
+  </data>
+  <data name="GitHub" xml:space="preserve">
+    <value>GitHub</value>
+  </data>
   <data name="UnknownError" xml:space="preserve">
     <value>Unknown Application Error
 
