@@ -82,9 +82,9 @@
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
       <Name>Bugger.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxys\Bugger.Proxys.csproj">
+    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxys\Bugger.Proxy.csproj">
       <Project>{e8727087-75f2-435f-bd11-78b4dff59a40}</Project>
-      <Name>Bugger.Proxys %28Bugger.Proxys\Bugger.Proxys%29</Name>
+      <Name>Bugger.Proxy</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

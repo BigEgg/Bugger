@@ -1,7 +1,7 @@
 ﻿using Bugger.Applications.Services;
 using Bugger.Applications.ViewModels;
 using Bugger.Applications.Views;
-using Bugger.Proxys;
+using Bugger.Proxy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 

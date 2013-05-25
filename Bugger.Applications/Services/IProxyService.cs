@@ -1,4 +1,4 @@
-﻿using Bugger.Proxys;
+﻿using Bugger.Proxy;
 using System.Collections.Generic;
 using System.ComponentModel;
 

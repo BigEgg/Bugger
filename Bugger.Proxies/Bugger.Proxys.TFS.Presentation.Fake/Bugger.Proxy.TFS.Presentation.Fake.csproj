@@ -7,8 +7,8 @@
     <ProjectGuid>{02AB8E76-2073-4F30-B891-1A1B60AE5101}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bugger.Proxys.TFS.Presentation.Fake</RootNamespace>
-    <AssemblyName>Bugger.Proxys.TFS.Presentation.Fake</AssemblyName>
+    <RootNamespace>Bugger.Proxy.TFS.Presentation.Fake</RootNamespace>
+    <AssemblyName>Bugger.Proxy.TFS.Presentation.Fake</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,9 +53,9 @@
       <Project>{EE01D20C-0F89-4219-A615-E5566A73814E}</Project>
       <Name>BigEgg.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxys.TFS\Bugger.Proxys.TFS.csproj">
-      <Project>{5714B0C6-82F3-4CC6-B33E-E3F8835C38FC}</Project>
-      <Name>Bugger.Proxys.TFS</Name>
+    <ProjectReference Include="..\Bugger.Proxys.TFS\Bugger.Proxy.TFS.csproj">
+      <Project>{5714b0c6-82f3-4cc6-b33e-e3f8835c38fc}</Project>
+      <Name>Bugger.Proxy.TFS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,8 +7,8 @@
     <ProjectGuid>{5714B0C6-82F3-4CC6-B33E-E3F8835C38FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bugger.Proxys.TFS</RootNamespace>
-    <AssemblyName>Bugger.Proxys.TFS</AssemblyName>
+    <RootNamespace>Bugger.Proxy.TFS</RootNamespace>
+    <AssemblyName>Bugger.Proxy.TFS</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug\Proxys\</OutputPath>
+    <OutputPath>..\..\bin\Debug\Proxies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release\Proxys\</OutputPath>
+    <OutputPath>..\..\bin\Release\Proxies\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -81,9 +81,9 @@
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
       <Name>Bugger.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxys.csproj">
-      <Project>{e8727087-75f2-435f-bd11-78b4dff59a40}</Project>
-      <Name>Bugger.Proxys %28Bugger.Proxys\Bugger.Proxys%29</Name>
+    <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxy.csproj">
+      <Project>{E8727087-75F2-435F-BD11-78B4DFF59A40}</Project>
+      <Name>Bugger.Proxy</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

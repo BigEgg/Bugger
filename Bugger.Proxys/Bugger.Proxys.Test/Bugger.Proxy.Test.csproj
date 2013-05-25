@@ -6,8 +6,8 @@
     <ProjectGuid>{71760CC4-83EF-4043-9DC5-8E8A40A9C765}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bugger.Proxys.Test</RootNamespace>
-    <AssemblyName>Bugger.Proxys.Test</AssemblyName>
+    <RootNamespace>Bugger.Proxy.Test</RootNamespace>
+    <AssemblyName>Bugger.Proxy.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -73,9 +73,9 @@
       <Project>{3DCFFAF0-D1E5-4FC1-B37B-4A6A27AE5E4F}</Project>
       <Name>Bugger.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxys.csproj">
-      <Project>{e8727087-75f2-435f-bd11-78b4dff59a40}</Project>
-      <Name>Bugger.Proxys %28Bugger.Proxys\Bugger.Proxys%29</Name>
+    <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxy.csproj">
+      <Project>{E8727087-75F2-435F-BD11-78B4DFF59A40}</Project>
+      <Name>Bugger.Proxy</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

@@ -7,8 +7,8 @@
     <ProjectGuid>{9D384026-D73B-4BA9-9AE3-7D2172C438CE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bugger.Proxys.FakeProxy</RootNamespace>
-    <AssemblyName>Bugger.Proxys.FakeProxy</AssemblyName>
+    <RootNamespace>Bugger.Proxy.FakeProxy</RootNamespace>
+    <AssemblyName>Bugger.Proxy.FakeProxy</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -51,9 +51,9 @@
       <Project>{3DCFFAF0-D1E5-4FC1-B37B-4A6A27AE5E4F}</Project>
       <Name>Bugger.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxys.csproj">
+    <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxy.csproj">
       <Project>{e8727087-75f2-435f-bd11-78b4dff59a40}</Project>
-      <Name>Bugger.Proxys %28Bugger.Proxys\Bugger.Proxys%29</Name>
+      <Name>Bugger.Proxy</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
