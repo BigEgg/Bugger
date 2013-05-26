@@ -120,6 +120,9 @@
   <data name="AboutEmailMessage" xml:space="preserve">
     <value>For any good idea, please contact:</value>
   </data>
+  <data name="AboutMenu" xml:space="preserve">
+    <value>_About</value>
+  </data>
   <data name="AboutMessage" xml:space="preserve">
     <value>This is a small tool for give a simple overview of bugs assigned to anyone (or team) in the source control system and show all their status, severity.
 It will like the bugger tool for Product Studio in MS. Can helped people a lot in efficiently tracking bugs assigned to he or she.
@@ -131,14 +134,32 @@ For anyone want to have a gadget as a simple dashboard for bugs, this is what he
   <data name="AboutSourceCodeMessage" xml:space="preserve">
     <value>If any one want to see the source code, please go to:</value>
   </data>
+  <data name="ChineseMenu" xml:space="preserve">
+    <value>中文(_C)</value>
+  </data>
   <data name="CodePlex" xml:space="preserve">
     <value>CodePlex</value>
   </data>
   <data name="EmailAddress" xml:space="preserve">
     <value>cd_bigegg@hotamil.com</value>
   </data>
+  <data name="EnglishMenu" xml:space="preserve">
+    <value>_English</value>
+  </data>
+  <data name="ExitMenu" xml:space="preserve">
+    <value>E_xit</value>
+  </data>
   <data name="GitHub" xml:space="preserve">
     <value>GitHub</value>
+  </data>
+  <data name="LanguageMenu" xml:space="preserve">
+    <value>_Language</value>
+  </data>
+  <data name="SettingMenu" xml:space="preserve">
+    <value>_Setting</value>
+  </data>
+  <data name="ShowMainWindowMenu" xml:space="preserve">
+    <value>_Show Main Window</value>
   </data>
   <data name="UnknownError" xml:space="preserve">
     <value>Unknown Application Error

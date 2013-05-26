@@ -6,6 +6,7 @@ using Bugger.Applications.Test.Services;
 using Bugger.Applications.Test.Views;
 using Bugger.Applications.ViewModels;
 using Bugger.Applications.Views;
+using Bugger.Domain.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,45 @@ namespace Bugger.Applications.Test.ViewModels
             ICommand showMainWindowCommand = new DelegateCommand(() => { });
             AssertHelper.PropertyChangedEvent(viewModel, x => x.ShowMainWindowCommand, () => viewModel.ShowMainWindowCommand = showMainWindowCommand);
             Assert.AreEqual(showMainWindowCommand, viewModel.ShowMainWindowCommand);
+
+            IDataService dataService = Container.GetExportedValue<IDataService>();
+
+            AssertHelper.PropertyChangedEvent(viewModel, x => x.RedBugCount, () =>
+                dataService.UserRedBugs.Add(
+                    new Bug()
+                    {
+                        ID = 1,
+                        Title = "Bug1",
+                        Description = "Description for Bug1.",
+                        Type = BugType.Red,
+                        AssignedTo = "BigEgg",
+                        State = "Implement",
+                        ChangedDate = new DateTime(2013, 4, 10),
+                        CreatedBy = "BigEgg",
+                        Priority = "High",
+                        Severity = ""
+                    }
+                )
+            );
+            Assert.AreEqual(viewModel.RedBugCount, 1);
+
+            AssertHelper.PropertyChangedEvent(viewModel, x => x.YellowBugCount, () =>
+                dataService.UserYellowBugs.Add(
+                    new Bug()
+                    {
+                        ID = 6,
+                        Title = "Bug6",
+                        Description = "Description for Bug6.",
+                        AssignedTo = "Pupil",
+                        State = "Closed",
+                        ChangedDate = new DateTime(2013, 4, 11),
+                        CreatedBy = "Pupil",
+                        Priority = "High",
+                        Severity = "High"
+                    }
+                )
+            ); 
+            Assert.AreEqual(viewModel.YellowBugCount, 1);
         }
 
         [TestMethod]

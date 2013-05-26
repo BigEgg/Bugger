@@ -70,6 +70,15 @@ namespace Bugger.Presentation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _About.
+        /// </summary>
+        internal static string AboutMenu {
+            get {
+                return ResourceManager.GetString("AboutMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This is a small tool for give a simple overview of bugs assigned to anyone (or team) in the source control system and show all their status, severity.
         ///It will like the bugger tool for Product Studio in MS. Can helped people a lot in efficiently tracking bugs assigned to he or she.
         ///For anyone want to have a gadget as a simple dashboard for bugs, this is what he want..
@@ -99,6 +108,15 @@ namespace Bugger.Presentation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 中文(_C).
+        /// </summary>
+        internal static string ChineseMenu {
+            get {
+                return ResourceManager.GetString("ChineseMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CodePlex.
         /// </summary>
         internal static string CodePlex {
@@ -117,11 +135,56 @@ namespace Bugger.Presentation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _English.
+        /// </summary>
+        internal static string EnglishMenu {
+            get {
+                return ResourceManager.GetString("EnglishMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E_xit.
+        /// </summary>
+        internal static string ExitMenu {
+            get {
+                return ResourceManager.GetString("ExitMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GitHub.
         /// </summary>
         internal static string GitHub {
             get {
                 return ResourceManager.GetString("GitHub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Language.
+        /// </summary>
+        internal static string LanguageMenu {
+            get {
+                return ResourceManager.GetString("LanguageMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Setting.
+        /// </summary>
+        internal static string SettingMenu {
+            get {
+                return ResourceManager.GetString("SettingMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Show Main Window.
+        /// </summary>
+        internal static string ShowMainWindowMenu {
+            get {
+                return ResourceManager.GetString("ShowMainWindowMenu", resourceCulture);
             }
         }
         

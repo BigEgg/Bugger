@@ -7,6 +7,9 @@
     <ImageSource x:Key="RedGiftboxImageSource">Images/RedGiftbox.png</ImageSource>
     <ImageSource x:Key="YellowGiftboxImageSource">Images/YellowGiftbox.png</ImageSource>
 
+    <ImageSource x:Key="RefreshImageSource">Images/Refresh.png</ImageSource>
+    <ImageSource x:Key="SettingImageSource">Images/Setting.png</ImageSource>
+
     <ImageSource x:Key="FlagEnImageSource">Images/FlagEn.png</ImageSource>
     <ImageSource x:Key="FlagCNImageSource">Images/FlagCN.png</ImageSource>
 

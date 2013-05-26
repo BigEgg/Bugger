@@ -3,8 +3,8 @@ using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Applications.Services;
 using Bugger.Domain.Models;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bugger.Presentation.DesignData
 {

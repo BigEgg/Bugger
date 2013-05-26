@@ -62,9 +62,13 @@
     </Compile>
     <Compile Include="DesignData\MockDataService.cs" />
     <Compile Include="DesignData\SampleAboutDialogViewModel.cs" />
+    <Compile Include="DesignData\SampleFloatingViewModel.cs" />
     <Compile Include="Services\PresentationService.cs" />
     <Compile Include="Views\AboutDialogWindow.xaml.cs">
       <DependentUpon>AboutDialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FloatingWindow.xaml.cs">
+      <DependentUpon>FloatingWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -105,13 +109,19 @@
       <Name>Bugger.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\Setting.png" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Resources\ImageResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AboutDialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FloatingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -124,6 +134,9 @@
   <ItemGroup>
     <Resource Include="Resources\Images\FlagCN.png" />
     <Resource Include="Resources\Images\FlagEn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Refresh.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

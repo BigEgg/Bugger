@@ -3,6 +3,7 @@ using Bugger.Applications.Properties;
 using Bugger.Applications.Services;
 using Bugger.Applications.Views;
 using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Windows.Input;
@@ -14,6 +15,9 @@ namespace Bugger.Applications.ViewModels
     {
         #region Fields
         private readonly IDataService dataService;
+
+        private int redBugCount;
+        private int yellowBugCount;
 
         private ICommand showMainWindowCommand;
         private ICommand refreshBugsCommand;
@@ -42,10 +46,21 @@ namespace Bugger.Applications.ViewModels
                 ViewCore.Height = Settings.Default.FloatingWindowHeight;
                 ViewCore.Width = Settings.Default.FloatingWindowWidth;
             }
+
+            AddWeakEventListener(this.dataService.UserRedBugs, UserRedBugsCollectionChanged);
+            AddWeakEventListener(this.dataService.UserYellowBugs, UserYellowBugsCollectionChanged);
         }
 
         #region Properties
-        public IDataService DataService { get { return this.dataService; } }
+        public int RedBugCount
+        {
+            get { return this.dataService.UserRedBugs.Count; }
+        }
+
+        public int YellowBugCount
+        {
+            get { return this.dataService.UserYellowBugs.Count; }
+        }
 
         public ICommand ShowMainWindowCommand
         {
@@ -169,6 +184,16 @@ namespace Bugger.Applications.ViewModels
             Settings.Default.FloatingWindowTop = ViewCore.Top;
             Settings.Default.FloatingWindowHeight = ViewCore.Height;
             Settings.Default.FloatingWindowWidth = ViewCore.Width;
+        }
+
+        private void UserRedBugsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            RaisePropertyChanged("RedBugCount");
+        }
+
+        private void UserYellowBugsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            RaisePropertyChanged("YellowBugCount");
         }
         #endregion
         #endregion
