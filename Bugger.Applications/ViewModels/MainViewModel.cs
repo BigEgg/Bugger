@@ -14,6 +14,7 @@ namespace Bugger.Applications.ViewModels
     {
         #region Fields
         private readonly IDataService dataService;
+        private readonly IShellService shellService;
 
         private ICommand refreshBugsCommand;
         private ICommand englishCommand;
@@ -24,9 +25,10 @@ namespace Bugger.Applications.ViewModels
         #endregion
 
         [ImportingConstructor]
-        public MainViewModel(IMainView view, IDataService dataService, IPresentationService presentationService)
+        public MainViewModel(IMainView view, IDataService dataService, IShellService shellService, IPresentationService presentationService)
             : base(view)
         {
+            this.shellService = shellService;
             this.dataService = dataService;
             view.Closing += ViewClosing;
             view.Closed += ViewClosed;
@@ -47,7 +49,9 @@ namespace Bugger.Applications.ViewModels
         #region Properties
         public string Title { get { return Resources.ApplicationName; } }
 
-        public IDataService DataService { get { return this.dataService; } }
+        public IShellService ShellService { get { return this.shellService; } }
+
+        public DateTime RefreshTime { get { return this.dataService.RefreshTime; } }
 
         public ICommand RefreshBugsCommand
         {

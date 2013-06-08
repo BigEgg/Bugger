@@ -39,11 +39,11 @@ namespace Bugger.Applications.Test.Controllers
             Assert.IsNotNull(mainViewModel.RefreshBugsCommand);
 
             applicationController.Run();
-            MockFloatingView shellView = (MockFloatingView)Container.GetExportedValue<IFloatingView>();
-            Assert.IsTrue(shellView.IsVisible);
+            MockFloatingView floatingView = (MockFloatingView)Container.GetExportedValue<IFloatingView>();
+            Assert.IsTrue(floatingView.IsVisible);
 
             floatingViewModel.ExitCommand.Execute(null);
-            Assert.IsFalse(shellView.IsVisible);
+            Assert.IsFalse(floatingView.IsVisible);
 
             applicationController.ShutDown();
         }
@@ -94,6 +94,28 @@ namespace Bugger.Applications.Test.Controllers
 
             mainViewModel.EnglishCommand.Execute(null);
             Assert.AreEqual("en-US", applicationController.NewLanguage.Name);
+        }
+
+        [TestMethod]
+        public void ShowMainWindowCommandTest()
+        {
+            IApplicationController applicationController = Container.GetExportedValue<IApplicationController>();
+
+            applicationController.Initialize();
+            FloatingViewModel floatingViewModel = Container.GetExportedValue<FloatingViewModel>();
+            MainViewModel mainViewModel = Container.GetExportedValue<MainViewModel>();
+
+            applicationController.Run();
+
+            MockFloatingView floatingView = (MockFloatingView)Container.GetExportedValue<IFloatingView>();
+            MockMainView mainView = (MockMainView)Container.GetExportedValue<IMainView>();
+            Assert.IsTrue(floatingView.IsVisible);
+            Assert.IsFalse(mainView.IsVisible);
+
+            floatingViewModel.ShowMainWindowCommand.Execute(null);
+            Assert.IsTrue(mainView.IsVisible);
+
+            applicationController.ShutDown();
         }
     }
 }

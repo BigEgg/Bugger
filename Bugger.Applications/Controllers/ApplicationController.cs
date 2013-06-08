@@ -26,6 +26,8 @@ namespace Bugger.Applications.Controllers
 
         private readonly FloatingViewModel floatingViewModel;
         private readonly MainViewModel mainViewModel;
+        private readonly UserBugsViewModel userBugsViewModel;
+        private readonly TeamBugsViewModel teamBugsViewModel;
 
         private readonly DelegateCommand showMainWindowCommand;
         private readonly DelegateCommand englishCommand;
@@ -39,7 +41,7 @@ namespace Bugger.Applications.Controllers
 
         [ImportingConstructor]
         public ApplicationController(CompositionContainer container, IPresentationService presentationService,
-            IMessageService messageService, ProxyController proxyController, DataController dataController)
+            IMessageService messageService, ShellService shellService, ProxyController proxyController, DataController dataController)
         {
             InitializeCultures();
             presentationService.InitializeCultures();
@@ -51,6 +53,12 @@ namespace Bugger.Applications.Controllers
 
             this.floatingViewModel = container.GetExportedValue<FloatingViewModel>();
             this.mainViewModel = container.GetExportedValue<MainViewModel>();
+            this.userBugsViewModel = container.GetExportedValue<UserBugsViewModel>();
+            this.teamBugsViewModel = container.GetExportedValue<TeamBugsViewModel>();
+
+            shellService.MainView = mainViewModel.View;
+            shellService.UserBugsView = userBugsViewModel.View;
+            shellService.TeamBugsView = teamBugsViewModel.View;
 
             this.floatingViewModel.Closing += FloatingViewModelClosing;
 

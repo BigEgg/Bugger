@@ -129,6 +129,12 @@
   <data name="RestartApplication" xml:space="preserve">
     <value>Please restart the application so that the configuration changes take effect.</value>
   </data>
+  <data name="TeamBugsTitle" xml:space="preserve">
+    <value>Bugs for team</value>
+  </data>
+  <data name="UserBugsTitle" xml:space="preserve">
+    <value>Bugs for me</value>
+  </data>
   <data name="UserNameMandatory" xml:space="preserve">
     <value>The user name is mandatory.</value>
   </data>

@@ -109,31 +109,32 @@ namespace Bugger.Applications.Test.ViewModels
             presentationService.VirtualScreenHeight = 700;
 
             MainViewModel viewModel = Container.GetExportedValue<MainViewModel>();
+            IShellService shellService = Container.GetExportedValue<IShellService>();
             MockMainView view = (MockMainView)Container.GetExportedValue<IMainView>();
             view.SetNAForLocationAndSize();
 
             SetSettingsValues();
-            new MainViewModel(view, dataService, presentationService).Close();
+            new MainViewModel(view, dataService, shellService, presentationService).Close();
             AssertSettingsValues(double.NaN, double.NaN, double.NaN, double.NaN);
 
             // Height is 0 => don't apply the Settings values
             SetSettingsValues(0, 0, 1, 0);
-            new MainViewModel(view, dataService, presentationService).Close();
+            new MainViewModel(view, dataService, shellService, presentationService).Close();
             AssertSettingsValues(double.NaN, double.NaN, double.NaN, double.NaN);
 
             // Left = 100 + Width = 901 > VirtualScreenWidth = 1000 => don't apply the Settings values
             SetSettingsValues(100, 100, 901, 100);
-            new MainViewModel(view, dataService, presentationService).Close();
+            new MainViewModel(view, dataService, shellService, presentationService).Close();
             AssertSettingsValues(double.NaN, double.NaN, double.NaN, double.NaN);
 
             // Top = 100 + Height = 601 > VirtualScreenWidth = 600 => don't apply the Settings values
             SetSettingsValues(100, 100, 100, 601);
-            new MainViewModel(view, dataService, presentationService).Close();
+            new MainViewModel(view, dataService, shellService, presentationService).Close();
             AssertSettingsValues(double.NaN, double.NaN, double.NaN, double.NaN);
 
             // Use the limit values => apply the Settings values
             SetSettingsValues(0, 0, 1000, 700);
-            new MainViewModel(view, dataService, presentationService).Close();
+            new MainViewModel(view, dataService, shellService, presentationService).Close();
             AssertSettingsValues(0, 0, 1000, 700);
         }
 

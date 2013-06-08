@@ -61,17 +61,23 @@
     <Compile Include="Services\IDataService.cs" />
     <Compile Include="Services\IPresentationService.cs" />
     <Compile Include="Services\IProxyService.cs" />
+    <Compile Include="Services\IShellService.cs" />
     <Compile Include="Services\ProxyService.cs" />
+    <Compile Include="Services\ShellService.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\FloatingViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingDialogViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\TeamBugsViewModel.cs" />
+    <Compile Include="ViewModels\UserBugsViewModel.cs" />
     <Compile Include="Views\IAboutDialogView.cs" />
     <Compile Include="Views\IFloatingView.cs" />
     <Compile Include="Views\IMainView.cs" />
     <Compile Include="Views\ISettingDialogView.cs" />
     <Compile Include="Views\ISettingsView.cs" />
+    <Compile Include="Views\ITeamBugsView.cs" />
+    <Compile Include="Views\IUserBugsView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">

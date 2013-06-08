@@ -67,16 +67,20 @@
     <Compile Include="Services\MockMessageService.cs" />
     <Compile Include="Services\MockPresentationService.cs" />
     <Compile Include="Services\ProxyServiceTest.cs" />
+    <Compile Include="Services\ShellServiceTest.cs" />
     <Compile Include="TestClassBase.cs" />
     <Compile Include="ViewModels\FloatingViewModelTest.cs" />
     <Compile Include="ViewModels\MainViewModelTest.cs" />
     <Compile Include="ViewModels\SettingDialogViewModelTest.cs" />
     <Compile Include="ViewModels\SettingsViewModelTest.cs" />
+    <Compile Include="ViewModels\TeamBugsViewModelTest.cs" />
+    <Compile Include="Views\MockTeamBugsView.cs" />
     <Compile Include="Views\MockAboutDialogView.cs" />
     <Compile Include="Views\MockMainView.cs" />
     <Compile Include="Views\MockFloatingView.cs" />
     <Compile Include="Views\MockSettingDialogView.cs" />
     <Compile Include="Views\MockSettingsView.cs" />
+    <Compile Include="Views\MockUserBugsView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BigEggCore\Framework\BigEgg.Framework.UnitTesting\BigEgg.Framework.UnitTesting.csproj">
