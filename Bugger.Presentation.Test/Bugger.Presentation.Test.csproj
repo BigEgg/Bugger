@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{788C52B8-DD44-4FC2-ACA7-492D6C79956D}</ProjectGuid>
+    <ProjectGuid>{16E901F8-B205-48F3-B1CD-E631E7F30FFD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bugger.Applications.Test</RootNamespace>
-    <AssemblyName>Bugger.Applications.Test</AssemblyName>
+    <RootNamespace>Bugger.Presentation.Test</RootNamespace>
+    <AssemblyName>Bugger.Presentation.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -39,12 +39,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -59,65 +61,19 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CollectionHelperTest.cs" />
-    <Compile Include="Controllers\ApplicationControllerTest.cs" />
-    <Compile Include="Controllers\ProxyControllerTest.cs" />
+    <Compile Include="Conveters\BugTypeToImageConverterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DataServiceTest.cs" />
-    <Compile Include="Services\MockMessageService.cs" />
-    <Compile Include="Services\MockPresentationService.cs" />
-    <Compile Include="Services\ProxyServiceTest.cs" />
-    <Compile Include="Services\ShellServiceTest.cs" />
-    <Compile Include="TestClassBase.cs" />
-    <Compile Include="ViewModels\FloatingViewModelTest.cs" />
-    <Compile Include="ViewModels\MainViewModelTest.cs" />
-    <Compile Include="ViewModels\SettingDialogViewModelTest.cs" />
-    <Compile Include="ViewModels\SettingsViewModelTest.cs" />
-    <Compile Include="ViewModels\TeamBugsViewModelTest.cs" />
-    <Compile Include="ViewModels\UserBugsViewModelTest.cs" />
-    <Compile Include="Views\MockTeamBugsView.cs" />
-    <Compile Include="Views\MockAboutDialogView.cs" />
-    <Compile Include="Views\MockMainView.cs" />
-    <Compile Include="Views\MockFloatingView.cs" />
-    <Compile Include="Views\MockSettingDialogView.cs" />
-    <Compile Include="Views\MockSettingsView.cs" />
-    <Compile Include="Views\MockUserBugsView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BigEggCore\Framework\BigEgg.Framework.UnitTesting\BigEgg.Framework.UnitTesting.csproj">
-      <Project>{0cc7a8da-a50b-405f-b14c-8b6bbaea42ce}</Project>
-      <Name>BigEgg.Framework.UnitTesting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">
-      <Project>{ee01d20c-0f89-4219-a615-e5566a73814e}</Project>
-      <Name>BigEgg.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bugger.Applications\Bugger.Applications.csproj">
-      <Project>{398d1756-2c56-454a-a7ec-e996bb146c2e}</Project>
-      <Name>Bugger.Applications</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Bugger.Domain\Bugger.Domain.csproj">
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
       <Name>Bugger.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxys.FakeProxy\Bugger.Proxy.FakeProxy.csproj">
-      <Project>{9d384026-d73b-4ba9-9ae3-7d2172c438ce}</Project>
-      <Name>Bugger.Proxy.FakeProxy</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxys.TFS.Presentation.Fake\Bugger.Proxy.TFS.Presentation.Fake.csproj">
-      <Project>{02ab8e76-2073-4f30-b891-1a1b60ae5101}</Project>
-      <Name>Bugger.Proxy.TFS.Presentation.Fake</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxys.TFS\Bugger.Proxy.TFS.csproj">
-      <Project>{5714b0c6-82f3-4cc6-b33e-e3f8835c38fc}</Project>
-      <Name>Bugger.Proxy.TFS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxys\Bugger.Proxy.csproj">
-      <Project>{e8727087-75f2-435f-bd11-78b4dff59a40}</Project>
-      <Name>Bugger.Proxy</Name>
+    <ProjectReference Include="..\Bugger.Presentation\Bugger.Presentation.csproj">
+      <Project>{3b42ff95-85a5-47ff-87c6-748a493cd9b5}</Project>
+      <Name>Bugger.Presentation</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

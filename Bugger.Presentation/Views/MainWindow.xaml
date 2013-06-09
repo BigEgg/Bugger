@@ -1,0 +1,33 @@
+﻿<Window x:Class="Bugger.Presentation.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:p="clr-namespace:Bugger.Presentation.Properties"
+        xmlns:dd="clr-namespace:Bugger.Presentation.DesignData"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleMainViewModel, IsDesignTimeCreatable=True}"
+        Icon="{Binding Mode=OneWay, Source={StaticResource BuggerImageSource}}"
+        ResizeMode="NoResize" Title="MainWindow" Height="300" Width="300">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{x:Static p:Resources.SystemMenu}">
+                <MenuItem Header="{x:Static p:Resources.ExitMenu}" Command="{Binding ExitCommand}"/>
+                <MenuItem Header="{x:Static p:Resources.SettingMenu}" Command="{Binding SettingCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource SettingImageSource}}"/>
+            </MenuItem>
+            <MenuItem Header="{x:Static p:Resources.LanguageMenu}">
+                <MenuItem Header="{x:Static p:Resources.EnglishMenu}" Command="{Binding EnglishCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagEnImageSource}}"/>
+                <MenuItem Header="{x:Static p:Resources.ChineseMenu}" Command="{Binding ChineseCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagCNImageSource}}"/>
+            </MenuItem>
+            <MenuItem Header="{x:Static p:Resources.AboutMenu}" Command="{Binding AboutCommand}"/>
+        </Menu>
+
+        <TabControl x:Name="documentView" ItemsSource="{Binding DocumentViews}">
+            <TabItem Header="{x:Static p:Resources.UserBugsTitle}">
+                <ContentControl Content="{Binding ShellService.UserBugsView}" Margin="0,0,5,0"/>
+            </TabItem>
+            <TabItem Header="{x:Static p:Resources.TeamBugsTitle}">
+                <ContentControl Content="{Binding ShellService.TeamBugsView}" Margin="0,0,5,0"/>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

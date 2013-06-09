@@ -23,8 +23,6 @@ namespace Bugger.Applications.ViewModels
         }
 
         #region Properties
-        public string Title { get { return Resources.TeamBugsTitle; } }
-
         public ObservableCollection<Bug> Bugs { get { return this.dataService.TeamBugs; } }
         #endregion
     }

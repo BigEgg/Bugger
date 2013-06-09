@@ -35,9 +35,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.TFS.Presentati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.TFS.Test", "Bugger.Proxies\Bugger.Proxys.TFS.Test\Bugger.Proxy.TFS.Test.csproj", "{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Presentation.Test", "Bugger.Presentation.Test\Bugger.Presentation.Test.csproj", "{16E901F8-B205-48F3-B1CD-E631E7F30FFD}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 16
+		SccNumberOfProjects = 17
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs12
 		SccLocalPath0 = .
@@ -96,6 +98,9 @@ Global
 		SccProjectTopLevelParentUniqueName15 = Bugger.sln
 		SccProjectName15 = Bugger.Proxies/Bugger.Proxys.TFS.Test
 		SccLocalPath15 = Bugger.Proxies\\Bugger.Proxys.TFS.Test
+		SccProjectUniqueName16 = Bugger.Presentation.Test\\Bugger.Presentation.Test.csproj
+		SccProjectName16 = Bugger.Presentation.Test
+		SccLocalPath16 = Bugger.Presentation.Test
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -154,6 +159,10 @@ Global
 		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16E901F8-B205-48F3-B1CD-E631E7F30FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16E901F8-B205-48F3-B1CD-E631E7F30FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16E901F8-B205-48F3-B1CD-E631E7F30FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16E901F8-B205-48F3-B1CD-E631E7F30FFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

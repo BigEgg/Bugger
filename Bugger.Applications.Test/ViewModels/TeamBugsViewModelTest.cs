@@ -21,7 +21,6 @@ namespace Bugger.Applications.Test.ViewModels
             IDataService dataService = Container.GetExportedValue<IDataService>();
 
             TeamBugsViewModel viewModel = new TeamBugsViewModel(view, dataService);
-            Assert.AreEqual(Resources.TeamBugsTitle, viewModel.Title);
             Assert.AreEqual(0, viewModel.Bugs.Count);
 
             dataService.TeamBugs.Add(

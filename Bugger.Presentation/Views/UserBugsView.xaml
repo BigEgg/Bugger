@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="Bugger.Presentation.Views.UserBugsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:p="clr-namespace:Bugger.Presentation.Properties"
+             xmlns:dd="clr-namespace:Bugger.Presentation.DesignData"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleUserBugsViewModel, IsDesignTimeCreatable=True}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+            
+    </Grid>
+</UserControl>

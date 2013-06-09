@@ -134,6 +134,33 @@ For anyone want to have a gadget as a simple dashboard for bugs, this is what he
   <data name="AboutSourceCodeMessage" xml:space="preserve">
     <value>If any one want to see the source code, please go to:</value>
   </data>
+  <data name="BugAssignTo" xml:space="preserve">
+    <value>Assign To</value>
+  </data>
+  <data name="BugChangedDate" xml:space="preserve">
+    <value>Changed Date</value>
+  </data>
+  <data name="BugCreatedBy" xml:space="preserve">
+    <value>Create By</value>
+  </data>
+  <data name="BugDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="BugID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="BugPriority" xml:space="preserve">
+    <value>Pri.</value>
+  </data>
+  <data name="BugSeverity" xml:space="preserve">
+    <value>Sev.</value>
+  </data>
+  <data name="BugState" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="BugTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
   <data name="ChineseMenu" xml:space="preserve">
     <value>中文(_C)</value>
   </data>
@@ -161,9 +188,24 @@ For anyone want to have a gadget as a simple dashboard for bugs, this is what he
   <data name="ShowMainWindowMenu" xml:space="preserve">
     <value>_Show Main Window</value>
   </data>
+  <data name="SystemMenu" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="TeamBugs" xml:space="preserve">
+    <value>The bugs assign to or create by team member:</value>
+  </data>
+  <data name="TeamBugsTitle" xml:space="preserve">
+    <value>Bugs for team</value>
+  </data>
   <data name="UnknownError" xml:space="preserve">
     <value>Unknown Application Error
 
 {0}</value>
+  </data>
+  <data name="UserBugs" xml:space="preserve">
+    <value>The bugs assign to or create by me:</value>
+  </data>
+  <data name="UserBugsTitle" xml:space="preserve">
+    <value>Bugs for me</value>
   </data>
 </root>

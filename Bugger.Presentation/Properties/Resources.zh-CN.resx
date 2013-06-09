@@ -117,19 +117,95 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ActiveProxyMandatory" xml:space="preserve">
-    <value>The active proxy is mandatory.</value>
+  <data name="AboutEmailMessage" xml:space="preserve">
+    <value>有什么好点子，请联系：</value>
   </data>
-  <data name="ApplicationName" xml:space="preserve">
-    <value>Bugger</value>
+  <data name="AboutMenu" xml:space="preserve">
+    <value>关于(_A)</value>
   </data>
-  <data name="RefreshMinutesRange" xml:space="preserve">
-    <value>The refresh minutes must be between {1} and {2}.</value>
+  <data name="AboutMessage" xml:space="preserve">
+    <value>这是一个用来查看源代码管理器中指派给自己或者团队的Bug的小程序，并且显示Bug的状态，严重性，优先级等等。
+这个小程序类似于微软内部使用的从Product Studio查找Bug的小工具。可以很方便使用者来追踪指派给自己或者自己创建的Bug。
+如果任何人像有一个小工具来展示Bug的话，这个就是他们需要的。</value>
   </data>
-  <data name="RestartApplication" xml:space="preserve">
-    <value>Please restart the application so that the configuration changes take effect.</value>
+  <data name="AboutOK" xml:space="preserve">
+    <value>知道了</value>
   </data>
-  <data name="UserNameMandatory" xml:space="preserve">
-    <value>The user name is mandatory.</value>
+  <data name="AboutSourceCodeMessage" xml:space="preserve">
+    <value>如果想看源代码的话，下面是连接：</value>
+  </data>
+  <data name="BugAssignTo" xml:space="preserve">
+    <value>指派给</value>
+  </data>
+  <data name="BugChangedDate" xml:space="preserve">
+    <value>修改时间</value>
+  </data>
+  <data name="BugCreatedBy" xml:space="preserve">
+    <value>创建者</value>
+  </data>
+  <data name="BugDescription" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="BugID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="BugPriority" xml:space="preserve">
+    <value>优先</value>
+  </data>
+  <data name="BugSeverity" xml:space="preserve">
+    <value>严重</value>
+  </data>
+  <data name="BugState" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="BugTitle" xml:space="preserve">
+    <value>标题</value>
+  </data>
+  <data name="ChineseMenu" xml:space="preserve">
+    <value>中文(_C)</value>
+  </data>
+  <data name="CodePlex" xml:space="preserve">
+    <value>CodePlex</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>cd_bigegg@hotamil.com</value>
+  </data>
+  <data name="EnglishMenu" xml:space="preserve">
+    <value>_English</value>
+  </data>
+  <data name="ExitMenu" xml:space="preserve">
+    <value>退出(_X)</value>
+  </data>
+  <data name="GitHub" xml:space="preserve">
+    <value>GitHub</value>
+  </data>
+  <data name="LanguageMenu" xml:space="preserve">
+    <value>语言(_L)</value>
+  </data>
+  <data name="SettingMenu" xml:space="preserve">
+    <value>设置(_S)</value>
+  </data>
+  <data name="ShowMainWindowMenu" xml:space="preserve">
+    <value>显示主窗体(_S)</value>
+  </data>
+  <data name="SystemMenu" xml:space="preserve">
+    <value>系统</value>
+  </data>
+  <data name="TeamBugs" xml:space="preserve">
+    <value>指派给或创建于团队成员的Bug：</value>
+  </data>
+  <data name="TeamBugsTitle" xml:space="preserve">
+    <value>团队的Bug</value>
+  </data>
+  <data name="UnknownError" xml:space="preserve">
+    <value>未知程序错误
+
+{0}</value>
+  </data>
+  <data name="UserBugs" xml:space="preserve">
+    <value>自己创建或指派给自己的Bug：</value>
+  </data>
+  <data name="UserBugsTitle" xml:space="preserve">
+    <value>我的Bug</value>
   </data>
 </root>

@@ -129,12 +129,6 @@
   <data name="RestartApplication" xml:space="preserve">
     <value>要使新的配置生效，需要重新程序。</value>
   </data>
-  <data name="TeamBugsTitle" xml:space="preserve">
-    <value>团队的Bug</value>
-  </data>
-  <data name="UserBugsTitle" xml:space="preserve">
-    <value>我的Bug</value>
-  </data>
   <data name="UserNameMandatory" xml:space="preserve">
     <value>用户名是必须的。</value>
   </data>

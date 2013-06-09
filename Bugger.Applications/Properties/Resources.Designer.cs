@@ -97,24 +97,6 @@ namespace Bugger.Applications.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bugs for team.
-        /// </summary>
-        internal static string TeamBugsTitle {
-            get {
-                return ResourceManager.GetString("TeamBugsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bugs for me.
-        /// </summary>
-        internal static string UserBugsTitle {
-            get {
-                return ResourceManager.GetString("UserBugsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The user name is mandatory..
         /// </summary>
         internal static string UserNameMandatory {

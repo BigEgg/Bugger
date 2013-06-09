@@ -48,7 +48,9 @@ namespace Bugger.Presentation
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(IApplicationController).Assembly));
 
             // Add the Bugger.Proxy assemblies to the catalog
-            string proxyAsseblyPath = Path.Combine(Assembly.GetExecutingAssembly().Location, "Proxies");
+            string proxyAsseblyPath = Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                "Proxies");
             foreach (var file in new System.IO.DirectoryInfo(proxyAsseblyPath).GetFiles())
             {
                 if (file.Extension.ToLower() == "dll")
