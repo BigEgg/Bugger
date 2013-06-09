@@ -100,7 +100,7 @@ namespace Bugger.Proxy.TFS.ViewModels
         #region Private Commands Methods
         private bool CanTestConnectionExcute()
         {
-            return this.settings.ConnectUri != null && this.settings.ConnectUri.IsAbsoluteUri;
+            return this.settings.ConnectUri == null ? false : this.settings.ConnectUri.IsAbsoluteUri;
         }
 
         private void TestConnectionExcute()

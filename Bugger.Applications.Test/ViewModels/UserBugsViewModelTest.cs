@@ -4,9 +4,7 @@ using Bugger.Applications.Views;
 using Bugger.Domain.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Bugger.Applications.Test.ViewModels
 {
@@ -20,10 +18,9 @@ namespace Bugger.Applications.Test.ViewModels
             IDataService dataService = Container.GetExportedValue<IDataService>();
 
             UserBugsViewModel viewModel = new UserBugsViewModel(view, dataService);
-            Assert.AreEqual(0, viewModel.RedBugs.Count);
-            Assert.AreEqual(0, viewModel.YellowBugs.Count);
+            Assert.AreEqual(0, viewModel.Bugs.Count);
 
-            dataService.UserRedBugs.Add(
+            dataService.UserBugs.Add(
                 new Bug()
                 {
                     ID = 1,
@@ -38,7 +35,7 @@ namespace Bugger.Applications.Test.ViewModels
                     Severity = ""
                 }
             );
-            dataService.UserYellowBugs.Add(
+            dataService.UserBugs.Add(
                 new Bug()
                 {
                     ID = 6,
@@ -52,8 +49,9 @@ namespace Bugger.Applications.Test.ViewModels
                     Severity = "High"
                 }
             );
-            Assert.AreEqual(1, viewModel.RedBugs.Count);
-            Assert.AreEqual(1, viewModel.YellowBugs.Count);
+            Assert.AreEqual(2, viewModel.Bugs.Count);
+            Assert.AreEqual(1, viewModel.Bugs.Count(x => x.Type == BugType.Red));
+            Assert.AreEqual(1, viewModel.Bugs.Count(x => x.Type == BugType.Yellow));
         }
     }
 }

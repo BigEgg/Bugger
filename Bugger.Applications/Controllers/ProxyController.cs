@@ -29,6 +29,11 @@ namespace Bugger.Applications.Controllers
         #region Implement Controller base class
         protected override void OnInitialize()
         {
+            foreach (var proxy in this.proxyService.Proxys)
+            {
+                proxy.Initialize();
+            }
+
             if (this.ProxyService.Proxys.Any(x => x.ProxyName == Settings.Default.ActiveProxy))
             {
                 this.proxyService.ActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == Settings.Default.ActiveProxy);
@@ -40,11 +45,6 @@ namespace Bugger.Applications.Controllers
             else
             {
                 this.proxyService.ActiveProxy = null;
-            }
-
-            foreach (var proxy in this.proxyService.Proxys)
-            {
-                proxy.Initialize();
             }
         }
 

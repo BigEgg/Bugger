@@ -23,6 +23,5 @@ namespace Bugger.Applications.Views
         void Show();
 
         void Close();
-
     }
 }

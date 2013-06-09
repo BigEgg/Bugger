@@ -134,8 +134,8 @@ For anyone want to have a gadget as a simple dashboard for bugs, this is what he
   <data name="AboutSourceCodeMessage" xml:space="preserve">
     <value>If any one want to see the source code, please go to:</value>
   </data>
-  <data name="BugAssignTo" xml:space="preserve">
-    <value>Assign To</value>
+  <data name="BugAssignedTo" xml:space="preserve">
+    <value>Assigned To</value>
   </data>
   <data name="BugChangedDate" xml:space="preserve">
     <value>Changed Date</value>
@@ -181,6 +181,9 @@ For anyone want to have a gadget as a simple dashboard for bugs, this is what he
   </data>
   <data name="LanguageMenu" xml:space="preserve">
     <value>_Language</value>
+  </data>
+  <data name="RefreshMenu" xml:space="preserve">
+    <value>_Refresh</value>
   </data>
   <data name="SettingMenu" xml:space="preserve">
     <value>_Setting</value>

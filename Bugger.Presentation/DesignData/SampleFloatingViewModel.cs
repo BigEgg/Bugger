@@ -1,6 +1,7 @@
 ﻿using BigEgg.Framework.Presentation;
 using Bugger.Applications.ViewModels;
 using Bugger.Applications.Views;
+using Bugger.Presentation.Services;
 using System;
 using System.ComponentModel;
 
@@ -9,7 +10,7 @@ namespace Bugger.Presentation.DesignData
     public class SampleFloatingViewModel : FloatingViewModel
     {
         public SampleFloatingViewModel()
-            : base(new MockFloatingView(), new MockDataService(), null)
+            : base(new MockFloatingView(), new MockDataService(), new PresentationService())
         {
         }
 
@@ -18,10 +19,6 @@ namespace Bugger.Presentation.DesignData
             public double Left { get; set; }
 
             public double Top { get; set; }
-
-            public double Width { get; set; }
-
-            public double Height { get; set; }
 
 
             public event CancelEventHandler Closing;

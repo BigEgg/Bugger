@@ -10,10 +10,6 @@ namespace Bugger.Applications.Views
 
         double Top { get; set; }
 
-        double Width { get; set; }
-
-        double Height { get; set; }
-
 
         event CancelEventHandler Closing;
 

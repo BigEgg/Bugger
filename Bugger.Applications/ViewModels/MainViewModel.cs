@@ -44,10 +44,13 @@ namespace Bugger.Applications.ViewModels
                 ViewCore.Width = Settings.Default.MainWindowWidth;
             }
 
+            this.IsShutDown = false;
         }
 
         #region Properties
         public string Title { get { return Resources.ApplicationName; } }
+
+        public bool IsShutDown { get; internal set; }
 
         public IShellService ShellService { get { return this.shellService; } }
 

@@ -1,5 +1,4 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Applications.Properties;
 using Bugger.Applications.Services;
 using Bugger.Applications.Views;
 using Bugger.Domain.Models;
@@ -23,9 +22,7 @@ namespace Bugger.Applications.ViewModels
         }
 
         #region Properties
-        public ObservableCollection<Bug> RedBugs { get { return this.dataService.UserRedBugs; } }
-
-        public ObservableCollection<Bug> YellowBugs { get { return this.dataService.UserYellowBugs; } }
+        public ObservableCollection<Bug> Bugs { get { return this.dataService.UserBugs; } }
         #endregion
     }
 }

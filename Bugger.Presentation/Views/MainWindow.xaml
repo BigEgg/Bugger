@@ -7,16 +7,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleMainViewModel, IsDesignTimeCreatable=True}"
         Icon="{Binding Mode=OneWay, Source={StaticResource BuggerImageSource}}"
-        ResizeMode="NoResize" Title="MainWindow" Height="300" Width="300">
+        Title="MainWindow" Height="650" Width="420" Closing="Window_Closing">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{x:Static p:Resources.SystemMenu}">
+                <MenuItem Header="{x:Static p:Resources.RefreshMenu}" Command="{Binding RefreshBugsCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource RefreshImage}}"/>
+                <Separator/>
+                <MenuItem Header="{x:Static p:Resources.SettingMenu}" Command="{Binding SettingCommand}" Icon="{StaticResource SettingImage}"/>
+                <Separator/>
                 <MenuItem Header="{x:Static p:Resources.ExitMenu}" Command="{Binding ExitCommand}"/>
-                <MenuItem Header="{x:Static p:Resources.SettingMenu}" Command="{Binding SettingCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource SettingImageSource}}"/>
             </MenuItem>
             <MenuItem Header="{x:Static p:Resources.LanguageMenu}">
-                <MenuItem Header="{x:Static p:Resources.EnglishMenu}" Command="{Binding EnglishCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagEnImageSource}}"/>
-                <MenuItem Header="{x:Static p:Resources.ChineseMenu}" Command="{Binding ChineseCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagCNImageSource}}"/>
+                <MenuItem Header="{x:Static p:Resources.EnglishMenu}" Command="{Binding EnglishCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagEnImage}}"/>
+                <MenuItem Header="{x:Static p:Resources.ChineseMenu}" Command="{Binding ChineseCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagCNImage}}"/>
             </MenuItem>
             <MenuItem Header="{x:Static p:Resources.AboutMenu}" Command="{Binding AboutCommand}"/>
         </Menu>

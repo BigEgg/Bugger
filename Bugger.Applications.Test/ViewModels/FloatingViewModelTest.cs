@@ -9,9 +9,6 @@ using Bugger.Applications.Views;
 using Bugger.Domain.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
 
 namespace Bugger.Applications.Test.ViewModels
@@ -55,7 +52,7 @@ namespace Bugger.Applications.Test.ViewModels
             IDataService dataService = Container.GetExportedValue<IDataService>();
 
             AssertHelper.PropertyChangedEvent(viewModel, x => x.RedBugCount, () =>
-                dataService.UserRedBugs.Add(
+                dataService.UserBugs.Add(
                     new Bug()
                     {
                         ID = 1,
@@ -74,7 +71,7 @@ namespace Bugger.Applications.Test.ViewModels
             Assert.AreEqual(viewModel.RedBugCount, 1);
 
             AssertHelper.PropertyChangedEvent(viewModel, x => x.YellowBugCount, () =>
-                dataService.UserYellowBugs.Add(
+                dataService.UserBugs.Add(
                     new Bug()
                     {
                         ID = 6,
@@ -128,22 +125,18 @@ namespace Bugger.Applications.Test.ViewModels
             presentationService.VirtualScreenWidth = 1000;
             presentationService.VirtualScreenHeight = 700;
 
-            SetSettingsValues(20, 10, 100, 30);
+            SetSettingsValues(20, 10);
 
             FloatingViewModel viewModel = Container.GetExportedValue<FloatingViewModel>();
             MockFloatingView view = (MockFloatingView)Container.GetExportedValue<IFloatingView>();
             Assert.AreEqual(20, view.Left);
             Assert.AreEqual(10, view.Top);
-            Assert.AreEqual(100, view.Width);
-            Assert.AreEqual(30, view.Height);
 
             view.Left = 25;
             view.Top = 15;
-            view.Width = 150;
-            view.Height = 35;
 
             view.Close();
-            AssertSettingsValues(25, 15, 150, 35);
+            AssertSettingsValues(25, 15);
         }
 
         [TestMethod]
@@ -160,44 +153,35 @@ namespace Bugger.Applications.Test.ViewModels
 
             SetSettingsValues();
             new FloatingViewModel(view, dataService, presentationService).Close();
-            AssertSettingsValues(double.NaN, double.NaN, double.NaN, double.NaN);
+            AssertSettingsValues(0, 0);
 
-            // Height is 0 => don't apply the Settings values
-            SetSettingsValues(0, 0, 1, 0);
+            // Left = 881 + Width(120) = 901 > VirtualScreenWidth = 1000 => don't apply the Settings values
+            SetSettingsValues(881, 100);
             new FloatingViewModel(view, dataService, presentationService).Close();
-            AssertSettingsValues(double.NaN, double.NaN, double.NaN, double.NaN);
+            AssertSettingsValues(0, 0);
 
-            // Left = 100 + Width = 901 > VirtualScreenWidth = 1000 => don't apply the Settings values
-            SetSettingsValues(100, 100, 901, 100);
+            // Top = 681 + Height(20) = 701 > VirtualScreenWidth = 600 => don't apply the Settings values
+            SetSettingsValues(100, 681);
             new FloatingViewModel(view, dataService, presentationService).Close();
-            AssertSettingsValues(double.NaN, double.NaN, double.NaN, double.NaN);
-
-            // Top = 100 + Height = 601 > VirtualScreenWidth = 600 => don't apply the Settings values
-            SetSettingsValues(100, 100, 100, 601);
-            new FloatingViewModel(view, dataService, presentationService).Close();
-            AssertSettingsValues(double.NaN, double.NaN, double.NaN, double.NaN);
+            AssertSettingsValues(0, 0);
 
             // Use the limit values => apply the Settings values
-            SetSettingsValues(0, 0, 1000, 700);
+            SetSettingsValues(880, 680);
             new FloatingViewModel(view, dataService, presentationService).Close();
-            AssertSettingsValues(0, 0, 1000, 700);
+            AssertSettingsValues(880, 680);
         }
 
 
-        private void SetSettingsValues(double left = 0, double top = 0, double width = 0, double height = 0)
+        private void SetSettingsValues(double left = 0, double top = 0)
         {
             Settings.Default.FloatingWindowLeft = left;
             Settings.Default.FloatingWindowTop = top;
-            Settings.Default.FloatingWindowWidth = width;
-            Settings.Default.FloatingWindowHeight = height;
         }
 
-        private void AssertSettingsValues(double left, double top, double width, double height)
+        private void AssertSettingsValues(double left, double top)
         {
             Assert.AreEqual(left, Settings.Default.FloatingWindowLeft);
             Assert.AreEqual(top, Settings.Default.FloatingWindowTop);
-            Assert.AreEqual(width, Settings.Default.FloatingWindowWidth);
-            Assert.AreEqual(height, Settings.Default.FloatingWindowHeight);
         }
     }
 }

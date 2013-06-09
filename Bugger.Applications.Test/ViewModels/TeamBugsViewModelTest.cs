@@ -1,13 +1,9 @@
-﻿using Bugger.Applications.Properties;
-using Bugger.Applications.Services;
+﻿using Bugger.Applications.Services;
 using Bugger.Applications.ViewModels;
 using Bugger.Applications.Views;
 using Bugger.Domain.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Bugger.Applications.Test.ViewModels
 {

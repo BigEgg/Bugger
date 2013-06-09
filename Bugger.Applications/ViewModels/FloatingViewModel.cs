@@ -2,10 +2,12 @@
 using Bugger.Applications.Properties;
 using Bugger.Applications.Services;
 using Bugger.Applications.Views;
+using Bugger.Domain.Models;
 using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Linq;
 using System.Windows.Input;
 
 namespace Bugger.Applications.ViewModels
@@ -15,9 +17,6 @@ namespace Bugger.Applications.ViewModels
     {
         #region Fields
         private readonly IDataService dataService;
-
-        private int redBugCount;
-        private int yellowBugCount;
 
         private ICommand showMainWindowCommand;
         private ICommand refreshBugsCommand;
@@ -37,29 +36,26 @@ namespace Bugger.Applications.ViewModels
             view.Closed += ViewClosed;
 
             // Restore the window size when the values are valid.
-            if (Settings.Default.FloatingWindowLeft >= 0 && Settings.Default.FloatingWindowTop >= 0 && Settings.Default.FloatingWindowWidth > 0 && Settings.Default.FloatingWindowHeight > 0
-                && Settings.Default.FloatingWindowLeft + Settings.Default.FloatingWindowWidth <= presentationService.VirtualScreenWidth
-                && Settings.Default.FloatingWindowTop + Settings.Default.FloatingWindowHeight <= presentationService.VirtualScreenHeight)
+            if (Settings.Default.FloatingWindowLeft >= 0 && Settings.Default.FloatingWindowTop >= 0
+                && Settings.Default.FloatingWindowLeft + 120 <= presentationService.VirtualScreenWidth
+                && Settings.Default.FloatingWindowTop + 20 <= presentationService.VirtualScreenHeight)
             {
                 ViewCore.Left = Settings.Default.FloatingWindowLeft;
                 ViewCore.Top = Settings.Default.FloatingWindowTop;
-                ViewCore.Height = Settings.Default.FloatingWindowHeight;
-                ViewCore.Width = Settings.Default.FloatingWindowWidth;
             }
 
-            AddWeakEventListener(this.dataService.UserRedBugs, UserRedBugsCollectionChanged);
-            AddWeakEventListener(this.dataService.UserYellowBugs, UserYellowBugsCollectionChanged);
+            AddWeakEventListener(this.dataService.UserBugs, UserBugsCollectionChanged);
         }
 
         #region Properties
         public int RedBugCount
         {
-            get { return this.dataService.UserRedBugs.Count; }
+            get { return this.dataService.UserBugs.Count(x=>x.Type == BugType.Red); }
         }
 
         public int YellowBugCount
         {
-            get { return this.dataService.UserYellowBugs.Count; }
+            get { return this.dataService.UserBugs.Count(x => x.Type == BugType.Yellow); }
         }
 
         public ICommand ShowMainWindowCommand
@@ -182,17 +178,11 @@ namespace Bugger.Applications.ViewModels
         {
             Settings.Default.FloatingWindowLeft = ViewCore.Left;
             Settings.Default.FloatingWindowTop = ViewCore.Top;
-            Settings.Default.FloatingWindowHeight = ViewCore.Height;
-            Settings.Default.FloatingWindowWidth = ViewCore.Width;
         }
 
-        private void UserRedBugsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void UserBugsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             RaisePropertyChanged("RedBugCount");
-        }
-
-        private void UserYellowBugsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
             RaisePropertyChanged("YellowBugCount");
         }
         #endregion

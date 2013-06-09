@@ -86,6 +86,8 @@ namespace Bugger.Applications.Controllers
             this.mainViewModel.AboutCommand = this.aboutCommand;
             this.mainViewModel.ExitCommand = this.exitCommand;
 
+            (this.userBugsViewModel.View as IUserBugsView).CreateGroupedBugs();
+
             this.proxyController.Initialize();
             this.dataController.Initialize();
         }
@@ -134,6 +136,8 @@ namespace Bugger.Applications.Controllers
 
         private void ExitCommandExcute()
         {
+            this.mainViewModel.IsShutDown = true;
+
             this.floatingViewModel.Close();
             this.mainViewModel.Close();
         }

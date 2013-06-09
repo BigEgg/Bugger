@@ -1,5 +1,4 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Applications.Properties;
 using Bugger.Applications.Services;
 using Bugger.Applications.Views;
 using Bugger.Domain.Models;

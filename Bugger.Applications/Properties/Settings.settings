@@ -8,12 +8,6 @@
     <Setting Name="FloatingWindowTop" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="FloatingWindowHeight" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="FloatingWindowWidth" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="AutoQueryMinutes" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">30</Value>
     </Setting>

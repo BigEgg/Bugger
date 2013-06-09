@@ -7,37 +7,44 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleFloatingViewModel, IsDesignTimeCreatable=True}"
         Icon="{Binding Mode=OneWay, Source={StaticResource BuggerImageSource}}"
-        Height="40" Width="150" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" Background="White" Topmost="True" Opacity="0.8">
+        Height="20" Width="100" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" 
+        Background="White" Topmost="True" Opacity="0.8" 
+        MouseDoubleClick="window_MouseDoubleClick" MouseDown="window_MouseDown" ShowInTaskbar="False">
     <Window.Resources>
         <Storyboard x:Key="OnMouseEnter">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="window">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0.8"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="window">
-                <EasingDoubleKeyFrame KeyTime="0" Value="150"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="170"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="120"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="refresh">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1"/>
+            	<EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="setting">
+        </Storyboard>
+        <Storyboard x:Key="OnMouseLeave">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="refresh">
                 <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="window">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0.8"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="window">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="100"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="{x:Static p:Resources.ShowMainWindowMenu}" Command="{Binding ShowMainWindowCommand}"/>
+            <MenuItem Header="{x:Static p:Resources.RefreshMenu}" Command="{Binding RefreshBugsCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource RefreshImage}}"/>
             <Separator/>
             <MenuItem Header="{x:Static p:Resources.LanguageMenu}">
-                <MenuItem Header="{x:Static p:Resources.EnglishMenu}" Command="{Binding EnglishCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagEnImageSource}}"/>
-                <MenuItem Header="{x:Static p:Resources.ChineseMenu}" Command="{Binding ChineseCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagCNImageSource}}"/>
+                <MenuItem Header="{x:Static p:Resources.EnglishMenu}" Command="{Binding EnglishCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagEnImage}}"/>
+                <MenuItem Header="{x:Static p:Resources.ChineseMenu}" Command="{Binding ChineseCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagCNImage}}"/>
             </MenuItem>
             <Separator/>
-            <MenuItem Header="{x:Static p:Resources.SettingMenu}" Command="{Binding SettingCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource SettingImageSource}}"/>
+            <MenuItem Header="{x:Static p:Resources.SettingMenu}" Command="{Binding SettingCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource SettingImage}}"/>
             <Separator/>
             <MenuItem Header="{x:Static p:Resources.AboutMenu}" Command="{Binding AboutCommand}"/>
             <Separator/>
@@ -49,40 +56,33 @@
             <BeginStoryboard x:Name="OnMouseEnter_BeginStoryboard" Storyboard="{StaticResource OnMouseEnter}"/>
         </EventTrigger>
         <EventTrigger RoutedEvent="Mouse.MouseLeave">
-            <RemoveStoryboard BeginStoryboardName="OnMouseEnter_BeginStoryboard"/>
+            <BeginStoryboard x:Name="OnMouseLeave_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave}"/>
         </EventTrigger>
     </Window.Triggers>
-    <Grid Width="170">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Grid Width="120">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.ColumnSpan="1" Grid.RowSpan="2">
+        <Grid Grid.ColumnSpan="1" IsHitTestVisible="False">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Image HorizontalAlignment="Center" Margin="3" VerticalAlignment="Center" Source="{Binding Mode=OneWay, Source={StaticResource RedGiftboxImageSource}}"/>
             <TextBlock Grid.Column="1" Margin="10,0" Text="{Binding RedBugCount, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
-        <Grid Grid.ColumnSpan="1" Grid.Column="1" Grid.RowSpan="2">
+        <Grid Grid.ColumnSpan="1" Grid.Column="1" IsHitTestVisible="False">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Image HorizontalAlignment="Center" Margin="3" VerticalAlignment="Center" Source="{Binding Mode=OneWay, Source={StaticResource YellowGiftboxImageSource}}"/>
             <TextBlock Grid.Column="1" Margin="10,0" Text="{Binding YellowBugCount, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
-        <Button x:Name="refresh" Command="{Binding RefreshBugsCommand}" Grid.Column="2" Margin="0" Opacity="0">
+        <Button x:Name="refresh" Command="{Binding RefreshBugsCommand}" Grid.Column="2" Opacity="0">
             <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Mode=OneWay, Source={StaticResource RefreshImageSource}}" IsHitTestVisible="False"/>
-        </Button>
-        <Button x:Name="setting" Command="{Binding SettingCommand}" Grid.Column="2" Grid.Row="1" Margin="0" Opacity="0">
-            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Mode=OneWay, Source={StaticResource SettingImageSource}}" IsHitTestVisible="False"/>
         </Button>
     </Grid>
 </Window>

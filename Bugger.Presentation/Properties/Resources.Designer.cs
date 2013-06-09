@@ -108,11 +108,11 @@ namespace Bugger.Presentation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assign To.
+        ///   Looks up a localized string similar to Assigned To.
         /// </summary>
-        public static string BugAssignTo {
+        public static string BugAssignedTo {
             get {
-                return ResourceManager.GetString("BugAssignTo", resourceCulture);
+                return ResourceManager.GetString("BugAssignedTo", resourceCulture);
             }
         }
         
@@ -248,6 +248,15 @@ namespace Bugger.Presentation.Properties {
         public static string LanguageMenu {
             get {
                 return ResourceManager.GetString("LanguageMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Refresh.
+        /// </summary>
+        public static string RefreshMenu {
+            get {
+                return ResourceManager.GetString("RefreshMenu", resourceCulture);
             }
         }
         

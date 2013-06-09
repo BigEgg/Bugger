@@ -1,4 +1,5 @@
-﻿using BigEgg.Framework.Applications;
+﻿using BigEgg.Framework;
+using BigEgg.Framework.Applications;
 using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Applications.Controllers;
 using System;
@@ -25,6 +26,9 @@ namespace Bugger.Presentation
 
         public App()
         {
+#if (DEBUG)
+            BEConfiguration.Debug = true;
+#endif
         }
 
 
@@ -53,7 +57,7 @@ namespace Bugger.Presentation
                 "Proxies");
             foreach (var file in new System.IO.DirectoryInfo(proxyAsseblyPath).GetFiles())
             {
-                if (file.Extension.ToLower() == "dll")
+                if (file.Extension.ToLower() == ".dll" && file.Name.StartsWith("Bugger.Proxy."))
                 {
                     catalog.Catalogs.Add(new AssemblyCatalog(file.FullName));
                 }

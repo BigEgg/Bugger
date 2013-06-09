@@ -10,8 +10,7 @@ namespace Bugger.Applications.Services
     internal class DataService : DataModel, IDataService
     {
         #region Fields
-        private MultiThreadingObservableCollection<Bug> userRedBugs;
-        private MultiThreadingObservableCollection<Bug> userYellowBugs;
+        private MultiThreadingObservableCollection<Bug> userBugs;
         private MultiThreadingObservableCollection<Bug> teamBugs;
         private DateTime refreshTime;
         #endregion
@@ -19,21 +18,15 @@ namespace Bugger.Applications.Services
         [ImportingConstructor]
         public DataService()
         {
-            this.userRedBugs = new MultiThreadingObservableCollection<Bug>();
-            this.userYellowBugs = new MultiThreadingObservableCollection<Bug>();
+            this.userBugs = new MultiThreadingObservableCollection<Bug>();
             this.teamBugs = new MultiThreadingObservableCollection<Bug>();
             this.refreshTime = DateTime.Now;
         }
 
         #region Properties
-        public MultiThreadingObservableCollection<Bug> UserRedBugs 
+        public MultiThreadingObservableCollection<Bug> UserBugs
         {
-            get { return this.userRedBugs; }
-        }
-
-        public MultiThreadingObservableCollection<Bug> UserYellowBugs
-        {
-            get { return this.userYellowBugs; }
+            get { return this.userBugs; }
         }
         
         public MultiThreadingObservableCollection<Bug> TeamBugs

@@ -3,6 +3,7 @@ using Bugger.Applications.Services;
 using Bugger.Domain.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace Bugger.Applications.Test.Services
 {
@@ -14,11 +15,10 @@ namespace Bugger.Applications.Test.Services
         {
             IDataService dataService = Container.GetExportedValue<IDataService>();
 
-            Assert.AreEqual(dataService.UserRedBugs.Count, 0);
-            Assert.AreEqual(dataService.UserYellowBugs.Count, 0);
+            Assert.AreEqual(dataService.UserBugs.Count, 0);
             Assert.AreEqual(dataService.TeamBugs.Count, 0);
 
-            dataService.UserRedBugs.Add(
+            dataService.UserBugs.Add(
                 new Bug()
                 {
                     ID = 1,
@@ -34,9 +34,9 @@ namespace Bugger.Applications.Test.Services
                 }
             );
 
-            Assert.AreEqual(dataService.UserRedBugs.Count, 1);
+            Assert.AreEqual(dataService.UserBugs.Count, 1);
 
-            dataService.UserYellowBugs.Add(
+            dataService.UserBugs.Add(
                 new Bug()
                 {
                     ID = 6,
@@ -51,7 +51,9 @@ namespace Bugger.Applications.Test.Services
                 }
             );
 
-            Assert.AreEqual(dataService.UserYellowBugs.Count, 1);
+            Assert.AreEqual(dataService.UserBugs.Count, 2);
+            Assert.AreEqual(dataService.UserBugs.Count(x => x.Type == BugType.Red), 1);
+            Assert.AreEqual(dataService.UserBugs.Count(x => x.Type == BugType.Yellow), 1);
 
             dataService.TeamBugs.Add(
                 new Bug()

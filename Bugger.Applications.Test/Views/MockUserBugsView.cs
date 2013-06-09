@@ -7,5 +7,7 @@ namespace Bugger.Applications.Test.Views
     [Export(typeof(IUserBugsView)), Export]
     public class MockUserBugsView : MockView, IUserBugsView
     {
+        public void CreateGroupedBugs()
+        {}
     }
 }

@@ -6,9 +6,9 @@
         xmlns:dd="clr-namespace:Bugger.Presentation.DesignData"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleAboutDialogViewModel, IsDesignTimeCreatable=True}"
-        Title="{Binding Title}" Height="350" Width="400" ResizeMode="NoResize"
+        Title="{Binding Title}" Height="360" Width="400" ResizeMode="NoResize"
         Icon="{Binding Mode=OneWay, Source={StaticResource BuggerImageSource}}"
-        ShowInTaskbar="False" WindowStartupLocation="CenterScreen">
+        ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
