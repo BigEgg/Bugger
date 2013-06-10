@@ -36,3 +36,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: InternalsVisibleTo("Bugger.Proxy.TFS.Test")]
 [assembly: InternalsVisibleTo("Bugger.Proxy.TFS.Presentation")]
+[assembly: InternalsVisibleTo("Bugger.Proxy.TFS.Presentation.Fake")]

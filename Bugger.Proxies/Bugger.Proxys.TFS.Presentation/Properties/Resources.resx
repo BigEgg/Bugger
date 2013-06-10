@@ -162,4 +162,7 @@
   <data name="UserName" xml:space="preserve">
     <value>User _name</value>
   </data>
+  <data name="SettingViewTitle" xml:space="preserve">
+    <value>TFS Proxy</value>
+  </data>
 </root>

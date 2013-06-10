@@ -14,5 +14,8 @@ namespace Bugger.Presentation.Views
         {
             InitializeComponent();
         }
+
+
+        public string Title { get { return Properties.Resources.SettingsViewTitle; } }
     }
 }

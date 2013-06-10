@@ -35,6 +35,8 @@ namespace Bugger.Proxy.TFS.Presentation.Views
         }
 
 
+        public string Title { get { return Properties.Resources.SettingViewTitle; } }
+
         private TFSSettingViewModel ViewModel { get { return viewModel.Value; } }
 
 

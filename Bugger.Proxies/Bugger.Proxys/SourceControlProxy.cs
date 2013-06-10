@@ -49,7 +49,7 @@ namespace Bugger.Proxy
         /// <value>
         /// The setting view.
         /// </value>
-        public virtual object SettingView { get { return null; } }
+        public virtual ISettingView SettingView { get { return null; } }
         #endregion
 
         #region Methods

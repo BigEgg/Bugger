@@ -153,7 +153,7 @@ namespace Bugger.Applications.Controllers
         {
             ISettingDialogView settingDialogView = container.GetExportedValue<ISettingDialogView>();
             ISettingsView settingsView = container.GetExportedValue<ISettingsView>();
-            IProxyService proxyService = container.GetExportedValue<IProxyService>();
+            IProxyService proxyService = this.proxyController.ProxyService;
 
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsView, proxyService, Settings.Default.TeamMembers);
             settingsViewModel.ActiveProxy = proxyService.ActiveProxy.ProxyName;

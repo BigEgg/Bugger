@@ -288,6 +288,15 @@ namespace Bugger.Presentation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Basic Settings.
+        /// </summary>
+        public static string SettingsViewTitle {
+            get {
+                return ResourceManager.GetString("SettingsViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Show Main Window.
         /// </summary>
         public static string ShowMainWindowMenu {

@@ -1,4 +1,5 @@
 ﻿using BigEgg.Framework.Presentation;
+using Bugger.Proxy.TFS.Presentation.Properties;
 using Bugger.Proxy.TFS.ViewModels;
 using Bugger.Proxy.TFS.Views;
 using System;
@@ -21,6 +22,7 @@ namespace Bugger.Proxy.TFS.Presentation.DesignData
 
         private class MockTFSSettingView : MockView, ITFSSettingView
         {
+            public string Title { get { return Resources.SettingViewTitle; } }
         }
     }
 }

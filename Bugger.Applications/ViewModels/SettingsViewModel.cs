@@ -72,7 +72,7 @@ namespace Bugger.Applications.ViewModels
 
         public ObservableCollection<string> TeamMembers { get { return this.teamMembers; } }
 
-        public string TeamMembersString { get { return String.Join(TeamMemberSplitString, this.teamMembers); } }
+        internal string TeamMembersString { get { return String.Join(TeamMemberSplitString, this.teamMembers); } }
 
         public ObservableCollection<string> SelectedTeamMembers { get { return this.selectedTeamMembers; } }
 

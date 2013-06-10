@@ -6,7 +6,7 @@
         xmlns:dd="clr-namespace:Bugger.Presentation.DesignData"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleSettingDialogViewModel, IsDesignTimeCreatable=True}"
-        Title="{Binding Title}" Height="360" Width="400" ResizeMode="NoResize"
+        Title="{Binding Title}" Height="500" Width="500" ResizeMode="NoResize"
         Icon="{Binding Mode=OneWay, Source={StaticResource BuggerImageSource}}"
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Grid Margin="10">
@@ -19,8 +19,18 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <TabControl Grid.ColumnSpan="3">
-            
+        <TabControl Grid.ColumnSpan="3" ItemsSource="{Binding Views}">
+            <TabControl.RenderTransform>
+                <TranslateTransform/>
+            </TabControl.RenderTransform>
+
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                    <Setter Property="Header" Value="{Binding Title}"/>
+                </Style>
+            </TabControl.ItemContainerStyle>
         </TabControl>
+        <Button Content="{x:Static p:Resources.SettingSubmit}" Grid.Column="1" HorizontalAlignment="Right" Margin="0" Grid.Row="1" VerticalAlignment="Bottom" Width="75" Height="25" Command="{Binding SubmitCommand, Mode=OneWay}"/>
+        <Button Content="{x:Static p:Resources.SettingCancel}" Grid.Column="2" HorizontalAlignment="Right" Margin="0" Grid.Row="1" VerticalAlignment="Bottom" Width="75" IsCancel="True" Height="25" Command="{Binding CancelCommand, Mode=OneWay}"/>
     </Grid>
 </Window>

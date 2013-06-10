@@ -25,7 +25,7 @@ namespace Bugger.Proxy
         /// <value>
         /// The setting view.
         /// </value>
-        object SettingView { get; }
+        ISettingView SettingView { get; }
         #endregion
 
         #region Methods

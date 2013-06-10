@@ -65,6 +65,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\BugTypeToImageConveter.cs" />
+    <Compile Include="DesignData\FakeProxy.cs" />
     <Compile Include="DesignData\MockDataService.cs" />
     <Compile Include="DesignData\MockProxyService.cs" />
     <Compile Include="DesignData\MockShellService.cs" />
@@ -135,10 +136,6 @@
     <ProjectReference Include="..\Bugger.Domain\Bugger.Domain.csproj">
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
       <Name>Bugger.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxys.FakeProxy\Bugger.Proxy.FakeProxy.csproj">
-      <Project>{9d384026-d73b-4ba9-9ae3-7d2172c438ce}</Project>
-      <Name>Bugger.Proxy.FakeProxy</Name>
     </ProjectReference>
     <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxys\Bugger.Proxy.csproj">
       <Project>{e8727087-75f2-435f-bd11-78b4dff59a40}</Project>

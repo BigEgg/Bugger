@@ -50,7 +50,7 @@ namespace Bugger.Proxy.TFS
         }
 
         #region Properties
-        public override object SettingView { get { return this.settingViewModel.View; } }
+        public override ISettingView SettingView { get { return this.settingViewModel.View as ISettingView; } }
         #endregion
 
         #region Methods

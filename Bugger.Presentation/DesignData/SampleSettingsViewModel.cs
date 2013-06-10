@@ -13,6 +13,8 @@ namespace Bugger.Presentation.DesignData
         }
 
         private class MockSettingsView : MockView, ISettingsView
-        {}
+        {
+            public string Title { get { return Properties.Resources.SettingsViewTitle; } }
+        }
     }
 }

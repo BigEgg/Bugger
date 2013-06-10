@@ -57,6 +57,10 @@
       <Project>{5714b0c6-82f3-4cc6-b33e-e3f8835c38fc}</Project>
       <Name>Bugger.Proxy.TFS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxy.csproj">
+      <Project>{e8727087-75f2-435f-bd11-78b4dff59a40}</Project>
+      <Name>Bugger.Proxy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

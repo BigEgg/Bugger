@@ -1,7 +1,6 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Applications.Services;
 using Bugger.Proxy;
-using Bugger.Proxy.FakeProxy;
 using System;
 using System.Collections.Generic;
 

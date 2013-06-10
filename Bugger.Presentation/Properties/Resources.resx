@@ -194,6 +194,9 @@ For anyone want to have a gadget as a simple dashboard for bugs, this is what he
   <data name="SettingSubmit" xml:space="preserve">
     <value>_Submit</value>
   </data>
+  <data name="SettingsViewTitle" xml:space="preserve">
+    <value>Basic Settings</value>
+  </data>
   <data name="ShowMainWindowMenu" xml:space="preserve">
     <value>_Show Main Window</value>
   </data>

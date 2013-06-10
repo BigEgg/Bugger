@@ -38,6 +38,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ISettingView.cs" />
     <Compile Include="ISourceControlProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceControlProxy.cs" />
