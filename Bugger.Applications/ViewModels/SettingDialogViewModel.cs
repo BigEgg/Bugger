@@ -43,8 +43,6 @@ namespace Bugger.Applications.ViewModels
         public ICommand CancelCommand { get { return this.cancelCommand; } }
 
         public ObservableCollection<object> Views { get { return this.views; } }
-
-        protected IProxyService ProxyService { get { return this.proxyService; } }
         #endregion
 
         #region Private Properties

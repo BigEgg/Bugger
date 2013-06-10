@@ -261,11 +261,29 @@ namespace Bugger.Presentation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Cancel.
+        /// </summary>
+        public static string SettingCancel {
+            get {
+                return ResourceManager.GetString("SettingCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Setting.
         /// </summary>
         public static string SettingMenu {
             get {
                 return ResourceManager.GetString("SettingMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Submit.
+        /// </summary>
+        public static string SettingSubmit {
+            get {
+                return ResourceManager.GetString("SettingSubmit", resourceCulture);
             }
         }
         

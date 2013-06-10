@@ -185,8 +185,14 @@
   <data name="RefreshMenu" xml:space="preserve">
     <value>刷新(_R)</value>
   </data>
+  <data name="SettingCancel" xml:space="preserve">
+    <value>算了(_C)</value>
+  </data>
   <data name="SettingMenu" xml:space="preserve">
     <value>设置(_S)</value>
+  </data>
+  <data name="SettingSubmit" xml:space="preserve">
+    <value>就这样(_S)</value>
   </data>
   <data name="ShowMainWindowMenu" xml:space="preserve">
     <value>显示主窗体(_S)</value>

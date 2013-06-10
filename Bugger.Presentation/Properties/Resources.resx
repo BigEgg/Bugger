@@ -185,8 +185,14 @@ For anyone want to have a gadget as a simple dashboard for bugs, this is what he
   <data name="RefreshMenu" xml:space="preserve">
     <value>_Refresh</value>
   </data>
+  <data name="SettingCancel" xml:space="preserve">
+    <value>_Cancel</value>
+  </data>
   <data name="SettingMenu" xml:space="preserve">
     <value>_Setting</value>
+  </data>
+  <data name="SettingSubmit" xml:space="preserve">
+    <value>_Submit</value>
   </data>
   <data name="ShowMainWindowMenu" xml:space="preserve">
     <value>_Show Main Window</value>
