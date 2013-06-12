@@ -261,6 +261,33 @@ namespace Bugger.Presentation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select the _active proxy.
+        /// </summary>
+        public static string SettingActiveProxy {
+            get {
+                return ResourceManager.GetString("SettingActiveProxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Add Member.
+        /// </summary>
+        public static string SettingAddTeamMember {
+            get {
+                return ResourceManager.GetString("SettingAddTeamMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Basic Settings.
+        /// </summary>
+        public static string SettingBasicTitle {
+            get {
+                return ResourceManager.GetString("SettingBasicTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Cancel.
         /// </summary>
         public static string SettingCancel {
@@ -270,11 +297,56 @@ namespace Bugger.Presentation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is filter _created by.
+        /// </summary>
+        public static string SettingIsFilterCreatedBy {
+            get {
+                return ResourceManager.GetString("SettingIsFilterCreatedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Setting.
         /// </summary>
         public static string SettingMenu {
             get {
                 return ResourceManager.GetString("SettingMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New _Member.
+        /// </summary>
+        public static string SettingNewTeamMember {
+            get {
+                return ResourceManager.GetString("SettingNewTeamMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active Proxy Settings.
+        /// </summary>
+        public static string SettingProxysTitle {
+            get {
+                return ResourceManager.GetString("SettingProxysTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh min_utes.
+        /// </summary>
+        public static string SettingRefreshMinutes {
+            get {
+                return ResourceManager.GetString("SettingRefreshMinutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Remove.
+        /// </summary>
+        public static string SettingRemoveTeamMember {
+            get {
+                return ResourceManager.GetString("SettingRemoveTeamMember", resourceCulture);
             }
         }
         
@@ -293,6 +365,24 @@ namespace Bugger.Presentation.Properties {
         public static string SettingsViewTitle {
             get {
                 return ResourceManager.GetString("SettingsViewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Team Settings.
+        /// </summary>
+        public static string SettingTeamMemberTitle {
+            get {
+                return ResourceManager.GetString("SettingTeamMemberTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User _name.
+        /// </summary>
+        public static string SettingUserName {
+            get {
+                return ResourceManager.GetString("SettingUserName", resourceCulture);
             }
         }
         

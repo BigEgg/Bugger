@@ -7,7 +7,7 @@
              xmlns:dd="clr-namespace:Bugger.Proxy.TFS.Presentation.DesignData"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleTFSSettingViewModel, IsDesignTimeCreatable=True}"
-             d:DesignHeight="500" d:DesignWidth="400">
+             d:DesignHeight="500" d:DesignWidth="450">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="160"/>

@@ -185,17 +185,47 @@ For anyone want to have a gadget as a simple dashboard for bugs, this is what he
   <data name="RefreshMenu" xml:space="preserve">
     <value>_Refresh</value>
   </data>
+  <data name="SettingActiveProxy" xml:space="preserve">
+    <value>Please select the _active proxy</value>
+  </data>
+  <data name="SettingAddTeamMember" xml:space="preserve">
+    <value>_Add Member</value>
+  </data>
+  <data name="SettingBasicTitle" xml:space="preserve">
+    <value>Basic Settings</value>
+  </data>
   <data name="SettingCancel" xml:space="preserve">
     <value>_Cancel</value>
   </data>
+  <data name="SettingIsFilterCreatedBy" xml:space="preserve">
+    <value>Is filter _created by</value>
+  </data>
   <data name="SettingMenu" xml:space="preserve">
     <value>_Setting</value>
+  </data>
+  <data name="SettingNewTeamMember" xml:space="preserve">
+    <value>New _Member</value>
+  </data>
+  <data name="SettingProxysTitle" xml:space="preserve">
+    <value>Active Proxy Settings</value>
+  </data>
+  <data name="SettingRefreshMinutes" xml:space="preserve">
+    <value>Refresh min_utes</value>
+  </data>
+  <data name="SettingRemoveTeamMember" xml:space="preserve">
+    <value>_Remove</value>
   </data>
   <data name="SettingSubmit" xml:space="preserve">
     <value>_Submit</value>
   </data>
   <data name="SettingsViewTitle" xml:space="preserve">
     <value>Basic Settings</value>
+  </data>
+  <data name="SettingTeamMemberTitle" xml:space="preserve">
+    <value>Team Settings</value>
+  </data>
+  <data name="SettingUserName" xml:space="preserve">
+    <value>User _name</value>
   </data>
   <data name="ShowMainWindowMenu" xml:space="preserve">
     <value>_Show Main Window</value>

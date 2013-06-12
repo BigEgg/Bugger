@@ -30,7 +30,11 @@ namespace Bugger.Applications.ViewModels
             this.cancelCommand = new DelegateCommand(() => Close(false));
 
             this.views = new ObservableCollection<object>();
-            this.views.Add(SettingsView);
+            this.views.Add(this.settingsViewModel.View);
+            if (this.proxyService.ActiveProxy != null && this.proxyService.ActiveProxy.SettingView != null)
+                this.views.Add(this.proxyService.ActiveProxy.SettingView);
+
+            SelectView = this.settingsViewModel.View;
 
             AddWeakEventListener(settingsViewModel, SettingsViewModelPropertyChanged);
         }
@@ -43,18 +47,8 @@ namespace Bugger.Applications.ViewModels
         public ICommand CancelCommand { get { return this.cancelCommand; } }
 
         public ObservableCollection<object> Views { get { return this.views; } }
-        #endregion
 
-        #region Private Properties
-        private object SettingsView
-        {
-            get { return this.settingsViewModel.View; }
-        }
-
-        private object ProxySettingView
-        {
-            get { return this.proxyService.ActiveProxy.SettingView; }
-        }
+        public object SelectView { get; set; }
         #endregion
 
         #region Methods
@@ -69,13 +63,13 @@ namespace Bugger.Applications.ViewModels
         {
             if (e.PropertyName == "ActiveProxy")
             {
-                if (ProxySettingView != null)
-                    this.views.Remove(ProxySettingView);
+                if (this.proxyService.ActiveProxy != null && this.proxyService.ActiveProxy.SettingView != null)
+                    this.views.Remove(this.proxyService.ActiveProxy.SettingView);
 
                 this.proxyService.ActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
 
-                if (ProxySettingView != null)
-                    this.views.Add(ProxySettingView);
+                if (this.proxyService.ActiveProxy != null && this.proxyService.ActiveProxy.SettingView != null)
+                    this.views.Add(this.proxyService.ActiveProxy.SettingView);
 
                 RaisePropertyChanged("Views");
             }

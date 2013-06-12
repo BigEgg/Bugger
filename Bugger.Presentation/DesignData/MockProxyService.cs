@@ -1,8 +1,8 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Applications.Services;
 using Bugger.Proxy;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bugger.Presentation.DesignData
 {
@@ -16,6 +16,7 @@ namespace Bugger.Presentation.DesignData
         public MockProxyService()
         {
             this.proxys = new List<ISourceControlProxy> { new FakeProxy() };
+            this.activeProxy = this.proxys.First();
         }
 
         #region Properties
