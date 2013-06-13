@@ -22,14 +22,13 @@ namespace Bugger.Proxy.TFS.ViewModels
     {
         #region Fields
         private readonly IMessageService messageService;
-        private readonly DelegateCommand testConnectionCommand;
 
         private SettingDocument settings;
         private ICommand saveCommand;
+        private ICommand testConnectionCommand;
         private ICommand uriHelpCommand;
         private bool canConnect;
-        private ReadOnlyCollection<string> readonlyTFSFields;
-        private List<string> tfsFields;
+        private ObservableCollection<string> tfsFields;
         #endregion
 
         [ImportingConstructor]
@@ -39,14 +38,11 @@ namespace Bugger.Proxy.TFS.ViewModels
             this.messageService = messageService;
 
             this.canConnect = false;
-            this.tfsFields = new List<string>();
-            this.readonlyTFSFields = new ReadOnlyCollection<string>(this.tfsFields);
-
-            this.testConnectionCommand = new DelegateCommand(TestConnectionExcute, CanTestConnectionExcute);
+            this.tfsFields = new ObservableCollection<string>();
         }
 
         #region Properties
-        public ReadOnlyCollection<string> TFSFields { get { return this.readonlyTFSFields; } }
+        public ObservableCollection<string> TFSFields { get { return this.tfsFields; } }
 
         public SettingDocument Settings
         {
@@ -80,12 +76,23 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
-        public ICommand TestConnectionCommand { get { return this.testConnectionCommand; } }
+        public ICommand TestConnectionCommand
+        {
+            get { return this.testConnectionCommand; }
+            set
+            {
+                if (this.testConnectionCommand != value)
+                {
+                    this.testConnectionCommand = value;
+                    RaisePropertyChanged("TestConnectionCommand");
+                }
+            }
+        }
 
         public bool CanConnect
         {
             get { return this.canConnect; }
-            private set
+            internal set
             {
                 if (this.canConnect != value)
                 {
@@ -94,66 +101,6 @@ namespace Bugger.Proxy.TFS.ViewModels
                 }
             }
         }
-        #endregion
-
-        #region Methods
-        #region Private Commands Methods
-        private bool CanTestConnectionExcute()
-        {
-            return this.settings != null && this.settings.ConnectUri != null && this.settings.ConnectUri.IsAbsoluteUri;
-        }
-
-        private void TestConnectionExcute()
-        {
-            this.CanConnect = false;
-
-            TfsTeamProjectCollection tpc = null;
-
-            try
-            {
-                tpc = new TfsTeamProjectCollection(
-                    this.settings.ConnectUri,
-                    new NetworkCredential(this.settings.UserName, this.settings.Password));
-                tpc.EnsureAuthenticated();
-            }
-            catch
-            {
-                messageService.ShowMessage(Resources.CannotConnect);
-                return;
-            }
-
-            try
-            {
-                WorkItemStore workItemStore = (WorkItemStore)tpc.GetService(typeof(WorkItemStore));
-                FieldDefinitionCollection collection = workItemStore.FieldDefinitions;
-                foreach (FieldDefinition field in collection)
-                {
-                    this.tfsFields.Add(field.Name);
-                }
-
-                this.CanConnect = true;
-                RaisePropertyChanged("TFSFields");
-            }
-            catch
-            {
-                messageService.ShowMessage(Resources.CannotQueryFields);
-            }
-        }
-        #endregion
-        #region Private Methods
-        private void SettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "ConnectUri")
-            {
-                UpdateCommands();
-            }
-        }
-
-        private void UpdateCommands()
-        {
-            this.testConnectionCommand.RaiseCanExecuteChanged();
-        }
-        #endregion
         #endregion
     }
 }

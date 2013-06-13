@@ -26,6 +26,7 @@ namespace Bugger.Proxy.TFS
         private readonly CompositionContainer container;
         private readonly IMessageService messageService;
         private readonly DelegateCommand saveCommand;
+        private readonly DelegateCommand testConnectionCommand;
         private readonly DelegateCommand uriHelpCommand;
 
         private SettingDocument document;
@@ -44,9 +45,7 @@ namespace Bugger.Proxy.TFS
             this.saveCommand = new DelegateCommand(SaveExcute, CanSaveExcute);
             this.uriHelpCommand = new DelegateCommand(OpenUriHelpExcute);
 
-            this.settingViewModel = this.container.GetExportedValue<TFSSettingViewModel>();
-            this.settingViewModel.SaveCommand = this.saveCommand;
-            this.settingViewModel.UriHelpCommand = this.uriHelpCommand;
+            this.testConnectionCommand = new DelegateCommand(TestConnectionExcute, CanTestConnectionExcute);
         }
 
         #region Properties
@@ -88,6 +87,11 @@ namespace Bugger.Proxy.TFS
             }
 
             AddWeakEventListener(this.document, DocumentPropertyChanged);
+
+            this.settingViewModel = this.container.GetExportedValue<TFSSettingViewModel>();
+            this.settingViewModel.SaveCommand = this.saveCommand;
+            this.settingViewModel.UriHelpCommand = this.uriHelpCommand;
+            this.settingViewModel.TestConnectionCommand = this.testConnectionCommand;
             this.settingViewModel.Settings = document;
         }
 
@@ -175,7 +179,7 @@ namespace Bugger.Proxy.TFS
 
         private bool CanSaveExcute()
         {
-            return this.settingViewModel.TestConnectionCommand.CanExecute(null)
+            return this.testConnectionCommand.CanExecute()
                 && !string.IsNullOrWhiteSpace(this.document.BugFilterField)
                 && !string.IsNullOrWhiteSpace(this.document.BugFilterValue)
                 && this.document.PropertyMappingList
@@ -198,6 +202,49 @@ namespace Bugger.Proxy.TFS
             else
                 this.document.ConnectUri = new Uri(viewModel.UriPreview);
         }
+
+        private bool CanTestConnectionExcute()
+        {
+            return this.document != null && this.document.ConnectUri != null && this.document.ConnectUri.IsAbsoluteUri
+                && !string.IsNullOrWhiteSpace(this.document.UserName);
+        }
+
+        private void TestConnectionExcute()
+        {
+            this.settingViewModel.CanConnect = false;
+
+            TfsTeamProjectCollection tpc = null;
+
+            try
+            {
+                tpc = new TfsTeamProjectCollection(
+                    this.document.ConnectUri,
+                    new NetworkCredential(this.document.UserName, this.document.Password));
+                tpc.EnsureAuthenticated();
+            }
+            catch
+            {
+                messageService.ShowMessage(Resources.CannotConnect);
+                return;
+            }
+
+            try
+            {
+                WorkItemStore workItemStore = (WorkItemStore)tpc.GetService(typeof(WorkItemStore));
+                FieldDefinitionCollection collection = workItemStore.FieldDefinitions;
+                this.settingViewModel.TFSFields.Clear();
+                foreach (FieldDefinition field in collection)
+                {
+                    this.settingViewModel.TFSFields.Add(field.Name);
+                }
+
+                this.settingViewModel.CanConnect = true;
+            }
+            catch
+            {
+                messageService.ShowMessage(Resources.CannotQueryFields);
+            }
+        }
         #endregion
 
         private void DocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -208,6 +255,7 @@ namespace Bugger.Proxy.TFS
         private void UpdateCommands()
         {
             this.saveCommand.RaiseCanExecuteChanged();
+            this.testConnectionCommand.RaiseCanExecuteChanged();
         }
         #endregion
         #endregion
