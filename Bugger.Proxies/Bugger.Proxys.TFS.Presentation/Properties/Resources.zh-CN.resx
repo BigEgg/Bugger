@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>取消</value>
   </data>
   <data name="ConnectionDetails" xml:space="preserve">
-    <value>Connection Details</value>
+    <value>连接详细信息</value>
   </data>
   <data name="ConnectSettingsTitle" xml:space="preserve">
-    <value>Connect Settings</value>
+    <value>连接设置</value>
   </data>
   <data name="GenerateUri" xml:space="preserve">
-    <value>_Generate Uri</value>
+    <value>生成Uri(_G)</value>
   </data>
   <data name="HTTP" xml:space="preserve">
     <value>HTTP</value>
@@ -136,60 +136,60 @@
     <value>HTTPS</value>
   </data>
   <data name="NameOrURIofTFS" xml:space="preserve">
-    <value>Name or Uri of _Team Foundation Server:</value>
+    <value>_Team Foundation Server的名称或Uri</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>_Password</value>
+    <value>密码(_P)</value>
   </data>
   <data name="Path" xml:space="preserve">
-    <value>Pat_h:</value>
+    <value>路径(_H)：</value>
   </data>
   <data name="PortNumber" xml:space="preserve">
-    <value>Port _number:</value>
+    <value>端口号(_N)：</value>
   </data>
   <data name="Preview" xml:space="preserve">
-    <value>Pre_view:</value>
+    <value>预览(_U)：</value>
   </data>
   <data name="Protocal" xml:space="preserve">
-    <value>_Protocol:</value>
+    <value>协议(_P)：</value>
   </data>
   <data name="TestConnection" xml:space="preserve">
-    <value>_Test Connection</value>
+    <value>连接测试(_T)</value>
   </data>
   <data name="UserName" xml:space="preserve">
-    <value>User _name</value>
+    <value>用户名(_N)</value>
   </data>
   <data name="SettingViewTitle" xml:space="preserve">
     <value>TFS Proxy</value>
   </data>
   <data name="MappingSettingsTitle" xml:space="preserve">
-    <value>Mapping Settings</value>
+    <value>映射设置</value>
   </data>
   <data name="BugFilter" xml:space="preserve">
-    <value>Filter bug by TFS Field</value>
+    <value>由TFS列确定Bug</value>
   </data>
   <data name="BugProperty" xml:space="preserve">
-    <value>Bug Property</value>
+    <value>Bug属性</value>
   </data>
   <data name="Equal" xml:space="preserve">
     <value>=</value>
   </data>
   <data name="MapTitle" xml:space="preserve">
-    <value>Mapping the TFS fields with Bugger:</value>
+    <value>映射TFS列到Bugger：</value>
   </data>
   <data name="PriorityRed" xml:space="preserve">
-    <value>Set bug _Red when priority</value>
+    <value>设置Bug为红色当优先级为(_R)</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>_Save</value>
+    <value>保存(_S)</value>
   </data>
   <data name="SplitBy" xml:space="preserve">
-    <value>Split the value by ";"</value>
+    <value>输入分号(";")来代表不同的值</value>
   </data>
   <data name="TFSField" xml:space="preserve">
-    <value>TFS Field</value>
+    <value>TFS列</value>
   </data>
 </root>

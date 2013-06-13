@@ -158,7 +158,7 @@ namespace Bugger.Applications.Controllers
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsView, proxyService, Settings.Default.TeamMembers);
             settingsViewModel.ActiveProxy = proxyService.ActiveProxy.ProxyName;
             settingsViewModel.UserName = Settings.Default.UserName;
-            settingsViewModel.RefreshMinutes = Settings.Default.RefreshMinutes;
+            settingsViewModel.RefreshMinutes = Settings.Default.AutoQueryMinutes;
             settingsViewModel.IsFilterCreatedBy = Settings.Default.IsFilterCreatedBy;
 
             SettingDialogViewModel settingDialog = new SettingDialogViewModel(settingDialogView, proxyService, settingsViewModel);
@@ -171,7 +171,7 @@ namespace Bugger.Applications.Controllers
 
                 Settings.Default.ActiveProxy = settingsViewModel.ActiveProxy;
                 Settings.Default.UserName = settingsViewModel.UserName;
-                Settings.Default.RefreshMinutes = settingsViewModel.RefreshMinutes;
+                Settings.Default.AutoQueryMinutes = settingsViewModel.RefreshMinutes;
                 Settings.Default.TeamMembers = settingsViewModel.TeamMembersString;
                 Settings.Default.IsFilterCreatedBy = settingsViewModel.IsFilterCreatedBy;
                 Settings.Default.Save();

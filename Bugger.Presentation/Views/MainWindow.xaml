@@ -24,7 +24,7 @@
             <MenuItem Header="{x:Static p:Resources.AboutMenu}" Command="{Binding AboutCommand}"/>
         </Menu>
 
-        <TabControl x:Name="documentView" ItemsSource="{Binding DocumentViews}">
+        <TabControl Margin="10" x:Name="documentView" ItemsSource="{Binding DocumentViews}">
             <TabItem Header="{x:Static p:Resources.UserBugsTitle}">
                 <ContentControl Content="{Binding ShellService.UserBugsView}" Margin="0,0,5,0"/>
             </TabItem>

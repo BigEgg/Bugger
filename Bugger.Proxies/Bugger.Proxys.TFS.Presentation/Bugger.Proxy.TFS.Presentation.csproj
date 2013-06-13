@@ -68,6 +68,7 @@
     <Compile Include="Views\UriHelpWindow.xaml.cs">
       <DependentUpon>UriHelpWindow.xaml</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.zh-CN.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
