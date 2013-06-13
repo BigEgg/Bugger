@@ -1,12 +1,16 @@
 Bugger change log
 
-Alpha 2 (v0.2.0)
+Alpha 3 (v0.3.0)
     Application:
         Show validation message in views.
     Proxies
         TFS Proxy
             Automation fill the mapping settings
             Support multi-lingual.
+
+Alpha 2 (v0.2.0)
+    Application:
+        Filter bug by its status.
 
 Alpha 1 (v0.1.0) <----- Currently Working
     Application:
