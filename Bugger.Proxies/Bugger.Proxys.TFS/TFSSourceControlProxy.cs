@@ -113,7 +113,9 @@ namespace Bugger.Proxy.TFS
             WorkItemStore workItemStore = (WorkItemStore)tpc.GetService(typeof(WorkItemStore));
 
             List<Bug> bugs = new List<Bug>();
-            List<string> redFilter = this.document.PriorityRed.Split(';').Select(x => x.Trim()).ToList();
+            List<string> redFilter = string.IsNullOrWhiteSpace(this.document.PriorityRed)
+                                         ? new List<string>()
+                                         : this.document.PriorityRed.Split(';').Select(x => x.Trim()).ToList();
             foreach (string userName in userNames)
             {
                 string fields = string.Join(", ", this.document.PropertyMappingList
@@ -140,28 +142,28 @@ namespace Bugger.Proxy.TFS
                 {
                     bugs.Add(new Bug()
                     {
-                        ID          = (int)item.Fields[this.document.PropertyMappingList.First(
+                        ID = (int)item.Fields[this.document.PropertyMappingList.First(
                                           x => x.PropertyName == "ID").FieldName].Value,
-                        Title       = item.Fields[this.document.PropertyMappingList.First(
+                        Title = item.Fields[this.document.PropertyMappingList.First(
                                           x => x.PropertyName == "Title").FieldName].Value.ToString(),
                         Description = item.Fields[this.document.PropertyMappingList.First(
                                           x => x.PropertyName == "Description").FieldName].Value.ToString(),
-                        AssignedTo  = item.Fields[this.document.PropertyMappingList.First(
+                        AssignedTo = item.Fields[this.document.PropertyMappingList.First(
                                           x => x.PropertyName == "AssignedTo").FieldName].Value.ToString(),
-                        State       = item.Fields[this.document.PropertyMappingList.First(
+                        State = item.Fields[this.document.PropertyMappingList.First(
                                           x => x.PropertyName == "State").FieldName].Value.ToString(),
                         ChangedDate = (DateTime)item.Fields[this.document.PropertyMappingList.First(
                                           x => x.PropertyName == "ChangedDate").FieldName].Value,
-                        CreatedBy   = item.Fields[this.document.PropertyMappingList.First(
+                        CreatedBy = item.Fields[this.document.PropertyMappingList.First(
                                           x => x.PropertyName == "CreatedBy").FieldName].Value.ToString(),
-                        Priority    = item.Fields[this.document.PropertyMappingList.First(
+                        Priority = item.Fields[this.document.PropertyMappingList.First(
                                           x => x.PropertyName == "Priority").FieldName].Value.ToString(),
-                        Severity    = string.IsNullOrWhiteSpace(this.document.PropertyMappingList.First(x => x.PropertyName == "Severity").FieldName) ?
+                        Severity = string.IsNullOrWhiteSpace(this.document.PropertyMappingList.First(x => x.PropertyName == "Severity").FieldName) ?
                                       string.Empty :
                                       item.Fields[this.document.PropertyMappingList.First(
                                           x => x.PropertyName == "Severity").FieldName].Value.ToString(),
-                        Type        = redFilter.Contains(item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "Priority").FieldName].Value.ToString()) 
+                        Type = redFilter.Contains(item.Fields[this.document.PropertyMappingList.First(
+                                          x => x.PropertyName == "Priority").FieldName].Value.ToString())
                                           ? BugType.Red : BugType.Yellow
                     });
                 }

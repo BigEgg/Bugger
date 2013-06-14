@@ -29,11 +29,11 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
         public void GeneralSettingViewModelTest()
         {
             Assert.IsFalse(viewModel.CanConnect);
-            Assert.AreEqual(0, viewModel.TFSFields.Count);
-            Assert.IsNotNull(viewModel.Settings);
-            Assert.IsNotNull(viewModel.SaveCommand);
-            Assert.IsNotNull(viewModel.UriHelpCommand);
-            Assert.IsNotNull(viewModel.TestConnectionCommand);
+            Assert.AreEqual(0, this.viewModel.TFSFields.Count);
+            Assert.IsNotNull(this.viewModel.Settings);
+            Assert.IsNotNull(this.viewModel.SaveCommand);
+            Assert.IsNotNull(this.viewModel.UriHelpCommand);
+            Assert.IsNotNull(this.viewModel.TestConnectionCommand);
         }
 
         [TestMethod]
@@ -74,13 +74,14 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
             this.viewModel.UriHelpCommand.Execute(null);
             this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
             this.viewModel.Settings.Password = password;
-            AssertHelper.PropertyChangedEvent(this.viewModel, x => x.TFSFields, () => this.viewModel.TestConnectionCommand.Execute(null));
+
+            Assert.IsFalse(this.viewModel.CanConnect);
+            AssertHelper.PropertyChangedEvent(this.viewModel, x => x.CanConnect, () => this.viewModel.TestConnectionCommand.Execute(null));
+            Assert.IsTrue(this.viewModel.CanConnect);
 
             this.viewModel.Settings.Password = "password";
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.CanConnect, () => this.viewModel.TestConnectionCommand.Execute(null));
-
-            this.viewModel.Settings.Password = password;
-            AssertHelper.PropertyChangedEvent(this.viewModel, x => x.CanConnect, () => this.viewModel.TestConnectionCommand.Execute(null));
+            Assert.IsFalse(this.viewModel.CanConnect);
         }
     }
 }

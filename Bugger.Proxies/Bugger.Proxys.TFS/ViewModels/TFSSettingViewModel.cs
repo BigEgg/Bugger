@@ -21,8 +21,6 @@ namespace Bugger.Proxy.TFS.ViewModels
     public class TFSSettingViewModel : ViewModel<ITFSSettingView>
     {
         #region Fields
-        private readonly IMessageService messageService;
-
         private SettingDocument settings;
         private ICommand saveCommand;
         private ICommand testConnectionCommand;
@@ -32,11 +30,9 @@ namespace Bugger.Proxy.TFS.ViewModels
         #endregion
 
         [ImportingConstructor]
-        public TFSSettingViewModel(ITFSSettingView view, IMessageService messageService)
+        public TFSSettingViewModel(ITFSSettingView view)
             : base(view)
         {
-            this.messageService = messageService;
-
             this.canConnect = false;
             this.tfsFields = new ObservableCollection<string>();
         }

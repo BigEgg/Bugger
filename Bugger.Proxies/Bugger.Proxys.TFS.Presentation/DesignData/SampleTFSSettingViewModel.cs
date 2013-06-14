@@ -9,7 +9,7 @@ namespace Bugger.Proxy.TFS.Presentation.DesignData
     public class SampleTFSSettingViewModel : TFSSettingViewModel
     {
         public SampleTFSSettingViewModel()
-            : base(new MockTFSSettingView(), null)
+            : base(new MockTFSSettingView())
         {
             this.Settings = new Documents.SettingDocument();
             this.Settings.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");

@@ -66,12 +66,26 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="{x:Static p:Resources.MapTitle}" VerticalAlignment="Center" Grid.ColumnSpan="4"/>
-                <DataGrid ItemsSource="{Binding Settings.PropertyMappingList}" Grid.Row="1" Grid.ColumnSpan="4" Margin="0,0,0,10" AutoGenerateColumns="False">
+                <ListView ItemsSource="{Binding Settings.PropertyMappingList}" Grid.Row="1" Grid.ColumnSpan="4" Margin="0,0,0,10">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="170" Header="{x:Static p:Resources.BugProperty}" DisplayMemberBinding="{Binding PropertyName}"/>
+                            <GridViewColumn Width="210" Header="{x:Static p:Resources.TFSField}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox Width="195" SelectedItem="{Binding FieldName}" ItemsSource="{Binding Path=DataContext.TFSFields, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <!--<DataGrid ItemsSource="{Binding Settings.PropertyMappingList}" Grid.Row="1" Grid.ColumnSpan="4" Margin="0,0,0,10" AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="{x:Static p:Resources.BugProperty}" IsReadOnly="True" Binding="{Binding PropertyName}" Width="*"/>
-                        <DataGridComboBoxColumn Header="{x:Static p:Resources.TFSField}" SelectedItemBinding="{Binding FieldName}" ItemsSource="{Binding TFSFields}" Width="*"/>
+                        <DataGridComboBoxColumn Header="{x:Static p:Resources.TFSField}" SelectedItemBinding="{Binding FieldName}" Width="*" ItemsSource="{Binding Source={x:Static vm:TFSSettingViewModel.TFSFields}}"/>
                     </DataGrid.Columns>
-                </DataGrid>
+                </DataGrid>-->
                 <Label Content="{x:Static p:Resources.BugFilter}" Grid.Row="2" VerticalAlignment="Center"/>
                 <ComboBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" ItemsSource="{Binding TFSFields}" SelectedItem="{Binding Settings.BugFilterField}"/>
                 <TextBlock Text="{x:Static p:Resources.Equal}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>

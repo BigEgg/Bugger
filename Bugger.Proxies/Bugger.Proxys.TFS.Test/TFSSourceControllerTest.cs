@@ -102,6 +102,7 @@ namespace Bugger.Proxy.TFS.Test
                 uriHelpViewModel.SubmitCommand.Execute(null);
             };
             this.viewModel.UriHelpCommand.Execute(null);
+            this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
 
             MockMessageService messageService = Container.GetExportedValue<IMessageService>() as MockMessageService;
             messageService.Clear();
@@ -110,7 +111,6 @@ namespace Bugger.Proxy.TFS.Test
             Assert.AreEqual(Resources.CannotConnect, messageService.Message);
             Assert.AreEqual(MessageType.Message, messageService.MessageType);
 
-            this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
             this.viewModel.Settings.Password = password;
             this.viewModel.TestConnectionCommand.Execute(null);
             Assert.IsTrue(this.viewModel.CanConnect);
@@ -141,7 +141,6 @@ namespace Bugger.Proxy.TFS.Test
             Assert.IsNotNull(bugs);
             Assert.IsTrue(bugs.Any());
 
-            bugs = null;
             bugs = this.proxy.Query("BigEgg_cp", false);
             Assert.IsNotNull(bugs);
             Assert.IsTrue(bugs.Any());
