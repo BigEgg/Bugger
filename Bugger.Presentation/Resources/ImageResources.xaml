@@ -1,0 +1,19 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <BitmapSource x:Key="BuggerImageSource">Images/Bugger.ico</BitmapSource>
+
+    <ImageSource x:Key="RedGiftboxImageSource">Images/RedGiftbox.png</ImageSource>
+    <ImageSource x:Key="YellowGiftboxImageSource">Images/YellowGiftbox.png</ImageSource>
+
+    <Image x:Key="RefreshImage" x:Shared="False" Source="Images/Refresh.png" Height="16" Width="16"/>
+    <Image x:Key="SettingImage" x:Shared="False" Source="Images/Setting.png" Height="16" Width="16"/>
+
+    <Image x:Key="FlagEnImage" x:Shared="False" Source="Images/FlagEn.png" Height="16" Width="16"/>
+    <Image x:Key="FlagCNImage" x:Shared="False" Source="Images/FlagCN.png" Height="16" Width="16"/>
+
+    <ImageSource x:Key="RefreshImageSource">Images/Refresh.png</ImageSource>
+    <ImageSource x:Key="SettingImageSource">Images/Setting.png</ImageSource>
+
+</ResourceDictionary>

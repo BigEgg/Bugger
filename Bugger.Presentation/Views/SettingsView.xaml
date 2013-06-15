@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="Bugger.Presentation.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:p="clr-namespace:Bugger.Presentation.Properties"
+             xmlns:dd="clr-namespace:Bugger.Presentation.DesignData"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleSettingsViewModel, IsDesignTimeCreatable=True}"
+             d:DesignWidth="500" MinWidth="500" d:DesignHeight="350" MinHeight="330">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="5*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="250" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <GroupBox Header="{x:Static p:Resources.SettingProxysTitle}" Margin="10,10,10,5" Grid.ColumnSpan="2">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Content="{x:Static p:Resources.SettingActiveProxy}" VerticalAlignment="Center"
+                       Target="{Binding ElementName=activeProxy}" />
+                <ComboBox x:Name="activeProxy" Grid.Column="1" ItemsSource="{Binding Proxys}" IsReadOnly="True"
+                          VerticalAlignment="Center" SelectedItem="{Binding ActiveProxy}" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="{x:Static p:Resources.SettingTeamMemberTitle}" Margin="10,5,5,5" Grid.Row="1">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <ListBox Grid.ColumnSpan="2" ItemsSource="{Binding TeamMembers}"
+                         SelectedItem="{Binding SelectedTeamMember}" SelectionChanged="ListBox_SelectionChanged" />
+                <Label Content="{x:Static p:Resources.SettingNewTeamMember}" Grid.Row="1"
+                       Target="{Binding ElementName=newMember}" />
+                <TextBox x:Name="newMember" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
+                         Text="{Binding NewTeamMember, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Command="{Binding AddNewTeamMemberCommand, Mode=OneWay}"
+                        Content="{x:Static p:Resources.SettingAddTeamMember}" Width="80" Height="25"
+                        HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="2" />
+                <Button Command="{Binding RemoveTeamMemberCommand, Mode=OneWay}"
+                        Content="{x:Static p:Resources.SettingRemoveTeamMember}" Width="80" Height="25"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="1" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="{x:Static p:Resources.SettingBasicTitle}" Margin="5,5,10,5" Grid.Row="1">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="22*" />
+                    <ColumnDefinition Width="25*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label Content="{x:Static p:Resources.SettingUserName}" VerticalAlignment="Center"
+                       Target="{Binding ElementName=userName}" />
+                <TextBox x:Name="userName" Grid.Column="1" VerticalAlignment="Center"
+                         Text="{Binding UserName, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+                <Label Content="{x:Static p:Resources.SettingRefreshMinutes}" VerticalAlignment="Center"
+                       Target="{Binding ElementName=refreshMinutes}" Grid.Row="1" />
+                <TextBox x:Name="refreshMinutes" Grid.Column="1" VerticalAlignment="Center"
+                         Text="{Binding RefreshMinutes, ValidatesOnExceptions=true, ValidatesOnDataErrors=true, NotifyOnValidationError=true}"
+                         Grid.Row="1" />
+                <Label Content="{x:Static p:Resources.SettingIsFilterCreatedBy}" VerticalAlignment="Center"
+                       Target="{Binding ElementName=filterCreatedBy}" Grid.Row="2" />
+                <CheckBox x:Name="filterCreatedBy" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left"
+                          VerticalAlignment="Center" IsChecked="{Binding IsFilterCreatedBy}" />
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

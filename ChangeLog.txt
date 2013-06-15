@@ -1,0 +1,30 @@
+Bugger change log
+
+Alpha 4 (v0.4.0)
+    Application:
+        Show setting dialog when open the application if the settings is not being set.
+    Proxies
+        TFS Proxy
+            Automation fill the mapping settings
+            Support multi-lingual.
+
+Alpha 3 (v0.3.0)
+    Application:
+        Show validation message in views.
+        Can change the Opacity of Floating window by setting
+    Proxies
+        TFS Proxy
+            Use multi-threading to avoid UI hang when test connection.
+
+Alpha 2 (v0.2.0) <----- Currently Working
+    Application:
+        Filter bug by its status.
+
+Alpha 1 (v0.1.0) <----- Currently Release
+    Application:
+        Complete all main functions.
+        Complete all views.
+    Proxies
+        TFS Proxy
+            Complete all main functions.
+            Complete all views.
