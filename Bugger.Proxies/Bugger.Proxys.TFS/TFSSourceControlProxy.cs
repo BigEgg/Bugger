@@ -94,7 +94,10 @@ namespace Bugger.Proxy.TFS
             this.settingViewModel.TestConnectionCommand = this.testConnectionCommand;
             this.settingViewModel.Settings = document;
 
-            this.testConnectionCommand.Execute();
+            if (this.testConnectionCommand.CanExecute())
+            {
+                this.testConnectionCommand.Execute();
+            }
         }
 
         /// <summary>
