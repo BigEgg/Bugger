@@ -22,9 +22,9 @@ Alpha 2 (v0.2.0) <----- Currently Working
 
 Alpha 1 (v0.1.0) <----- Currently Release
     Application:
-        Complate all main functions.
-        Complate all views.
+        Complete all main functions.
+        Complete all views.
     Proxies
         TFS Proxy
-            Complate all main functions.
-            Complate all views.
+            Complete all main functions.
+            Complete all views.
