@@ -7,7 +7,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleMainViewModel, IsDesignTimeCreatable=True}"
         Icon="{Binding Mode=OneWay, Source={StaticResource BuggerImageSource}}"
-        Title="MainWindow" Height="650" Width="420" Closing="Window_Closing">
+        Title="MainWindow" Height="550" Width="500" Closing="Window_Closing">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{x:Static p:Resources.SystemMenu}">

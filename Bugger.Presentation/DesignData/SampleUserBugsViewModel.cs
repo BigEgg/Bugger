@@ -13,8 +13,6 @@ namespace Bugger.Presentation.DesignData
 
         private class MockUserBugsView : MockView, IUserBugsView
         {
-            public void CreateGroupedBugs()
-            {}
         }
     }
 }

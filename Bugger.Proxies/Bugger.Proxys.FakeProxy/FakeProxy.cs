@@ -245,17 +245,19 @@ namespace Bugger.Proxy.FakeProxy
 
         protected override ReadOnlyCollection<Bug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
         {
-            List<Bug> queriedBugs = new List<Bug>();
+            List<Bug> queriedResult = new List<Bug>();
 
             foreach (string userName in userNames)
             {
                 if (isFilterCreatedBy)
-                    queriedBugs.AddRange(this.bugs.Where(x => x.AssignedTo == userName || x.CreatedBy == userName));
+                    queriedResult.AddRange(this.bugs
+                        .Where(x => x.AssignedTo.ToLower() == userName.ToLower() 
+                            || x.CreatedBy.ToLower() == userName.ToLower()));
                 else
-                    queriedBugs.AddRange(this.bugs.Where(x => x.AssignedTo == userName));
+                    queriedResult.AddRange(this.bugs.Where(x => x.AssignedTo.ToLower() == userName.ToLower()));
             }
 
-            return new ReadOnlyCollection<Bug>(queriedBugs);
+            return new ReadOnlyCollection<Bug>(queriedResult.Distinct().ToList());
         }
         #endregion
         #endregion

@@ -170,7 +170,8 @@ namespace Bugger.Proxy.TFS
                     });
                 }
             }
-            return new ReadOnlyCollection<Bug>(bugs);
+
+            return new ReadOnlyCollection<Bug>(bugs.Distinct().ToList());
         }
         #endregion
 

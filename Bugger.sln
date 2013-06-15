@@ -42,9 +42,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 Documents", "00 Document
 		ChangeLog.txt = ChangeLog.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.FakeProxy.Test", "Bugger.Proxies\Bugger.Proxy.FakeProxy.Test\Bugger.Proxy.FakeProxy.Test.csproj", "{8694BCC9-B84F-4692-B14B-DC8C5A39310E}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 17
+		SccNumberOfProjects = 18
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs12
 		SccLocalPath0 = .
@@ -106,6 +108,10 @@ Global
 		SccProjectUniqueName16 = Bugger.Presentation.Test\\Bugger.Presentation.Test.csproj
 		SccProjectName16 = Bugger.Presentation.Test
 		SccLocalPath16 = Bugger.Presentation.Test
+		SccProjectUniqueName17 = Bugger.Proxies\\Bugger.Proxy.FakeProxy.Test\\Bugger.Proxy.FakeProxy.Test.csproj
+		SccProjectTopLevelParentUniqueName17 = Bugger.sln
+		SccProjectName17 = Bugger.Proxies/Bugger.Proxy.FakeProxy.Test
+		SccLocalPath17 = Bugger.Proxies\\Bugger.Proxy.FakeProxy.Test
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -168,6 +174,10 @@ Global
 		{16E901F8-B205-48F3-B1CD-E631E7F30FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16E901F8-B205-48F3-B1CD-E631E7F30FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16E901F8-B205-48F3-B1CD-E631E7F30FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8694BCC9-B84F-4692-B14B-DC8C5A39310E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8694BCC9-B84F-4692-B14B-DC8C5A39310E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8694BCC9-B84F-4692-B14B-DC8C5A39310E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8694BCC9-B84F-4692-B14B-DC8C5A39310E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -183,5 +193,6 @@ Global
 		{0C5CD96E-9B43-4065-8A02-83B96989E242} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 		{02AB8E76-2073-4F30-B891-1A1B60AE5101} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
+		{8694BCC9-B84F-4692-B14B-DC8C5A39310E} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 	EndGlobalSection
 EndGlobal

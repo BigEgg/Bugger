@@ -16,11 +16,11 @@ Alpha 3 (v0.3.0)
         TFS Proxy
             Use multi-threading to avoid UI hang when test connection.
 
-Alpha 2 (v0.2.0)
+Alpha 2 (v0.2.0) <----- Currently Working
     Application:
         Filter bug by its status.
 
-Alpha 1 (v0.1.0) <----- Currently Working
+Alpha 1 (v0.1.0) <----- Currently Release
     Application:
         Complate all main functions.
         Complate all views.
