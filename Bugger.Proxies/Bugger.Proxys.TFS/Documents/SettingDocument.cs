@@ -35,10 +35,13 @@ namespace Bugger.Proxy.TFS.Documents
                 mappingList.Add(mappingPair);
             }
 
+            this.HasChanged = false;
             this.propertyMappingList = new ReadOnlyCollection<MappingPair>(mappingList);
         }
 
         #region Properties
+        internal bool HasChanged { get; set; }
+
         public ReadOnlyCollection<MappingPair> PropertyMappingList { get { return this.propertyMappingList; } }
 
         public Uri ConnectUri
@@ -47,6 +50,7 @@ namespace Bugger.Proxy.TFS.Documents
             set 
             { 
                 this.connectUri = value;
+                this.HasChanged = true;
                 RaisePropertyChanged("ConnectUri");
             }
         }
@@ -59,6 +63,7 @@ namespace Bugger.Proxy.TFS.Documents
                 if (this.userName != value)
                 {
                     this.userName = value;
+                    this.HasChanged = true;
                     RaisePropertyChanged("UserName");
                 }
             }
@@ -72,6 +77,7 @@ namespace Bugger.Proxy.TFS.Documents
                 if (this.password != value)
                 {
                     this.password = value;
+                    this.HasChanged = true;
                     RaisePropertyChanged("Password");
                 }
             }
@@ -85,6 +91,7 @@ namespace Bugger.Proxy.TFS.Documents
                 if (this.bugFilterField != value)
                 {
                     this.bugFilterField = value;
+                    this.HasChanged = true;
                     RaisePropertyChanged("BugFilterField");
                 }
             }
@@ -98,6 +105,7 @@ namespace Bugger.Proxy.TFS.Documents
                 if (this.bugFilterValue != value)
                 {
                     this.bugFilterValue = value;
+                    this.HasChanged = true;
                     RaisePropertyChanged("BugFilterValue");
                 }
             }
@@ -111,6 +119,7 @@ namespace Bugger.Proxy.TFS.Documents
                 if (this.priorityRed != value)
                 {
                     this.priorityRed = value;
+                    this.HasChanged = true;
                     RaisePropertyChanged("PriorityRed");
                 }
             }
@@ -121,6 +130,7 @@ namespace Bugger.Proxy.TFS.Documents
         #region Private Methods
         private void MappingPairPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            this.HasChanged = true;
             RaisePropertyChanged("PropertyMappingList");
         }
         #endregion

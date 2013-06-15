@@ -1,5 +1,6 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Proxy.TFS.Models;
+using Bugger.Proxy.TFS.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +23,7 @@ namespace Bugger.Proxy.TFS.Documents
         {
             filePath = Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().FullName) + FileExtension);
+                Resources.ProxyName + FileExtension);
         }
 
         #region Properties
@@ -39,8 +40,14 @@ namespace Bugger.Proxy.TFS.Documents
         public static SettingDocument Open()
         {
             SettingDocument document = new SettingDocument();
+            XElement root;
 
-            XElement root = XDocument.Load(filePath).Root;
+            using (FileStream fs = new FileStream(filePath, FileMode.Open))
+            {
+                root = XDocument.Load(fs).Root;
+                fs.Flush();
+                fs.Close();                
+            }
             byte[] entropy = Convert.FromBase64String(root.Attribute("entropy").Value);
 
             document.ConnectUri = new Uri(root.Element("Uri").Value);
@@ -56,11 +63,14 @@ namespace Bugger.Proxy.TFS.Documents
                 document.PropertyMappingList.First(x => x.PropertyName == element.Name).FieldName = element.Value;
             }
 
+            document.HasChanged = false;
             return document;
         }
 
         public static void Save(SettingDocument document)
         {
+            if (!document.HasChanged) return;
+
             // Generate additional entropy (will be used as the Initialization vector)
             byte[] entropy = new byte[20];
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
@@ -88,7 +98,12 @@ namespace Bugger.Proxy.TFS.Documents
                 )
             );
 
-            settingDocument.Save(FilePath);
+            using (FileStream fs = new FileStream(filePath, FileMode.Create))
+            {
+                settingDocument.Save(fs);
+                fs.Flush();
+                fs.Close();
+            }
         }
         #endregion
 

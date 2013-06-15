@@ -93,6 +93,8 @@ namespace Bugger.Proxy.TFS
             this.settingViewModel.UriHelpCommand = this.uriHelpCommand;
             this.settingViewModel.TestConnectionCommand = this.testConnectionCommand;
             this.settingViewModel.Settings = document;
+
+            this.testConnectionCommand.Execute();
         }
 
         /// <summary>

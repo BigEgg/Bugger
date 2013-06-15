@@ -17,9 +17,9 @@ namespace Bugger.Presentation.Views
 
         public void ShowDialog(object owner)
         {
-            Show();
             Owner = owner as Window;
             this.Visibility = Visibility.Visible;
+            ShowDialog();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

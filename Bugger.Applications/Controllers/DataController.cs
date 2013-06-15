@@ -125,7 +125,7 @@ namespace Bugger.Applications.Controllers
 
             // Create an inferred delegate that invokes methods for the timer.
             TimerCallback tcb = TimerCallbackMethods;
-            this.autoRefreshTimer = new Timer(tcb, null, 0, Settings.Default.AutoQueryMinutes * 1000);
+            this.autoRefreshTimer = new Timer(tcb, null, 0, Settings.Default.AutoQueryMinutes * 1000 * 1000);
 
             this.timerStarted = true;
         }
