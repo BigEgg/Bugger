@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Documents\SettingDocument.cs" />
     <Compile Include="Documents\SettingDocumentType.cs" />
+    <Compile Include="Models\TFSField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\MappingPair.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -93,6 +94,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -44,9 +44,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 Documents", "00 Document
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.FakeProxy.Test", "Bugger.Proxies\Bugger.Proxy.FakeProxy.Test\Bugger.Proxy.FakeProxy.Test.csproj", "{8694BCC9-B84F-4692-B14B-DC8C5A39310E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.TFS.Presentation.Test", "Bugger.Proxies\Bugger.Proxy.TFS.Presentation.Test\Bugger.Proxy.TFS.Presentation.Test.csproj", "{F6C15702-B96F-4581-B8DA-9DA3D6AD5646}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 18
+		SccNumberOfProjects = 19
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs12
 		SccLocalPath0 = .
@@ -112,6 +114,10 @@ Global
 		SccProjectTopLevelParentUniqueName17 = Bugger.sln
 		SccProjectName17 = Bugger.Proxies/Bugger.Proxy.FakeProxy.Test
 		SccLocalPath17 = Bugger.Proxies\\Bugger.Proxy.FakeProxy.Test
+		SccProjectUniqueName18 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation.Test\\Bugger.Proxy.TFS.Presentation.Test.csproj
+		SccProjectTopLevelParentUniqueName18 = Bugger.sln
+		SccProjectName18 = Bugger.Proxies/Bugger.Proxy.TFS.Presentation.Test
+		SccLocalPath18 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation.Test
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -173,10 +179,12 @@ Global
 		{16E901F8-B205-48F3-B1CD-E631E7F30FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16E901F8-B205-48F3-B1CD-E631E7F30FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16E901F8-B205-48F3-B1CD-E631E7F30FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16E901F8-B205-48F3-B1CD-E631E7F30FFD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8694BCC9-B84F-4692-B14B-DC8C5A39310E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8694BCC9-B84F-4692-B14B-DC8C5A39310E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8694BCC9-B84F-4692-B14B-DC8C5A39310E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6C15702-B96F-4581-B8DA-9DA3D6AD5646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6C15702-B96F-4581-B8DA-9DA3D6AD5646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6C15702-B96F-4581-B8DA-9DA3D6AD5646}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -193,5 +201,6 @@ Global
 		{02AB8E76-2073-4F30-B891-1A1B60AE5101} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 		{ACA76AA8-1231-480D-A2B0-EA5A63C477EB} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 		{8694BCC9-B84F-4692-B14B-DC8C5A39310E} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
+		{F6C15702-B96F-4581-B8DA-9DA3D6AD5646} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 	EndGlobalSection
 EndGlobal

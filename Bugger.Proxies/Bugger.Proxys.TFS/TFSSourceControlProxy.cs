@@ -2,6 +2,7 @@
 using BigEgg.Framework.Applications.Services;
 using Bugger.Domain.Models;
 using Bugger.Proxy.TFS.Documents;
+using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Properties;
 using Bugger.Proxy.TFS.ViewModels;
 using Bugger.Proxy.TFS.Views;
@@ -243,7 +244,13 @@ namespace Bugger.Proxy.TFS
                 this.settingViewModel.TFSFields.Clear();
                 foreach (FieldDefinition field in collection)
                 {
-                    this.settingViewModel.TFSFields.Add(field.Name);
+                    TFSField tfsField = new TFSField(field.Name);
+                    foreach (var value in field.AllowedValues)
+                    {
+                        tfsField.AllowedValues.Add(value.ToString());
+                    }
+
+                    this.settingViewModel.TFSFields.Add(tfsField);
                 }
 
                 this.settingViewModel.CanConnect = true;

@@ -53,6 +53,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\ItemsToStringConverter.cs" />
     <Compile Include="DesignData\SampleTFSSettingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -62,6 +63,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TemplateSelectors\TFSFieldComboTemplateSelector.cs" />
     <Compile Include="Views\TFSSettingView.xaml.cs">
       <DependentUpon>TFSSettingView.xaml</DependentUpon>
     </Compile>
