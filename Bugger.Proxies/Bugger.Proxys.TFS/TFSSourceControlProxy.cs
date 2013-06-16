@@ -251,6 +251,10 @@ namespace Bugger.Proxy.TFS
                     }
 
                     this.settingViewModel.TFSFields.Add(tfsField);
+                    if (tfsField.AllowedValues.Any())
+                    {
+                        this.settingViewModel.BugFilterFields.Add(tfsField);
+                    }
                 }
 
                 this.settingViewModel.CanConnect = true;

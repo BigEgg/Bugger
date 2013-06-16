@@ -25,6 +25,7 @@ namespace Bugger.Proxy.TFS.Presentation.DesignData
             field.AllowedValues.Add("Bugs");
 
             this.TFSFields.Add(field);
+            this.BugFilterFields.Add(field);
         }
 
         private class MockTFSSettingView : MockView, ITFSSettingView

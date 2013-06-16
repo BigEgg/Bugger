@@ -12,12 +12,14 @@ namespace Bugger.Proxy.TFS.ViewModels
     public class TFSSettingViewModel : ViewModel<ITFSSettingView>
     {
         #region Fields
+        private readonly ObservableCollection<TFSField> tfsFields;
+        private readonly ObservableCollection<TFSField> bugFilterFields;
+
         private SettingDocument settings;
         private ICommand saveCommand;
         private ICommand testConnectionCommand;
         private ICommand uriHelpCommand;
         private bool canConnect;
-        private ObservableCollection<TFSField> tfsFields;
         #endregion
 
         [ImportingConstructor]
@@ -26,10 +28,13 @@ namespace Bugger.Proxy.TFS.ViewModels
         {
             this.canConnect = false;
             this.tfsFields = new ObservableCollection<TFSField>();
+            this.bugFilterFields = new ObservableCollection<TFSField>();
         }
 
         #region Properties
         public ObservableCollection<TFSField> TFSFields { get { return this.tfsFields; } }
+
+        public ObservableCollection<TFSField> BugFilterFields { get { return this.bugFilterFields; } }
 
         public SettingDocument Settings
         {
