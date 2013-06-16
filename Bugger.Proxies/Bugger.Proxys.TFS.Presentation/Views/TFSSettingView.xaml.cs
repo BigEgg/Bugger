@@ -42,6 +42,7 @@ namespace Bugger.Proxy.TFS.Presentation.Views
 
         private void LoadedHandler(object sender, RoutedEventArgs e)
         {
+            password.Password = ViewModel.Settings.Password;
             ViewModel.Settings.PropertyChanged += SettingsPropertyChanged;
             tfsName.Focus();
         }

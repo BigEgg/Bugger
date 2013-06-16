@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Documents\SettingDocument.cs" />
     <Compile Include="Documents\SettingDocumentType.cs" />
+    <Compile Include="Models\CheckString.cs" />
     <Compile Include="Models\TFSField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\MappingPair.cs" />

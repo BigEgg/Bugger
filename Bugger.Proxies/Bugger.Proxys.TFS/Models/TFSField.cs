@@ -1,4 +1,5 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 
 namespace Bugger.Proxy.TFS.Models
@@ -12,6 +13,8 @@ namespace Bugger.Proxy.TFS.Models
 
         public TFSField(string name)
         {
+            if (string.IsNullOrWhiteSpace(name)) { throw new ArgumentException("name"); }
+
             this.name = name;
             this.allowedValues = new ObservableCollection<string>();
         }

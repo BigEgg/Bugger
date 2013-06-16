@@ -32,6 +32,8 @@ namespace Bugger.Proxy.TFS
 
         private SettingDocument document;
         private TFSSettingViewModel settingViewModel;
+
+        private string priorityFieldCache;
         #endregion
 
         /// <summary>
@@ -57,13 +59,15 @@ namespace Bugger.Proxy.TFS
         #region Public Methods
         public override bool CanQuery()
         {
-            bool canQuery = this.saveCommand.CanExecute();
+            //bool canQuery = this.saveCommand.CanExecute();
 
-            if (canQuery)
-            {
-                this.saveCommand.Execute();
-            }
-            return canQuery;
+            //if (canQuery)
+            //{
+            //    this.saveCommand.Execute();
+            //}
+            //return canQuery;
+
+            return this.saveCommand.CanExecute();
         }
         #endregion
 
@@ -98,6 +102,7 @@ namespace Bugger.Proxy.TFS
             if (this.testConnectionCommand.CanExecute())
             {
                 this.testConnectionCommand.Execute();
+                UpdatePriorityValues();
             }
         }
 
@@ -268,13 +273,49 @@ namespace Bugger.Proxy.TFS
 
         private void DocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName == "PropertyMappingList")
+            {
+                UpdatePriorityValues();
+            }
+
             UpdateCommands();
+        }
+
+        private void PriorityValuePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.document.PriorityRed = string.Join("; ", 
+                this.settingViewModel.PriorityValues.Where(x => x.IsChecked).Select(x=>x.Name));
         }
 
         private void UpdateCommands()
         {
             this.saveCommand.RaiseCanExecuteChanged();
             this.testConnectionCommand.RaiseCanExecuteChanged();
+        }
+
+        private void UpdatePriorityValues()
+        {
+            if (!this.settingViewModel.CanConnect &&
+                priorityFieldCache != null && 
+                priorityFieldCache == this.document.PropertyMappingList.First(x => x.PropertyName == "Priority").FieldName)
+                return;
+
+            priorityFieldCache = this.document.PropertyMappingList.First(x => x.PropertyName == "Priority").FieldName;
+            this.settingViewModel.PriorityValues.Clear();
+
+            TFSField priorityField = this.settingViewModel.TFSFields.First(x => x.Name == priorityFieldCache);
+            foreach (var value in priorityField.AllowedValues)
+            {
+                CheckString checkValue = new CheckString(value);
+                checkValue.IsChecked = this.document.PriorityRed.Contains(value);
+
+                AddWeakEventListener(checkValue, PriorityValuePropertyChanged);
+
+                this.settingViewModel.PriorityValues.Add(checkValue);
+            }
+
+            this.document.PriorityRed = string.Join("; ",
+                this.settingViewModel.PriorityValues.Where(x => x.IsChecked).Select(x => x.Name));
         }
         #endregion
         #endregion

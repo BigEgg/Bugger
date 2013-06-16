@@ -2,9 +2,6 @@
 using Bugger.Proxy.TFS.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Bugger.Proxy.TFS.Test.Models
 {
@@ -22,6 +19,14 @@ namespace Bugger.Proxy.TFS.Test.Models
             field.AllowedValues.Add("Work Item");
             field.AllowedValues.Add("Bug");
             Assert.AreEqual(2, field.AllowedValues.Count);
+        }
+
+        [TestMethod]
+        public void ConstructorTest()
+        {
+            AssertHelper.ExpectedException<ArgumentException>(() => new TFSField(null));
+            AssertHelper.ExpectedException<ArgumentException>(() => new TFSField(""));
+            AssertHelper.ExpectedException<ArgumentException>(() => new TFSField("  "));
         }
     }
 }

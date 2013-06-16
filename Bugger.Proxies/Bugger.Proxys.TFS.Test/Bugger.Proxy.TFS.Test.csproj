@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Documents\SettingDocumentTest.cs" />
     <Compile Include="Documents\SettingDocumentTypeTest.cs" />
+    <Compile Include="Models\CheckStringTest.cs" />
     <Compile Include="Models\MappingPairTest.cs" />
     <Compile Include="Models\TFSFieldTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

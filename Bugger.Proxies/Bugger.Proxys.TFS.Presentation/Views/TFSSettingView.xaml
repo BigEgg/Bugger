@@ -109,10 +109,20 @@
                     </ComboBox.ItemTemplateSelector>
                 </ComboBox>
                 <TextBlock Text="{x:Static p:Resources.Equal}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <!--<TextBox Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" Text="{Binding Settings.BugFilterValue, UpdateSourceTrigger=PropertyChanged}"/>-->
                 <ComboBox Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" ItemsSource="{Binding SelectedItem.AllowedValues, ElementName=bugFilter}" SelectedItem="{Binding Settings.BugFilterValue}"/>
                 <Label Content="{x:Static p:Resources.PriorityRed}" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Target="{Binding ElementName=priorityRed}"/>
-                <TextBox x:Name="priorityRed" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" Text="{Binding Settings.PriorityRed}"/>
+                <!--<TextBox x:Name="priorityRed" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" Text="{Binding Settings.PriorityRed}"/>-->
+                <ComboBox x:Name="priorityRed" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" Text="{Binding Settings.PriorityRed, Mode=OneWay}" ItemsSource="{Binding PriorityValues}" IsReadOnly="True" IsEditable="True">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding IsChecked}" Margin="5"/>
+                                <TextBlock Text="{Binding Name}" Margin="5,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Path=DataContext.Settings.PriorityRed, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
                 <TextBlock Text="{x:Static p:Resources.SplitBy}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>

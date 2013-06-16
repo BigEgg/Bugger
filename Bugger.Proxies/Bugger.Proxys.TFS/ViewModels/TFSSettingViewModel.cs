@@ -14,6 +14,7 @@ namespace Bugger.Proxy.TFS.ViewModels
         #region Fields
         private readonly ObservableCollection<TFSField> tfsFields;
         private readonly ObservableCollection<TFSField> bugFilterFields;
+        private readonly ObservableCollection<CheckString> priorityValues;
 
         private SettingDocument settings;
         private ICommand saveCommand;
@@ -29,12 +30,15 @@ namespace Bugger.Proxy.TFS.ViewModels
             this.canConnect = false;
             this.tfsFields = new ObservableCollection<TFSField>();
             this.bugFilterFields = new ObservableCollection<TFSField>();
+            this.priorityValues = new ObservableCollection<CheckString>();
         }
 
         #region Properties
         public ObservableCollection<TFSField> TFSFields { get { return this.tfsFields; } }
 
         public ObservableCollection<TFSField> BugFilterFields { get { return this.bugFilterFields; } }
+
+        public ObservableCollection<CheckString> PriorityValues { get { return this.priorityValues; } }
 
         public SettingDocument Settings
         {
