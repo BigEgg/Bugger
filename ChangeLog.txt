@@ -8,7 +8,7 @@ Alpha 4 (v0.4.0)
             Automation fill the mapping settings
             Support multi-lingual.
 
-Alpha 3 (v0.3.0)
+Alpha 3 (v0.3.0) <----- Currently Working
     Application:
         Show validation message in views.
         Can change the Opacity of Floating window by setting
@@ -16,7 +16,7 @@ Alpha 3 (v0.3.0)
         TFS Proxy
             Use multi-threading to avoid UI hang when test connection.
 
-Alpha 2 (v0.2.0) <----- Currently Working
+Alpha 2 (v0.2.0) <----- Currently Release
     Application:
         Can filter bug by its status.
     Proxies
@@ -24,7 +24,7 @@ Alpha 2 (v0.2.0) <----- Currently Working
         TFS Proxy
             Show the allowed value for TFS field.
 
-Alpha 1 (v0.1.0) <----- Currently Release
+Alpha 1 (v0.1.0)
     Application:
         Complete all main functions.
         Complete all views.
