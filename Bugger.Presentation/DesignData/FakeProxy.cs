@@ -23,14 +23,10 @@ namespace Bugger.Presentation.DesignData
             : base("Fake")
         {
             this.bugs = new List<Bug>();
+            this.CanQuery = true;
         }
 
         #region Methods
-        #region Public Methods
-        public override bool CanQuery() { return true; }
-        #endregion
-
-
         #region Protected Methods
         protected override void OnInitialize()
         {

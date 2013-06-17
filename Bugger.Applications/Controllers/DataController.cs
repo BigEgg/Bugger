@@ -74,7 +74,7 @@ namespace Bugger.Applications.Controllers
         #region Commands Methods
         private bool CanRefreshBugsCommandExecute()
         {
-            return this.ProxyService.ActiveProxy == null ? false : this.ProxyService.ActiveProxy.CanQuery();
+            return this.ProxyService.ActiveProxy == null ? false : this.ProxyService.ActiveProxy.CanQuery;
         }
 
         private void RefreshBugsCommandExecute()

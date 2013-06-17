@@ -11,8 +11,12 @@ namespace Bugger.Proxy.FakeProxy.Test
         public void GeneralFakeProxyTest()
         {
             FakeProxy proxy = new FakeProxy();
-            Assert.IsTrue(proxy.CanQuery());
+            Assert.IsTrue(proxy.CanQuery);
             Assert.AreEqual("Fake", proxy.ProxyName);
+            Assert.AreEqual(0, proxy.StateValues.Count);
+
+            proxy.Initialize();
+            Assert.AreEqual(3, proxy.StateValues.Count);
         }
 
         [TestMethod]

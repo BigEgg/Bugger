@@ -18,8 +18,9 @@ Alpha 3 (v0.3.0)
 
 Alpha 2 (v0.2.0) <----- Currently Working
     Application:
-        Filter bug by its status.
+        Can filter bug by its status.
     Proxies
+        Improve the communication between proxy to application.
         TFS Proxy
             Show the allowed value for TFS field.
 

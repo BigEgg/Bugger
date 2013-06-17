@@ -9,10 +9,13 @@ namespace Bugger.Proxy
     /// <summary>
     /// The base class of the application proxy for source control system.
     /// </summary>
-    public abstract class SourceControlProxy : Controller, ISourceControlProxy
+    public abstract class SourceControlProxy : DataModel, ISourceControlProxy
     {
         #region Fields
+        private readonly ObservableCollection<string> statusValues;
+
         private string proxyName;
+        private bool canQuery;
         #endregion
 
         /// <summary>
@@ -25,6 +28,8 @@ namespace Bugger.Proxy
             if (string.IsNullOrWhiteSpace(proxyName)) { throw new ArgumentException("proxyName"); }
 
             this.proxyName = proxyName;
+            this.canQuery = false;
+            this.statusValues = new ObservableCollection<string>();
         }
 
         #region Properties
@@ -50,17 +55,62 @@ namespace Bugger.Proxy
         /// The setting view.
         /// </value>
         public virtual ISettingView SettingView { get { return null; } }
-        #endregion
 
-        #region Methods
-        #region Public Methods
+        /// <summary>
+        /// Gets the status values.
+        /// </summary>
+        /// <value>
+        /// The status values.
+        /// </value>
+        public ObservableCollection<string> StateValues { get { return this.statusValues; } }
+
         /// <summary>
         /// Determines whether this source control proxy can query the bugs.
         /// </summary>
         /// <returns>
         ///   <c>true</c> if this source control proxy can query the bugs.; otherwise, <c>false</c>.
         /// </returns>
-        public virtual bool CanQuery() { return false; }
+        public bool CanQuery
+        {
+            get { return this.canQuery; }
+            protected set
+            {
+                if (this.canQuery != value)
+                {
+                    this.canQuery = value;
+                    RaisePropertyChanged("CanQuery");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the flag of the Initialization of the Controller.
+        /// </summary>
+        public bool IsInitialized { get; private set; }
+        #endregion
+
+        #region Methods
+        #region Public Methods
+        /// <summary>
+        /// Initialize the Controller.
+        /// </summary>
+        public void Initialize()
+        {
+            try
+            {
+                if (IsInitialized)
+                    return;
+
+                OnInitialize();
+                IsInitialized = true;
+            }
+            catch
+            {
+                IsInitialized = false;
+                throw;
+            }
+
+        }
 
         /// <summary>
         /// Query the bugs with the specified user name which the bug assign to.
@@ -75,7 +125,6 @@ namespace Bugger.Proxy
         public ReadOnlyCollection<Bug> Query(string userName, bool isFilterCreatedBy = true)
         {
             if (string.IsNullOrWhiteSpace(userName)) { throw new ArgumentException("userName"); }
-            if (!CanQuery()) { throw new NotSupportedException("The Query operation is not supported. CanQuery returned false."); }
 
             return Query(new List<string>() { userName }, isFilterCreatedBy);
         }
@@ -93,13 +142,16 @@ namespace Bugger.Proxy
         public ReadOnlyCollection<Bug> Query(List<string> teamMembers, bool isFilterCreatedBy = true)
         {
             if (teamMembers == null) { throw new ArgumentException("teamMembers"); }
-            if (!CanQuery()) { throw new NotSupportedException("The Query operation is not supported. CanQuery returned false."); }
+            if (!CanQuery) { throw new NotSupportedException("The Query operation is not supported. CanQuery returned false."); }
 
             if (teamMembers.Count == 0)
                 return new ReadOnlyCollection<Bug>(new List<Bug>());
 
             return QueryCore(teamMembers, isFilterCreatedBy);
         }
+
+        public virtual void SaveSettings()
+        {}
         #endregion
 
         #region Protected Methods
@@ -115,6 +167,13 @@ namespace Bugger.Proxy
         protected virtual ReadOnlyCollection<Bug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
         {
             throw new NotImplementedException("The Query Method not implemented in the base class.");
+        }
+
+        /// <summary>
+        /// The method which will execute when the Controller.Initialize() execute.
+        /// </summary>
+        protected virtual void OnInitialize()
+        {
         }
         #endregion
         #endregion

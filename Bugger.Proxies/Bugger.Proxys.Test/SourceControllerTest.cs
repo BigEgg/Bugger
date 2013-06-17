@@ -44,6 +44,18 @@ namespace Bugger.Proxy.Test
             MockSourceController controller = new MockSourceController("proxyName");
 
             Assert.AreEqual("proxyName", controller.ProxyName);
+            Assert.AreEqual(0, controller.StateValues.Count);
+            Assert.IsFalse(controller.CanQuery);
+        }
+
+        [TestMethod]
+        public void PropertiesWithNotification()
+        {
+            MockSourceController controller = new MockSourceController("proxyName");
+
+            Assert.IsFalse(controller.CanQuery);
+            AssertHelper.PropertyChangedEvent(controller, x => x.CanQuery, () => controller.CanQueryValue = true);
+            Assert.IsTrue(controller.CanQuery);
         }
 
         [TestMethod]
@@ -62,12 +74,13 @@ namespace Bugger.Proxy.Test
             public MockSourceController(string proxyName)
                 : base(proxyName)
             {
-                this.CanQueryValue = false;
             }
 
-            public bool CanQueryValue { get; set; }
-
-            public override bool CanQuery() { return CanQueryValue; }
+            public bool CanQueryValue 
+            { 
+                get { return this.CanQuery; }
+                set { this.CanQuery = value; }
+            }
 
             public ReadOnlyCollection<Bug> CallQueryCore(List<string> userNames, bool isFilterCreatedBy)
             {

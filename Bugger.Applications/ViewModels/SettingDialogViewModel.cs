@@ -26,7 +26,7 @@ namespace Bugger.Applications.ViewModels
         {
             this.proxyService = proxyService;
             this.settingsViewModel = settingsViewModel;
-            this.submitCommand = new DelegateCommand(() => Close(true), CanSubmitSetting);
+            this.submitCommand = new DelegateCommand(SubmitSettingCommand, CanSubmitSetting);
             this.cancelCommand = new DelegateCommand(() => Close(false));
 
             this.views = new ObservableCollection<object>();
@@ -53,10 +53,18 @@ namespace Bugger.Applications.ViewModels
 
         #region Methods
         #region Private Methods
+        private void SubmitSettingCommand()
+        {
+            if (this.proxyService.ActiveProxy != null)
+                this.proxyService.ActiveProxy.SaveSettings();
+            
+            Close(true);
+        }
+
         private bool CanSubmitSetting()
         {
             return string.IsNullOrEmpty(this.settingsViewModel.Validate()) 
-                && this.proxyService.ActiveProxy.CanQuery();
+                && this.proxyService.ActiveProxy.CanQuery;
         }
 
         private void SettingsViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
