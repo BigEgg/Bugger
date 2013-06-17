@@ -98,6 +98,7 @@ namespace Bugger.Proxy.TFS
                 this.testConnectionCommand.Execute();
                 UpdatePriorityValues();
                 UpdateStatusValues();
+                this.CanQuery = this.saveCommand.CanExecute();
             }
         }
 

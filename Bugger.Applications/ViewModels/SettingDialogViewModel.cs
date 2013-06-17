@@ -39,6 +39,12 @@ namespace Bugger.Applications.ViewModels
             SelectView = this.settingsViewModel.View;
 
             AddWeakEventListener(settingsViewModel, SettingsViewModelPropertyChanged);
+            if (this.proxyService.ActiveProxy != null)
+            {
+                AddWeakEventListener(this.proxyService.ActiveProxy, ActiveProxyPropertyChanged);
+                AddWeakEventListener(this.proxyService.ActiveProxy.StateValues, StateValuesCollectionChanged);
+                StateValuesCollectionChanged(null, null);
+            }
         }
 
         #region Properties
@@ -111,12 +117,18 @@ namespace Bugger.Applications.ViewModels
             foreach (var value in this.proxyService.ActiveProxy.StateValues)
             {
                 CheckString checkValue = new CheckString(value);
-                checkValue.IsChecked = this.settingsViewModel.FilterStatusValues.Contains(value);
+                checkValue.IsChecked = string.IsNullOrWhiteSpace(this.settingsViewModel.FilterStatusValues)
+                    ? true
+                    : this.settingsViewModel.FilterStatusValues.Contains(value);
 
                 AddWeakEventListener(checkValue, StatusValuePropertyChanged);
 
                 this.settingsViewModel.StatusValues.Add(checkValue);
             }
+
+            this.settingsViewModel.FilterStatusValues = string.Join(
+                "; ",
+                this.settingsViewModel.StatusValues.Where(x => x.IsChecked).Select(x => x.Name));
         }
 
         private void StatusValuePropertyChanged(object sender, PropertyChangedEventArgs e)
