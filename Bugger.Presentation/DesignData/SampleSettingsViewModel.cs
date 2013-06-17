@@ -9,7 +9,7 @@ namespace Bugger.Presentation.DesignData
         public SampleSettingsViewModel()
             : base(new MockSettingsView(), new MockProxyService(), "BigEgg;Pupil")
         {
-
+            this.FilterStatusValues = "High; Low";
         }
 
         private class MockSettingsView : MockView, ISettingsView

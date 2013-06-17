@@ -1,6 +1,7 @@
 ﻿using BigEgg.Framework.Applications.Commands;
 using BigEgg.Framework.Applications.ViewModels;
 using BigEgg.Framework.Foundation;
+using Bugger.Applications.Models;
 using Bugger.Applications.Properties;
 using Bugger.Applications.Services;
 using Bugger.Applications.Views;
@@ -21,6 +22,7 @@ namespace Bugger.Applications.ViewModels
 
         private readonly ObservableCollection<string> teamMembers;
         private readonly ObservableCollection<string> selectedTeamMembers;
+        private readonly ObservableCollection<CheckString> statusValues;
         private readonly ReadOnlyCollection<string> proxys;
         private readonly DelegateCommand addNewTeamMemberCommand;
         private readonly DelegateCommand removeTeamMemberCommand;
@@ -31,6 +33,7 @@ namespace Bugger.Applications.ViewModels
         private string newTeamMember;
         private int refreshMinutes;
         private bool isFilterCreatedBy;
+        private string filterStatusValues;
         #endregion
 
         public SettingsViewModel(ISettingsView view, IProxyService proxyService, string teamMembers)
@@ -45,6 +48,8 @@ namespace Bugger.Applications.ViewModels
                 proxyService.Proxys.Select(x => x.ProxyName).ToList());
             this.activeProxy = 
                 proxyService.ActiveProxy == null ? string.Empty : proxyService.ActiveProxy.ProxyName;
+
+            this.statusValues = new ObservableCollection<CheckString>();
 
             this.addNewTeamMemberCommand = new DelegateCommand(AddNewTeamMemberCommandExecute, CanAddNewTeamMemberCommandExecute);
             this.removeTeamMemberCommand = new DelegateCommand(RemoveTeamMemberCommandExecute, CanRemoveTeamMemberCommandExecute);
@@ -157,6 +162,21 @@ namespace Bugger.Applications.ViewModels
                 }
             }        
         }
+
+        public string FilterStatusValues
+        {
+            get { return this.filterStatusValues; }
+            set
+            {
+                if (this.filterStatusValues != value)
+                {
+                    this.filterStatusValues = value;
+                    RaisePropertyChanged("FilterStatusValues");
+                }
+            }
+        }
+
+        public ObservableCollection<CheckString> StatusValues { get { return this.statusValues; } }
         #endregion
 
         #region Private Methods

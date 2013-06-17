@@ -118,7 +118,6 @@
                             <StackPanel Orientation="Horizontal">
                                 <CheckBox IsChecked="{Binding IsChecked}" Margin="5"/>
                                 <TextBlock Text="{Binding Name}" Margin="5,0,10,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="{Binding Path=DataContext.Settings.PriorityRed, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>

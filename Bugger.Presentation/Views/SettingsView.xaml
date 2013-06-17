@@ -64,6 +64,7 @@
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
                     <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Label Content="{x:Static p:Resources.SettingUserName}" VerticalAlignment="Center"
@@ -79,6 +80,18 @@
                        Target="{Binding ElementName=filterCreatedBy}" Grid.Row="2" />
                 <CheckBox x:Name="filterCreatedBy" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left"
                           VerticalAlignment="Center" IsChecked="{Binding IsFilterCreatedBy}" />
+                <Label Content="{x:Static p:Resources.SettingFilterBugStatus}" VerticalAlignment="Center"
+                       Target="{Binding ElementName=filterBugStatus}" Grid.Row="3" />
+                <ComboBox x:Name="filterBugStatus" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding FilterStatusValues, Mode=OneWay}" ItemsSource="{Binding StatusValues}" IsReadOnly="True" IsEditable="True">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding IsChecked}" Margin="5"/>
+                                <TextBlock Text="{Binding Name}" Margin="5,0,10,0" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
         </GroupBox>
     </Grid>

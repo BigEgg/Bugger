@@ -1,10 +1,12 @@
 ﻿using BigEgg.Framework.Applications.Commands;
 using BigEgg.Framework.Applications.ViewModels;
 using BigEgg.Framework.Foundation;
+using Bugger.Applications.Models;
 using Bugger.Applications.Properties;
 using Bugger.Applications.Services;
 using Bugger.Applications.Views;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
@@ -71,18 +73,57 @@ namespace Bugger.Applications.ViewModels
         {
             if (e.PropertyName == "ActiveProxy")
             {
-                if (this.proxyService.ActiveProxy != null && this.proxyService.ActiveProxy.SettingView != null)
-                    this.views.Remove(this.proxyService.ActiveProxy.SettingView);
+                if (this.proxyService.ActiveProxy != null)
+                {
+                    RemoveWeakEventListener(this.proxyService.ActiveProxy, ActiveProxyPropertyChanged);
+                    RemoveWeakEventListener(this.proxyService.ActiveProxy.StateValues, StateValuesCollectionChanged);
+                    if (this.proxyService.ActiveProxy.SettingView != null)
+                    {
+                        this.views.Remove(this.proxyService.ActiveProxy.SettingView);
+                    }
+                }
 
                 this.proxyService.ActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
 
-                if (this.proxyService.ActiveProxy != null && this.proxyService.ActiveProxy.SettingView != null)
-                    this.views.Add(this.proxyService.ActiveProxy.SettingView);
-
-                RaisePropertyChanged("Views");
+                if (this.proxyService.ActiveProxy != null)
+                {
+                    AddWeakEventListener(this.proxyService.ActiveProxy, ActiveProxyPropertyChanged);
+                    AddWeakEventListener(this.proxyService.ActiveProxy.StateValues, StateValuesCollectionChanged);
+                    if (this.proxyService.ActiveProxy.SettingView != null)
+                    {
+                        this.views.Add(this.proxyService.ActiveProxy.SettingView);
+                    }
+                }
             }
 
             UpdateCommands();
+        }
+
+        private void ActiveProxyPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            UpdateCommands();
+        }
+
+        private void StateValuesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            this.settingsViewModel.StatusValues.Clear();
+
+            foreach (var value in this.proxyService.ActiveProxy.StateValues)
+            {
+                CheckString checkValue = new CheckString(value);
+                checkValue.IsChecked = this.settingsViewModel.FilterStatusValues.Contains(value);
+
+                AddWeakEventListener(checkValue, StatusValuePropertyChanged);
+
+                this.settingsViewModel.StatusValues.Add(checkValue);
+            }
+        }
+
+        private void StatusValuePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.settingsViewModel.FilterStatusValues = string.Join(
+                "; ",
+                this.settingsViewModel.StatusValues.Where(x => x.IsChecked).Select(x => x.Name));
         }
 
         private void UpdateCommands()
