@@ -100,7 +100,7 @@ namespace Bugger.Applications.Controllers
             {
                 Task.Factory.StartNew(
                     () => this.ProxyService.ActiveProxy.Query(
-                        Settings.Default.TeamMembers,
+                        Settings.Default.TeamMembers.Split(';').Select(x => x.Trim()).ToList(),
                         Settings.Default.IsFilterCreatedBy))
                 .ContinueWith((result) =>
                 {

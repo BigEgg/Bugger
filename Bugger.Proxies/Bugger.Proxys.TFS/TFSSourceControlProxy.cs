@@ -147,32 +147,83 @@ namespace Bugger.Proxy.TFS
 
                 foreach (WorkItem item in collection)
                 {
-                    bugs.Add(new Bug()
+                    Bug bug = new Bug();
+                    object value = null;
+
+                    //  ID
+                    value =
+                        item.Fields[this.document.PropertyMappingList.First(x => x.PropertyName == "ID").FieldName]
+                            .Value;
+                    bug.ID = value == null ? 0 : (int) value;
+
+                    //  Title
+                    value =
+                        item.Fields[this.document.PropertyMappingList.First(x => x.PropertyName == "Title").FieldName]
+                            .Value;
+                    bug.Title = value == null ? string.Empty : value.ToString();
+
+                    //  Description
+                    value =
+                        item.Fields[
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "Description").FieldName]
+                            .Value;
+                    bug.Description = value == null ? string.Empty : value.ToString();
+
+                    //  AssignedTo
+                    value =
+                        item.Fields[
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "AssignedTo").FieldName]
+                            .Value;
+                    bug.AssignedTo = value == null ? string.Empty : value.ToString();
+
+                    //  State
+                    value =
+                        item.Fields[
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "State").FieldName]
+                            .Value;
+                    bug.State = value == null ? string.Empty : value.ToString();
+
+                    //  ChangedDate
+                    value =
+                        item.Fields[
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "ChangedDate").FieldName]
+                            .Value;
+                    bug.ChangedDate = value == null ? DateTime.Today : (DateTime)value;
+
+                    //  CreatedBy
+                    value =
+                        item.Fields[
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "CreatedBy").FieldName]
+                            .Value;
+                    bug.CreatedBy = value == null ? string.Empty : value.ToString();
+
+                    //  Priority
+                    value =
+                        item.Fields[
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "Priority").FieldName]
+                            .Value;
+                    bug.Priority = value == null ? string.Empty : value.ToString();
+
+                    //  Severity
+                    if (string.IsNullOrWhiteSpace(
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "Severity").FieldName))
                     {
-                        ID = (int)item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "ID").FieldName].Value,
-                        Title = item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "Title").FieldName].Value.ToString(),
-                        Description = item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "Description").FieldName].Value.ToString(),
-                        AssignedTo = item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "AssignedTo").FieldName].Value.ToString(),
-                        State = item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "State").FieldName].Value.ToString(),
-                        ChangedDate = (DateTime)item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "ChangedDate").FieldName].Value,
-                        CreatedBy = item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "CreatedBy").FieldName].Value.ToString(),
-                        Priority = item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "Priority").FieldName].Value.ToString(),
-                        Severity = string.IsNullOrWhiteSpace(this.document.PropertyMappingList.First(x => x.PropertyName == "Severity").FieldName) ?
-                                      string.Empty :
-                                      item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "Severity").FieldName].Value.ToString(),
-                        Type = redFilter.Contains(item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "Priority").FieldName].Value.ToString())
-                                          ? BugType.Red : BugType.Yellow
-                    });
+                        bug.Severity = string.Empty;
+                    }
+                    else
+                    {
+                        value =
+                            item.Fields[
+                                this.document.PropertyMappingList.First(x => x.PropertyName == "Severity").FieldName]
+                                .Value;
+                        bug.Severity = value == null ? string.Empty : value.ToString();
+                    }
+
+                    bug.Type = string.IsNullOrWhiteSpace(bug.Priority)
+                                   ? BugType.Yellow
+                                   : (redFilter.Contains(bug.Priority) ? BugType.Red : BugType.Yellow);
+
+                    bugs.Add(bug);
                 }
             }
 
@@ -308,7 +359,8 @@ namespace Bugger.Proxy.TFS
             foreach (var value in priorityField.AllowedValues)
             {
                 CheckString checkValue = new CheckString(value);
-                checkValue.IsChecked = this.document.PriorityRed.Contains(value);
+                checkValue.IsChecked = !string.IsNullOrWhiteSpace(this.document.PriorityRed) &&
+                                       this.document.PriorityRed.Contains(value);
 
                 AddWeakEventListener(checkValue, PriorityValuePropertyChanged);
 

@@ -10,6 +10,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using Bugger.Proxy;
 
 namespace Bugger.Applications.ViewModels
 {
@@ -21,6 +22,8 @@ namespace Bugger.Applications.ViewModels
         private readonly DelegateCommand cancelCommand;
         private readonly ObservableCollection<object> views;
         private SettingsViewModel settingsViewModel;
+
+        private ISourceControlProxy settingActiveProxy;
         #endregion
 
         public SettingDialogViewModel(ISettingDialogView view, IProxyService proxyService, SettingsViewModel settingsViewModel)
@@ -38,11 +41,14 @@ namespace Bugger.Applications.ViewModels
 
             SelectView = this.settingsViewModel.View;
 
-            AddWeakEventListener(settingsViewModel, SettingsViewModelPropertyChanged);
-            if (this.proxyService.ActiveProxy != null)
+            AddWeakEventListener(this.settingsViewModel, SettingsViewModelPropertyChanged);
+
+            if (!string.IsNullOrWhiteSpace(this.settingsViewModel.ActiveProxy))
+                this.settingActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
+            if (this.settingActiveProxy != null)
             {
-                AddWeakEventListener(this.proxyService.ActiveProxy, ActiveProxyPropertyChanged);
-                AddWeakEventListener(this.proxyService.ActiveProxy.StateValues, StateValuesCollectionChanged);
+                AddWeakEventListener(this.settingActiveProxy, ActiveProxyPropertyChanged);
+                AddWeakEventListener(this.settingActiveProxy.StateValues, StateValuesCollectionChanged);
                 StateValuesCollectionChanged(null, null);
             }
         }
@@ -63,41 +69,45 @@ namespace Bugger.Applications.ViewModels
         #region Private Methods
         private void SubmitSettingCommand()
         {
-            if (this.proxyService.ActiveProxy != null)
-                this.proxyService.ActiveProxy.SaveSettings();
-            
+            if (this.settingActiveProxy != null)
+                this.settingActiveProxy.SaveSettings();
+
+            this.proxyService.ActiveProxy = this.settingActiveProxy;
+
             Close(true);
         }
 
         private bool CanSubmitSetting()
         {
-            return string.IsNullOrEmpty(this.settingsViewModel.Validate()) 
-                && this.proxyService.ActiveProxy.CanQuery;
+            return string.IsNullOrEmpty(this.settingsViewModel.Validate())
+                && this.settingActiveProxy.CanQuery;
         }
 
         private void SettingsViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "ActiveProxy")
             {
-                if (this.proxyService.ActiveProxy != null)
+                if (this.settingActiveProxy != null)
                 {
-                    RemoveWeakEventListener(this.proxyService.ActiveProxy, ActiveProxyPropertyChanged);
-                    RemoveWeakEventListener(this.proxyService.ActiveProxy.StateValues, StateValuesCollectionChanged);
-                    if (this.proxyService.ActiveProxy.SettingView != null)
+                    RemoveWeakEventListener(this.settingActiveProxy, ActiveProxyPropertyChanged);
+                    RemoveWeakEventListener(this.settingActiveProxy.StateValues, StateValuesCollectionChanged);
+                    if (this.settingActiveProxy.SettingView != null)
                     {
-                        this.views.Remove(this.proxyService.ActiveProxy.SettingView);
+                        this.views.Remove(this.settingActiveProxy.SettingView);
                     }
                 }
 
-                this.proxyService.ActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
+                this.settingActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
 
-                if (this.proxyService.ActiveProxy != null)
+                StateValuesCollectionChanged(null, null);
+
+                if (this.settingActiveProxy != null)
                 {
-                    AddWeakEventListener(this.proxyService.ActiveProxy, ActiveProxyPropertyChanged);
-                    AddWeakEventListener(this.proxyService.ActiveProxy.StateValues, StateValuesCollectionChanged);
-                    if (this.proxyService.ActiveProxy.SettingView != null)
+                    AddWeakEventListener(this.settingActiveProxy, ActiveProxyPropertyChanged);
+                    AddWeakEventListener(this.settingActiveProxy.StateValues, StateValuesCollectionChanged);
+                    if (this.settingActiveProxy.SettingView != null)
                     {
-                        this.views.Add(this.proxyService.ActiveProxy.SettingView);
+                        this.views.Add(this.settingActiveProxy.SettingView);
                     }
                 }
             }
@@ -114,12 +124,11 @@ namespace Bugger.Applications.ViewModels
         {
             this.settingsViewModel.StatusValues.Clear();
 
-            foreach (var value in this.proxyService.ActiveProxy.StateValues)
+            foreach (var value in this.settingActiveProxy.StateValues)
             {
                 CheckString checkValue = new CheckString(value);
-                checkValue.IsChecked = string.IsNullOrWhiteSpace(this.settingsViewModel.FilterStatusValues)
-                    ? true
-                    : this.settingsViewModel.FilterStatusValues.Contains(value);
+                checkValue.IsChecked = string.IsNullOrWhiteSpace(this.settingsViewModel.FilterStatusValues) ||
+                                       Settings.Default.FilterStatusValues.Contains(value);
 
                 AddWeakEventListener(checkValue, StatusValuePropertyChanged);
 
