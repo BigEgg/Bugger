@@ -5,9 +5,11 @@ Alpha 3 (v0.3.0) <----- Currently Working
         Show validation message in views.
         Can change the Opacity of Floating window by setting
         Show setting dialog when open the application if the settings is not being set.
+        Show progress and out come when query bugs.
     Proxies
         TFS Proxy
             Use multi-threading to avoid UI hang when test connection.
+                Show progress and out come when test connection.
             Automation fill the mapping settings
 
 Alpha 2 (v0.2.0) <----- Currently Release
