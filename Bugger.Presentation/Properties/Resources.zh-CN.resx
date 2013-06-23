@@ -250,4 +250,7 @@
   <data name="UserBugsTitle" xml:space="preserve">
     <value>我的Bug</value>
   </data>
+  <data name="SettingFilterBugStatus" xml:space="preserve">
+    <value>过滤Bug状态(_S)</value>
+  </data>
 </root>

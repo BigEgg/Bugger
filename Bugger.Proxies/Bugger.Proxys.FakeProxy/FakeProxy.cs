@@ -26,17 +26,17 @@ namespace Bugger.Proxy.FakeProxy
             : base("Fake")
         {
             this.bugs = new List<Bug>();
+            this.CanQuery = true;
         }
 
         #region Methods
-        #region Public Methods
-        public override bool CanQuery() { return true; }
-        #endregion
-
-
         #region Protected Methods
         protected override void OnInitialize()
         {
+            this.StateValues.Add("High");
+            this.StateValues.Add("Medium");
+            this.StateValues.Add("Low");
+
             this.bugs.Add(new Bug()
             {
                 ID = 1,

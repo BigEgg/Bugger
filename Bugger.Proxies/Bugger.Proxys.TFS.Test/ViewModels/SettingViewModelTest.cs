@@ -30,6 +30,7 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
         {
             Assert.IsFalse(viewModel.CanConnect);
             Assert.AreEqual(0, this.viewModel.TFSFields.Count);
+            Assert.AreEqual(0, this.viewModel.BugFilterFields.Count);
             Assert.IsNotNull(this.viewModel.Settings);
             Assert.IsNotNull(this.viewModel.SaveCommand);
             Assert.IsNotNull(this.viewModel.UriHelpCommand);

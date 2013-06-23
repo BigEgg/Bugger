@@ -37,7 +37,7 @@ namespace Bugger.Proxy.TFS.Test
         public void GeneralTFSSourceControllerTest()
         {
             Assert.IsTrue(this.proxy.IsInitialized);
-            Assert.IsFalse(this.proxy.CanQuery());
+            Assert.IsFalse(this.proxy.CanQuery);
             Assert.IsNotNull(this.proxy.SettingView);
 
             Assert.IsNotNull(this.viewModel.SaveCommand);
@@ -136,7 +136,7 @@ namespace Bugger.Proxy.TFS.Test
             this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "CreatedBy").FieldName = "Created By";
             this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "Priority").FieldName = "Code Studio Rank";
 
-            Assert.IsTrue(this.proxy.CanQuery());
+            Assert.IsTrue(this.proxy.CanQuery);
             ReadOnlyCollection<Bug> bugs = this.proxy.Query("BigEgg_cp");
             Assert.IsNotNull(bugs);
             Assert.IsTrue(bugs.Any());

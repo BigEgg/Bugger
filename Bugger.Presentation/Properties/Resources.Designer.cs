@@ -297,6 +297,15 @@ namespace Bugger.Presentation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter bug&apos;s _status.
+        /// </summary>
+        public static string SettingFilterBugStatus {
+            get {
+                return ResourceManager.GetString("SettingFilterBugStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is filter _created by.
         /// </summary>
         public static string SettingIsFilterCreatedBy {

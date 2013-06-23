@@ -2,6 +2,7 @@
 using BigEgg.Framework.Applications.Services;
 using Bugger.Domain.Models;
 using Bugger.Proxy.TFS.Documents;
+using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Properties;
 using Bugger.Proxy.TFS.ViewModels;
 using Bugger.Proxy.TFS.Views;
@@ -31,6 +32,9 @@ namespace Bugger.Proxy.TFS
 
         private SettingDocument document;
         private TFSSettingViewModel settingViewModel;
+
+        private string priorityFieldCache;
+        private string stateFieldCache;
         #endregion
 
         /// <summary>
@@ -54,15 +58,10 @@ namespace Bugger.Proxy.TFS
 
         #region Methods
         #region Public Methods
-        public override bool CanQuery()
+        public override void SaveSettings()
         {
-            bool canQuery = this.saveCommand.CanExecute();
-
-            if (canQuery)
-            {
+            if (this.saveCommand.CanExecute())
                 this.saveCommand.Execute();
-            }
-            return canQuery;
         }
         #endregion
 
@@ -97,6 +96,9 @@ namespace Bugger.Proxy.TFS
             if (this.testConnectionCommand.CanExecute())
             {
                 this.testConnectionCommand.Execute();
+                UpdatePriorityValues();
+                UpdateStatusValues();
+                this.CanQuery = this.saveCommand.CanExecute();
             }
         }
 
@@ -145,32 +147,83 @@ namespace Bugger.Proxy.TFS
 
                 foreach (WorkItem item in collection)
                 {
-                    bugs.Add(new Bug()
+                    Bug bug = new Bug();
+                    object value = null;
+
+                    //  ID
+                    value =
+                        item.Fields[this.document.PropertyMappingList.First(x => x.PropertyName == "ID").FieldName]
+                            .Value;
+                    bug.ID = value == null ? 0 : (int) value;
+
+                    //  Title
+                    value =
+                        item.Fields[this.document.PropertyMappingList.First(x => x.PropertyName == "Title").FieldName]
+                            .Value;
+                    bug.Title = value == null ? string.Empty : value.ToString();
+
+                    //  Description
+                    value =
+                        item.Fields[
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "Description").FieldName]
+                            .Value;
+                    bug.Description = value == null ? string.Empty : value.ToString();
+
+                    //  AssignedTo
+                    value =
+                        item.Fields[
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "AssignedTo").FieldName]
+                            .Value;
+                    bug.AssignedTo = value == null ? string.Empty : value.ToString();
+
+                    //  State
+                    value =
+                        item.Fields[
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "State").FieldName]
+                            .Value;
+                    bug.State = value == null ? string.Empty : value.ToString();
+
+                    //  ChangedDate
+                    value =
+                        item.Fields[
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "ChangedDate").FieldName]
+                            .Value;
+                    bug.ChangedDate = value == null ? DateTime.Today : (DateTime)value;
+
+                    //  CreatedBy
+                    value =
+                        item.Fields[
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "CreatedBy").FieldName]
+                            .Value;
+                    bug.CreatedBy = value == null ? string.Empty : value.ToString();
+
+                    //  Priority
+                    value =
+                        item.Fields[
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "Priority").FieldName]
+                            .Value;
+                    bug.Priority = value == null ? string.Empty : value.ToString();
+
+                    //  Severity
+                    if (string.IsNullOrWhiteSpace(
+                            this.document.PropertyMappingList.First(x => x.PropertyName == "Severity").FieldName))
                     {
-                        ID = (int)item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "ID").FieldName].Value,
-                        Title = item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "Title").FieldName].Value.ToString(),
-                        Description = item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "Description").FieldName].Value.ToString(),
-                        AssignedTo = item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "AssignedTo").FieldName].Value.ToString(),
-                        State = item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "State").FieldName].Value.ToString(),
-                        ChangedDate = (DateTime)item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "ChangedDate").FieldName].Value,
-                        CreatedBy = item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "CreatedBy").FieldName].Value.ToString(),
-                        Priority = item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "Priority").FieldName].Value.ToString(),
-                        Severity = string.IsNullOrWhiteSpace(this.document.PropertyMappingList.First(x => x.PropertyName == "Severity").FieldName) ?
-                                      string.Empty :
-                                      item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "Severity").FieldName].Value.ToString(),
-                        Type = redFilter.Contains(item.Fields[this.document.PropertyMappingList.First(
-                                          x => x.PropertyName == "Priority").FieldName].Value.ToString())
-                                          ? BugType.Red : BugType.Yellow
-                    });
+                        bug.Severity = string.Empty;
+                    }
+                    else
+                    {
+                        value =
+                            item.Fields[
+                                this.document.PropertyMappingList.First(x => x.PropertyName == "Severity").FieldName]
+                                .Value;
+                        bug.Severity = value == null ? string.Empty : value.ToString();
+                    }
+
+                    bug.Type = string.IsNullOrWhiteSpace(bug.Priority)
+                                   ? BugType.Yellow
+                                   : (redFilter.Contains(bug.Priority) ? BugType.Red : BugType.Yellow);
+
+                    bugs.Add(bug);
                 }
             }
 
@@ -243,7 +296,17 @@ namespace Bugger.Proxy.TFS
                 this.settingViewModel.TFSFields.Clear();
                 foreach (FieldDefinition field in collection)
                 {
-                    this.settingViewModel.TFSFields.Add(field.Name);
+                    TFSField tfsField = new TFSField(field.Name);
+                    foreach (var value in field.AllowedValues)
+                    {
+                        tfsField.AllowedValues.Add(value.ToString());
+                    }
+
+                    this.settingViewModel.TFSFields.Add(tfsField);
+                    if (tfsField.AllowedValues.Any())
+                    {
+                        this.settingViewModel.BugFilterFields.Add(tfsField);
+                    }
                 }
 
                 this.settingViewModel.CanConnect = true;
@@ -257,13 +320,75 @@ namespace Bugger.Proxy.TFS
 
         private void DocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName == "PropertyMappingList")
+            {
+                UpdatePriorityValues();
+                UpdateStatusValues();
+            }
+
             UpdateCommands();
+            this.CanQuery = this.saveCommand.CanExecute();
+        }
+
+        private void PriorityValuePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.document.PriorityRed = string.Join("; ", 
+                this.settingViewModel.PriorityValues.Where(x => x.IsChecked).Select(x=>x.Name));
         }
 
         private void UpdateCommands()
         {
             this.saveCommand.RaiseCanExecuteChanged();
             this.testConnectionCommand.RaiseCanExecuteChanged();
+        }
+
+        private void UpdatePriorityValues()
+        {
+            string fieldName = this.document.PropertyMappingList.First(x => x.PropertyName == "Priority").FieldName;
+
+            if (!this.settingViewModel.CanConnect ||
+                (string.IsNullOrWhiteSpace(fieldName) &&
+                priorityFieldCache != null &&
+                priorityFieldCache == fieldName))
+                return;
+
+            priorityFieldCache = fieldName;
+            this.settingViewModel.PriorityValues.Clear();
+
+            TFSField priorityField = this.settingViewModel.TFSFields.First(x => x.Name == priorityFieldCache);
+            foreach (var value in priorityField.AllowedValues)
+            {
+                CheckString checkValue = new CheckString(value);
+                checkValue.IsChecked = !string.IsNullOrWhiteSpace(this.document.PriorityRed) &&
+                                       this.document.PriorityRed.Contains(value);
+
+                AddWeakEventListener(checkValue, PriorityValuePropertyChanged);
+
+                this.settingViewModel.PriorityValues.Add(checkValue);
+            }
+
+            this.document.PriorityRed = string.Join("; ",
+                this.settingViewModel.PriorityValues.Where(x => x.IsChecked).Select(x => x.Name));
+        }
+
+        private void UpdateStatusValues()
+        {
+            string fieldName = this.document.PropertyMappingList.First(x => x.PropertyName == "State").FieldName;
+
+            if (!this.settingViewModel.CanConnect ||
+                (string.IsNullOrWhiteSpace(fieldName) &&
+                stateFieldCache != null &&
+                stateFieldCache == fieldName))
+                return;
+
+            stateFieldCache = fieldName;
+            this.StateValues.Clear();
+
+            TFSField stateField = this.settingViewModel.TFSFields.First(x => x.Name == stateFieldCache);
+            foreach (var value in stateField.AllowedValues)
+            {
+                this.StateValues.Add(value);
+            }
         }
         #endregion
         #endregion

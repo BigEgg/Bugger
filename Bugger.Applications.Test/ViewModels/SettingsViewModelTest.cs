@@ -18,6 +18,7 @@ namespace Bugger.Applications.Test.ViewModels
         private string activeProxy = "Fake";
         private string teamMembersString = "BigEgg; Pupil";
         private string userName = "BigEgg";
+        private string filterStatusValues = "High; Low";
         private int refreshMinutes = 60;
         private bool isFilterCreatedBy = false;
 
@@ -36,6 +37,7 @@ namespace Bugger.Applications.Test.ViewModels
             this.viewModel.UserName = this.userName;
             this.viewModel.RefreshMinutes = this.refreshMinutes;
             this.viewModel.IsFilterCreatedBy = this.isFilterCreatedBy;
+            this.viewModel.FilterStatusValues = this.filterStatusValues;
         }
 
         [TestMethod]
@@ -50,6 +52,7 @@ namespace Bugger.Applications.Test.ViewModels
             Assert.AreEqual(this.userName, this.viewModel.UserName);
             Assert.AreEqual(this.refreshMinutes, this.viewModel.RefreshMinutes);
             Assert.IsFalse(this.viewModel.IsFilterCreatedBy);
+            Assert.AreEqual(this.filterStatusValues, this.viewModel.FilterStatusValues);
 
             Assert.AreEqual(string.Empty, viewModel.Validate());
 

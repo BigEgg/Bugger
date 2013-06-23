@@ -42,11 +42,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Framework\BigEgg.Framework.UnitTesting\BigEgg.Framework.UnitTesting.csproj">
+    <ProjectReference Include="..\..\BigEggCore\Framework\BigEgg.Framework.UnitTesting\BigEgg.Framework.UnitTesting.csproj">
       <Project>{0CC7A8DA-A50B-405F-B14C-8B6BBAEA42CE}</Project>
       <Name>BigEgg.Framework.UnitTesting</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\Framework\BigEgg.Framework\BigEgg.Framework.csproj">
+    <ProjectReference Include="..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">
       <Project>{EE01D20C-0F89-4219-A615-E5566A73814E}</Project>
       <Name>BigEgg.Framework</Name>
     </ProjectReference>

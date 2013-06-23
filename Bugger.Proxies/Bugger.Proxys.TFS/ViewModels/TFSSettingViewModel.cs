@@ -1,18 +1,9 @@
-﻿using BigEgg.Framework.Applications.Commands;
-using BigEgg.Framework.Applications.Services;
-using BigEgg.Framework.Applications.ViewModels;
+﻿using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Proxy.TFS.Documents;
-using Bugger.Proxy.TFS.Properties;
+using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Views;
-using Microsoft.TeamFoundation.Client;
-using Microsoft.TeamFoundation.WorkItemTracking.Client;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.Net;
 using System.Windows.Input;
 
 namespace Bugger.Proxy.TFS.ViewModels
@@ -21,12 +12,15 @@ namespace Bugger.Proxy.TFS.ViewModels
     public class TFSSettingViewModel : ViewModel<ITFSSettingView>
     {
         #region Fields
+        private readonly ObservableCollection<TFSField> tfsFields;
+        private readonly ObservableCollection<TFSField> bugFilterFields;
+        private readonly ObservableCollection<CheckString> priorityValues;
+
         private SettingDocument settings;
         private ICommand saveCommand;
         private ICommand testConnectionCommand;
         private ICommand uriHelpCommand;
         private bool canConnect;
-        private ObservableCollection<string> tfsFields;
         #endregion
 
         [ImportingConstructor]
@@ -34,11 +28,17 @@ namespace Bugger.Proxy.TFS.ViewModels
             : base(view)
         {
             this.canConnect = false;
-            this.tfsFields = new ObservableCollection<string>();
+            this.tfsFields = new ObservableCollection<TFSField>();
+            this.bugFilterFields = new ObservableCollection<TFSField>();
+            this.priorityValues = new ObservableCollection<CheckString>();
         }
 
         #region Properties
-        public ObservableCollection<string> TFSFields { get { return this.tfsFields; } }
+        public ObservableCollection<TFSField> TFSFields { get { return this.tfsFields; } }
+
+        public ObservableCollection<TFSField> BugFilterFields { get { return this.bugFilterFields; } }
+
+        public ObservableCollection<CheckString> PriorityValues { get { return this.priorityValues; } }
 
         public SettingDocument Settings
         {

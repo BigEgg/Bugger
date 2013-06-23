@@ -250,4 +250,7 @@ For anyone want to have a gadget as a simple dashboard for bugs, this is what he
   <data name="UserBugsTitle" xml:space="preserve">
     <value>Bugs for me</value>
   </data>
+  <data name="SettingFilterBugStatus" xml:space="preserve">
+    <value>Filter bug's _status</value>
+  </data>
 </root>

@@ -5,6 +5,7 @@ using Bugger.Applications.Properties;
 using Bugger.Applications.Services;
 using Bugger.Applications.ViewModels;
 using System;
+using System.Linq;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -74,7 +75,7 @@ namespace Bugger.Applications.Controllers
         #region Commands Methods
         private bool CanRefreshBugsCommandExecute()
         {
-            return this.ProxyService.ActiveProxy == null ? false : this.ProxyService.ActiveProxy.CanQuery();
+            return this.ProxyService.ActiveProxy == null ? false : this.ProxyService.ActiveProxy.CanQuery;
         }
 
         private void RefreshBugsCommandExecute()
@@ -88,7 +89,7 @@ namespace Bugger.Applications.Controllers
                 .ContinueWith((result) =>
                 {
                     this.dataService.UserBugs.Clear();
-                    foreach (var bug in result.Result)
+                    foreach (var bug in result.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)))
                     {
                         this.dataService.UserBugs.Add(bug);
                     }
@@ -99,12 +100,12 @@ namespace Bugger.Applications.Controllers
             {
                 Task.Factory.StartNew(
                     () => this.ProxyService.ActiveProxy.Query(
-                        Settings.Default.TeamMembers,
+                        Settings.Default.TeamMembers.Split(';').Select(x => x.Trim()).ToList(),
                         Settings.Default.IsFilterCreatedBy))
                 .ContinueWith((result) =>
                 {
                     this.dataService.TeamBugs.Clear();
-                    foreach (var bug in result.Result)
+                    foreach (var bug in result.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)))
                         this.dataService.TeamBugs.Add(bug);
                 }, TaskContinuationOptions.OnlyOnRanToCompletion);
             }

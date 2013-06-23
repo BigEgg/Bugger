@@ -1,14 +1,14 @@
-﻿using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Domain.Models;
+﻿using Bugger.Domain.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace Bugger.Proxy
 {
     /// <summary>
     /// The interface of the application proxy for source control system.
     /// </summary>
-    public interface ISourceControlProxy
+    public interface ISourceControlProxy : INotifyPropertyChanged
     {
         #region Properties
         /// <summary>
@@ -26,18 +26,26 @@ namespace Bugger.Proxy
         /// The setting view.
         /// </value>
         ISettingView SettingView { get; }
-        #endregion
 
-        #region Methods
-        void Initialize();
+        /// <summary>
+        /// Gets the status values.
+        /// </summary>
+        /// <value>
+        /// The status values.
+        /// </value>
+        ObservableCollection<string> StateValues { get; }
 
         /// <summary>
         /// Determines whether this source control proxy can query the bugs.
         /// </summary>
-        /// <returns>
+        /// <value>
         ///   <c>true</c> if this source control proxy can query the bugs.; otherwise, <c>false</c>.
-        /// </returns>
-        bool CanQuery();
+        /// </value>
+        bool CanQuery { get; }
+        #endregion
+
+        #region Methods
+        void Initialize();
 
         /// <summary>
         /// Query the bugs with the specified user name which the bug assign to.
@@ -58,6 +66,8 @@ namespace Bugger.Proxy
         /// The bugs.
         /// </returns>
         ReadOnlyCollection<Bug> Query(List<string> teamMembers, bool isFilterCreatedBy = false);
+
+        void SaveSettings();
         #endregion
     }
 }
