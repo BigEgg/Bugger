@@ -255,13 +255,16 @@ namespace Bugger.Proxy.TFS
         {
             IUriHelpView view = this.container.GetExportedValue<IUriHelpView>();
             UriHelpViewModel viewModel = new UriHelpViewModel(view);
+            viewModel.ServerName = this.document.ConnectUri.AbsoluteUri;
 
-            viewModel.ShowDialog(this);
+            var result = viewModel.ShowDialog(this);
 
-            if (viewModel.UriPreview == Resources.InvalidUrl)
-                this.document.ConnectUri = null;
-            else
-                this.document.ConnectUri = new Uri(viewModel.UriPreview);
+            if (result.HasValue && result.Value)
+            {
+                this.document.ConnectUri = viewModel.UriPreview == Resources.InvalidUrl
+                                               ? null
+                                               : new Uri(viewModel.UriPreview);
+            }
         }
 
         private bool CanTestConnectionExcute()
