@@ -84,14 +84,14 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="{x:Static p:Resources.MapTitle}" VerticalAlignment="Center" Grid.ColumnSpan="4"/>
-                <ListView ItemsSource="{Binding Settings.PropertyMappingList}" Grid.Row="1" Grid.ColumnSpan="4" Margin="0,0,0,10">
+                <ListView ItemsSource="{Binding Settings.PropertyMappingCollection}" Grid.Row="1" Grid.ColumnSpan="4" Margin="0,0,0,10">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Width="170" Header="{x:Static p:Resources.BugProperty}" DisplayMemberBinding="{Binding PropertyName}"/>
+                            <GridViewColumn Width="170" Header="{x:Static p:Resources.BugProperty}" DisplayMemberBinding="{Binding Key}"/>
                             <GridViewColumn Width="210" Header="{x:Static p:Resources.TFSField}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox Width="195" Grid.IsSharedSizeScope="True" SelectedValue="{Binding FieldName}" ItemsSource="{Binding Path=DataContext.TFSFields, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" SelectedValuePath="Name">
+                                        <ComboBox Width="195" Grid.IsSharedSizeScope="True" SelectedValue="{Binding Value}" ItemsSource="{Binding Path=DataContext.TFSFields, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" SelectedValuePath="Name">
                                             <ComboBox.ItemTemplateSelector>
                                                 <ts:TFSFieldComboTemplateSelector/>
                                             </ComboBox.ItemTemplateSelector>

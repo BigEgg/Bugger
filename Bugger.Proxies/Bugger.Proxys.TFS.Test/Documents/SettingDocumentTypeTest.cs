@@ -45,7 +45,7 @@ namespace Bugger.Proxy.TFS.Test.Documents
             document.UserName = "BigEgg";
             document.Password = "Password";
             document.PriorityRed = "1,2";
-            document.PropertyMappingList.First(x => x.PropertyName == "ID").FieldName = "ID";
+            document.PropertyMappingCollection["ID"] = "ID";
 
             SettingDocumentType.Save(document);
             Assert.IsTrue(File.Exists(SettingDocumentType.FilePath));
@@ -57,8 +57,7 @@ namespace Bugger.Proxy.TFS.Test.Documents
             Assert.AreEqual(document.UserName = "BigEgg", openDocument.UserName);
             Assert.AreEqual(document.Password = "Password", openDocument.Password);
             Assert.AreEqual(document.PriorityRed = "1,2", openDocument.PriorityRed);
-            Assert.AreEqual(document.PropertyMappingList.First(x => x.PropertyName == "ID").FieldName,
-                openDocument.PropertyMappingList.First(x => x.PropertyName == "ID").FieldName);
+            Assert.AreEqual(document.PropertyMappingCollection["ID"], openDocument.PropertyMappingCollection["ID"]);
         }
     }
 }

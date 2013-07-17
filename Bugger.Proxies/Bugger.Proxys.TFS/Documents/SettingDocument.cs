@@ -4,6 +4,7 @@ using Bugger.Proxy.TFS.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 
 namespace Bugger.Proxy.TFS.Documents
@@ -11,7 +12,7 @@ namespace Bugger.Proxy.TFS.Documents
     public class SettingDocument : DataModel
     {
         #region Fields
-        private readonly ReadOnlyCollection<MappingPair> propertyMappingList;
+        private readonly ObservableDictionary<string, string> propertyMappingCollection;
         private Uri connectUri;
         private string userName;
         private string password;
@@ -22,27 +23,25 @@ namespace Bugger.Proxy.TFS.Documents
 
         public SettingDocument()
         {
-            List<MappingPair> mappingList = new List<MappingPair>();
+            this.propertyMappingCollection = new ObservableDictionary<string, string>();
 
             PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(Bug));
             foreach (PropertyDescriptor propertyDescriptor in propertyDescriptorCollection)
             {
-                if (propertyDescriptor.Name == "Type")
-                    continue;
+                if (propertyDescriptor.Name == "Type") continue;
 
-                MappingPair mappingPair = new MappingPair(propertyDescriptor.Name);
-                AddWeakEventListener(mappingPair, MappingPairPropertyChanged);
-                mappingList.Add(mappingPair);
+                this.propertyMappingCollection.Add(propertyDescriptor.Name, string.Empty);
             }
 
+            AddWeakEventListener(this.propertyMappingCollection, PropertyMappingCollectionChanged);
+
             this.HasChanged = false;
-            this.propertyMappingList = new ReadOnlyCollection<MappingPair>(mappingList);
         }
 
         #region Properties
         internal bool HasChanged { get; set; }
 
-        public ReadOnlyCollection<MappingPair> PropertyMappingList { get { return this.propertyMappingList; } }
+        public ObservableDictionary<string, string> PropertyMappingCollection { get { return this.propertyMappingCollection; } }
 
         public Uri ConnectUri
         {
@@ -126,13 +125,14 @@ namespace Bugger.Proxy.TFS.Documents
         }
         #endregion
 
-        #region Methdos
+        #region Methods
         #region Private Methods
-        private void MappingPairPropertyChanged(object sender, PropertyChangedEventArgs e)
+
+        private void PropertyMappingCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            this.HasChanged = true;
-            RaisePropertyChanged("PropertyMappingList");
+            RaisePropertyChanged("PropertyMappingCollection");
         }
+
         #endregion
         #endregion
     }

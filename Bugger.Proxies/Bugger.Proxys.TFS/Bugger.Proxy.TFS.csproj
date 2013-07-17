@@ -60,14 +60,16 @@
     <Compile Include="Documents\SettingDocument.cs" />
     <Compile Include="Documents\SettingDocumentType.cs" />
     <Compile Include="Models\CheckString.cs" />
+    <Compile Include="Models\ProgressType.cs" />
     <Compile Include="Models\TFSField.cs" />
+    <Compile Include="ObservableDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\MappingPair.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TFSHelper.cs" />
     <Compile Include="TFSSourceControlProxy.cs" />
     <Compile Include="ViewModels\TFSSettingViewModel.cs" />
     <Compile Include="ViewModels\UriHelpViewModel.cs" />

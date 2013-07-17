@@ -60,7 +60,7 @@ namespace Bugger.Proxy.TFS.Documents
             IEnumerable<XElement> elements = root.Element("PropertyMappings").Elements();
             foreach (XElement element in elements)
             {
-                document.PropertyMappingList.First(x => x.PropertyName == element.Name).FieldName = element.Value;
+                document.PropertyMappingCollection[element.Name.ToString()] = element.Value;
             }
 
             document.HasChanged = false;
@@ -79,9 +79,9 @@ namespace Bugger.Proxy.TFS.Documents
             }
 
             XElement propertyMappingElement = new XElement("PropertyMappings");
-            foreach (MappingPair pair in document.PropertyMappingList)
+            foreach (var pair in document.PropertyMappingCollection)
             {
-                propertyMappingElement.Add(new XElement(pair.PropertyName, pair.FieldName));
+                propertyMappingElement.Add(new XElement(pair.Key, pair.Value));
             }
 
             XDocument settingDocument = new XDocument(

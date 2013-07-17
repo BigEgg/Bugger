@@ -52,14 +52,14 @@ namespace Bugger.Proxy.TFS.Test
             this.viewModel.Settings.BugFilterValue = "Issue";
             this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
             this.viewModel.Settings.Password = password;
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "ID").FieldName = "ID";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "Title").FieldName = "Title";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "Description").FieldName = "Description";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "AssignedTo").FieldName = "Assigned To";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "State").FieldName = "State";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "ChangedDate").FieldName = "Changed Date";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "CreatedBy").FieldName = "Created By";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "Priority").FieldName = "Code Studio Rank";
+            this.viewModel.Settings.PropertyMappingCollection["ID"] = "ID";
+            this.viewModel.Settings.PropertyMappingCollection["Title"] = "Title";
+            this.viewModel.Settings.PropertyMappingCollection["Description"] = "Description";
+            this.viewModel.Settings.PropertyMappingCollection["AssignedTo"] = "Assigned To";
+            this.viewModel.Settings.PropertyMappingCollection["State"] = "State";
+            this.viewModel.Settings.PropertyMappingCollection["ChangedDate"] = "Changed Date";
+            this.viewModel.Settings.PropertyMappingCollection["CreatedBy"] = "Created By";
+            this.viewModel.Settings.PropertyMappingCollection["Priority"] = "Code Studio Rank";
 
             Assert.IsTrue(this.viewModel.SaveCommand.CanExecute(null));
 
@@ -127,14 +127,14 @@ namespace Bugger.Proxy.TFS.Test
             this.viewModel.Settings.BugFilterValue = "Work Item";
             this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
             this.viewModel.Settings.Password = password;
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "ID").FieldName = "ID";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "Title").FieldName = "Title";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "Description").FieldName = "Description";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "AssignedTo").FieldName = "Assigned To";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "State").FieldName = "State";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "ChangedDate").FieldName = "Changed Date";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "CreatedBy").FieldName = "Created By";
-            this.viewModel.Settings.PropertyMappingList.First(x => x.PropertyName == "Priority").FieldName = "Code Studio Rank";
+            this.viewModel.Settings.PropertyMappingCollection["ID"] = "ID";
+            this.viewModel.Settings.PropertyMappingCollection["Title"] = "Title";
+            this.viewModel.Settings.PropertyMappingCollection["Description"] = "Description";
+            this.viewModel.Settings.PropertyMappingCollection["AssignedTo"] = "Assigned To";
+            this.viewModel.Settings.PropertyMappingCollection["State"] = "State";
+            this.viewModel.Settings.PropertyMappingCollection["ChangedDate"] = "Changed Date";
+            this.viewModel.Settings.PropertyMappingCollection["CreatedBy"] = "Created By";
+            this.viewModel.Settings.PropertyMappingCollection["Priority"] = "Code Studio Rank";
 
             Assert.IsTrue(this.proxy.CanQuery);
             ReadOnlyCollection<Bug> bugs = this.proxy.Query("BigEgg_cp");

@@ -6,7 +6,6 @@ using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Properties;
 using Bugger.Proxy.TFS.ViewModels;
 using Bugger.Proxy.TFS.Views;
-using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using System;
 using System.Collections.Generic;
@@ -16,7 +15,6 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
-using System.Net;
 
 namespace Bugger.Proxy.TFS
 {
@@ -29,6 +27,8 @@ namespace Bugger.Proxy.TFS
         private readonly DelegateCommand saveCommand;
         private readonly DelegateCommand testConnectionCommand;
         private readonly DelegateCommand uriHelpCommand;
+
+        private List<string> IgnoreField;
 
         private SettingDocument document;
         private TFSSettingViewModel settingViewModel;
@@ -46,10 +46,10 @@ namespace Bugger.Proxy.TFS
         {
             this.container = container;
             this.messageService = messageService;
-            this.saveCommand = new DelegateCommand(SaveExcute, CanSaveExcute);
-            this.uriHelpCommand = new DelegateCommand(OpenUriHelpExcute);
+            this.saveCommand = new DelegateCommand(SaveCommandExcute, CanSaveCommandExcute);
+            this.uriHelpCommand = new DelegateCommand(OpenUriHelpCommandExcute);
 
-            this.testConnectionCommand = new DelegateCommand(TestConnectionExcute, CanTestConnectionExcute);
+            this.testConnectionCommand = new DelegateCommand(TestConnectionCommandExcute, CanTestConnectionCommandExcute);
         }
 
         #region Properties
@@ -68,6 +68,9 @@ namespace Bugger.Proxy.TFS
         #region Protected Methods
         protected override void OnInitialize()
         {
+            IgnoreField = new List<string>();
+            IgnoreField.Add("Severity");
+
             if (File.Exists(SettingDocumentType.FilePath))
             {
                 try
@@ -112,38 +115,16 @@ namespace Bugger.Proxy.TFS
         /// </returns>
         protected override ReadOnlyCollection<Bug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
         {
-            TfsTeamProjectCollection tpc = new TfsTeamProjectCollection(
-                this.document.ConnectUri,
-                new NetworkCredential(this.document.UserName, this.document.Password));
-            tpc.EnsureAuthenticated();
-
-            WorkItemStore workItemStore = (WorkItemStore)tpc.GetService(typeof(WorkItemStore));
-
             List<Bug> bugs = new List<Bug>();
             List<string> redFilter = string.IsNullOrWhiteSpace(this.document.PriorityRed)
                                          ? new List<string>()
                                          : this.document.PriorityRed.Split(';').Select(x => x.Trim()).ToList();
+
             foreach (string userName in userNames)
             {
-                string fields = string.Join(", ", this.document.PropertyMappingList
-                    .Where(x => !string.IsNullOrWhiteSpace(x.FieldName))
-                    .Select(x => "[" + x.FieldName + "]"));
-                string filter = "["
-                    + this.document.PropertyMappingList.First(x => x.PropertyName == "AssignedTo").FieldName
-                    + "] = '" + userName + "'";
-
-                if (isFilterCreatedBy)
-                {
-                    filter = "( " + filter + " OR ["
-                        + this.document.PropertyMappingList.First(x => x.PropertyName == "CreatedBy").FieldName
-                        + "] = '" + userName + "' )";
-                }
-
-                filter = "[" + this.document.BugFilterField + "] = '" + this.document.BugFilterValue + "' And " + filter;
-                string queryString = "SELECT " + fields + " FROM WorkItems WHERE " + filter;
-
-                Query query = new Query(workItemStore, queryString);
-                WorkItemCollection collection = query.RunQuery();
+                WorkItemCollection collection = TFSHelper.GetBugs(userName, isFilterCreatedBy, this.document.PropertyMappingCollection, this.document.BugFilterField, this.document.BugFilterValue);
+                if (collection == null)
+                    break;
 
                 foreach (WorkItem item in collection)
                 {
@@ -151,71 +132,45 @@ namespace Bugger.Proxy.TFS
                     object value = null;
 
                     //  ID
-                    value =
-                        item.Fields[this.document.PropertyMappingList.First(x => x.PropertyName == "ID").FieldName]
-                            .Value;
-                    bug.ID = value == null ? 0 : (int) value;
+                    value = item.Fields[this.document.PropertyMappingCollection["ID"]].Value;
+                    bug.ID = value == null ? 0 : (int)value;
 
                     //  Title
-                    value =
-                        item.Fields[this.document.PropertyMappingList.First(x => x.PropertyName == "Title").FieldName]
-                            .Value;
+                    value = item.Fields[this.document.PropertyMappingCollection["Title"]].Value;
                     bug.Title = value == null ? string.Empty : value.ToString();
 
                     //  Description
-                    value =
-                        item.Fields[
-                            this.document.PropertyMappingList.First(x => x.PropertyName == "Description").FieldName]
-                            .Value;
+                    value = item.Fields[this.document.PropertyMappingCollection["Description"]].Value;
                     bug.Description = value == null ? string.Empty : value.ToString();
 
                     //  AssignedTo
-                    value =
-                        item.Fields[
-                            this.document.PropertyMappingList.First(x => x.PropertyName == "AssignedTo").FieldName]
-                            .Value;
+                    value = item.Fields[this.document.PropertyMappingCollection["AssignedTo"]].Value;
                     bug.AssignedTo = value == null ? string.Empty : value.ToString();
 
                     //  State
-                    value =
-                        item.Fields[
-                            this.document.PropertyMappingList.First(x => x.PropertyName == "State").FieldName]
-                            .Value;
+                    value = item.Fields[this.document.PropertyMappingCollection["State"]].Value;
                     bug.State = value == null ? string.Empty : value.ToString();
 
                     //  ChangedDate
-                    value =
-                        item.Fields[
-                            this.document.PropertyMappingList.First(x => x.PropertyName == "ChangedDate").FieldName]
-                            .Value;
+                    value = item.Fields[this.document.PropertyMappingCollection["ChangedDate"]].Value;
                     bug.ChangedDate = value == null ? DateTime.Today : (DateTime)value;
 
                     //  CreatedBy
-                    value =
-                        item.Fields[
-                            this.document.PropertyMappingList.First(x => x.PropertyName == "CreatedBy").FieldName]
-                            .Value;
+                    value = item.Fields[this.document.PropertyMappingCollection["CreatedBy"]].Value;
                     bug.CreatedBy = value == null ? string.Empty : value.ToString();
 
                     //  Priority
-                    value =
-                        item.Fields[
-                            this.document.PropertyMappingList.First(x => x.PropertyName == "Priority").FieldName]
-                            .Value;
+                    value = item.Fields[this.document.PropertyMappingCollection["Priority"]].Value;
                     bug.Priority = value == null ? string.Empty : value.ToString();
 
                     //  Severity
-                    if (string.IsNullOrWhiteSpace(
-                            this.document.PropertyMappingList.First(x => x.PropertyName == "Severity").FieldName))
+                    if (string.IsNullOrWhiteSpace(this.document.PropertyMappingCollection["Severity"]))
                     {
                         bug.Severity = string.Empty;
                     }
                     else
                     {
-                        value =
-                            item.Fields[
-                                this.document.PropertyMappingList.First(x => x.PropertyName == "Severity").FieldName]
-                                .Value;
+                        value = item.Fields[this.document.PropertyMappingCollection["Severity"]].Value;
                         bug.Severity = value == null ? string.Empty : value.ToString();
                     }
 
@@ -233,25 +188,25 @@ namespace Bugger.Proxy.TFS
 
         #region Private Methods
         #region Commands Mehods
-        private void SaveExcute()
+        private void SaveCommandExcute()
         {
             SettingDocumentType.Save(this.document);
         }
 
-        private bool CanSaveExcute()
+        private bool CanSaveCommandExcute()
         {
             return this.testConnectionCommand.CanExecute()
                 && !string.IsNullOrWhiteSpace(this.document.BugFilterField)
                 && !string.IsNullOrWhiteSpace(this.document.BugFilterValue)
-                && this.document.PropertyMappingList
-                        .Where(x => x.PropertyName != "Severity")
+                && this.document.PropertyMappingCollection
+                        .Where(x => !IgnoreField.Contains(x.Key))
                         .Any(x =>
                         {
-                            return !string.IsNullOrWhiteSpace(x.FieldName);
+                            return !string.IsNullOrWhiteSpace(x.Value);
                         });
         }
 
-        private void OpenUriHelpExcute()
+        private void OpenUriHelpCommandExcute()
         {
             IUriHelpView view = this.container.GetExportedValue<IUriHelpView>();
             UriHelpViewModel viewModel = new UriHelpViewModel(view);
@@ -267,57 +222,47 @@ namespace Bugger.Proxy.TFS
             }
         }
 
-        private bool CanTestConnectionExcute()
+        private bool CanTestConnectionCommandExcute()
         {
             return this.document != null && this.document.ConnectUri != null && this.document.ConnectUri.IsAbsoluteUri
                 && !string.IsNullOrWhiteSpace(this.document.UserName);
         }
 
-        private void TestConnectionExcute()
+        private void TestConnectionCommandExcute()
         {
             this.settingViewModel.CanConnect = false;
 
-            TfsTeamProjectCollection tpc = null;
-
-            try
-            {
-                tpc = new TfsTeamProjectCollection(
-                    this.document.ConnectUri,
-                    new NetworkCredential(this.document.UserName, this.document.Password));
-                tpc.EnsureAuthenticated();
-            }
-            catch
+            if (!TFSHelper.TestConnection(this.document.ConnectUri, this.document.UserName, this.document.Password))
             {
                 messageService.ShowMessage(Resources.CannotConnect);
                 return;
             }
 
-            try
-            {
-                WorkItemStore workItemStore = (WorkItemStore)tpc.GetService(typeof(WorkItemStore));
-                FieldDefinitionCollection collection = workItemStore.FieldDefinitions;
-                this.settingViewModel.TFSFields.Clear();
-                foreach (FieldDefinition field in collection)
-                {
-                    TFSField tfsField = new TFSField(field.Name);
-                    foreach (var value in field.AllowedValues)
-                    {
-                        tfsField.AllowedValues.Add(value.ToString());
-                    }
-
-                    this.settingViewModel.TFSFields.Add(tfsField);
-                    if (tfsField.AllowedValues.Any())
-                    {
-                        this.settingViewModel.BugFilterFields.Add(tfsField);
-                    }
-                }
-
-                this.settingViewModel.CanConnect = true;
-            }
-            catch
+            FieldDefinitionCollection collection = TFSHelper.GetFields(this.document.ConnectUri, this.document.UserName, this.document.Password);
+            if (collection == null)
             {
                 messageService.ShowMessage(Resources.CannotQueryFields);
+                return;
             }
+
+            this.settingViewModel.TFSFields.Clear();
+
+            foreach (FieldDefinition field in collection)
+            {
+                TFSField tfsField = new TFSField(field.Name);
+                foreach (var value in field.AllowedValues)
+                {
+                    tfsField.AllowedValues.Add(value.ToString());
+                }
+
+                this.settingViewModel.TFSFields.Add(tfsField);
+                if (tfsField.AllowedValues.Any())
+                {
+                    this.settingViewModel.BugFilterFields.Add(tfsField);
+                }
+            }
+
+            this.settingViewModel.CanConnect = true;
         }
         #endregion
 
@@ -335,8 +280,8 @@ namespace Bugger.Proxy.TFS
 
         private void PriorityValuePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            this.document.PriorityRed = string.Join("; ", 
-                this.settingViewModel.PriorityValues.Where(x => x.IsChecked).Select(x=>x.Name));
+            this.document.PriorityRed = string.Join("; ",
+                this.settingViewModel.PriorityValues.Where(x => x.IsChecked).Select(x => x.Name));
         }
 
         private void UpdateCommands()
@@ -347,7 +292,7 @@ namespace Bugger.Proxy.TFS
 
         private void UpdatePriorityValues()
         {
-            string fieldName = this.document.PropertyMappingList.First(x => x.PropertyName == "Priority").FieldName;
+            string fieldName = this.document.PropertyMappingCollection["Priority"];
 
             if (!this.settingViewModel.CanConnect ||
                 (string.IsNullOrWhiteSpace(fieldName) &&
@@ -376,7 +321,7 @@ namespace Bugger.Proxy.TFS
 
         private void UpdateStatusValues()
         {
-            string fieldName = this.document.PropertyMappingList.First(x => x.PropertyName == "State").FieldName;
+            string fieldName = this.document.PropertyMappingCollection["State"];
 
             if (!this.settingViewModel.CanConnect ||
                 (string.IsNullOrWhiteSpace(fieldName) &&

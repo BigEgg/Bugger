@@ -49,8 +49,7 @@
                                             <Expander.Header>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Image HorizontalAlignment="Center" Height="16" Width="16" VerticalAlignment="Center" Source="{Binding Name, Converter={x:Static c:BugTypeToImageConverter.Default}}"/>
-                                                    <TextBlock Text="{Binding ItemCount, StringFormat=Bugs (0)}"/>
-                                                    <TextBlock Text="{Binding Name}"/>
+                                                    <TextBlock Text="{Binding ItemCount, StringFormat=' Bugs (0)'}"/>
                                                 </StackPanel>
                                             </Expander.Header>
                                             <ItemsPresenter />

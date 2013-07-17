@@ -13,8 +13,8 @@ namespace Bugger.Proxy.TFS.Test.Documents
         public void GeneralSettingDocumentTest()
         {
             SettingDocument document = new SettingDocument();
-            Assert.IsNotNull(document.PropertyMappingList);
-            Assert.AreEqual(9, document.PropertyMappingList.Count);
+            Assert.IsNotNull(document.PropertyMappingCollection);
+            Assert.AreEqual(9, document.PropertyMappingCollection.Count);
 
             document.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");
             document.BugFilterField = "Work Item Type";
@@ -36,7 +36,7 @@ namespace Bugger.Proxy.TFS.Test.Documents
         {
             SettingDocument document = new SettingDocument();
 
-            AssertHelper.PropertyChangedEvent(document, x => x.PropertyMappingList, () => document.PropertyMappingList.First(x => x.PropertyName == "ID").FieldName = "ID");
+            AssertHelper.PropertyChangedEvent(document, x => x.PropertyMappingCollection, () => document.PropertyMappingCollection["ID"] = "ID");
             AssertHelper.PropertyChangedEvent(document, x => x.ConnectUri, () => document.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12"));
             AssertHelper.PropertyChangedEvent(document, x => x.BugFilterField, () => document.BugFilterField = "Work Item Type");
             AssertHelper.PropertyChangedEvent(document, x => x.BugFilterValue, () => document.BugFilterValue = "Bugs");
@@ -44,7 +44,7 @@ namespace Bugger.Proxy.TFS.Test.Documents
             AssertHelper.PropertyChangedEvent(document, x => x.Password, () => document.Password = "Password");
             AssertHelper.PropertyChangedEvent(document, x => x.PriorityRed, () => document.PriorityRed = "1,2");
 
-            Assert.AreEqual("ID", document.PropertyMappingList.First(x => x.PropertyName == "ID").FieldName);
+            Assert.AreEqual("ID", document.PropertyMappingCollection["ID"]);
             Assert.AreEqual("https://tfs.codeplex.com/tfs/TFS12", document.ConnectUri.AbsoluteUri);
             Assert.AreEqual("Work Item Type", document.BugFilterField);
             Assert.AreEqual("Bugs", document.BugFilterValue);
