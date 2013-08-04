@@ -69,7 +69,7 @@ namespace Bugger.Proxy.TFS.Test
 
 
         [TestMethod]
-        public void CanTestConnectionCommandChangeTest()
+        public void CanTestConnectionCommandTest()
         {
             MockUriHelpView view = Container.GetExportedValue<IUriHelpView>() as MockUriHelpView;
             view.ShowDialogAction = (x) =>

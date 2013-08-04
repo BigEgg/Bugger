@@ -6,7 +6,6 @@ using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Properties;
 using Bugger.Proxy.TFS.ViewModels;
 using Bugger.Proxy.TFS.Views;
-using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,6 +23,7 @@ namespace Bugger.Proxy.TFS
         #region Fields
         private readonly CompositionContainer container;
         private readonly IMessageService messageService;
+        private readonly TFSHelper tfsHelper;
         private readonly DelegateCommand saveCommand;
         private readonly DelegateCommand testConnectionCommand;
         private readonly DelegateCommand uriHelpCommand;
@@ -46,6 +46,7 @@ namespace Bugger.Proxy.TFS
         {
             this.container = container;
             this.messageService = messageService;
+            this.tfsHelper = new TFSHelper();
             this.saveCommand = new DelegateCommand(SaveCommandExcute, CanSaveCommandExcute);
             this.uriHelpCommand = new DelegateCommand(OpenUriHelpCommandExcute);
 
@@ -115,6 +116,9 @@ namespace Bugger.Proxy.TFS
         /// </returns>
         protected override ReadOnlyCollection<Bug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
         {
+            if (!this.tfsHelper.IsConnected())
+                this.tfsHelper.TestConnection(this.document.ConnectUri, this.document.UserName, this.document.Password);
+
             List<Bug> bugs = new List<Bug>();
             List<string> redFilter = string.IsNullOrWhiteSpace(this.document.PriorityRed)
                                          ? new List<string>()
@@ -122,64 +126,11 @@ namespace Bugger.Proxy.TFS
 
             foreach (string userName in userNames)
             {
-                WorkItemCollection collection = TFSHelper.GetBugs(userName, isFilterCreatedBy, this.document.PropertyMappingCollection, this.document.BugFilterField, this.document.BugFilterValue);
-                if (collection == null)
-                    break;
+                var bugCollection = this.tfsHelper.GetBugs(userName, isFilterCreatedBy, this.document.PropertyMappingCollection, this.document.BugFilterField, this.document.BugFilterValue, redFilter);
+                if (bugCollection == null)
+                    continue;
 
-                foreach (WorkItem item in collection)
-                {
-                    Bug bug = new Bug();
-                    object value = null;
-
-                    //  ID
-                    value = item.Fields[this.document.PropertyMappingCollection["ID"]].Value;
-                    bug.ID = value == null ? 0 : (int)value;
-
-                    //  Title
-                    value = item.Fields[this.document.PropertyMappingCollection["Title"]].Value;
-                    bug.Title = value == null ? string.Empty : value.ToString();
-
-                    //  Description
-                    value = item.Fields[this.document.PropertyMappingCollection["Description"]].Value;
-                    bug.Description = value == null ? string.Empty : value.ToString();
-
-                    //  AssignedTo
-                    value = item.Fields[this.document.PropertyMappingCollection["AssignedTo"]].Value;
-                    bug.AssignedTo = value == null ? string.Empty : value.ToString();
-
-                    //  State
-                    value = item.Fields[this.document.PropertyMappingCollection["State"]].Value;
-                    bug.State = value == null ? string.Empty : value.ToString();
-
-                    //  ChangedDate
-                    value = item.Fields[this.document.PropertyMappingCollection["ChangedDate"]].Value;
-                    bug.ChangedDate = value == null ? DateTime.Today : (DateTime)value;
-
-                    //  CreatedBy
-                    value = item.Fields[this.document.PropertyMappingCollection["CreatedBy"]].Value;
-                    bug.CreatedBy = value == null ? string.Empty : value.ToString();
-
-                    //  Priority
-                    value = item.Fields[this.document.PropertyMappingCollection["Priority"]].Value;
-                    bug.Priority = value == null ? string.Empty : value.ToString();
-
-                    //  Severity
-                    if (string.IsNullOrWhiteSpace(this.document.PropertyMappingCollection["Severity"]))
-                    {
-                        bug.Severity = string.Empty;
-                    }
-                    else
-                    {
-                        value = item.Fields[this.document.PropertyMappingCollection["Severity"]].Value;
-                        bug.Severity = value == null ? string.Empty : value.ToString();
-                    }
-
-                    bug.Type = string.IsNullOrWhiteSpace(bug.Priority)
-                                   ? BugType.Yellow
-                                   : (redFilter.Contains(bug.Priority) ? BugType.Red : BugType.Yellow);
-
-                    bugs.Add(bug);
-                }
+                bugs.AddRange(bugCollection);
             }
 
             return new ReadOnlyCollection<Bug>(bugs.Distinct().ToList());
@@ -210,7 +161,8 @@ namespace Bugger.Proxy.TFS
         {
             IUriHelpView view = this.container.GetExportedValue<IUriHelpView>();
             UriHelpViewModel viewModel = new UriHelpViewModel(view);
-            viewModel.ServerName = this.document.ConnectUri.AbsoluteUri;
+            if (this.document.ConnectUri != null)
+                viewModel.ServerName = this.document.ConnectUri.AbsoluteUri;
 
             var result = viewModel.ShowDialog(this);
 
@@ -232,33 +184,27 @@ namespace Bugger.Proxy.TFS
         {
             this.settingViewModel.CanConnect = false;
 
-            if (!TFSHelper.TestConnection(this.document.ConnectUri, this.document.UserName, this.document.Password))
+            if (!this.tfsHelper.TestConnection(this.document.ConnectUri, this.document.UserName, this.document.Password))
             {
                 messageService.ShowMessage(Resources.CannotConnect);
                 return;
             }
 
-            FieldDefinitionCollection collection = TFSHelper.GetFields(this.document.ConnectUri, this.document.UserName, this.document.Password);
-            if (collection == null)
+            var fields = this.tfsHelper.GetFields();
+            if (fields == null)
             {
                 messageService.ShowMessage(Resources.CannotQueryFields);
                 return;
             }
 
             this.settingViewModel.TFSFields.Clear();
-
-            foreach (FieldDefinition field in collection)
+            this.settingViewModel.BugFilterFields.Clear();
+            foreach (var field in fields)
             {
-                TFSField tfsField = new TFSField(field.Name);
-                foreach (var value in field.AllowedValues)
+                this.settingViewModel.TFSFields.Add(field);
+                if (field.AllowedValues.Any())
                 {
-                    tfsField.AllowedValues.Add(value.ToString());
-                }
-
-                this.settingViewModel.TFSFields.Add(tfsField);
-                if (tfsField.AllowedValues.Any())
-                {
-                    this.settingViewModel.BugFilterFields.Add(tfsField);
+                    this.settingViewModel.BugFilterFields.Add(field);
                 }
             }
 
