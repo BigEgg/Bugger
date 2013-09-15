@@ -37,6 +37,7 @@ namespace Bugger.Proxy.TFS
 
         private string priorityFieldCache;
         private string stateFieldCache;
+        private bool isTestConnectOnProgress = false;
         #endregion
 
         /// <summary>
@@ -61,10 +62,15 @@ namespace Bugger.Proxy.TFS
 
         #region Methods
         #region Public Methods
-        public override void SaveSettings()
+        public override void OnSumbitSettings()
         {
             if (this.saveCommand.CanExecute())
                 this.saveCommand.Execute();
+        }
+
+        public override void OnCancelSettings()
+        {
+            RestoreTFSData();
         }
         #endregion
 
@@ -101,7 +107,6 @@ namespace Bugger.Proxy.TFS
 
             if (this.testConnectionCommand.CanExecute())
             {
-                List<TFSField> tfsFields = null;
                 GetDataFromTFS();
                 UpdatePriorityValues();
                 UpdateStatusValues();
@@ -183,13 +188,15 @@ namespace Bugger.Proxy.TFS
 
         private bool CanTestConnectionCommandExcute()
         {
-            return this.document != null && this.document.ConnectUri != null && this.document.ConnectUri.IsAbsoluteUri
+            return !this.isTestConnectOnProgress && this.document != null && this.document.ConnectUri != null && this.document.ConnectUri.IsAbsoluteUri
                 && !string.IsNullOrWhiteSpace(this.document.UserName);
         }
 
         private void TestConnectionCommandExcute()
         {
-            this.settingViewModel.CanConnect = false;
+            this.isTestConnectOnProgress = true;
+            ClearTFSData();
+            UpdateCommands();
 
             //  Connect
             this.settingViewModel.ProgressType = ProgressTypes.OnConnectProgress;
@@ -254,6 +261,9 @@ namespace Bugger.Proxy.TFS
                 this.settingViewModel.ProgressValue = 100;
                 this.settingViewModel.ProgressType = ProgressTypes.Success;
             }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
+
+            this.isTestConnectOnProgress = false;
+            UpdateCommands();
         }
         #endregion
 
@@ -287,12 +297,102 @@ namespace Bugger.Proxy.TFS
             this.settingViewModel.CanConnect = true;
         }
 
+        private void ClearTFSData()
+        {
+            TempTFSData.CanConnect = this.settingViewModel.CanConnect;
+            this.settingViewModel.CanConnect = false;
+            this.settingViewModel.ProgressType = ProgressTypes.NotWorking;
+            this.settingViewModel.ProgressValue = 0;
+
+            TempTFSData.TFSFields = this.settingViewModel.TFSFields.ToList();
+            this.settingViewModel.TFSFields.Clear();
+            TempTFSData.BugFilterFields = this.settingViewModel.BugFilterFields.ToList();
+            this.settingViewModel.BugFilterFields.Clear();
+            TempTFSData.PriorityValues = this.settingViewModel.PriorityValues.ToList();
+            this.settingViewModel.PriorityValues.Clear();
+
+            this.document.PriorityRed = string.Empty;
+            this.document.BugFilterField = string.Empty;
+            this.document.BugFilterValue = string.Empty;
+            foreach (var pair in this.document.PropertyMappingCollection)
+            {
+                pair.Value = string.Empty;
+            }
+
+            TempTFSData.StateValues = this.StateValues.ToList();
+            this.StateValues.Clear();
+            this.CanQuery = saveCommand.CanExecute();
+
+            TempTFSData.CanRestore = true;
+        }
+
+        private void RestoreTFSData()
+        {
+            if (!TempTFSData.CanRestore)
+            {
+                return;
+            }
+
+            this.settingViewModel.CanConnect = TempTFSData.CanConnect;
+
+            foreach (var item in TempTFSData.TFSFields)
+            {
+                this.settingViewModel.TFSFields.Add(item);
+            }
+            foreach (var item in TempTFSData.BugFilterFields)
+            {
+                this.settingViewModel.BugFilterFields.Add(item);
+            }
+            foreach (var item in TempTFSData.PriorityValues)
+            {
+                this.settingViewModel.PriorityValues.Add(item);
+            }
+
+            SettingDocument newDocument = null;
+            if (File.Exists(SettingDocumentType.FilePath))
+            {
+                try
+                {
+                    newDocument = SettingDocumentType.Open();
+
+                    this.document.ConnectUri = newDocument.ConnectUri;
+                    this.document.UserName = newDocument.UserName;
+                    this.document.Password = newDocument.Password;
+
+                    this.document.PriorityRed = newDocument.PriorityRed;
+                    this.document.BugFilterField = newDocument.BugFilterField;
+                    this.document.BugFilterValue = newDocument.BugFilterValue;
+                    foreach (var pair in this.document.PropertyMappingCollection)
+                    {
+                        pair.Value = newDocument.PropertyMappingCollection[pair.Key];
+                    }
+                }
+                catch
+                {
+                }
+            }
+
+            foreach (var item in TempTFSData.StateValues)
+            {
+                this.StateValues.Add(item);
+            }
+
+            this.CanQuery = saveCommand.CanExecute();
+
+            TempTFSData.Clear();
+            TempTFSData.CanRestore = false;
+        }
+
         private void DocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "PropertyMappingList")
             {
                 UpdatePriorityValues();
                 UpdateStatusValues();
+            }
+            else if (e.PropertyName == "ConnectUri" || e.PropertyName == "UserName" || e.PropertyName == "Password")
+            {
+                ClearTFSData();
             }
 
             UpdateCommands();

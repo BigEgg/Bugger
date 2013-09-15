@@ -150,8 +150,11 @@ namespace Bugger.Proxy
             return QueryCore(teamMembers, isFilterCreatedBy);
         }
 
-        public virtual void SaveSettings()
-        {}
+        public virtual void OnSumbitSettings()
+        { }
+
+        public virtual void OnCancelSettings()
+        { }
         #endregion
 
         #region Protected Methods

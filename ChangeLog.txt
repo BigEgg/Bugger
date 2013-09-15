@@ -16,10 +16,13 @@ Alpha 3 (v0.3.0) <----- Currently Working
         Show setting dialog when open the application if the settings is not being set.
         Show progress and out come when query bugs.
     Proxies
+        Support cancel event for proxy restore data when setting dialog cancelled.
         TFS Proxy
             Use multi-threading to avoid UI hang when test connection.
                 Show progress and out come when test connection.
             Automation fill the mapping settings
+            Implament cancel event for restoring data.
+            Update connect status when change the connect information.
 
 Alpha 2 (v0.2.0) <----- Currently Release
     Application:

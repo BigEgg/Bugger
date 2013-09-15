@@ -130,6 +130,7 @@ namespace Bugger.Proxy.TFS.Documents
 
         private void PropertyMappingCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            this.HasChanged = true;
             RaisePropertyChanged("PropertyMappingCollection");
         }
 

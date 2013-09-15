@@ -66,11 +66,19 @@ namespace Bugger.Applications.ViewModels
         #endregion
 
         #region Methods
+        #region Public Methods
+        public void OnCancelSettings()
+        {
+            if (this.settingActiveProxy != null)
+                this.settingActiveProxy.OnCancelSettings();
+        }
+        #endregion
+
         #region Private Methods
         private void SubmitSettingCommand()
         {
             if (this.settingActiveProxy != null)
-                this.settingActiveProxy.SaveSettings();
+                this.settingActiveProxy.OnSumbitSettings();
 
             this.proxyService.ActiveProxy = this.settingActiveProxy;
 

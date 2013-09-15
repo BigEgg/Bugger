@@ -33,9 +33,9 @@ namespace Bugger.Proxy.FakeProxy
         #region Protected Methods
         protected override void OnInitialize()
         {
-            this.StateValues.Add("High");
-            this.StateValues.Add("Medium");
-            this.StateValues.Add("Low");
+            this.StateValues.Add("Implement");
+            this.StateValues.Add("Closed");
+            this.StateValues.Add("Design");
 
             this.bugs.Add(new Bug()
             {
@@ -44,7 +44,7 @@ namespace Bugger.Proxy.FakeProxy
                 Description = "Description for Bug1.",
                 Type = BugType.Red,
                 AssignedTo = "BigEgg",
-                State = "Implement",
+                State = "Design",
                 ChangedDate = new DateTime(2013, 4, 10),
                 CreatedBy = "BigEgg",
                 Priority = "High",
@@ -121,7 +121,7 @@ namespace Bugger.Proxy.FakeProxy
                 Title = "Bug7",
                 Description = "Description for Bug7.",
                 AssignedTo = "User1",
-                State = "Implement",
+                State = "Design",
                 ChangedDate = new DateTime(2013, 4, 11),
                 CreatedBy = "Pupil",
                 Priority = "High",
@@ -146,7 +146,7 @@ namespace Bugger.Proxy.FakeProxy
                 Title = "Bug9",
                 Description = "Description for Bug9.",
                 AssignedTo = "BigEgg",
-                State = "Implement",
+                State = "Design",
                 ChangedDate = new DateTime(2013, 4, 12),
                 CreatedBy = "User1",
                 Priority = "Low",

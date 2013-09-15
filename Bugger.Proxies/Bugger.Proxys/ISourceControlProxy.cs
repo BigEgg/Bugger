@@ -67,7 +67,9 @@ namespace Bugger.Proxy
         /// </returns>
         ReadOnlyCollection<Bug> Query(List<string> teamMembers, bool isFilterCreatedBy = false);
 
-        void SaveSettings();
+        void OnSumbitSettings();
+
+        void OnCancelSettings();
         #endregion
     }
 }
