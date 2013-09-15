@@ -1,4 +1,4 @@
-Bugger change log
+﻿Bugger change log
 
 Alpha 4 (v0.4.0)
     Application:
@@ -16,30 +16,30 @@ Alpha 3 (v0.3.0) <----- Currently Working
         Show setting dialog when open the application if the settings is not being set.
         Show progress and out come when query bugs.
     Proxies
-        Support cancel event for proxy restore data when setting dialog cancelled.
+        Support cancel event for proxy restore data when setting dialog cancelled. (✓)
         TFS Proxy
-            Use multi-threading to avoid UI hang when test connection.
+            Use multi-threading to avoid UI hang when test connection. (✓)
                 Show progress and out come when test connection.
-            Automation fill the mapping settings
-            Implament cancel event for restoring data.
-            Update connect status when change the connect information.
+            Automation fill the mapping settings (✓)
+            Implament cancel event for restoring data. (✓)
+            Update connect status when change the connect information. (✓)
 
 Alpha 2 (v0.2.0) <----- Currently Release
     Application:
-        Can filter bug by its status.
+        Can filter bug by its status. (✓)
     Proxies
-        Improve the communication between proxy to application.
+        Improve the communication between proxy to application. (✓)
         TFS Proxy
-            Show the allowed value for TFS field.
-            All filter filed show TFS field value to choose.
+            Show the allowed value for TFS field. (✓)
+            All filter filed show TFS field value to choose. (✓)
 
 Alpha 1 (v0.1.0)
     Application:
-        Complete all main functions.
-        Complete all views.
-        Support multi-lingual (English, Chinese).
+        Complete all main functions. (✓)
+        Complete all views. (✓)
+        Support multi-lingual (English, Chinese). (✓)
     Proxies
         TFS Proxy
-            Complete all main functions.
-            Complete all views.
-            Support multi-lingual (English, Chinese).
+            Complete all main functions. (✓)
+            Complete all views. (✓)
+            Support multi-lingual (English, Chinese). (✓)
