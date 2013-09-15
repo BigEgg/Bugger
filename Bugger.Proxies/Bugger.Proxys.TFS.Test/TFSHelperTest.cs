@@ -67,21 +67,21 @@ namespace Bugger.Proxy.TFS.Test
             AssertHelper.ExpectedException<ArgumentNullException>(
                 () => this.tfsHelper.GetBugs("bigegg", true, null, null, null, null));
             AssertHelper.ExpectedException<ArgumentException>(
-                () => this.tfsHelper.GetBugs("bigegg", true, new Dictionary<string, string>(), null, null, null));
+                () => this.tfsHelper.GetBugs("bigegg", true, new PropertyMappingDictionary(), null, null, null));
             AssertHelper.ExpectedException<ArgumentException>(
-                () => this.tfsHelper.GetBugs("bigegg", true, new Dictionary<string, string>(), " ", null, null));
+                () => this.tfsHelper.GetBugs("bigegg", true, new PropertyMappingDictionary(), " ", null, null));
             AssertHelper.ExpectedException<ArgumentException>(
-                () => this.tfsHelper.GetBugs("bigegg", true, new Dictionary<string, string>(), "Work Item Type", null, null));
+                () => this.tfsHelper.GetBugs("bigegg", true, new PropertyMappingDictionary(), "Work Item Type", null, null));
             AssertHelper.ExpectedException<ArgumentException>(
-                () => this.tfsHelper.GetBugs("bigegg", true, new Dictionary<string, string>(), "Work Item Type", " ", null));
+                () => this.tfsHelper.GetBugs("bigegg", true, new PropertyMappingDictionary(), "Work Item Type", " ", null));
             AssertHelper.ExpectedException<ArgumentNullException>(
-                () => this.tfsHelper.GetBugs("bigegg", true, new Dictionary<string, string>(), "Work Item Type", "Work Item", null));
+                () => this.tfsHelper.GetBugs("bigegg", true, new PropertyMappingDictionary(), "Work Item Type", "Work Item", null));
         }
 
         [TestMethod]
         public void GetBugsTest()
         {
-            var propertyMappingCollection = new Dictionary<string, string>();
+            var propertyMappingCollection = new PropertyMappingDictionary();
             propertyMappingCollection.Add("ID", "ID");
             propertyMappingCollection.Add("Title", "Title");
             propertyMappingCollection.Add("Description", "Description");

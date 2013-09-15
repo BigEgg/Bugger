@@ -72,7 +72,7 @@ namespace Bugger.Proxy.TFS
         }
 
         public List<Bug> GetBugs(
-            string userName, bool isFilterCreatedBy, IDictionary<string, string> propertyMappingList,
+            string userName, bool isFilterCreatedBy, PropertyMappingDictionary propertyMappingList,
             string bugFilterField, string bugFilterValue, IEnumerable<string> redFilter)
         {
             if (string.IsNullOrWhiteSpace(userName)) { throw new ArgumentException("userName"); }
@@ -123,7 +123,8 @@ namespace Bugger.Proxy.TFS
         }
 
 
-        private Bug Map(WorkItem workitem, IDictionary<string, string> propertyMappingList, IEnumerable<string> redFilter)
+        private Bug Map(WorkItem workitem, PropertyMappingDictionary propertyMappingList, 
+                        IEnumerable<string> redFilter)
         {
             Bug bug = new Bug();
             object value = null;

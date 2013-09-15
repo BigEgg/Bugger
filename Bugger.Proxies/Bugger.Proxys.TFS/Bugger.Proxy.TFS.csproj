@@ -60,9 +60,9 @@
     <Compile Include="Documents\SettingDocument.cs" />
     <Compile Include="Documents\SettingDocumentType.cs" />
     <Compile Include="Models\CheckString.cs" />
-    <Compile Include="Models\ProgressType.cs" />
+    <Compile Include="Models\ProgressTypes.cs" />
     <Compile Include="Models\TFSField.cs" />
-    <Compile Include="ObservableDictionary.cs" />
+    <Compile Include="PropertyMappingDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

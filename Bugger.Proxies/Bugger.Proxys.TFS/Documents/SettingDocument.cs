@@ -12,7 +12,7 @@ namespace Bugger.Proxy.TFS.Documents
     public class SettingDocument : DataModel
     {
         #region Fields
-        private readonly ObservableDictionary<string, string> propertyMappingCollection;
+        private readonly PropertyMappingDictionary propertyMappingCollection;
         private Uri connectUri;
         private string userName;
         private string password;
@@ -23,7 +23,7 @@ namespace Bugger.Proxy.TFS.Documents
 
         public SettingDocument()
         {
-            this.propertyMappingCollection = new ObservableDictionary<string, string>();
+            this.propertyMappingCollection = new PropertyMappingDictionary();
 
             PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(Bug));
             foreach (PropertyDescriptor propertyDescriptor in propertyDescriptorCollection)
@@ -41,7 +41,7 @@ namespace Bugger.Proxy.TFS.Documents
         #region Properties
         internal bool HasChanged { get; set; }
 
-        public ObservableDictionary<string, string> PropertyMappingCollection { get { return this.propertyMappingCollection; } }
+        public PropertyMappingDictionary PropertyMappingCollection { get { return this.propertyMappingCollection; } }
 
         public Uri ConnectUri
         {

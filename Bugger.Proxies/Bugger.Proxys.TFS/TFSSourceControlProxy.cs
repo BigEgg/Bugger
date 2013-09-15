@@ -14,6 +14,8 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bugger.Proxy.TFS
 {
@@ -99,9 +101,11 @@ namespace Bugger.Proxy.TFS
 
             if (this.testConnectionCommand.CanExecute())
             {
-                this.testConnectionCommand.Execute();
+                List<TFSField> tfsFields = null;
+                GetDataFromTFS();
                 UpdatePriorityValues();
                 UpdateStatusValues();
+
                 this.CanQuery = this.saveCommand.CanExecute();
             }
         }
@@ -126,7 +130,10 @@ namespace Bugger.Proxy.TFS
 
             foreach (string userName in userNames)
             {
-                var bugCollection = this.tfsHelper.GetBugs(userName, isFilterCreatedBy, this.document.PropertyMappingCollection, this.document.BugFilterField, this.document.BugFilterValue, redFilter);
+                var bugCollection = this.tfsHelper.GetBugs(userName, isFilterCreatedBy,
+                                                           this.document.PropertyMappingCollection,
+                                                           this.document.BugFilterField, this.document.BugFilterValue,
+                                                           redFilter);
                 if (bugCollection == null)
                     continue;
 
@@ -184,22 +191,92 @@ namespace Bugger.Proxy.TFS
         {
             this.settingViewModel.CanConnect = false;
 
-            if (!this.tfsHelper.TestConnection(this.document.ConnectUri, this.document.UserName, this.document.Password))
+            //  Connect
+            this.settingViewModel.ProgressType = ProgressTypes.OnConnectProgress;
+            this.settingViewModel.ProgressValue = 0;
+            Task.Factory.StartNew(() =>
             {
-                messageService.ShowMessage(Resources.CannotConnect);
+                return this.tfsHelper.TestConnection(this.document.ConnectUri, this.document.UserName, this.document.Password);
+            })
+            .ContinueWith(task =>
+            {
+                if (!task.Result)
+                {
+                    this.settingViewModel.ProgressType = ProgressTypes.FailedOnConnect;
+                    this.settingViewModel.ProgressValue = 100;
+                    throw new OperationCanceledException();
+                }
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
+            .ContinueWith(task =>
+            {
+                //  Query TFS Fields
+                this.settingViewModel.ProgressType = ProgressTypes.OnGetFiledsProgress;
+                this.settingViewModel.ProgressValue = 50;
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
+            .ContinueWith(task =>
+            {
+                return this.tfsHelper.GetFields(); ;
+            })
+            .ContinueWith(task =>
+            {
+                if (task.Result == null)
+                {
+                    this.settingViewModel.ProgressType = ProgressTypes.FailedOnGetFileds;
+                    this.settingViewModel.ProgressValue = 100;
+                    throw new OperationCanceledException();
+                }
+                this.settingViewModel.ProgressValue = 80;
+                this.settingViewModel.TFSFields.Clear();
+                this.settingViewModel.BugFilterFields.Clear();
+                foreach (var field in task.Result)
+                {
+                    this.settingViewModel.TFSFields.Add(field);
+                    if (field.AllowedValues.Any())
+                    {
+                        this.settingViewModel.BugFilterFields.Add(field);
+                    }
+                }
+
+                this.settingViewModel.CanConnect = true;
+                this.settingViewModel.ProgressValue = 90;
+                this.settingViewModel.ProgressType = ProgressTypes.OnAutoFillMapSettings;
+                try
+                {
+                    AutoFillMapSettings(task.Result);
+                }
+                catch
+                {
+                    this.settingViewModel.ProgressType = ProgressTypes.SuccessWithError;
+                    this.settingViewModel.ProgressValue = 100;
+                    return;
+                }
+
+                this.settingViewModel.ProgressValue = 100;
+                this.settingViewModel.ProgressType = ProgressTypes.Success;
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+        #endregion
+
+
+        private void GetDataFromTFS()
+        {
+            //  Connect
+            bool canConnect = this.tfsHelper.TestConnection(this.document.ConnectUri, this.document.UserName, this.document.Password);
+            if (!canConnect)
+            {
                 return;
             }
 
-            var fields = this.tfsHelper.GetFields();
-            if (fields == null)
+            //  Query TFS Fields
+            var tfsFields = this.tfsHelper.GetFields();
+            if (tfsFields == null)
             {
-                messageService.ShowMessage(Resources.CannotQueryFields);
                 return;
             }
 
             this.settingViewModel.TFSFields.Clear();
             this.settingViewModel.BugFilterFields.Clear();
-            foreach (var field in fields)
+            foreach (var field in tfsFields)
             {
                 this.settingViewModel.TFSFields.Add(field);
                 if (field.AllowedValues.Any())
@@ -207,10 +284,8 @@ namespace Bugger.Proxy.TFS
                     this.settingViewModel.BugFilterFields.Add(field);
                 }
             }
-
             this.settingViewModel.CanConnect = true;
         }
-        #endregion
 
         private void DocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -282,6 +357,48 @@ namespace Bugger.Proxy.TFS
             foreach (var value in stateField.AllowedValues)
             {
                 this.StateValues.Add(value);
+            }
+        }
+
+        private void AutoFillMapSettings(List<TFSField> tfsFields)
+        {
+            if (tfsFields == null) { throw new ArgumentException("tfsFields"); }
+
+            if (tfsFields.Any(x => x.Name == "ID"))
+            {
+                this.document.PropertyMappingCollection["ID"] = "ID";
+            }
+            if (tfsFields.Any(x => x.Name == "Title"))
+            {
+                this.document.PropertyMappingCollection["Title"] = "Title";
+            }
+            if (tfsFields.Any(x => x.Name == "Description"))
+            {
+                this.document.PropertyMappingCollection["Description"] = "Description";
+            }
+            if (tfsFields.Any(x => x.Name == "Assigned To"))
+            {
+                this.document.PropertyMappingCollection["AssignedTo"] = "Assigned To";
+            }
+            if (tfsFields.Any(x => x.Name == "State"))
+            {
+                this.document.PropertyMappingCollection["State"] = "State";
+            }
+            if (tfsFields.Any(x => x.Name == "Changed Date"))
+            {
+                this.document.PropertyMappingCollection["ChangedDate"] = "Changed Date";
+            }
+            if (tfsFields.Any(x => x.Name == "Created By"))
+            {
+                this.document.PropertyMappingCollection["CreatedBy"] = "Created By";
+            }
+            if (tfsFields.Any(x => x.Name == "Code Studio Rank"))
+            {
+                this.document.PropertyMappingCollection["Priority"] = "Code Studio Rank";
+            }
+            if (tfsFields.Any(x => x.Name == "Severity"))
+            {
+                this.document.PropertyMappingCollection["Severity"] = "Severity";
             }
         }
         #endregion

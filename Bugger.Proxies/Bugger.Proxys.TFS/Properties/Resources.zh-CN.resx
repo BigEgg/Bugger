@@ -121,7 +121,7 @@
     <value>无法连接到TFS服务器，请检查URL及用户名密码是否正确。</value>
   </data>
   <data name="CannotOpenFile" xml:space="preserve">
-    <value>无法打开配置文件。</value>
+    <value>无法打开TFS配置文件。</value>
   </data>
   <data name="CannotQueryFields" xml:space="preserve">
     <value>无法从TFS服务器获取字段种类，请稍后再试。</value>

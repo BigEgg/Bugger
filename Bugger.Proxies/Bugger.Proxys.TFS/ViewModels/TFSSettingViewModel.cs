@@ -21,6 +21,8 @@ namespace Bugger.Proxy.TFS.ViewModels
         private ICommand testConnectionCommand;
         private ICommand uriHelpCommand;
         private bool canConnect;
+        private ProgressTypes progressType;
+        private int progressValue;
         #endregion
 
         [ImportingConstructor]
@@ -31,6 +33,9 @@ namespace Bugger.Proxy.TFS.ViewModels
             this.tfsFields = new ObservableCollection<TFSField>();
             this.bugFilterFields = new ObservableCollection<TFSField>();
             this.priorityValues = new ObservableCollection<CheckString>();
+
+            this.ProgressType = ProgressTypes.NotWorking;
+            this.progressValue = 0;
         }
 
         #region Properties
@@ -46,8 +51,8 @@ namespace Bugger.Proxy.TFS.ViewModels
             internal set { this.settings = value; }
         }
 
-        public ICommand UriHelpCommand 
-        { 
+        public ICommand UriHelpCommand
+        {
             get { return this.uriHelpCommand; }
             set
             {
@@ -94,6 +99,32 @@ namespace Bugger.Proxy.TFS.ViewModels
                 {
                     this.canConnect = value;
                     RaisePropertyChanged("CanConnect");
+                }
+            }
+        }
+
+        public ProgressTypes ProgressType
+        {
+            get { return this.progressType; }
+            set
+            {
+                if (this.progressType != value)
+                {
+                    this.progressType = value;
+                    RaisePropertyChanged("ProgressType");
+                }
+            }
+        }
+
+        public int ProgressValue
+        {
+            get { return this.progressValue; }
+            set
+            {
+                if (this.progressValue != value)
+                {
+                    this.progressValue = value;
+                    RaisePropertyChanged("ProgressValue");
                 }
             }
         }

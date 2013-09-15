@@ -121,7 +121,7 @@
     <value>Cannot connect to the TFS server, please check your uri or credential information is correct.</value>
   </data>
   <data name="CannotOpenFile" xml:space="preserve">
-    <value>The setting file cannot be opened.</value>
+    <value>The TFS setting file cannot be opened.</value>
   </data>
   <data name="CannotQueryFields" xml:space="preserve">
     <value>Cannot get the fields information from the TFS server. Please do this later.</value>
