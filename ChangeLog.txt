@@ -1,5 +1,14 @@
 Bugger change log
 
+Alpha 4 (v0.4.0)
+    Application:
+        Add extension manager to manage the proxies.
+    Proxies
+        Jira Proxy
+            Complete all main functions.
+            Complete all views.
+            Support multi-lingual (English, Chinese).
+
 Alpha 3 (v0.3.0) <----- Currently Working
     Application:
         Show validation message in views.
