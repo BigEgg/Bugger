@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 namespace Bugger.Proxy.Test
 {
     [TestClass]
-    public class SourceControllerTest
+    public class TracingSystemTest
     {
         [TestMethod]
         public void ConstructorTest()
@@ -69,7 +69,7 @@ namespace Bugger.Proxy.Test
             Assert.AreEqual(0, bugs.Count);
         }
 
-        private class MockSourceController : SourceControlProxy
+        private class MockSourceController : TracingSystemProxy
         {
             public MockSourceController(string proxyName)
                 : base(proxyName)

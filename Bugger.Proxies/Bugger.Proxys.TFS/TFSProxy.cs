@@ -19,8 +19,8 @@ using System.Threading.Tasks;
 
 namespace Bugger.Proxy.TFS
 {
-    [Export(typeof(ISourceControlProxy)), Export]
-    public class TFSSourceControlProxy : SourceControlProxy
+    [Export(typeof(ITracingSystemProxy)), Export]
+    public class TFSProxy : TracingSystemProxy
     {
         #region Fields
         private readonly CompositionContainer container;
@@ -41,10 +41,10 @@ namespace Bugger.Proxy.TFS
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TFSSourceControlProxy" /> class.
+        /// Initializes a new instance of the <see cref="TFSProxy" /> class.
         /// </summary>
         [ImportingConstructor]
-        public TFSSourceControlProxy(CompositionContainer container, IMessageService messageService)
+        public TFSProxy(CompositionContainer container, IMessageService messageService)
             : base(Resources.ProxyName)
         {
             this.container = container;

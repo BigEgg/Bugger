@@ -71,7 +71,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TFSHelper.cs" />
-    <Compile Include="TFSSourceControlProxy.cs" />
+    <Compile Include="TFSProxy.cs" />
     <Compile Include="ViewModels\TFSSettingViewModel.cs" />
     <Compile Include="ViewModels\UriHelpViewModel.cs" />
     <Compile Include="Views\ITFSSettingView.cs" />

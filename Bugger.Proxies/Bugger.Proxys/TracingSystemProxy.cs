@@ -9,7 +9,7 @@ namespace Bugger.Proxy
     /// <summary>
     /// The base class of the application proxy for source control system.
     /// </summary>
-    public abstract class SourceControlProxy : DataModel, ISourceControlProxy
+    public abstract class TracingSystemProxy : DataModel, ITracingSystemProxy
     {
         #region Fields
         private readonly ObservableCollection<string> statusValues;
@@ -19,11 +19,11 @@ namespace Bugger.Proxy
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SourceControlProxy" /> class.
+        /// Initializes a new instance of the <see cref="TracingSystemProxy" /> class.
         /// </summary>
         /// <param name="proxyName">Name of the proxy.</param>
         /// <exception cref="System.ArgumentException">proxyName</exception>
-        public SourceControlProxy(string proxyName)
+        public TracingSystemProxy(string proxyName)
         {
             if (string.IsNullOrWhiteSpace(proxyName)) { throw new ArgumentException("proxyName"); }
 

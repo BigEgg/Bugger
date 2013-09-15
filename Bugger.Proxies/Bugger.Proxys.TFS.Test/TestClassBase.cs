@@ -24,7 +24,7 @@ namespace Bugger.Proxy.TFS.Test
             
             AggregateCatalog catalog = new AggregateCatalog();
             catalog.Catalogs.Add(new TypeCatalog(
-                typeof(TFSSourceControlProxy),
+                typeof(TFSProxy),
                 typeof(TFSSettingViewModel)
             ));
             catalog.Catalogs.Add(new TypeCatalog(
@@ -36,7 +36,7 @@ namespace Bugger.Proxy.TFS.Test
             batch.AddExportedValue(container);
             container.Compose(batch);
 
-            ISourceControlProxy proxy = container.GetExportedValue<ISourceControlProxy>();
+            ITracingSystemProxy proxy = container.GetExportedValue<ITracingSystemProxy>();
             proxy.Initialize();
         }
 

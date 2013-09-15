@@ -22,7 +22,7 @@ namespace Bugger.Applications.Controllers
         {
             this.container = container;
 
-            IEnumerable<ISourceControlProxy> proxys = this.container.GetExportedValues<ISourceControlProxy>();
+            IEnumerable<ITracingSystemProxy> proxys = this.container.GetExportedValues<ITracingSystemProxy>();
             this.proxyService = new ProxyService(proxys);
         }
 

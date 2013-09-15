@@ -10,12 +10,12 @@ namespace Bugger.Applications.Test.Services
     [TestClass]
     public class ProxyServiceTest : TestClassBase
     {
-        private IEnumerable<ISourceControlProxy> proxys;
+        private IEnumerable<ITracingSystemProxy> proxys;
         private IProxyService proxyService;
 
         protected override void OnTestInitialize()
         {
-            this.proxys = Container.GetExportedValues<ISourceControlProxy>();
+            this.proxys = Container.GetExportedValues<ITracingSystemProxy>();
             this.proxyService = new ProxyService(proxys);
         }
 

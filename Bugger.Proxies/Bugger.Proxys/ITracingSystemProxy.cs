@@ -8,7 +8,7 @@ namespace Bugger.Proxy
     /// <summary>
     /// The interface of the application proxy for source control system.
     /// </summary>
-    public interface ISourceControlProxy : INotifyPropertyChanged
+    public interface ITracingSystemProxy : INotifyPropertyChanged
     {
         #region Properties
         /// <summary>

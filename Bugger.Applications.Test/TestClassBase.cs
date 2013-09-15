@@ -33,7 +33,7 @@ namespace Bugger.Applications.Test
                 typeof(MockAboutDialogView), typeof(MockSettingDialogView)
             ));
             catalog.Catalogs.Add(new TypeCatalog(
-                typeof(FakeProxy), typeof(TFSSourceControlProxy),
+                typeof(FakeProxy), typeof(TFSProxy),
                 typeof(TFSSettingViewModel)
             ));
             catalog.Catalogs.Add(new TypeCatalog(

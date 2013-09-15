@@ -11,8 +11,8 @@ namespace Bugger.Proxy.FakeProxy
     /// <summary>
     /// This class is for test only.
     /// </summary>
-    [Export(typeof(ISourceControlProxy)), Export]
-    public class FakeProxy : SourceControlProxy
+    [Export(typeof(ITracingSystemProxy)), Export]
+    public class FakeProxy : TracingSystemProxy
     {
         #region Fields
         private List<Bug> bugs;

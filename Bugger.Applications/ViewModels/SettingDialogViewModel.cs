@@ -23,7 +23,7 @@ namespace Bugger.Applications.ViewModels
         private readonly ObservableCollection<object> views;
         private SettingsViewModel settingsViewModel;
 
-        private ISourceControlProxy settingActiveProxy;
+        private ITracingSystemProxy settingActiveProxy;
         #endregion
 
         public SettingDialogViewModel(ISettingDialogView view, IProxyService proxyService, SettingsViewModel settingsViewModel)

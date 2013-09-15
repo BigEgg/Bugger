@@ -71,7 +71,7 @@
     <Compile Include="Services\MockMessageService.cs" />
     <Compile Include="TestClassBase.cs" />
     <Compile Include="TFSHelperTest.cs" />
-    <Compile Include="TFSSourceControllerTest.cs" />
+    <Compile Include="TFSProxyTest.cs" />
     <Compile Include="ViewModels\SettingViewModelTest.cs" />
     <Compile Include="ViewModels\UriHelpViewModelTest.cs" />
   </ItemGroup>

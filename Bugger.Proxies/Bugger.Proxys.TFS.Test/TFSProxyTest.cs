@@ -17,9 +17,9 @@ using System.Linq;
 namespace Bugger.Proxy.TFS.Test
 {
     [TestClass]
-    public class TFSSourceControllerTest : TestClassBase
+    public class TFSProxyTest : TestClassBase
     {
-        private TFSSourceControlProxy proxy;
+        private TFSProxy proxy;
         private TFSSettingViewModel viewModel;
 
         protected override void OnTestInitialize()
@@ -29,7 +29,7 @@ namespace Bugger.Proxy.TFS.Test
                 File.Delete(SettingDocumentType.FilePath);
             }
 
-            this.proxy = Container.GetExportedValue<ISourceControlProxy>() as TFSSourceControlProxy;
+            this.proxy = Container.GetExportedValue<ITracingSystemProxy>() as TFSProxy;
             this.viewModel = Container.GetExportedValue<TFSSettingViewModel>();
         }
 
