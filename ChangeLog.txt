@@ -4,6 +4,8 @@ Alpha 4 (v0.4.0)
     Application:
         Add extension manager to manage the proxies.
     Proxies
+        TFS Proxy
+            Use XML file to save the default automation fill logic.
         Jira Proxy
             Complete all main functions.
             Complete all views.
@@ -19,8 +21,8 @@ Alpha 3 (v0.3.0) <----- Currently Working
         Support cancel event for proxy restore data when setting dialog cancelled. (✓)
         TFS Proxy
             Use multi-threading to avoid UI hang when test connection. (✓)
-                Show progress and out come when test connection.
-            Automation fill the mapping settings (✓)
+                Show progress and out come when test connection. (✓)
+            Automation fill the mapping settings. (✓)
             Implament cancel event for restoring data. (✓)
             Update connect status when change the connect information. (✓)
 
