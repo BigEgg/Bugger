@@ -500,6 +500,18 @@ namespace Bugger.Proxy.TFS
             {
                 this.document.PropertyMappingCollection["Severity"] = "Severity";
             }
+
+            var workItemType = tfsFields.FirstOrDefault(x => x.Name == "Work Item Type");
+            if (workItemType != null)
+            {
+                this.document.BugFilterField = "Work Item Type";
+                var value = workItemType.AllowedValues.FirstOrDefault(x => string.Compare(x, "Bugs", true) == 0);
+
+                if (string.IsNullOrEmpty(value))
+                {
+                    this.document.BugFilterValue = "value";
+                }
+            }
         }
         #endregion
         #endregion
