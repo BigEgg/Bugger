@@ -123,8 +123,11 @@
   <data name="ApplicationName" xml:space="preserve">
     <value>Bugger</value>
   </data>
+  <data name="FloatingWindowOpacityRange" xml:space="preserve">
+    <value>悬浮窗透明度必须在{1}到{2}之间</value>
+  </data>
   <data name="RefreshMinutesRange" xml:space="preserve">
-    <value>The refresh minutes must be between {1} and {2}.</value>
+    <value>刷新时间必须在{1}到{2}之间</value>
   </data>
   <data name="RestartApplication" xml:space="preserve">
     <value>要使新的配置生效，需要重新程序。</value>

@@ -253,4 +253,10 @@ For anyone want to have a gadget as a simple dashboard for bugs, this is what he
   <data name="SettingFilterBugStatus" xml:space="preserve">
     <value>Filter bug's _status</value>
   </data>
+  <data name="SettingDialogMenu" xml:space="preserve">
+    <value>_Setting...</value>
+  </data>
+  <data name="SettingOpacityMenu" xml:space="preserve">
+    <value>_Opacity</value>
+  </data>
 </root>

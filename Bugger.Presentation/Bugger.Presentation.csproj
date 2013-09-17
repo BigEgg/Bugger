@@ -65,6 +65,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\BugTypeToImageConveter.cs" />
+    <Compile Include="Converters\ByteToOpacityConverter.cs" />
     <Compile Include="DesignData\FakeProxy.cs" />
     <Compile Include="DesignData\MockDataService.cs" />
     <Compile Include="DesignData\MockProxyService.cs" />

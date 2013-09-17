@@ -12,6 +12,7 @@ namespace Bugger.Presentation.DesignData
         public SampleFloatingViewModel()
             : base(new MockFloatingView(), new MockDataService(), new PresentationService())
         {
+            Opacity = 30;
         }
 
         private class MockFloatingView : MockView, IFloatingView

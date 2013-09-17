@@ -34,6 +34,7 @@ namespace Bugger.Applications.ViewModels
         private int refreshMinutes;
         private bool isFilterCreatedBy;
         private string filterStatusValues;
+        private byte floatingWindowOpacity;
         #endregion
 
         public SettingsViewModel(ISettingsView view, IProxyService proxyService, string teamMembers)
@@ -46,7 +47,7 @@ namespace Bugger.Applications.ViewModels
                 .Select(x => x.Trim()));
             this.proxys = new ReadOnlyCollection<string>(
                 proxyService.Proxys.Select(x => x.ProxyName).ToList());
-            this.activeProxy = 
+            this.activeProxy =
                 proxyService.ActiveProxy == null ? string.Empty : proxyService.ActiveProxy.ProxyName;
 
             this.statusValues = new ObservableCollection<CheckString>();
@@ -160,7 +161,7 @@ namespace Bugger.Applications.ViewModels
                     this.isFilterCreatedBy = value;
                     RaisePropertyChanged("IsFilterCreatedBy");
                 }
-            }        
+            }
         }
 
         public string FilterStatusValues
@@ -172,6 +173,20 @@ namespace Bugger.Applications.ViewModels
                 {
                     this.filterStatusValues = value;
                     RaisePropertyChanged("FilterStatusValues");
+                }
+            }
+        }
+
+        [Range(20, 100, ErrorMessageResourceName = "FloatingWindowOpacityRange", ErrorMessageResourceType = typeof(Resources))]
+        public byte FloatingWindowOpacity
+        {
+            get { return this.floatingWindowOpacity; }
+            set
+            {
+                if (this.floatingWindowOpacity != value)
+                {
+                    this.floatingWindowOpacity = value;
+                    RaisePropertyChanged("FloatingWindowOpacity");
                 }
             }
         }

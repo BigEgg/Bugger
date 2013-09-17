@@ -159,6 +159,7 @@ namespace Bugger.Applications.Controllers
             settingsViewModel.RefreshMinutes = Settings.Default.AutoQueryMinutes;
             settingsViewModel.IsFilterCreatedBy = Settings.Default.IsFilterCreatedBy;
             settingsViewModel.FilterStatusValues = Settings.Default.FilterStatusValues;
+            settingsViewModel.FloatingWindowOpacity = Settings.Default.FloatingWindowOpacity;
 
             SettingDialogViewModel settingDialog = new SettingDialogViewModel(settingDialogView, proxyService, settingsViewModel);
 
@@ -174,8 +175,11 @@ namespace Bugger.Applications.Controllers
                 Settings.Default.TeamMembers = settingsViewModel.TeamMembersString;
                 Settings.Default.IsFilterCreatedBy = settingsViewModel.IsFilterCreatedBy;
                 Settings.Default.FilterStatusValues = settingsViewModel.FilterStatusValues;
+                Settings.Default.FloatingWindowOpacity = settingsViewModel.FloatingWindowOpacity;
                 Settings.Default.Save();
             }
+
+            floatingViewModel.Opacity = Settings.Default.FloatingWindowOpacity;
         }
         #endregion
 

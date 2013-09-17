@@ -253,4 +253,10 @@
   <data name="SettingFilterBugStatus" xml:space="preserve">
     <value>过滤Bug状态(_S)</value>
   </data>
+  <data name="SettingDialogMenu" xml:space="preserve">
+    <value>设置(_S)...</value>
+  </data>
+  <data name="SettingOpacityMenu" xml:space="preserve">
+    <value>透明度(_O)</value>
+  </data>
 </root>
