@@ -192,4 +192,25 @@
   <data name="TFSField" xml:space="preserve">
     <value>TFS列</value>
   </data>
+  <data name="FailedOnConnect" xml:space="preserve">
+    <value>TFS服务器连接失败</value>
+  </data>
+  <data name="FailedOnGetFileds" xml:space="preserve">
+    <value>获取TFS内容列表失败</value>
+  </data>
+  <data name="OnAutoFillMapSettings" xml:space="preserve">
+    <value>正在尝试自动填充映射设置</value>
+  </data>
+  <data name="OnConnectProgress" xml:space="preserve">
+    <value>正在尝试连接到TFS服务器</value>
+  </data>
+  <data name="OnGetFiledsProgress" xml:space="preserve">
+    <value>正在尝试获取TFS内容列表</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>成功</value>
+  </data>
+  <data name="SuccessWithError" xml:space="preserve">
+    <value>成功，但自动填充映射设置失败</value>
+  </data>
 </root>

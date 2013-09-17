@@ -54,6 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ItemsToStringConverter.cs" />
+    <Compile Include="Converters\ProgressTypesToColorConverter.cs" />
+    <Compile Include="Converters\ProgressTypesToIndeterminateConverter.cs" />
+    <Compile Include="Converters\ProgressTypesToMessageConverter.cs" />
+    <Compile Include="Converters\ProgressTypesToVisibilityConverter.cs" />
     <Compile Include="DesignData\SampleTFSSettingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

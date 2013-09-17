@@ -26,6 +26,8 @@ namespace Bugger.Proxy.TFS.Presentation.DesignData
 
             this.TFSFields.Add(field);
             this.BugFilterFields.Add(field);
+            this.ProgressType = ProgressTypes.SuccessWithError;
+            this.ProgressValue = 100;
         }
 
         private class MockTFSSettingView : MockView, ITFSSettingView

@@ -192,4 +192,25 @@
   <data name="TFSField" xml:space="preserve">
     <value>TFS Field</value>
   </data>
+  <data name="FailedOnConnect" xml:space="preserve">
+    <value>Failed to connect to the TFS server.</value>
+  </data>
+  <data name="FailedOnGetFileds" xml:space="preserve">
+    <value>Failed to get the TFS fields.</value>
+  </data>
+  <data name="OnAutoFillMapSettings" xml:space="preserve">
+    <value>Automatically fill the map settings.</value>
+  </data>
+  <data name="OnConnectProgress" xml:space="preserve">
+    <value>Trying to connect to the TFS server.</value>
+  </data>
+  <data name="OnGetFiledsProgress" xml:space="preserve">
+    <value>Trying to get the TFS fields.</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success.</value>
+  </data>
+  <data name="SuccessWithError" xml:space="preserve">
+    <value>Success with some non-critical problem.</value>
+  </data>
 </root>
