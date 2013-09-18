@@ -28,7 +28,7 @@ namespace Bugger.Applications.ViewModels
         private ICommand settingCommand;
         private ICommand exitCommand;
 
-        private double opacity;
+        private byte opacity;
         #endregion
 
         [ImportingConstructor]
@@ -59,7 +59,7 @@ namespace Bugger.Applications.ViewModels
             }
             else
             {
-                Opacity = 0.8;
+                Opacity = 80;
             }
 
             AddWeakEventListener(this.dataService.UserBugs, UserBugsCollectionChanged);
@@ -171,7 +171,7 @@ namespace Bugger.Applications.ViewModels
             }
         }
 
-        public double Opacity
+        public byte Opacity
         {
             get { return this.opacity; }
             set
@@ -213,7 +213,7 @@ namespace Bugger.Applications.ViewModels
         {
             Settings.Default.FloatingWindowLeft = ViewCore.Left;
             Settings.Default.FloatingWindowTop = ViewCore.Top;
-            Settings.Default.FloatingWindowOpacity = (byte)(this.opacity * 100);
+            Settings.Default.FloatingWindowOpacity = this.opacity;
         }
 
         private void UserBugsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
