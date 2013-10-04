@@ -23,8 +23,8 @@ namespace Bugger.Applications.Test.ViewModels
         protected override void OnTestInitialize()
         {
             this.proxyService = new ProxyService(Container.GetExportedValues<ITracingSystemProxy>());
-            this.proxyService.ActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == activeProxy);
-            foreach (var proxy in this.proxyService.Proxys)
+            this.proxyService.ActiveProxy = this.proxyService.Proxies.First(x => x.ProxyName == activeProxy);
+            foreach (var proxy in this.proxyService.Proxies)
             {
                 proxy.Initialize();
             }

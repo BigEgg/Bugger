@@ -25,7 +25,7 @@
                 </Grid.ColumnDefinitions>
                 <Label Content="{x:Static p:Resources.SettingActiveProxy}" VerticalAlignment="Center"
                        Target="{Binding ElementName=activeProxy}" />
-                <ComboBox x:Name="activeProxy" Grid.Column="1" ItemsSource="{Binding Proxys}" IsReadOnly="True"
+                <ComboBox x:Name="activeProxy" Grid.Column="1" ItemsSource="{Binding Proxies}" IsReadOnly="True"
                           VerticalAlignment="Center" SelectedItem="{Binding ActiveProxy}" />
             </Grid>
         </GroupBox>

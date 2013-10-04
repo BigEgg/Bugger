@@ -44,7 +44,7 @@ namespace Bugger.Applications.ViewModels
             AddWeakEventListener(this.settingsViewModel, SettingsViewModelPropertyChanged);
 
             if (!string.IsNullOrWhiteSpace(this.settingsViewModel.ActiveProxy))
-                this.settingActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
+                this.settingActiveProxy = this.proxyService.Proxies.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
             if (this.settingActiveProxy != null)
             {
                 AddWeakEventListener(this.settingActiveProxy, ActiveProxyPropertyChanged);
@@ -105,7 +105,7 @@ namespace Bugger.Applications.ViewModels
                     }
                 }
 
-                this.settingActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
+                this.settingActiveProxy = this.proxyService.Proxies.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
 
                 StateValuesCollectionChanged(null, null);
 

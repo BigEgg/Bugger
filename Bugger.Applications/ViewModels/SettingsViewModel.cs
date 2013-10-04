@@ -20,21 +20,34 @@ namespace Bugger.Applications.ViewModels
         #region Fields
         private const string TeamMemberSplitString = "; ";
 
+        #region Relative with Team Member
         private readonly ObservableCollection<string> teamMembers;
         private readonly ObservableCollection<string> selectedTeamMembers;
-        private readonly ObservableCollection<CheckString> statusValues;
-        private readonly ReadOnlyCollection<string> proxys;
         private readonly DelegateCommand addNewTeamMemberCommand;
         private readonly DelegateCommand removeTeamMemberCommand;
 
         private string selectedTeamMember;
-        private string activeProxy;
-        private string userName;
         private string newTeamMember;
-        private int refreshMinutes;
+        #endregion
+
+        #region Relative with Proxies
+        private readonly ReadOnlyCollection<string> proxies;
+
+        private string activeProxy;
+        #endregion
+
+        #region Relative with Proxy Settings
+        private readonly ObservableCollection<CheckString> statusValues;
+
+        private string userName;
         private bool isFilterCreatedBy;
         private string filterStatusValues;
+        #endregion
+
+        #region Relative with Application
+        private int refreshMinutes;
         private byte floatingWindowOpacity;
+        #endregion
         #endregion
 
         public SettingsViewModel(ISettingsView view, IProxyService proxyService, string teamMembers)
@@ -45,8 +58,8 @@ namespace Bugger.Applications.ViewModels
             this.teamMembers = new ObservableCollection<string>(
                 teamMembers.Split(TeamMemberSplitString.ToArray(), StringSplitOptions.RemoveEmptyEntries)
                 .Select(x => x.Trim()));
-            this.proxys = new ReadOnlyCollection<string>(
-                proxyService.Proxys.Select(x => x.ProxyName).ToList());
+            this.proxies = new ReadOnlyCollection<string>(
+                proxyService.Proxies.Select(x => x.ProxyName).ToList());
             this.activeProxy =
                 proxyService.ActiveProxy == null ? string.Empty : proxyService.ActiveProxy.ProxyName;
 
@@ -70,11 +83,10 @@ namespace Bugger.Applications.ViewModels
         #endregion
 
         #region Properties
+        #region Relative with Team Member
         public ICommand AddNewTeamMemberCommand { get { return this.addNewTeamMemberCommand; } }
 
         public ICommand RemoveTeamMemberCommand { get { return this.removeTeamMemberCommand; } }
-
-        public ReadOnlyCollection<string> Proxys { get { return this.proxys; } }
 
         public ObservableCollection<string> TeamMembers { get { return this.teamMembers; } }
 
@@ -94,6 +106,10 @@ namespace Bugger.Applications.ViewModels
                 }
             }
         }
+        #endregion
+
+        #region Relative with Proxies
+        public ReadOnlyCollection<string> Proxies { get { return this.proxies; } }
 
         [Required(ErrorMessageResourceName = "ActiveProxyMandatory", ErrorMessageResourceType = typeof(Resources))]
         public string ActiveProxy
@@ -108,7 +124,9 @@ namespace Bugger.Applications.ViewModels
                 }
             }
         }
+        #endregion
 
+        #region Relative with Proxy Settings
         [Required(ErrorMessageResourceName = "UserNameMandatory", ErrorMessageResourceType = typeof(Resources))]
         public string UserName
         {
@@ -133,20 +151,6 @@ namespace Bugger.Applications.ViewModels
                     this.newTeamMember = value;
                     UpdateCommands();
                     RaisePropertyChanged("NewTeamMember");
-                }
-            }
-        }
-
-        [Range(1, 720, ErrorMessageResourceName = "RefreshMinutesRange", ErrorMessageResourceType = typeof(Resources))]
-        public int RefreshMinutes
-        {
-            get { return this.refreshMinutes; }
-            set
-            {
-                if (this.refreshMinutes != value)
-                {
-                    this.refreshMinutes = value;
-                    RaisePropertyChanged("RefreshMinutes");
                 }
             }
         }
@@ -177,6 +181,24 @@ namespace Bugger.Applications.ViewModels
             }
         }
 
+        public ObservableCollection<CheckString> StatusValues { get { return this.statusValues; } }
+        #endregion
+
+        #region Relative with Application
+        [Range(1, 720, ErrorMessageResourceName = "RefreshMinutesRange", ErrorMessageResourceType = typeof(Resources))]
+        public int RefreshMinutes
+        {
+            get { return this.refreshMinutes; }
+            set
+            {
+                if (this.refreshMinutes != value)
+                {
+                    this.refreshMinutes = value;
+                    RaisePropertyChanged("RefreshMinutes");
+                }
+            }
+        }
+
         [Range(20, 100, ErrorMessageResourceName = "FloatingWindowOpacityRange", ErrorMessageResourceType = typeof(Resources))]
         public byte FloatingWindowOpacity
         {
@@ -190,8 +212,7 @@ namespace Bugger.Applications.ViewModels
                 }
             }
         }
-
-        public ObservableCollection<CheckString> StatusValues { get { return this.statusValues; } }
+        #endregion
         #endregion
 
         #region Private Methods

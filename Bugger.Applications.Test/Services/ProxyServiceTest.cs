@@ -22,7 +22,7 @@ namespace Bugger.Applications.Test.Services
         [TestMethod]
         public void GeneralProxyServiceTest()
         {
-            Assert.AreEqual(this.proxys.Count(), this.proxyService.Proxys.Count());
+            Assert.AreEqual(this.proxys.Count(), this.proxyService.Proxies.Count());
             Assert.IsNull(this.proxyService.ActiveProxy);
         }
 

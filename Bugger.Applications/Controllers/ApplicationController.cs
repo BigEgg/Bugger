@@ -167,7 +167,7 @@ namespace Bugger.Applications.Controllers
 
             if (result == true)
             {
-                proxyService.ActiveProxy = proxyService.Proxys.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
+                proxyService.ActiveProxy = proxyService.Proxies.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
 
                 Settings.Default.ActiveProxy = settingsViewModel.ActiveProxy;
                 Settings.Default.UserName = settingsViewModel.UserName;

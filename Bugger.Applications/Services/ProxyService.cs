@@ -18,7 +18,7 @@ namespace Bugger.Applications.Services
         }
 
         #region Properties
-        public IEnumerable<ITracingSystemProxy> Proxys { get { return this.proxys; } }
+        public IEnumerable<ITracingSystemProxy> Proxies { get { return this.proxys; } }
 
         public ITracingSystemProxy ActiveProxy
         {

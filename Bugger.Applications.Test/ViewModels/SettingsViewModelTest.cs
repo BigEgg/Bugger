@@ -25,8 +25,8 @@ namespace Bugger.Applications.Test.ViewModels
         protected override void OnTestInitialize()
         {
             this.proxyService = new ProxyService(Container.GetExportedValues<ITracingSystemProxy>());
-            this.proxyService.ActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == activeProxy);
-            foreach (var proxy in this.proxyService.Proxys)
+            this.proxyService.ActiveProxy = this.proxyService.Proxies.First(x => x.ProxyName == activeProxy);
+            foreach (var proxy in this.proxyService.Proxies)
             {
                 proxy.Initialize();
             }
@@ -44,7 +44,7 @@ namespace Bugger.Applications.Test.ViewModels
         public void SettingsViewModelGeneralTest()
         {
             Assert.AreEqual(proxyService.ActiveProxy.ProxyName, this.viewModel.ActiveProxy);
-            Assert.AreEqual(proxyService.Proxys.Count(), this.viewModel.Proxys.Count);
+            Assert.AreEqual(proxyService.Proxies.Count(), this.viewModel.Proxies.Count);
             Assert.AreEqual(2, this.viewModel.TeamMembers.Count);
             Assert.AreEqual(this.teamMembersString, this.viewModel.TeamMembersString);
             Assert.IsNotNull(this.viewModel.AddNewTeamMemberCommand);
@@ -72,9 +72,9 @@ namespace Bugger.Applications.Test.ViewModels
             Assert.AreEqual("Pupil", this.viewModel.SelectedTeamMember);
 
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.ActiveProxy, () =>
-                this.viewModel.ActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName != activeProxy).ProxyName
+                this.viewModel.ActiveProxy = this.proxyService.Proxies.First(x => x.ProxyName != activeProxy).ProxyName
             );
-            Assert.AreEqual(this.proxyService.Proxys.First(x => x.ProxyName != activeProxy).ProxyName, this.viewModel.ActiveProxy);
+            Assert.AreEqual(this.proxyService.Proxies.First(x => x.ProxyName != activeProxy).ProxyName, this.viewModel.ActiveProxy);
 
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.UserName, () =>
                 this.viewModel.UserName = "Pupil"
