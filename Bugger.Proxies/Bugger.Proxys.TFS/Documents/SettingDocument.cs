@@ -9,12 +9,6 @@ namespace Bugger.Proxy.TFS.Documents
     {
         #region Fields
         private readonly PropertyMappingDictionary propertyMappingCollection;
-        private Uri connectUri;
-        private string userName;
-        private string password;
-        private string bugFilterField;
-        private string bugFilterValue;
-        private string priorityRed;
         #endregion
 
         public SettingDocument()
