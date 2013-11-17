@@ -6,6 +6,7 @@ using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Properties;
 using Bugger.Proxy.TFS.ViewModels;
 using Bugger.Proxy.TFS.Views;
+using Microsoft.TeamFoundation.Client;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,60 +27,223 @@ namespace Bugger.Proxy.TFS
         private readonly CompositionContainer container;
         private readonly IMessageService messageService;
         private readonly TFSHelper tfsHelper;
-        private readonly DelegateCommand saveCommand;
-        private readonly DelegateCommand testConnectionCommand;
-        private readonly DelegateCommand uriHelpCommand;
-
-        private List<string> IgnoreField;
-
         private SettingDocument document;
         private TFSSettingViewModel settingViewModel;
 
-        private string priorityFieldCache;
-        private string stateFieldCache;
-        private bool isTestConnectOnProgress = false;
+        private readonly ObservableCollection<string> stateValues;
+        private List<string> ignoreField;
+        private readonly List<TFSField> tfsFieldsCache;
+
+        private readonly DelegateCommand testConnectionCommand;
         #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TFSProxy" /> class.
         /// </summary>
         [ImportingConstructor]
-        public TFSProxy(CompositionContainer container, IMessageService messageService)
+        public TFSProxy(CompositionContainer container, IMessageService messageService, TFSHelper tfsHelper)
             : base(Resources.ProxyName)
         {
+            if (container == null) { throw new ArgumentNullException("container"); }
+            if (messageService == null) { throw new ArgumentNullException("messageService"); }
+            if (tfsHelper == null) { throw new ArgumentNullException("tfsHelper"); }
+
             this.container = container;
             this.messageService = messageService;
-            this.tfsHelper = new TFSHelper();
-            this.saveCommand = new DelegateCommand(SaveCommandExcute, CanSaveCommandExcute);
-            this.uriHelpCommand = new DelegateCommand(OpenUriHelpCommandExcute);
+            this.tfsHelper = tfsHelper;
 
             this.testConnectionCommand = new DelegateCommand(TestConnectionCommandExcute, CanTestConnectionCommandExcute);
+
+            this.tfsFieldsCache = new List<TFSField>();
+            this.stateValues = new ObservableCollection<string>();
+
+            this.CanQuery = false;
         }
 
         #region Properties
-        public override ISettingView SettingView { get { return this.settingViewModel.View as ISettingView; } }
+        /// <summary>
+        /// Gets the status values.
+        /// </summary>
+        /// <value>
+        /// The status values.
+        /// </value>
+        public override ObservableCollection<string> StateValues { get { return this.stateValues; } }
         #endregion
 
         #region Methods
         #region Public Methods
-        public override void OnSumbitSettings()
+        /// <summary>
+        /// Initializes the setting dialog.
+        /// </summary>
+        /// <returns></returns>
+        public override ISettingView InitializeSettingDialog()
         {
-            if (this.saveCommand.CanExecute())
-                this.saveCommand.Execute();
+            if (this.settingViewModel == null)
+            {
+                ITFSSettingView view = this.container.GetExportedValue<ITFSSettingView>();
+                IUriHelpView uriHelpView = this.container.GetExportedValue<IUriHelpView>();
+                this.settingViewModel = new TFSSettingViewModel(view, uriHelpView);
+                this.settingViewModel.TestConnectionCommand = this.testConnectionCommand;
+            }
+
+            this.settingViewModel.ClearData();
+
+            this.settingViewModel.ConnectUri = this.document.ConnectUri;
+            this.settingViewModel.UserName = this.document.UserName;
+            this.settingViewModel.Password = this.document.Password;
+
+            foreach (var mapping in this.document.PropertyMappingCollection)
+            {
+                this.settingViewModel.PropertyMappingCollection.Add(mapping);
+            }
+
+            foreach (var field in this.tfsFieldsCache)
+            {
+                this.settingViewModel.TFSFields.Add(field);
+                if (field.AllowedValues.Any())
+                {
+                    this.settingViewModel.BugFilterFields.Add(field);
+                }
+            }
+
+            this.settingViewModel.BugFilterField = this.document.BugFilterField;
+            this.settingViewModel.BugFilterValue = this.document.BugFilterValue;
+            this.settingViewModel.PriorityRed = this.document.PriorityRed;
+
+            UpdateSettingDialogPriorityValues();
+
+            if (this.CanQuery)
+            {
+                if (string.IsNullOrWhiteSpace(this.settingViewModel.BugFilterField)
+                    && string.IsNullOrWhiteSpace(this.settingViewModel.BugFilterValue)
+                    && this.settingViewModel.PropertyMappingCollection
+                            .Where(x => !ignoreField.Contains(x.Key))
+                            .Any(x =>
+                            {
+                                return string.IsNullOrWhiteSpace(x.Value);
+                            }))
+                {
+                    this.settingViewModel.ProgressType = ProgressTypes.SuccessWithError;
+                }
+                else
+                {
+                    this.settingViewModel.ProgressType = ProgressTypes.Success;
+                }
+                this.settingViewModel.ProgressValue = 100;
+            }
+
+            AddWeakEventListener(this.settingViewModel, SettingViewModelPropertyChanged);
+
+            return this.settingViewModel.View as ISettingView;
         }
 
-        public override void OnCancelSettings()
+        /// <summary>
+        /// Do something afters close setting dialog.
+        /// </summary>
+        /// <param name="submit">If the dialog is return as submit..</param>
+        public override void AfterCloseSettingDialog(bool submit)
         {
-            RestoreTFSData();
+            RemoveWeakEventListener(this.settingViewModel, SettingViewModelPropertyChanged);
+
+            if (!submit) { return; }
+
+            this.document.ConnectUri = this.settingViewModel.ConnectUri;
+            this.document.UserName = this.settingViewModel.UserName;
+            this.document.Password = this.settingViewModel.Password;
+
+            this.document.PropertyMappingCollection.Clear();
+            foreach (var mapping in this.settingViewModel.PropertyMappingCollection)
+            {
+                this.document.PropertyMappingCollection.Add(mapping);
+            }
+
+            this.tfsFieldsCache.Clear();
+            this.tfsFieldsCache.AddRange(this.settingViewModel.TFSFields);
+
+            this.document.BugFilterField = this.settingViewModel.BugFilterField;
+            this.document.BugFilterValue = this.settingViewModel.BugFilterValue;
+            this.document.PriorityRed = this.settingViewModel.PriorityRed;
+
+            this.CanQuery = false;
+
+            if ((this.settingViewModel.ProgressType == ProgressTypes.Success
+                || this.settingViewModel.ProgressType == ProgressTypes.SuccessWithError)
+                &&
+                (!string.IsNullOrWhiteSpace(this.settingViewModel.BugFilterField)
+                 && !string.IsNullOrWhiteSpace(this.settingViewModel.BugFilterValue)
+                 && this.settingViewModel.PropertyMappingCollection
+                         .Where(x => !ignoreField.Contains(x.Key))
+                         .Any(x =>
+                         {
+                             return !string.IsNullOrWhiteSpace(x.Value);
+                         })))
+            {
+                this.CanQuery = true;
+            }
+
+            SettingDocumentType.Save(this.document);
+        }
+
+        /// <summary>
+        /// Validate the setting values before close setting dialog.
+        /// </summary>
+        /// <returns>
+        /// The validation result.
+        /// </returns>
+        public override SettingDialogValidateionResult ValidateBeforeCloseSettingDialog()
+        {
+            if (this.settingViewModel.ProgressType == ProgressTypes.OnAutoFillMapSettings
+                && this.settingViewModel.ProgressType == ProgressTypes.OnConnectProgress
+                && this.settingViewModel.ProgressType == ProgressTypes.OnGetFiledsProgress)
+            {
+                return SettingDialogValidateionResult.Busy;
+            }
+
+            if (this.settingViewModel.ConnectUri != null
+                && this.settingViewModel.ConnectUri.IsAbsoluteUri
+                && !string.IsNullOrWhiteSpace(this.settingViewModel.UserName)
+                && this.settingViewModel.ProgressType == ProgressTypes.FailedOnConnect
+                && this.settingViewModel.ProgressType == ProgressTypes.FailedOnGetFileds)
+            {
+                return SettingDialogValidateionResult.ConnectFailed;
+            }
+
+            if (this.settingViewModel.ProgressType == ProgressTypes.NotWorking)
+            {
+                TfsTeamProjectCollection tpc = null;
+                if (!tfsHelper.TryConnection(this.settingViewModel.ConnectUri, this.settingViewModel.UserName,
+                                             this.settingViewModel.Password, out tpc))
+                {
+                    return SettingDialogValidateionResult.ConnectFailed;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(this.settingViewModel.BugFilterField)
+                && string.IsNullOrWhiteSpace(this.settingViewModel.BugFilterValue)
+                && this.settingViewModel.PropertyMappingCollection
+                                        .Where(x => !ignoreField.Contains(x.Key))
+                                        .Any(x =>
+                                         {
+                                             return string.IsNullOrWhiteSpace(x.Value);
+                                         }))
+            {
+                return SettingDialogValidateionResult.UnValid;
+            }
+
+            return SettingDialogValidateionResult.Valid;
         }
         #endregion
 
         #region Protected Methods
+        /// <summary>
+        /// The method which will execute when the Controller.Initialize() execute.
+        /// </summary>
         protected override void OnInitialize()
         {
-            IgnoreField = new List<string>();
-            IgnoreField.Add("Severity");
+            ignoreField = new List<string>();
+            ignoreField.Add("Severity");
 
+            //  Open the setting file
             if (File.Exists(SettingDocumentType.FilePath))
             {
                 try
@@ -97,22 +261,37 @@ namespace Bugger.Proxy.TFS
                 this.document = SettingDocumentType.New();
             }
 
-            AddWeakEventListener(this.document, DocumentPropertyChanged);
-
-            this.settingViewModel = this.container.GetExportedValue<TFSSettingViewModel>();
-            this.settingViewModel.SaveCommand = this.saveCommand;
-            this.settingViewModel.UriHelpCommand = this.uriHelpCommand;
-            this.settingViewModel.TestConnectionCommand = this.testConnectionCommand;
-            this.settingViewModel.Settings = document;
-
-            if (this.testConnectionCommand.CanExecute())
+            //  Validate Connect Information
+            if (this.document == null || this.document.ConnectUri == null ||
+                string.IsNullOrWhiteSpace(this.document.ConnectUri.AbsoluteUri) ||
+                string.IsNullOrWhiteSpace(this.document.UserName))
             {
-                GetDataFromTFS();
-                UpdatePriorityValues();
-                UpdateStatusValues();
-
-                this.CanQuery = this.saveCommand.CanExecute();
+                return;
             }
+
+            //  Connect to TFS
+            TfsTeamProjectCollection tpc = null;
+            if (!tfsHelper.TryConnection(this.document.ConnectUri, this.document.UserName,
+                                        this.document.Password, out tpc))
+            {
+                return;
+            }
+
+            //  Get Fields
+            var fields = tfsHelper.GetFields(tpc);
+            if (fields == null || !fields.Any()) { return; }
+
+            this.tfsFieldsCache.AddRange(tfsHelper.GetFields(tpc));
+            var stateFieldName = this.document.PropertyMappingCollection["State"];
+            if (!string.IsNullOrWhiteSpace(stateFieldName))
+            {
+                var values = this.tfsFieldsCache.First(x => x.Name == stateFieldName).AllowedValues;
+                foreach (var value in values)
+                {
+                    this.stateValues.Add(value);
+                }
+            }
+            this.CanQuery = true;
         }
 
         /// <summary>
@@ -125,340 +304,96 @@ namespace Bugger.Proxy.TFS
         /// </returns>
         protected override ReadOnlyCollection<Bug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
         {
-            if (!this.tfsHelper.IsConnected())
-                this.tfsHelper.TestConnection(this.document.ConnectUri, this.document.UserName, this.document.Password);
-
             List<Bug> bugs = new List<Bug>();
-            List<string> redFilter = string.IsNullOrWhiteSpace(this.document.PriorityRed)
-                                         ? new List<string>()
-                                         : this.document.PriorityRed.Split(';').Select(x => x.Trim()).ToList();
 
-            foreach (string userName in userNames)
+            if (!this.CanQuery) { return new ReadOnlyCollection<Bug>(bugs); }
+
+            if (this.document == null || this.document.ConnectUri == null ||
+                string.IsNullOrWhiteSpace(this.document.ConnectUri.AbsoluteUri) ||
+                string.IsNullOrWhiteSpace(this.document.UserName))
             {
-                var bugCollection = this.tfsHelper.GetBugs(userName, isFilterCreatedBy,
-                                                           this.document.PropertyMappingCollection,
-                                                           this.document.BugFilterField, this.document.BugFilterValue,
-                                                           redFilter);
-                if (bugCollection == null)
-                    continue;
-
-                bugs.AddRange(bugCollection);
+                this.CanQuery = false;
+                return new ReadOnlyCollection<Bug>(bugs);
             }
 
-            return new ReadOnlyCollection<Bug>(bugs.Distinct().ToList());
+            TfsTeamProjectCollection tpc = null;
+            if (tfsHelper.TryConnection(this.document.ConnectUri, this.document.UserName,
+                                        this.document.Password, out tpc))
+            {
+                List<string> redFilter = string.IsNullOrWhiteSpace(this.document.PriorityRed)
+                                           ? new List<string>()
+                                           : this.document.PriorityRed.Split(';').Select(x => x.Trim()).ToList();
+
+                foreach (string userName in userNames)
+                {
+                    var bugCollection = this.tfsHelper.GetBugs(tpc, userName, isFilterCreatedBy,
+                                                               this.document.PropertyMappingCollection,
+                                                               this.document.BugFilterField, this.document.BugFilterValue,
+                                                               redFilter);
+                    if (bugCollection == null) { continue; }
+
+                    bugs.AddRange(bugCollection);
+                }
+
+                return new ReadOnlyCollection<Bug>(bugs.Distinct().ToList());
+            }
+            else
+            {
+                this.CanQuery = false;
+                return new ReadOnlyCollection<Bug>(bugs);
+            }
         }
         #endregion
 
         #region Private Methods
-        #region Commands Mehods
-        private void SaveCommandExcute()
+        private void UpdateSettingDialogPriorityValues()
         {
-            SettingDocumentType.Save(this.document);
-        }
+            string fieldName = this.settingViewModel.PropertyMappingCollection["Priority"];
+            if (string.IsNullOrWhiteSpace(fieldName)) { return; }
 
-        private bool CanSaveCommandExcute()
-        {
-            return this.testConnectionCommand.CanExecute()
-                && !string.IsNullOrWhiteSpace(this.document.BugFilterField)
-                && !string.IsNullOrWhiteSpace(this.document.BugFilterValue)
-                && this.document.PropertyMappingCollection
-                        .Where(x => !IgnoreField.Contains(x.Key))
-                        .Any(x =>
-                        {
-                            return !string.IsNullOrWhiteSpace(x.Value);
-                        });
-        }
-
-        private void OpenUriHelpCommandExcute()
-        {
-            IUriHelpView view = this.container.GetExportedValue<IUriHelpView>();
-            UriHelpViewModel viewModel = new UriHelpViewModel(view);
-            if (this.document.ConnectUri != null)
-                viewModel.ServerName = this.document.ConnectUri.AbsoluteUri;
-
-            var result = viewModel.ShowDialog(this);
-
-            if (result.HasValue && result.Value)
+            foreach (var checkString in this.settingViewModel.PriorityValues)
             {
-                this.document.ConnectUri = viewModel.UriPreview == Resources.InvalidUrl
-                                               ? null
-                                               : new Uri(viewModel.UriPreview);
+                RemoveWeakEventListener(checkString, PriorityValuePropertyChanged);
             }
-        }
-
-        private bool CanTestConnectionCommandExcute()
-        {
-            return !this.isTestConnectOnProgress && this.document != null && this.document.ConnectUri != null && this.document.ConnectUri.IsAbsoluteUri
-                && !string.IsNullOrWhiteSpace(this.document.UserName);
-        }
-
-        private void TestConnectionCommandExcute()
-        {
-            this.isTestConnectOnProgress = true;
-            ClearTFSData();
-            UpdateCommands();
-
-            //  Connect
-            this.settingViewModel.ProgressType = ProgressTypes.OnConnectProgress;
-            this.settingViewModel.ProgressValue = 0;
-            Task.Factory.StartNew(() =>
-            {
-                return this.tfsHelper.TestConnection(this.document.ConnectUri, this.document.UserName, this.document.Password);
-            })
-            .ContinueWith(task =>
-            {
-                if (!task.Result)
-                {
-                    this.settingViewModel.ProgressType = ProgressTypes.FailedOnConnect;
-                    this.settingViewModel.ProgressValue = 100;
-                    throw new OperationCanceledException();
-                }
-            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
-            .ContinueWith(task =>
-            {
-                //  Query TFS Fields
-                this.settingViewModel.ProgressType = ProgressTypes.OnGetFiledsProgress;
-                this.settingViewModel.ProgressValue = 50;
-            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
-            .ContinueWith(task =>
-            {
-                return this.tfsHelper.GetFields(); ;
-            })
-            .ContinueWith(task =>
-            {
-                if (task.Result == null)
-                {
-                    this.settingViewModel.ProgressType = ProgressTypes.FailedOnGetFileds;
-                    this.settingViewModel.ProgressValue = 100;
-                    throw new OperationCanceledException();
-                }
-                this.settingViewModel.ProgressValue = 80;
-                this.settingViewModel.TFSFields.Clear();
-                this.settingViewModel.BugFilterFields.Clear();
-                foreach (var field in task.Result)
-                {
-                    this.settingViewModel.TFSFields.Add(field);
-                    if (field.AllowedValues.Any())
-                    {
-                        this.settingViewModel.BugFilterFields.Add(field);
-                    }
-                }
-
-                this.settingViewModel.CanConnect = true;
-                this.settingViewModel.ProgressValue = 90;
-                this.settingViewModel.ProgressType = ProgressTypes.OnAutoFillMapSettings;
-                try
-                {
-                    AutoFillMapSettings(task.Result);
-                }
-                catch
-                {
-                    this.settingViewModel.ProgressType = ProgressTypes.SuccessWithError;
-                    this.settingViewModel.ProgressValue = 100;
-                    return;
-                }
-
-                this.settingViewModel.ProgressValue = 100;
-                this.settingViewModel.ProgressType = ProgressTypes.Success;
-            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
-
-            this.isTestConnectOnProgress = false;
-            UpdateCommands();
-        }
-        #endregion
-
-
-        private void GetDataFromTFS()
-        {
-            //  Connect
-            bool canConnect = this.tfsHelper.TestConnection(this.document.ConnectUri, this.document.UserName, this.document.Password);
-            if (!canConnect)
-            {
-                return;
-            }
-
-            //  Query TFS Fields
-            var tfsFields = this.tfsHelper.GetFields();
-            if (tfsFields == null)
-            {
-                return;
-            }
-
-            this.settingViewModel.TFSFields.Clear();
-            this.settingViewModel.BugFilterFields.Clear();
-            foreach (var field in tfsFields)
-            {
-                this.settingViewModel.TFSFields.Add(field);
-                if (field.AllowedValues.Any())
-                {
-                    this.settingViewModel.BugFilterFields.Add(field);
-                }
-            }
-            this.settingViewModel.CanConnect = true;
-        }
-
-        private void ClearTFSData()
-        {
-            TempTFSData.CanConnect = this.settingViewModel.CanConnect;
-            this.settingViewModel.CanConnect = false;
-            this.settingViewModel.ProgressType = ProgressTypes.NotWorking;
-            this.settingViewModel.ProgressValue = 0;
-
-            TempTFSData.TFSFields = this.settingViewModel.TFSFields.ToList();
-            this.settingViewModel.TFSFields.Clear();
-            TempTFSData.BugFilterFields = this.settingViewModel.BugFilterFields.ToList();
-            this.settingViewModel.BugFilterFields.Clear();
-            TempTFSData.PriorityValues = this.settingViewModel.PriorityValues.ToList();
             this.settingViewModel.PriorityValues.Clear();
 
-            this.document.PriorityRed = string.Empty;
-            this.document.BugFilterField = string.Empty;
-            this.document.BugFilterValue = string.Empty;
-            foreach (var pair in this.document.PropertyMappingCollection)
-            {
-                pair.Value = string.Empty;
-            }
-
-            TempTFSData.StateValues = this.StateValues.ToList();
-            this.StateValues.Clear();
-            this.CanQuery = saveCommand.CanExecute();
-
-            TempTFSData.CanRestore = true;
-        }
-
-        private void RestoreTFSData()
-        {
-            if (!TempTFSData.CanRestore)
-            {
-                return;
-            }
-
-            this.settingViewModel.CanConnect = TempTFSData.CanConnect;
-
-            foreach (var item in TempTFSData.TFSFields)
-            {
-                this.settingViewModel.TFSFields.Add(item);
-            }
-            foreach (var item in TempTFSData.BugFilterFields)
-            {
-                this.settingViewModel.BugFilterFields.Add(item);
-            }
-            foreach (var item in TempTFSData.PriorityValues)
-            {
-                this.settingViewModel.PriorityValues.Add(item);
-            }
-
-            SettingDocument newDocument = null;
-            if (File.Exists(SettingDocumentType.FilePath))
-            {
-                try
-                {
-                    newDocument = SettingDocumentType.Open();
-
-                    this.document.ConnectUri = newDocument.ConnectUri;
-                    this.document.UserName = newDocument.UserName;
-                    this.document.Password = newDocument.Password;
-
-                    this.document.PriorityRed = newDocument.PriorityRed;
-                    this.document.BugFilterField = newDocument.BugFilterField;
-                    this.document.BugFilterValue = newDocument.BugFilterValue;
-                    foreach (var pair in this.document.PropertyMappingCollection)
-                    {
-                        pair.Value = newDocument.PropertyMappingCollection[pair.Key];
-                    }
-                }
-                catch
-                {
-                }
-            }
-
-            foreach (var item in TempTFSData.StateValues)
-            {
-                this.StateValues.Add(item);
-            }
-
-            this.CanQuery = saveCommand.CanExecute();
-
-            TempTFSData.Clear();
-            TempTFSData.CanRestore = false;
-        }
-
-        private void DocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "PropertyMappingList")
-            {
-                UpdatePriorityValues();
-                UpdateStatusValues();
-            }
-            else if (e.PropertyName == "ConnectUri" || e.PropertyName == "UserName" || e.PropertyName == "Password")
-            {
-                ClearTFSData();
-            }
-
-            UpdateCommands();
-            this.CanQuery = this.saveCommand.CanExecute();
-        }
-
-        private void PriorityValuePropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            this.document.PriorityRed = string.Join("; ",
-                this.settingViewModel.PriorityValues.Where(x => x.IsChecked).Select(x => x.Name));
-        }
-
-        private void UpdateCommands()
-        {
-            this.saveCommand.RaiseCanExecuteChanged();
-            this.testConnectionCommand.RaiseCanExecuteChanged();
-        }
-
-        private void UpdatePriorityValues()
-        {
-            string fieldName = this.document.PropertyMappingCollection["Priority"];
-
-            if (!this.settingViewModel.CanConnect ||
-                (string.IsNullOrWhiteSpace(fieldName) &&
-                priorityFieldCache != null &&
-                priorityFieldCache == fieldName))
-                return;
-
-            priorityFieldCache = fieldName;
-            this.settingViewModel.PriorityValues.Clear();
-
-            TFSField priorityField = this.settingViewModel.TFSFields.First(x => x.Name == priorityFieldCache);
+            TFSField priorityField = this.settingViewModel.TFSFields.First(x => x.Name == fieldName);
             foreach (var value in priorityField.AllowedValues)
             {
                 CheckString checkValue = new CheckString(value);
-                checkValue.IsChecked = !string.IsNullOrWhiteSpace(this.document.PriorityRed) &&
-                                       this.document.PriorityRed.Contains(value);
+                checkValue.IsChecked = !string.IsNullOrWhiteSpace(this.settingViewModel.PriorityRed)
+                                       && this.settingViewModel.PriorityRed.Contains(value);
 
                 AddWeakEventListener(checkValue, PriorityValuePropertyChanged);
 
                 this.settingViewModel.PriorityValues.Add(checkValue);
             }
 
-            this.document.PriorityRed = string.Join("; ",
-                this.settingViewModel.PriorityValues.Where(x => x.IsChecked).Select(x => x.Name));
+            this.settingViewModel.PriorityRed = string.Join("; ",
+                                                            this.settingViewModel.PriorityValues
+                                                                                 .Where(x => x.IsChecked)
+                                                                                 .Select(x => x.Name));
         }
 
-        private void UpdateStatusValues()
-        {
-            string fieldName = this.document.PropertyMappingCollection["State"];
+        //private void UpdateStatusValues()
+        //{
+        //    string fieldName = this.document.PropertyMappingCollection["State"];
 
-            if (!this.settingViewModel.CanConnect ||
-                (string.IsNullOrWhiteSpace(fieldName) &&
-                stateFieldCache != null &&
-                stateFieldCache == fieldName))
-                return;
+        //    if (!this.settingViewModel.CanConnect ||
+        //        (string.IsNullOrWhiteSpace(fieldName) &&
+        //        stateFieldCache != null &&
+        //        stateFieldCache == fieldName))
+        //        return;
 
-            stateFieldCache = fieldName;
-            this.StateValues.Clear();
+        //    stateFieldCache = fieldName;
+        //    this.StateValues.Clear();
 
-            TFSField stateField = this.settingViewModel.TFSFields.First(x => x.Name == stateFieldCache);
-            foreach (var value in stateField.AllowedValues)
-            {
-                this.StateValues.Add(value);
-            }
-        }
+        //    TFSField stateField = this.settingViewModel.TFSFields.First(x => x.Name == stateFieldCache);
+        //    foreach (var value in stateField.AllowedValues)
+        //    {
+        //        this.StateValues.Add(value);
+        //    }
+        //}
 
         private void AutoFillMapSettings(List<TFSField> tfsFields)
         {
@@ -512,6 +447,104 @@ namespace Bugger.Proxy.TFS
                     this.document.BugFilterValue = "value";
                 }
             }
+        }
+
+        private void SettingViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "PropertyMappingList")
+            {
+                UpdateSettingDialogPriorityValues();
+            }
+            else if (e.PropertyName == "ConnectUri" || e.PropertyName == "UserName" || e.PropertyName == "Password")
+            {
+                this.settingViewModel.ClearData();
+            }
+
+            UpdateCommands();
+        }
+
+        private void PriorityValuePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.settingViewModel.PriorityRed = string.Join("; ",
+                                                            this.settingViewModel.PriorityValues
+                                                                                 .Where(x => x.IsChecked)
+                                                                                 .Select(x => x.Name));
+        }
+        #endregion
+
+        #region Commands Methods
+        private bool CanTestConnectionCommandExcute()
+        {
+            return this.settingViewModel.ProgressType != ProgressTypes.OnAutoFillMapSettings
+                && this.settingViewModel.ProgressType != ProgressTypes.OnConnectProgress
+                && this.settingViewModel.ProgressType != ProgressTypes.OnGetFiledsProgress
+                && this.settingViewModel.ConnectUri != null
+                && this.settingViewModel.ConnectUri.IsAbsoluteUri
+                && !string.IsNullOrWhiteSpace(this.settingViewModel.UserName);
+        }
+
+        private void TestConnectionCommandExcute()
+        {
+            this.settingViewModel.ClearData();
+
+            this.settingViewModel.ProgressType = ProgressTypes.OnConnectProgress;
+            this.settingViewModel.ProgressValue = 0;
+            Task.Factory.StartNew(() =>
+            {
+                //  Connect
+                TfsTeamProjectCollection tpc = null;
+                if (!tfsHelper.TryConnection(this.document.ConnectUri, this.document.UserName,
+                                             this.document.Password, out tpc))
+                {
+                    this.settingViewModel.ProgressType = ProgressTypes.FailedOnConnect;
+                    this.settingViewModel.ProgressValue = 100;
+                    return;
+                }
+
+
+                //  Query TFS Fields
+                this.settingViewModel.ProgressType = ProgressTypes.OnGetFiledsProgress;
+                this.settingViewModel.ProgressValue = 50;
+
+                var fields = tfsHelper.GetFields(tpc);
+                if (fields == null || !fields.Any())
+                {
+                    this.settingViewModel.ProgressType = ProgressTypes.FailedOnGetFileds;
+                    this.settingViewModel.ProgressValue = 100;
+                }
+
+                this.settingViewModel.ProgressValue = 80;
+                foreach (var field in fields)
+                {
+                    this.settingViewModel.TFSFields.Add(field);
+                    if (field.AllowedValues.Any())
+                    {
+                        this.settingViewModel.BugFilterFields.Add(field);
+                    }
+                }
+
+                //  Auto Fill Map Settings
+                this.settingViewModel.ProgressValue = 90;
+                this.settingViewModel.ProgressType = ProgressTypes.OnAutoFillMapSettings;
+                try
+                {
+                    AutoFillMapSettings(fields);
+                }
+                catch
+                {
+                    this.settingViewModel.ProgressType = ProgressTypes.SuccessWithError;
+                    this.settingViewModel.ProgressValue = 100;
+                    return;
+                }
+
+                this.settingViewModel.ProgressValue = 100;
+                this.settingViewModel.ProgressType = ProgressTypes.Success;
+            }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void UpdateCommands()
+        {
+            this.testConnectionCommand.RaiseCanExecuteChanged();
         }
         #endregion
         #endregion

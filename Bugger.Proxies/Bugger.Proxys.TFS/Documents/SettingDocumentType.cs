@@ -1,10 +1,8 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -34,7 +32,7 @@ namespace Bugger.Proxy.TFS.Documents
         #region Public Methods
         public static SettingDocument New()
         {
-            return new SettingDocument();;
+            return new SettingDocument();
         }
 
         public static SettingDocument Open()
@@ -46,7 +44,7 @@ namespace Bugger.Proxy.TFS.Documents
             {
                 root = XDocument.Load(fs).Root;
                 fs.Flush();
-                fs.Close();                
+                fs.Close();
             }
             byte[] entropy = Convert.FromBase64String(root.Attribute("entropy").Value);
 
@@ -63,14 +61,11 @@ namespace Bugger.Proxy.TFS.Documents
                 document.PropertyMappingCollection[element.Name.ToString()] = element.Value;
             }
 
-            document.HasChanged = false;
             return document;
         }
 
         public static void Save(SettingDocument document)
         {
-            if (!document.HasChanged) return;
-
             // Generate additional entropy (will be used as the Initialization vector)
             byte[] entropy = new byte[20];
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())

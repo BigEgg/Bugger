@@ -1,41 +1,55 @@
-﻿using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Proxy.TFS.Documents;
+﻿using BigEgg.Framework.Applications.Commands;
+using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Proxy.TFS.Models;
+using Bugger.Proxy.TFS.Properties;
 using Bugger.Proxy.TFS.Views;
+using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
+using System.Collections.Specialized;
 using System.Windows.Input;
 
 namespace Bugger.Proxy.TFS.ViewModels
 {
-    [Export]
     public class TFSSettingViewModel : ViewModel<ITFSSettingView>
     {
         #region Fields
         private readonly ObservableCollection<TFSField> tfsFields;
         private readonly ObservableCollection<TFSField> bugFilterFields;
         private readonly ObservableCollection<CheckString> priorityValues;
+        private readonly PropertyMappingDictionary propertyMappingCollection;
+        private Uri connectUri;
+        private string userName;
+        private string password;
+        private string bugFilterField;
+        private string bugFilterValue;
+        private string priorityRed;
 
-        private SettingDocument settings;
-        private ICommand saveCommand;
+        private readonly DelegateCommand uriHelpCommand;
         private ICommand testConnectionCommand;
-        private ICommand uriHelpCommand;
-        private bool canConnect;
+
+        private readonly IUriHelpView uriHelpView;
+
         private ProgressTypes progressType;
         private int progressValue;
         #endregion
 
-        [ImportingConstructor]
-        public TFSSettingViewModel(ITFSSettingView view)
+        public TFSSettingViewModel(ITFSSettingView view, IUriHelpView uriHelpView)
             : base(view)
         {
-            this.canConnect = false;
+            if (uriHelpView == null) { throw new ArgumentNullException("uriHelpView"); }
+
+            this.uriHelpView = uriHelpView;
+
+            this.uriHelpCommand = new DelegateCommand(OpenUriHelpCommandExcute);
+
+            this.propertyMappingCollection = new PropertyMappingDictionary();
             this.tfsFields = new ObservableCollection<TFSField>();
             this.bugFilterFields = new ObservableCollection<TFSField>();
             this.priorityValues = new ObservableCollection<CheckString>();
 
-            this.ProgressType = ProgressTypes.NotWorking;
-            this.progressValue = 0;
+            ClearData();
+
+            AddWeakEventListener(this.propertyMappingCollection, PropertyMappingCollectionCollectionChanged);
         }
 
         #region Properties
@@ -45,60 +59,97 @@ namespace Bugger.Proxy.TFS.ViewModels
 
         public ObservableCollection<CheckString> PriorityValues { get { return this.priorityValues; } }
 
-        public SettingDocument Settings
-        {
-            get { return this.settings; }
-            internal set { this.settings = value; }
-        }
+        public PropertyMappingDictionary PropertyMappingCollection { get { return this.propertyMappingCollection; } }
 
-        public ICommand UriHelpCommand
+        public Uri ConnectUri
         {
-            get { return this.uriHelpCommand; }
+            get { return this.connectUri; }
             set
             {
-                if (this.uriHelpCommand != value)
+                if (this.connectUri != value)
                 {
-                    this.uriHelpCommand = value;
-                    RaisePropertyChanged("UriHelpCommand");
+                    this.connectUri = value;
+                    RaisePropertyChanged("ConnectUri");
                 }
             }
         }
 
-        public ICommand SaveCommand
+        public string UserName
         {
-            get { return this.saveCommand; }
+            get { return this.userName; }
             set
             {
-                if (this.saveCommand != value)
+                if (this.userName != value)
                 {
-                    this.saveCommand = value;
-                    RaisePropertyChanged("SaveCommand");
+                    this.userName = value;
+                    RaisePropertyChanged("UserName");
                 }
             }
         }
+
+        public string Password
+        {
+            get { return this.password; }
+            set
+            {
+                if (this.password != value)
+                {
+                    this.password = value;
+                    RaisePropertyChanged("Password");
+                }
+            }
+        }
+
+        public string BugFilterField
+        {
+            get { return this.bugFilterField; }
+            set
+            {
+                if (this.bugFilterField != value)
+                {
+                    this.bugFilterField = value;
+                    RaisePropertyChanged("BugFilterField");
+                }
+            }
+        }
+
+        public string BugFilterValue
+        {
+            get { return this.bugFilterValue; }
+            set
+            {
+                if (this.bugFilterValue != value)
+                {
+                    this.bugFilterValue = value;
+                    RaisePropertyChanged("BugFilterValue");
+                }
+            }
+        }
+
+        public string PriorityRed
+        {
+            get { return this.priorityRed; }
+            set
+            {
+                if (this.priorityRed != value)
+                {
+                    this.priorityRed = value;
+                    RaisePropertyChanged("PriorityRed");
+                }
+            }
+        }
+
+        public ICommand UriHelpCommand { get { return this.uriHelpCommand; } }
 
         public ICommand TestConnectionCommand
         {
             get { return this.testConnectionCommand; }
-            set
+            internal set
             {
                 if (this.testConnectionCommand != value)
                 {
                     this.testConnectionCommand = value;
                     RaisePropertyChanged("TestConnectionCommand");
-                }
-            }
-        }
-
-        public bool CanConnect
-        {
-            get { return this.canConnect; }
-            internal set
-            {
-                if (this.canConnect != value)
-                {
-                    this.canConnect = value;
-                    RaisePropertyChanged("CanConnect");
                 }
             }
         }
@@ -128,6 +179,50 @@ namespace Bugger.Proxy.TFS.ViewModels
                 }
             }
         }
+        #endregion
+
+        #region Methods
+        #region Public Methods
+        public void ClearData()
+        {
+            TFSFields.Clear();
+            BugFilterFields.Clear();
+            PriorityValues.Clear();
+            PropertyMappingCollection.Clear();
+
+            BugFilterField = string.Empty;
+            BugFilterValue = string.Empty;
+            PriorityRed = string.Empty;
+
+            ProgressType = ProgressTypes.NotWorking;
+            ProgressValue = 0;
+        }
+        #endregion
+
+        #region Private Methods
+        private void OpenUriHelpCommandExcute()
+        {
+            UriHelpViewModel viewModel = new UriHelpViewModel(this.uriHelpView);
+            if (this.ConnectUri != null)
+            {
+                viewModel.ServerName = this.ConnectUri.AbsoluteUri;
+            }
+
+            var result = viewModel.ShowDialog(this);
+
+            if (result.HasValue && result.Value)
+            {
+                this.ConnectUri = viewModel.UriPreview == Resources.InvalidUrl
+                                      ? null
+                                      : new Uri(viewModel.UriPreview);
+            }
+        }
+
+        private void PropertyMappingCollectionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            RaisePropertyChanged("PropertyMappingCollection");
+        }
+        #endregion
         #endregion
     }
 }

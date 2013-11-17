@@ -13,43 +13,55 @@ namespace Bugger.Proxy.TFS
     [Export]
     public class TFSHelper
     {
-        private TfsTeamProjectCollection tfsProjectCache;
-
-        public bool TestConnection(Uri connectUri, string userName, string password)
+        /// <summary>
+        /// Try to connect the TFS with the specific authentication information
+        /// </summary>
+        /// <param name="connectUri">The connect URI.</param>
+        /// <param name="userName">The user name.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="tpc">The TFS Team Project Collection.</param>
+        /// <returns>
+        ///   <c>True</c>, if the TFS can be connected with the specific authentication information;
+        ///   otherwise, <c>false</c>.</returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// connectUri
+        /// or
+        /// userName
+        /// </exception>
+        public bool TryConnection(Uri connectUri, string userName, string password, out TfsTeamProjectCollection tpc)
         {
             if (connectUri == null) { throw new ArgumentNullException("connectUri"); }
-            if (string.IsNullOrWhiteSpace(userName)) { throw new ArgumentException("userName"); }
+            if (string.IsNullOrWhiteSpace(userName)) { throw new ArgumentNullException("userName"); }
 
             try
             {
-                this.tfsProjectCache = null;
-                TfsTeamProjectCollection tpc = new TfsTeamProjectCollection(
+                TfsTeamProjectCollection tempTPC = new TfsTeamProjectCollection(
                     connectUri, new NetworkCredential(userName, password));
-                tpc.EnsureAuthenticated();
-                this.tfsProjectCache = tpc;
+                tempTPC.EnsureAuthenticated();
+
+                tpc = tempTPC;
                 return true;
             }
             catch
             {
+                tpc = null;
                 return false;
             }
         }
 
-        public bool IsConnected()
+        /// <summary>
+        /// Gets the fields' informations from the TFS.
+        /// </summary>
+        /// <param name="tpc">The TFS Team Project Collection.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">tpc</exception>
+        public List<TFSField> GetFields(TfsTeamProjectCollection tpc)
         {
-            return this.tfsProjectCache != null;
-        }
-
-        public List<TFSField> GetFields()
-        {
-            if (!IsConnected())
-            {
-                throw new InvalidOperationException("The method cannot be executed because the IsConnected returned false.");
-            }
+            if (tpc == null) { throw new ArgumentNullException("tpc"); }
 
             try
             {
-                WorkItemStore workItemStore = (WorkItemStore)this.tfsProjectCache.GetService(typeof(WorkItemStore));
+                WorkItemStore workItemStore = (WorkItemStore)tpc.GetService(typeof(WorkItemStore));
                 var collection = workItemStore.FieldDefinitions;
 
                 var fields = new List<TFSField>();
@@ -71,24 +83,45 @@ namespace Bugger.Proxy.TFS
             }
         }
 
+        /// <summary>
+        /// Gets the bugs from TFS.
+        /// </summary>
+        /// <param name="tpc">The TFS Team Project Collection.</param>
+        /// <param name="userName">The user name.</param>
+        /// <param name="isFilterCreatedBy">if set to <c>true</c> [is filter created by].</param>
+        /// <param name="propertyMappingList">The property mapping list.</param>
+        /// <param name="bugFilterField">The bug filter field.</param>
+        /// <param name="bugFilterValue">The bug filter value.</param>
+        /// <param name="redFilter">The red filter.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// userName
+        /// or
+        /// propertyMappingList
+        /// or
+        /// usebugFilterFieldrName
+        /// or
+        /// bugFilterValue
+        /// or
+        /// redFilter
+        /// or
+        /// tpc
+        /// </exception>
         public List<Bug> GetBugs(
+            TfsTeamProjectCollection tpc,
             string userName, bool isFilterCreatedBy, PropertyMappingDictionary propertyMappingList,
             string bugFilterField, string bugFilterValue, IEnumerable<string> redFilter)
         {
-            if (string.IsNullOrWhiteSpace(userName)) { throw new ArgumentException("userName"); }
+            if (tpc == null) { throw new ArgumentNullException("tpc"); }
+            if (string.IsNullOrWhiteSpace(userName)) { throw new ArgumentNullException("userName"); }
             if (propertyMappingList == null) { throw new ArgumentNullException("propertyMappingList"); }
-            if (string.IsNullOrWhiteSpace(bugFilterField)) { throw new ArgumentException("usebugFilterFieldrName"); }
-            if (string.IsNullOrWhiteSpace(bugFilterValue)) { throw new ArgumentException("bugFilterValue"); }
+            if (string.IsNullOrWhiteSpace(bugFilterField)) { throw new ArgumentNullException("usebugFilterFieldrName"); }
+            if (string.IsNullOrWhiteSpace(bugFilterValue)) { throw new ArgumentNullException("bugFilterValue"); }
             if (redFilter == null) { throw new ArgumentNullException("redFilter"); }
-
-            if (!IsConnected())
-            {
-                throw new InvalidOperationException("The method cannot be executed because the IsConnected returned false.");
-            }
 
             try
             {
-                WorkItemStore workItemStore = (WorkItemStore)this.tfsProjectCache.GetService(typeof(WorkItemStore));
+                WorkItemStore workItemStore = (WorkItemStore)tpc.GetService(typeof(WorkItemStore));
 
                 string fields = string.Join(", ", propertyMappingList.Where(x => !string.IsNullOrWhiteSpace(x.Value))
                                                                      .Select(x => "[" + x.Value + "]"));
@@ -105,8 +138,7 @@ namespace Bugger.Proxy.TFS
                 Query query = new Query(workItemStore, queryString);
                 var collection = query.RunQuery();
 
-                if (collection == null)
-                    return null;
+                if (collection == null) { return null; }
 
                 var bugs = new List<Bug>();
                 foreach (WorkItem item in collection)
@@ -123,7 +155,14 @@ namespace Bugger.Proxy.TFS
         }
 
 
-        private Bug Map(WorkItem workitem, PropertyMappingDictionary propertyMappingList, 
+        /// <summary>
+        /// Maps the specified workitem to the bug model.
+        /// </summary>
+        /// <param name="workitem">The workitem.</param>
+        /// <param name="propertyMappingList">The property mapping list.</param>
+        /// <param name="redFilter">The red bug filter.</param>
+        /// <returns></returns>
+        private Bug Map(WorkItem workitem, PropertyMappingDictionary propertyMappingList,
                         IEnumerable<string> redFilter)
         {
             Bug bug = new Bug();

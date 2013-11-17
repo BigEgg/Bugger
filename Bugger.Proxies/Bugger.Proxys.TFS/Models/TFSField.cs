@@ -1,10 +1,10 @@
-﻿using BigEgg.Framework.Applications.ViewModels;
+﻿using BigEgg.Framework.Foundation;
 using System;
 using System.Collections.ObjectModel;
 
 namespace Bugger.Proxy.TFS.Models
 {
-    public class TFSField : DataModel
+    public class TFSField : Model
     {
         #region Fields
         private readonly string name;

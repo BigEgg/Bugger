@@ -1,4 +1,5 @@
 ﻿using Bugger.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -18,14 +19,6 @@ namespace Bugger.Proxy
         /// The name of the proxy.
         /// </value>
         string ProxyName { get; }
-
-        /// <summary>
-        /// Gets the setting view.
-        /// </summary>
-        /// <value>
-        /// The setting view.
-        /// </value>
-        ISettingView SettingView { get; }
 
         /// <summary>
         /// Gets the status values.
@@ -67,9 +60,26 @@ namespace Bugger.Proxy
         /// </returns>
         ReadOnlyCollection<Bug> Query(List<string> teamMembers, bool isFilterCreatedBy = false);
 
-        void OnSumbitSettings();
 
-        void OnCancelSettings();
+        #region SettingDialog
+        /// <summary>
+        /// Initializes the values before open the setting dialog.
+        /// </summary>
+        /// <returns></returns>
+        ISettingView InitializeSettingDialog();
+
+        /// <summary>
+        /// Do something afters close setting dialog.
+        /// </summary>
+        /// <param name="submit">if set to <c>true</c> [submit].</param>
+        void AfterCloseSettingDialog(bool submit);
+
+        /// <summary>
+        /// Validate the setting values before close setting dialog.
+        /// </summary>
+        /// <returns>The validation result.</returns>
+        SettingDialogValidateionResult ValidateBeforeCloseSettingDialog();
+        #endregion
         #endregion
     }
 }

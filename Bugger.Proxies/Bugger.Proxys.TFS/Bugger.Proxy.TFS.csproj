@@ -61,7 +61,6 @@
     <Compile Include="Documents\SettingDocumentType.cs" />
     <Compile Include="Models\CheckString.cs" />
     <Compile Include="Models\ProgressTypes.cs" />
-    <Compile Include="Models\TempTFSData.cs" />
     <Compile Include="Models\TFSField.cs" />
     <Compile Include="PropertyMappingDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

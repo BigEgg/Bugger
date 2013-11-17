@@ -12,8 +12,6 @@ namespace Bugger.Proxy
     public abstract class TracingSystemProxy : DataModel, ITracingSystemProxy
     {
         #region Fields
-        private readonly ObservableCollection<string> statusValues;
-
         private string proxyName;
         private bool canQuery;
         #endregion
@@ -29,7 +27,6 @@ namespace Bugger.Proxy
 
             this.proxyName = proxyName;
             this.canQuery = false;
-            this.statusValues = new ObservableCollection<string>();
         }
 
         #region Properties
@@ -49,22 +46,6 @@ namespace Bugger.Proxy
         }
 
         /// <summary>
-        /// Gets the setting view.
-        /// </summary>
-        /// <value>
-        /// The setting view.
-        /// </value>
-        public virtual ISettingView SettingView { get { return null; } }
-
-        /// <summary>
-        /// Gets the status values.
-        /// </summary>
-        /// <value>
-        /// The status values.
-        /// </value>
-        public ObservableCollection<string> StateValues { get { return this.statusValues; } }
-
-        /// <summary>
         /// Determines whether this source control proxy can query the bugs.
         /// </summary>
         /// <returns>
@@ -82,6 +63,14 @@ namespace Bugger.Proxy
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the status values.
+        /// </summary>
+        /// <value>
+        /// The status values.
+        /// </value>
+        public abstract ObservableCollection<string> StateValues { get; }
 
         /// <summary>
         /// Get the flag of the Initialization of the Controller.
@@ -109,7 +98,6 @@ namespace Bugger.Proxy
                 IsInitialized = false;
                 throw;
             }
-
         }
 
         /// <summary>
@@ -150,11 +138,32 @@ namespace Bugger.Proxy
             return QueryCore(teamMembers, isFilterCreatedBy);
         }
 
-        public virtual void OnSumbitSettings()
+        /// <summary>
+        /// Initializes the values before open the setting dialog.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ISettingView InitializeSettingDialog()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Do something afters close setting dialog.
+        /// </summary>
+        /// <param name="submit">if set to <c>true</c> [submit].</param>
+        public virtual void AfterCloseSettingDialog(bool submit)
         { }
 
-        public virtual void OnCancelSettings()
-        { }
+        /// <summary>
+        /// Validate the setting values before close setting dialog.
+        /// </summary>
+        /// <returns>
+        /// The validation result.
+        /// </returns>
+        public virtual SettingDialogValidateionResult ValidateBeforeCloseSettingDialog()
+        {
+            return SettingDialogValidateionResult.Valid;
+        }
         #endregion
 
         #region Protected Methods

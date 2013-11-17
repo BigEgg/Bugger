@@ -14,16 +14,20 @@ Alpha 4 (v0.4.0)
 Alpha 3 (v0.3.0) <----- Currently Working
     Application:
         Show validation message in views.
-        Can change the Opacity of Floating window by setting
+        Can change the Opacity of Floating window by setting (✓)
         Show setting dialog when open the application if the settings is not being set.
+        Validate the proxy's setting when submit the setting dialog.
         Show progress and out come when query bugs.
+        Optimized the startup time. (✓)
     Proxies
         Support cancel event for proxy restore data when setting dialog cancelled. (✓)
+        Support validate event before the submit, to valid the settings. (✓)
         TFS Proxy
             Use multi-threading to avoid UI hang when test connection. (✓)
                 Show progress and out come when test connection. (✓)
             Automation fill the mapping settings. (✓)
             Implament cancel event for restoring data. (✓)
+            Implament the submit validation logic. (✓)
             Update connect status when change the connect information. (✓)
 
 Alpha 2 (v0.2.0) <----- Currently Release

@@ -1,10 +1,6 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Domain.Models;
-using Bugger.Proxy.TFS.Models;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 
 namespace Bugger.Proxy.TFS.Documents
@@ -32,109 +28,22 @@ namespace Bugger.Proxy.TFS.Documents
 
                 this.propertyMappingCollection.Add(propertyDescriptor.Name, string.Empty);
             }
-
-            AddWeakEventListener(this.propertyMappingCollection, PropertyMappingCollectionChanged);
-
-            this.HasChanged = false;
         }
 
         #region Properties
-        internal bool HasChanged { get; set; }
-
         public PropertyMappingDictionary PropertyMappingCollection { get { return this.propertyMappingCollection; } }
 
-        public Uri ConnectUri
-        {
-            get { return this.connectUri; }
-            set 
-            { 
-                this.connectUri = value;
-                this.HasChanged = true;
-                RaisePropertyChanged("ConnectUri");
-            }
-        }
+        public Uri ConnectUri { get; set; }
 
-        public string UserName
-        {
-            get { return this.userName; }
-            set
-            {
-                if (this.userName != value)
-                {
-                    this.userName = value;
-                    this.HasChanged = true;
-                    RaisePropertyChanged("UserName");
-                }
-            }
-        }
+        public string UserName { get; set; }
 
-        public string Password
-        {
-            get { return this.password; }
-            set
-            {
-                if (this.password != value)
-                {
-                    this.password = value;
-                    this.HasChanged = true;
-                    RaisePropertyChanged("Password");
-                }
-            }
-        }
+        public string Password { get; set; }
 
-        public string BugFilterField
-        {
-            get { return this.bugFilterField; }
-            set
-            {
-                if (this.bugFilterField != value)
-                {
-                    this.bugFilterField = value;
-                    this.HasChanged = true;
-                    RaisePropertyChanged("BugFilterField");
-                }
-            }
-        }
+        public string BugFilterField { get; set; }
 
-        public string BugFilterValue
-        {
-            get { return this.bugFilterValue; }
-            set
-            {
-                if (this.bugFilterValue != value)
-                {
-                    this.bugFilterValue = value;
-                    this.HasChanged = true;
-                    RaisePropertyChanged("BugFilterValue");
-                }
-            }
-        }
+        public string BugFilterValue { get; set; }
 
-        public string PriorityRed
-        {
-            get { return this.priorityRed; }
-            set
-            {
-                if (this.priorityRed != value)
-                {
-                    this.priorityRed = value;
-                    this.HasChanged = true;
-                    RaisePropertyChanged("PriorityRed");
-                }
-            }
-        }
-        #endregion
-
-        #region Methods
-        #region Private Methods
-
-        private void PropertyMappingCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            this.HasChanged = true;
-            RaisePropertyChanged("PropertyMappingCollection");
-        }
-
-        #endregion
+        public string PriorityRed { get; set; }
         #endregion
     }
 }
