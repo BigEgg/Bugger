@@ -1,11 +1,13 @@
 ﻿using BigEgg.Framework.Applications.Commands;
 using BigEgg.Framework.Applications.ViewModels;
+using Bugger.Domain.Models;
 using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Properties;
 using Bugger.Proxy.TFS.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace Bugger.Proxy.TFS.ViewModels
@@ -47,9 +49,18 @@ namespace Bugger.Proxy.TFS.ViewModels
             this.bugFilterFields = new ObservableCollection<TFSField>();
             this.priorityValues = new ObservableCollection<CheckString>();
 
-            ClearData();
+            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(Bug));
+            foreach (PropertyDescriptor propertyDescriptor in propertyDescriptorCollection)
+            {
+                if (propertyDescriptor.Name == "Type") continue;
 
-            AddWeakEventListener(this.propertyMappingCollection, PropertyMappingCollectionCollectionChanged);
+                var mapping = new MappingModel(propertyDescriptor.Name);
+                this.propertyMappingCollection.Add(mapping);
+
+                AddWeakEventListener(mapping, PropertyMappingModelPropertyChanged);
+            }
+
+            ClearData();
         }
 
         #region Properties
@@ -188,7 +199,11 @@ namespace Bugger.Proxy.TFS.ViewModels
             TFSFields.Clear();
             BugFilterFields.Clear();
             PriorityValues.Clear();
-            PropertyMappingCollection.Clear();
+
+            foreach (var mapping in PropertyMappingCollection)
+            {
+                mapping.Value = string.Empty;
+            }
 
             BugFilterField = string.Empty;
             BugFilterValue = string.Empty;
@@ -218,7 +233,7 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
-        private void PropertyMappingCollectionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void PropertyMappingModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             RaisePropertyChanged("PropertyMappingCollection");
         }

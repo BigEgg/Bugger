@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
-using System.Linq;
 
 namespace Bugger.Proxy.TFS.Test.Documents
 {
@@ -17,6 +16,16 @@ namespace Bugger.Proxy.TFS.Test.Documents
                 File.Delete(SettingDocumentType.FilePath);
             }
         }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            if (File.Exists(SettingDocumentType.FilePath))
+            {
+                File.Delete(SettingDocumentType.FilePath);
+            }
+        }
+
 
         [TestMethod]
         public void GeneralSettingDocumentTypeTest()

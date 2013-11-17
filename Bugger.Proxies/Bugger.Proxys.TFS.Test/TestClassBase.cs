@@ -21,11 +21,10 @@ namespace Bugger.Proxy.TFS.Test
         {
             if (File.Exists(SettingDocumentType.FilePath))
                 File.Delete(SettingDocumentType.FilePath);
-            
+
             AggregateCatalog catalog = new AggregateCatalog();
             catalog.Catalogs.Add(new TypeCatalog(
-                typeof(TFSProxy),
-                typeof(TFSSettingViewModel)
+                typeof(TFSProxy), typeof(TFSHelper)
             ));
             catalog.Catalogs.Add(new TypeCatalog(
                 typeof(MockMessageService),

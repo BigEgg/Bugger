@@ -94,7 +94,7 @@ namespace Bugger.Proxy.TFS
 
             foreach (var mapping in this.document.PropertyMappingCollection)
             {
-                this.settingViewModel.PropertyMappingCollection.Add(mapping);
+                this.settingViewModel.PropertyMappingCollection[mapping.Key] = mapping.Value;
             }
 
             foreach (var field in this.tfsFieldsCache)
@@ -374,26 +374,6 @@ namespace Bugger.Proxy.TFS
                                                                                  .Where(x => x.IsChecked)
                                                                                  .Select(x => x.Name));
         }
-
-        //private void UpdateStatusValues()
-        //{
-        //    string fieldName = this.document.PropertyMappingCollection["State"];
-
-        //    if (!this.settingViewModel.CanConnect ||
-        //        (string.IsNullOrWhiteSpace(fieldName) &&
-        //        stateFieldCache != null &&
-        //        stateFieldCache == fieldName))
-        //        return;
-
-        //    stateFieldCache = fieldName;
-        //    this.StateValues.Clear();
-
-        //    TFSField stateField = this.settingViewModel.TFSFields.First(x => x.Name == stateFieldCache);
-        //    foreach (var value in stateField.AllowedValues)
-        //    {
-        //        this.StateValues.Add(value);
-        //    }
-        //}
 
         private void AutoFillMapSettings(List<TFSField> tfsFields)
         {
