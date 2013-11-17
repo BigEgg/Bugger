@@ -16,7 +16,10 @@ namespace Bugger.Proxy.TFS
 
         public MappingModel(string key)
         {
+            if (string.IsNullOrWhiteSpace(key)) { throw new ArgumentNullException("key"); }
+
             this.key = key;
+            this.value = string.Empty;
         }
 
         #region Properties
@@ -30,8 +33,11 @@ namespace Bugger.Proxy.TFS
             get { return this.value; }
             set
             {
-                this.value = value;
-                RaisePropertyChanged("Value");
+                if (value != null && this.value != value)
+                {
+                    this.value = value;
+                    RaisePropertyChanged("Value");
+                }
             }
         }
         #endregion
