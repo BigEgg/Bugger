@@ -15,6 +15,7 @@ namespace Bugger.Proxy.FakeProxy
     public class FakeProxy : TracingSystemProxy
     {
         #region Fields
+        private readonly ObservableCollection<string> status;
         private List<Bug> bugs;
         #endregion
 
@@ -25,18 +26,22 @@ namespace Bugger.Proxy.FakeProxy
         public FakeProxy()
             : base("Fake")
         {
+            this.status = new ObservableCollection<string>();
+
             this.bugs = new List<Bug>();
             this.CanQuery = true;
         }
+
+
+        #region Properties
+        public override ObservableCollection<string> StateValues { get { return this.status; } }
+        #endregion
+
 
         #region Methods
         #region Protected Methods
         protected override void OnInitialize()
         {
-            this.StateValues.Add("Implement");
-            this.StateValues.Add("Closed");
-            this.StateValues.Add("Design");
-
             this.bugs.Add(new Bug()
             {
                 ID = 1,
@@ -241,6 +246,11 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "High",
                 Severity = "High"
             });
+
+            this.status.Add("Design");
+            this.status.Add("Implement");
+            this.status.Add("Resolve");
+            this.status.Add("Closed");
         }
 
         protected override ReadOnlyCollection<Bug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
@@ -251,7 +261,7 @@ namespace Bugger.Proxy.FakeProxy
             {
                 if (isFilterCreatedBy)
                     queriedResult.AddRange(this.bugs
-                        .Where(x => x.AssignedTo.ToLower() == userName.ToLower() 
+                        .Where(x => x.AssignedTo.ToLower() == userName.ToLower()
                             || x.CreatedBy.ToLower() == userName.ToLower()));
                 else
                     queriedResult.AddRange(this.bugs.Where(x => x.AssignedTo.ToLower() == userName.ToLower()));
