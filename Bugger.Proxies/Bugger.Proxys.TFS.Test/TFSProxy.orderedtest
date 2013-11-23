@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="TFSProxy" storage="d:\codeplex\bugger\bugger.proxies\bugger.proxys.tfs.test\tfsproxy.orderedtest" id="1ad98a6d-0be0-4e43-ae92-c0059ba464a1" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="98ce863d-b9bc-57f7-8412-9c44199ecb81" name="GeneralTFSProxyTest" storage="bin\debug\bugger.proxy.tfs.test.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="cc579aaa-2376-ba7e-35db-8c681b1ab031" name="InitializeSettingDialogTest" storage="bin\debug\bugger.proxy.tfs.test.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

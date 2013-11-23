@@ -349,7 +349,11 @@ namespace Bugger.Proxy.TFS
         private void UpdateSettingDialogPriorityValues()
         {
             string fieldName = this.settingViewModel.PropertyMappingCollection["Priority"];
-            if (string.IsNullOrWhiteSpace(fieldName)) { return; }
+            if (string.IsNullOrWhiteSpace(fieldName))
+            {
+                this.settingViewModel.PriorityRed = string.Empty;
+                return;
+            }
 
             foreach (var checkString in this.settingViewModel.PriorityValues)
             {
