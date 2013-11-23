@@ -21,19 +21,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Applications.Test", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Presentation", "Bugger.Presentation\Bugger.Presentation.csproj", "{3B42FF95-85A5-47FF-87C6-748A493CD9B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy", "Bugger.Proxies\Bugger.Proxys\Bugger.Proxy.csproj", "{E8727087-75F2-435F-BD11-78B4DFF59A40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy", "Bugger.Proxies\Bugger.Proxy\Bugger.Proxy.csproj", "{E8727087-75F2-435F-BD11-78B4DFF59A40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.FakeProxy", "Bugger.Proxies\Bugger.Proxys.FakeProxy\Bugger.Proxy.FakeProxy.csproj", "{9D384026-D73B-4BA9-9AE3-7D2172C438CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.FakeProxy", "Bugger.Proxies\Bugger.Proxy.FakeProxy\Bugger.Proxy.FakeProxy.csproj", "{9D384026-D73B-4BA9-9AE3-7D2172C438CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.Test", "Bugger.Proxies\Bugger.Proxys.Test\Bugger.Proxy.Test.csproj", "{71760CC4-83EF-4043-9DC5-8E8A40A9C765}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.Test", "Bugger.Proxies\Bugger.Proxy.Test\Bugger.Proxy.Test.csproj", "{71760CC4-83EF-4043-9DC5-8E8A40A9C765}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.TFS", "Bugger.Proxies\Bugger.Proxys.TFS\Bugger.Proxy.TFS.csproj", "{5714B0C6-82F3-4CC6-B33E-E3F8835C38FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.TFS", "Bugger.Proxies\Bugger.Proxy.TFS\Bugger.Proxy.TFS.csproj", "{5714B0C6-82F3-4CC6-B33E-E3F8835C38FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.TFS.Presentation", "Bugger.Proxies\Bugger.Proxys.TFS.Presentation\Bugger.Proxy.TFS.Presentation.csproj", "{0C5CD96E-9B43-4065-8A02-83B96989E242}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.TFS.Presentation", "Bugger.Proxies\Bugger.Proxy.TFS.Presentation\Bugger.Proxy.TFS.Presentation.csproj", "{0C5CD96E-9B43-4065-8A02-83B96989E242}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.TFS.Presentation.Fake", "Bugger.Proxies\Bugger.Proxys.TFS.Presentation.Fake\Bugger.Proxy.TFS.Presentation.Fake.csproj", "{02AB8E76-2073-4F30-B891-1A1B60AE5101}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.TFS.Presentation.Fake", "Bugger.Proxies\Bugger.Proxy.TFS.Presentation.Fake\Bugger.Proxy.TFS.Presentation.Fake.csproj", "{02AB8E76-2073-4F30-B891-1A1B60AE5101}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.TFS.Test", "Bugger.Proxies\Bugger.Proxys.TFS.Test\Bugger.Proxy.TFS.Test.csproj", "{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.TFS.Test", "Bugger.Proxies\Bugger.Proxy.TFS.Test\Bugger.Proxy.TFS.Test.csproj", "{ACA76AA8-1231-480D-A2B0-EA5A63C477EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Presentation.Test", "Bugger.Presentation.Test\Bugger.Presentation.Test.csproj", "{16E901F8-B205-48F3-B1CD-E631E7F30FFD}"
 EndProject
