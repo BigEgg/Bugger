@@ -11,10 +11,13 @@ namespace Bugger.Proxy.TFS.Test
     public class TFSHelperTest : TestClassBase
     {
         private TFSHelper tfsHelper;
+        TfsTeamProjectCollection tpc;
 
-        protected override void OnTestInitialize()
+
+        public TFSHelperTest()
         {
             this.tfsHelper = new TFSHelper();
+            this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", ThePassword, out tpc);
         }
 
         [TestMethod]
@@ -57,11 +60,6 @@ namespace Bugger.Proxy.TFS.Test
         [TestMethod]
         public void GetFieldsTest()
         {
-            TfsTeamProjectCollection tpc = null;
-            var result = this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", ThePassword, out tpc);
-            Assert.IsTrue(result);
-            Assert.IsNotNull(tpc);
-
             var fields = this.tfsHelper.GetFields(tpc);
             Assert.IsNotNull(fields);
             Assert.IsTrue(fields.Any());
@@ -70,11 +68,6 @@ namespace Bugger.Proxy.TFS.Test
         [TestMethod]
         public void GetBugsExceptionTest()
         {
-            TfsTeamProjectCollection tpc = null;
-            var result = this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", ThePassword, out tpc);
-            Assert.IsTrue(result);
-            Assert.IsNotNull(tpc);
-
             AssertHelper.ExpectedException<ArgumentNullException>(
                 () => this.tfsHelper.GetBugs(null, null, true, null, null, null, null));
             AssertHelper.ExpectedException<ArgumentNullException>(
@@ -108,11 +101,6 @@ namespace Bugger.Proxy.TFS.Test
             propertyMappingCollection.Add("CreatedBy", "Created By");
             propertyMappingCollection.Add("Priority", "Code Studio Rank");
             propertyMappingCollection.Add("Severity", string.Empty);
-
-            TfsTeamProjectCollection tpc = null;
-            var result = this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", ThePassword, out tpc);
-            Assert.IsTrue(result);
-            Assert.IsNotNull(tpc);
 
             var bugs = this.tfsHelper.GetBugs(
                 tpc, "BigEgg_cp", true, propertyMappingCollection, "Work Item Type", "Work Item", new List<string>());
