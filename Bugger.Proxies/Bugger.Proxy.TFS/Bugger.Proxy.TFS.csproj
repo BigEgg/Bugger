@@ -85,7 +85,7 @@
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
       <Name>Bugger.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxy.csproj">
+    <ProjectReference Include="..\Bugger.Proxy\Bugger.Proxy.csproj">
       <Project>{E8727087-75F2-435F-BD11-78B4DFF59A40}</Project>
       <Name>Bugger.Proxy</Name>
     </ProjectReference>
