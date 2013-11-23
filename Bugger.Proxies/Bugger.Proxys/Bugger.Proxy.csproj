@@ -42,7 +42,7 @@
     <Compile Include="ITracingSystemProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingDialogValidateionResult.cs" />
-    <Compile Include="TracingSystemProxy.cs" />
+    <Compile Include="TracingSystemProxyBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">

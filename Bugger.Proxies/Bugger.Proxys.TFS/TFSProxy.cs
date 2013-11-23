@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 namespace Bugger.Proxy.TFS
 {
     [Export(typeof(ITracingSystemProxy)), Export]
-    public class TFSProxy : TracingSystemProxy
+    public class TFSProxy : TracingSystemProxyBase
     {
         #region Fields
         private readonly CompositionContainer container;

@@ -10,7 +10,7 @@ namespace Bugger.Presentation.DesignData
     /// <summary>
     /// This class is for test only.
     /// </summary>
-    public class FakeProxy : TracingSystemProxy
+    public class FakeProxy : TracingSystemProxyBase
     {
         #region Fields
         private List<Bug> bugs;

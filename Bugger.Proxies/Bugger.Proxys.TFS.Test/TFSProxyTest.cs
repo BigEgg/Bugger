@@ -24,11 +24,6 @@ namespace Bugger.Proxy.TFS.Test
 
         protected override void OnTestInitialize()
         {
-            if (File.Exists(SettingDocumentType.FilePath))
-            {
-                File.Delete(SettingDocumentType.FilePath);
-            }
-
             this.proxy = Container.GetExportedValue<ITracingSystemProxy>() as TFSProxy;
             this.viewModel = Container.GetExportedValue<TFSSettingViewModel>();
         }
@@ -38,7 +33,7 @@ namespace Bugger.Proxy.TFS.Test
         {
             Assert.IsTrue(this.proxy.IsInitialized);
             Assert.IsFalse(this.proxy.CanQuery);
-            Assert.IsNotNull(this.proxy.SettingView);
+            Assert.IsNotNull(this.proxy.StateValues);
 
             Assert.IsNotNull(this.viewModel.SaveCommand);
             Assert.IsNotNull(this.viewModel.Settings);

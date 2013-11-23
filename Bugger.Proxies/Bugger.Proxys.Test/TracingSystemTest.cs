@@ -88,7 +88,7 @@ namespace Bugger.Proxy.Test
             Assert.AreEqual(SettingDialogValidateionResult.Valid, result);
         }
 
-        private class MockTracingSystemProxy : TracingSystemProxy
+        private class MockTracingSystemProxy : TracingSystemProxyBase
         {
             #region Fields
             private ObservableCollection<string> statsValues;

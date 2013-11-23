@@ -9,7 +9,7 @@ namespace Bugger.Proxy
     /// <summary>
     /// The base class of the application proxy for source control system.
     /// </summary>
-    public abstract class TracingSystemProxy : DataModel, ITracingSystemProxy
+    public abstract class TracingSystemProxyBase : DataModel, ITracingSystemProxy
     {
         #region Fields
         private string proxyName;
@@ -17,11 +17,11 @@ namespace Bugger.Proxy
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TracingSystemProxy" /> class.
+        /// Initializes a new instance of the <see cref="TracingSystemProxyBase" /> class.
         /// </summary>
         /// <param name="proxyName">Name of the proxy.</param>
         /// <exception cref="System.ArgumentException">proxyName</exception>
-        public TracingSystemProxy(string proxyName)
+        public TracingSystemProxyBase(string proxyName)
         {
             if (string.IsNullOrWhiteSpace(proxyName)) { throw new ArgumentException("proxyName"); }
 

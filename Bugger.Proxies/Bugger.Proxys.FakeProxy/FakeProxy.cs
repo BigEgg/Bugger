@@ -12,7 +12,7 @@ namespace Bugger.Proxy.FakeProxy
     /// This class is for test only.
     /// </summary>
     [Export(typeof(ITracingSystemProxy)), Export]
-    public class FakeProxy : TracingSystemProxy
+    public class FakeProxy : TracingSystemProxyBase
     {
         #region Fields
         private readonly ObservableCollection<string> status;
