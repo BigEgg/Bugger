@@ -32,6 +32,7 @@ namespace Bugger.Proxy.TFS
         {
             if (connectUri == null) { throw new ArgumentNullException("connectUri"); }
             if (string.IsNullOrWhiteSpace(userName)) { throw new ArgumentNullException("userName"); }
+            if (password == null) { throw new ArgumentNullException("password"); }
 
             try
             {

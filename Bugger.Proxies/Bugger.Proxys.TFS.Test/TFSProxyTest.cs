@@ -51,7 +51,7 @@ namespace Bugger.Proxy.TFS.Test
             this.viewModel.Settings.BugFilterField = "WorkItemType";
             this.viewModel.Settings.BugFilterValue = "Issue";
             this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
-            this.viewModel.Settings.Password = password;
+            this.viewModel.Settings.Password = ThePassword;
             this.viewModel.Settings.PropertyMappingCollection["ID"] = "ID";
             this.viewModel.Settings.PropertyMappingCollection["Title"] = "Title";
             this.viewModel.Settings.PropertyMappingCollection["Description"] = "Description";
@@ -111,7 +111,7 @@ namespace Bugger.Proxy.TFS.Test
             Assert.AreEqual(Resources.CannotConnect, messageService.Message);
             Assert.AreEqual(MessageType.Message, messageService.MessageType);
 
-            this.viewModel.Settings.Password = password;
+            this.viewModel.Settings.Password = ThePassword;
             this.viewModel.TestConnectionCommand.Execute(null);
             Assert.IsTrue(this.viewModel.CanConnect);
             Assert.IsTrue(this.viewModel.TFSFields.Any());
@@ -126,7 +126,7 @@ namespace Bugger.Proxy.TFS.Test
             this.viewModel.Settings.BugFilterField = "Work Item Type";
             this.viewModel.Settings.BugFilterValue = "Work Item";
             this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
-            this.viewModel.Settings.Password = password;
+            this.viewModel.Settings.Password = ThePassword;
             this.viewModel.Settings.PropertyMappingCollection["ID"] = "ID";
             this.viewModel.Settings.PropertyMappingCollection["Title"] = "Title";
             this.viewModel.Settings.PropertyMappingCollection["Description"] = "Description";

@@ -2,7 +2,9 @@
 
 Alpha 4 (v0.4.0)
     Application:
+        Show validation message in views.
         Add extension manager to manage the proxies.
+        When open the application, show setting dialog if the settings is not being set.
     Proxies
         TFS Proxy
             Use XML file to save the default automation fill logic.
@@ -13,9 +15,7 @@ Alpha 4 (v0.4.0)
 
 Alpha 3 (v0.3.0) <----- Currently Working
     Application:
-        Show validation message in views.
         Can change the Opacity of Floating window by setting (✓)
-        Show setting dialog when open the application if the settings is not being set.
         Validate the proxy's setting when submit the setting dialog.
         Show progress and out come when query bugs.
         Optimized the startup time. (✓)

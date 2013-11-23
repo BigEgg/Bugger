@@ -1,4 +1,5 @@
 ﻿using BigEgg.Framework.UnitTesting;
+using Microsoft.TeamFoundation.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -17,42 +18,51 @@ namespace Bugger.Proxy.TFS.Test
         }
 
         [TestMethod]
-        public void TestConnnectionExceptionTest()
+        public void TryConnnectionExceptionTest()
         {
-            AssertHelper.ExpectedException<ArgumentNullException>(() => this.tfsHelper.TestConnection(null, null, null));
-            AssertHelper.ExpectedException<ArgumentNullException>(() => this.tfsHelper.TestConnection(null, " ", null));
-            AssertHelper.ExpectedException<ArgumentNullException>(() => this.tfsHelper.TestConnection(null, null, " "));
-            AssertHelper.ExpectedException<ArgumentNullException>(() => this.tfsHelper.TestConnection(null, " ", " "));
-            AssertHelper.ExpectedException<ArgumentException>(
-                () => this.tfsHelper.TestConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), " ", null));
-            AssertHelper.ExpectedException<ArgumentException>(
-                () => this.tfsHelper.TestConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), null, " "));
-            AssertHelper.ExpectedException<ArgumentException>(
-                () => this.tfsHelper.TestConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), " ", " "));
+            TfsTeamProjectCollection tpc = null;
+            AssertHelper.ExpectedException<ArgumentNullException>(() => this.tfsHelper.TryConnection(null, null, null, out tpc));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => this.tfsHelper.TryConnection(null, " ", null, out tpc));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => this.tfsHelper.TryConnection(null, null, " ", out tpc));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => this.tfsHelper.TryConnection(null, " ", " ", out tpc));
+            AssertHelper.ExpectedException<ArgumentNullException>(
+                () => this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), " ", null, out tpc));
+            AssertHelper.ExpectedException<ArgumentNullException>(
+                () => this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), null, " ", out tpc));
+            AssertHelper.ExpectedException<ArgumentNullException>(
+                () => this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), " ", " ", out tpc));
+            AssertHelper.ExpectedException<ArgumentNullException>(
+                () => this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", null, out tpc));
         }
 
         [TestMethod]
-        public void TestConnectionTest()
+        public void TryConnectionTest()
         {
-            Assert.IsFalse(this.tfsHelper.IsConnected());
-            var result = this.tfsHelper.TestConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", "123");
+            TfsTeamProjectCollection tpc = null;
+            var result = this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", "123", out tpc);
             Assert.IsFalse(result);
-            Assert.IsFalse(this.tfsHelper.IsConnected());
+            Assert.IsNull(tpc);
 
-            result = this.tfsHelper.TestConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", password);
+            result = this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", ThePassword, out tpc);
             Assert.IsTrue(result);
-            Assert.IsTrue(this.tfsHelper.IsConnected());
+            Assert.IsNotNull(tpc);
+        }
+
+        [TestMethod]
+        public void GetFiledsExceptionTest()
+        {
+            AssertHelper.ExpectedException<ArgumentNullException>(() => this.tfsHelper.GetFields(null));
         }
 
         [TestMethod]
         public void GetFieldsTest()
         {
-            Assert.IsFalse(this.tfsHelper.IsConnected());
-            AssertHelper.ExpectedException<InvalidOperationException>(() => this.tfsHelper.GetFields());
-            this.tfsHelper.TestConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", password);
-            Assert.IsTrue(this.tfsHelper.IsConnected());
+            TfsTeamProjectCollection tpc = null;
+            var result = this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", ThePassword, out tpc);
+            Assert.IsTrue(result);
+            Assert.IsNotNull(tpc);
 
-            var fields = this.tfsHelper.GetFields();
+            var fields = this.tfsHelper.GetFields(tpc);
             Assert.IsNotNull(fields);
             Assert.IsTrue(fields.Any());
         }
@@ -60,22 +70,29 @@ namespace Bugger.Proxy.TFS.Test
         [TestMethod]
         public void GetBugsExceptionTest()
         {
-            AssertHelper.ExpectedException<ArgumentException>(
-                () => this.tfsHelper.GetBugs(null, true, null, null, null, null));
-            AssertHelper.ExpectedException<ArgumentException>(
-                () => this.tfsHelper.GetBugs(" ", true, null, null, null, null));
+            TfsTeamProjectCollection tpc = null;
+            var result = this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", ThePassword, out tpc);
+            Assert.IsTrue(result);
+            Assert.IsNotNull(tpc);
+
             AssertHelper.ExpectedException<ArgumentNullException>(
-                () => this.tfsHelper.GetBugs("bigegg", true, null, null, null, null));
-            AssertHelper.ExpectedException<ArgumentException>(
-                () => this.tfsHelper.GetBugs("bigegg", true, new PropertyMappingDictionary(), null, null, null));
-            AssertHelper.ExpectedException<ArgumentException>(
-                () => this.tfsHelper.GetBugs("bigegg", true, new PropertyMappingDictionary(), " ", null, null));
-            AssertHelper.ExpectedException<ArgumentException>(
-                () => this.tfsHelper.GetBugs("bigegg", true, new PropertyMappingDictionary(), "Work Item Type", null, null));
-            AssertHelper.ExpectedException<ArgumentException>(
-                () => this.tfsHelper.GetBugs("bigegg", true, new PropertyMappingDictionary(), "Work Item Type", " ", null));
+                () => this.tfsHelper.GetBugs(null, null, true, null, null, null, null));
             AssertHelper.ExpectedException<ArgumentNullException>(
-                () => this.tfsHelper.GetBugs("bigegg", true, new PropertyMappingDictionary(), "Work Item Type", "Work Item", null));
+                () => this.tfsHelper.GetBugs(tpc, null, true, null, null, null, null));
+            AssertHelper.ExpectedException<ArgumentNullException>(
+                () => this.tfsHelper.GetBugs(tpc, " ", true, null, null, null, null));
+            AssertHelper.ExpectedException<ArgumentNullException>(
+                () => this.tfsHelper.GetBugs(tpc, "bigegg", true, null, null, null, null));
+            AssertHelper.ExpectedException<ArgumentNullException>(
+                () => this.tfsHelper.GetBugs(tpc, "bigegg", true, new PropertyMappingDictionary(), null, null, null));
+            AssertHelper.ExpectedException<ArgumentNullException>(
+                () => this.tfsHelper.GetBugs(tpc, "bigegg", true, new PropertyMappingDictionary(), " ", null, null));
+            AssertHelper.ExpectedException<ArgumentNullException>(
+                () => this.tfsHelper.GetBugs(tpc, "bigegg", true, new PropertyMappingDictionary(), "Work Item Type", null, null));
+            AssertHelper.ExpectedException<ArgumentNullException>(
+                () => this.tfsHelper.GetBugs(tpc, "bigegg", true, new PropertyMappingDictionary(), "Work Item Type", " ", null));
+            AssertHelper.ExpectedException<ArgumentNullException>(
+                () => this.tfsHelper.GetBugs(tpc, "bigegg", true, new PropertyMappingDictionary(), "Work Item Type", "Work Item", null));
         }
 
         [TestMethod]
@@ -92,16 +109,13 @@ namespace Bugger.Proxy.TFS.Test
             propertyMappingCollection.Add("Priority", "Code Studio Rank");
             propertyMappingCollection.Add("Severity", string.Empty);
 
-            Assert.IsFalse(this.tfsHelper.IsConnected());
-            AssertHelper.ExpectedException<InvalidOperationException>(
-                () => this.tfsHelper.GetBugs(
-                    "BigEgg_cp", true, propertyMappingCollection, "Work Item Type", "Work Item", new List<string>()));
-            this.tfsHelper.TestConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", password);
-            Assert.IsTrue(this.tfsHelper.IsConnected());
+            TfsTeamProjectCollection tpc = null;
+            var result = this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", ThePassword, out tpc);
+            Assert.IsTrue(result);
+            Assert.IsNotNull(tpc);
 
             var bugs = this.tfsHelper.GetBugs(
-                "BigEgg_cp", true, propertyMappingCollection, "Work Item Type", "Work Item", new List<string>());
-
+                tpc, "BigEgg_cp", true, propertyMappingCollection, "Work Item Type", "Work Item", new List<string>());
             Assert.IsNotNull(bugs);
             Assert.IsTrue(bugs.Any());
         }
