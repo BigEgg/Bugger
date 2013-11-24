@@ -42,28 +42,28 @@ namespace Bugger.Proxy.TFS.Presentation.Views
 
         private void LoadedHandler(object sender, RoutedEventArgs e)
         {
-            password.Password = ViewModel.Settings.Password;
-            ViewModel.Settings.PropertyChanged += SettingsPropertyChanged;
+            password.Password = ViewModel.Password;
+            ViewModel.PropertyChanged += SettingsPropertyChanged;
             tfsName.Focus();
         }
 
         private void UnloadedHandler(object sender, RoutedEventArgs e)
         {
-            ViewModel.Settings.PropertyChanged -= SettingsPropertyChanged;
+            ViewModel.PropertyChanged -= SettingsPropertyChanged;
         }
 
         private void SettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Password")
             {
-                password.Password = ViewModel.Settings.Password;
+                password.Password = ViewModel.Password;
             }
         }
 
         private void PasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordBox passwordBox = (PasswordBox)sender;
-            ViewModel.Settings.Password = passwordBox.Password;
+            ViewModel.Password = passwordBox.Password;
         }
     }
 }
