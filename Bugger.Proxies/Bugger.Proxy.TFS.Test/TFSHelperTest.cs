@@ -17,7 +17,7 @@ namespace Bugger.Proxy.TFS.Test
         public TFSHelperTest()
         {
             this.tfsHelper = new TFSHelper();
-            this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", ThePassword, out tpc);
+            this.tfsHelper.TryConnection(new Uri(TheCodePlexUri), TheUsername, ThePassword, out tpc);
         }
 
         [TestMethod]
@@ -29,24 +29,24 @@ namespace Bugger.Proxy.TFS.Test
             AssertHelper.ExpectedException<ArgumentNullException>(() => this.tfsHelper.TryConnection(null, null, " ", out tpc));
             AssertHelper.ExpectedException<ArgumentNullException>(() => this.tfsHelper.TryConnection(null, " ", " ", out tpc));
             AssertHelper.ExpectedException<ArgumentNullException>(
-                () => this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), " ", null, out tpc));
+                () => this.tfsHelper.TryConnection(new Uri(TheCodePlexUri), " ", null, out tpc));
             AssertHelper.ExpectedException<ArgumentNullException>(
-                () => this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), null, " ", out tpc));
+                () => this.tfsHelper.TryConnection(new Uri(TheCodePlexUri), null, " ", out tpc));
             AssertHelper.ExpectedException<ArgumentNullException>(
-                () => this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), " ", " ", out tpc));
+                () => this.tfsHelper.TryConnection(new Uri(TheCodePlexUri), " ", " ", out tpc));
             AssertHelper.ExpectedException<ArgumentNullException>(
-                () => this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", null, out tpc));
+                () => this.tfsHelper.TryConnection(new Uri(TheCodePlexUri), TheUsername, null, out tpc));
         }
 
         [TestMethod]
         public void TryConnectionTest()
         {
             TfsTeamProjectCollection tpc = null;
-            var result = this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", "123", out tpc);
+            var result = this.tfsHelper.TryConnection(new Uri(TheCodePlexUri), TheUsername, "123", out tpc);
             Assert.IsFalse(result);
             Assert.IsNull(tpc);
 
-            result = this.tfsHelper.TryConnection(new Uri("https://tfs.codeplex.com:443/tfs/TFS12"), "snd\\BigEgg_cp", ThePassword, out tpc);
+            result = this.tfsHelper.TryConnection(new Uri(TheCodePlexUri), TheUsername, ThePassword, out tpc);
             Assert.IsTrue(result);
             Assert.IsNotNull(tpc);
         }

@@ -96,8 +96,8 @@ namespace Bugger.Proxy.TFS.Test
             viewModel = (view as ITFSSettingView).GetViewModel<TFSSettingViewModel>();
             Assert.IsNotNull(viewModel);
 
-            Assert.AreEqual(new Uri("https://tfs.codeplex.com:443/tfs/TFS12").AbsoluteUri, viewModel.ConnectUri.AbsoluteUri);
-            Assert.AreEqual("snd\\BigEgg_cp", viewModel.UserName);
+            Assert.AreEqual(new Uri(TheCodePlexUri).AbsoluteUri, viewModel.ConnectUri.AbsoluteUri);
+            Assert.AreEqual(TheUsername, viewModel.UserName);
             Assert.AreEqual(ThePassword, viewModel.Password);
 
             Assert.AreEqual("ID", viewModel.PropertyMappingCollection["ID"]);
@@ -114,7 +114,8 @@ namespace Bugger.Proxy.TFS.Test
 
             Assert.AreEqual("Work Item Type", viewModel.BugFilterField);
             Assert.AreEqual("Work Item", viewModel.BugFilterValue);
-            Assert.AreEqual(string.Empty, viewModel.PriorityRed);
+            Assert.AreEqual("High;Low", viewModel.PriorityRed);
+            Assert.IsTrue(viewModel.PriorityValues.Any(x => x.IsChecked));
 
             Assert.AreEqual(ProgressTypes.Success, viewModel.ProgressType);
             Assert.AreEqual(100, viewModel.ProgressValue);
@@ -147,9 +148,9 @@ namespace Bugger.Proxy.TFS.Test
             Assert.AreEqual(string.Empty, viewModel.UserName);
             Assert.AreEqual(string.Empty, viewModel.Password);
             Assert.AreEqual(SettingDialogValidateionResult.ConnectFailed, proxy.ValidateBeforeCloseSettingDialog());
-            viewModel.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");
+            viewModel.ConnectUri = new Uri(TheCodePlexUri);
             Assert.AreEqual(SettingDialogValidateionResult.ConnectFailed, proxy.ValidateBeforeCloseSettingDialog());
-            viewModel.UserName = "snd\\BigEgg_cp";
+            viewModel.UserName = TheUsername;
             viewModel.ProgressType = ProgressTypes.FailedOnConnect;
             Assert.AreEqual(SettingDialogValidateionResult.ConnectFailed, proxy.ValidateBeforeCloseSettingDialog());
             viewModel.ProgressType = ProgressTypes.FailedOnGetFileds;
@@ -225,6 +226,8 @@ namespace Bugger.Proxy.TFS.Test
 
             proxy.AfterCloseSettingDialog(true);
             Assert.IsTrue(File.Exists(SettingDocumentType.FilePath));
+            var view = proxy.InitializeSettingDialog();
+            viewModel = (view as ITFSSettingView).GetViewModel<TFSSettingViewModel>();
 
             var idMapping = viewModel.PropertyMappingCollection["ID"];
             var bugFilterField = viewModel.BugFilterField;
@@ -253,9 +256,9 @@ namespace Bugger.Proxy.TFS.Test
             viewModel.ConnectUri = null;
             viewModel.UserName = string.Empty;
             Assert.IsFalse(viewModel.TestConnectionCommand.CanExecute(null));
-            viewModel.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");
+            viewModel.ConnectUri = new Uri(TheCodePlexUri);
             Assert.IsFalse(viewModel.TestConnectionCommand.CanExecute(null));
-            viewModel.UserName = "snd\\BigEgg_cp";
+            viewModel.UserName = TheUsername;
             Assert.IsTrue(viewModel.TestConnectionCommand.CanExecute(null));
         }
 
@@ -301,66 +304,174 @@ namespace Bugger.Proxy.TFS.Test
             //  Code Plex don't have a type named "Bugs"
             Assert.AreEqual(string.Empty, viewModel.BugFilterValue);
 
+            Assert.IsNotNull(viewModel.PriorityValues);
+            Assert.IsTrue(viewModel.PriorityValues.Any());
             Assert.AreEqual(string.Empty, viewModel.PriorityRed);
 
             viewModel.BugFilterValue = "Work Item";
+            viewModel.PriorityRed = "High;Low";
         }
 
         [TestMethod]
-        public void SettingViewModelConnectionPropertyChangedTest()
+        public void SettingViewModelConnectUriPropertyChangedTest()
         {
             if (order++ != 13) { throw new NotSupportedException("This unit test must run as order."); }
 
+            var view = proxy.InitializeSettingDialog();
+            viewModel = (view as ITFSSettingView).GetViewModel<TFSSettingViewModel>();
+            Assert.AreEqual(ProgressTypes.Success, viewModel.ProgressType);
+            Assert.AreEqual(100, viewModel.ProgressValue);
+
+            viewModel.ConnectUri = null;
+            Assert.AreEqual(ProgressTypes.NotWorking, viewModel.ProgressType);
+            Assert.AreEqual(0, viewModel.ProgressValue);
+
+            foreach (var mapping in viewModel.PropertyMappingCollection)
+            {
+                Assert.AreEqual(string.Empty, viewModel.PropertyMappingCollection[mapping.Key]);
+            }
+
+            Assert.IsNotNull(viewModel.TFSFields);
+            Assert.IsFalse(viewModel.TFSFields.Any());
+            Assert.IsNotNull(viewModel.BugFilterFields);
+            Assert.IsFalse(viewModel.BugFilterFields.Any());
+            Assert.AreEqual(string.Empty, viewModel.BugFilterField);
+            Assert.AreEqual(string.Empty, viewModel.BugFilterValue);
+
+            Assert.IsNotNull(viewModel.PriorityValues);
+            Assert.IsFalse(viewModel.PriorityValues.Any());
+            Assert.AreEqual(string.Empty, viewModel.PriorityRed);
+
+            proxy.AfterCloseSettingDialog(false);
+        }
+
+        [TestMethod]
+        public void SettingViewModelUserNamePropertyChangedTest()
+        {
+            if (order++ != 14) { throw new NotSupportedException("This unit test must run as order."); }
+
+            var view = proxy.InitializeSettingDialog();
+            viewModel = (view as ITFSSettingView).GetViewModel<TFSSettingViewModel>();
+            Assert.AreEqual(ProgressTypes.Success, viewModel.ProgressType);
+            Assert.AreEqual(100, viewModel.ProgressValue);
+
+            viewModel.UserName = "BigEgg";
+            Assert.AreEqual(ProgressTypes.NotWorking, viewModel.ProgressType);
+            Assert.AreEqual(0, viewModel.ProgressValue);
+
+            foreach (var mapping in viewModel.PropertyMappingCollection)
+            {
+                Assert.AreEqual(string.Empty, viewModel.PropertyMappingCollection[mapping.Key]);
+            }
+
+            Assert.IsNotNull(viewModel.TFSFields);
+            Assert.IsFalse(viewModel.TFSFields.Any());
+            Assert.IsNotNull(viewModel.BugFilterFields);
+            Assert.IsFalse(viewModel.BugFilterFields.Any());
+            Assert.AreEqual(string.Empty, viewModel.BugFilterField);
+            Assert.AreEqual(string.Empty, viewModel.BugFilterValue);
+
+            Assert.IsNotNull(viewModel.PriorityValues);
+            Assert.IsFalse(viewModel.PriorityValues.Any());
+            Assert.AreEqual(string.Empty, viewModel.PriorityRed);
+
+            proxy.AfterCloseSettingDialog(false);
+        }
+
+        [TestMethod]
+        public void SettingViewModelPasswordPropertyChangedTest()
+        {
+            if (order++ != 15) { throw new NotSupportedException("This unit test must run as order."); }
+
+            var view = proxy.InitializeSettingDialog();
+            viewModel = (view as ITFSSettingView).GetViewModel<TFSSettingViewModel>();
+            Assert.AreEqual(ProgressTypes.Success, viewModel.ProgressType);
+            Assert.AreEqual(100, viewModel.ProgressValue);
+
+            viewModel.Password = "Password";
+            Assert.AreEqual(ProgressTypes.NotWorking, viewModel.ProgressType);
+            Assert.AreEqual(0, viewModel.ProgressValue);
+
+            foreach (var mapping in viewModel.PropertyMappingCollection)
+            {
+                Assert.AreEqual(string.Empty, viewModel.PropertyMappingCollection[mapping.Key]);
+            }
+
+            Assert.IsNotNull(viewModel.TFSFields);
+            Assert.IsFalse(viewModel.TFSFields.Any());
+            Assert.IsNotNull(viewModel.BugFilterFields);
+            Assert.IsFalse(viewModel.BugFilterFields.Any());
+            Assert.AreEqual(string.Empty, viewModel.BugFilterField);
+            Assert.AreEqual(string.Empty, viewModel.BugFilterValue);
+
+            Assert.IsNotNull(viewModel.PriorityValues);
+            Assert.IsFalse(viewModel.PriorityValues.Any());
+            Assert.AreEqual(string.Empty, viewModel.PriorityRed);
+
+            proxy.AfterCloseSettingDialog(false);
         }
 
         [TestMethod]
         public void SettingViewModelPriorityMappingChangedTest()
         {
-            if (order++ != 14) { throw new NotSupportedException("This unit test must run as order."); }
+            if (order++ != 16) { throw new NotSupportedException("This unit test must run as order."); }
 
+            var view = proxy.InitializeSettingDialog();
+            viewModel = (view as ITFSSettingView).GetViewModel<TFSSettingViewModel>();
+
+            var priorityMapping = viewModel.PropertyMappingCollection["Priority"];
+            var priorityRed = viewModel.PriorityRed;
+
+            viewModel.PropertyMappingCollection["Priority"] = string.Empty;
+            Assert.AreEqual(string.Empty, viewModel.PriorityRed);
+            Assert.IsNotNull(viewModel.PriorityValues);
+            Assert.IsFalse(viewModel.PriorityValues.Any());
+
+            viewModel.PropertyMappingCollection["Priority"] = priorityMapping;
+            Assert.AreEqual(priorityRed, viewModel.PriorityRed);
+            Assert.IsNotNull(viewModel.PriorityValues);
+            Assert.IsTrue(viewModel.PriorityValues.Any());
+            Assert.IsTrue(viewModel.PriorityValues.Any(x => x.IsChecked));
+
+            proxy.AfterCloseSettingDialog(false);
         }
 
         [TestMethod]
         public void SettingViewModelPriorityValuePropertyChangedTest()
         {
-            if (order++ != 15) { throw new NotSupportedException("This unit test must run as order."); }
+            if (order++ != 17) { throw new NotSupportedException("This unit test must run as order."); }
 
+            var view = proxy.InitializeSettingDialog();
+            viewModel = (view as ITFSSettingView).GetViewModel<TFSSettingViewModel>();
+            Assert.IsNotNull(viewModel.PriorityValues);
+            Assert.IsTrue(viewModel.PriorityValues.Any());
+            Assert.IsFalse(string.IsNullOrWhiteSpace(viewModel.PriorityRed));
+            Assert.IsTrue(viewModel.PriorityValues.Any(x => x.IsChecked));
+
+            foreach (var value in viewModel.PriorityValues)
+            {
+                value.IsChecked = false;
+            }
+            Assert.IsTrue(string.IsNullOrWhiteSpace(viewModel.PriorityRed));
+
+            proxy.AfterCloseSettingDialog(false);
         }
 
         [TestMethod]
         public void QueryTest()
         {
-            if (order++ != 16) { throw new NotSupportedException("This unit test must run as order."); }
+            if (order++ != 18) { throw new NotSupportedException("This unit test must run as order."); }
 
+            Assert.IsTrue(proxy.CanQuery);
+            ReadOnlyCollection<Bug> bugs = proxy.Query(TheQueryUsername);
+            Assert.IsNotNull(bugs);
+            Assert.IsTrue(bugs.Any());
+            Assert.IsTrue(bugs.Any(x => x.Type == BugType.Red));
+
+            bugs = proxy.Query(TheQueryUsername, false);
+            Assert.IsNotNull(bugs);
+            Assert.IsTrue(bugs.Any());
+            Assert.IsTrue(bugs.Any(x => x.Type == BugType.Red));
         }
-
-        //[TestMethod]
-        //public void QueryTest()
-        //{
-        //    AssertHelper.ExpectedException<NotSupportedException>(() => proxy.Query("snd\\BigEgg_cp"));
-
-        //    viewModel.Settings.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");
-        //    viewModel.Settings.BugFilterField = "Work Item Type";
-        //    viewModel.Settings.BugFilterValue = "Work Item";
-        //    viewModel.Settings.UserName = "snd\\BigEgg_cp";
-        //    viewModel.Settings.Password = ThePassword;
-        //    viewModel.Settings.PropertyMappingCollection["ID"] = "ID";
-        //    viewModel.Settings.PropertyMappingCollection["Title"] = "Title";
-        //    viewModel.Settings.PropertyMappingCollection["Description"] = "Description";
-        //    viewModel.Settings.PropertyMappingCollection["AssignedTo"] = "Assigned To";
-        //    viewModel.Settings.PropertyMappingCollection["State"] = "State";
-        //    viewModel.Settings.PropertyMappingCollection["ChangedDate"] = "Changed Date";
-        //    viewModel.Settings.PropertyMappingCollection["CreatedBy"] = "Created By";
-        //    viewModel.Settings.PropertyMappingCollection["Priority"] = "Code Studio Rank";
-
-        //    Assert.IsTrue(proxy.CanQuery);
-        //    ReadOnlyCollection<Bug> bugs = proxy.Query("BigEgg_cp");
-        //    Assert.IsNotNull(bugs);
-        //    Assert.IsTrue(bugs.Any());
-
-        //    bugs = proxy.Query("BigEgg_cp", false);
-        //    Assert.IsNotNull(bugs);
-        //    Assert.IsTrue(bugs.Any());
-        //}
     }
 }

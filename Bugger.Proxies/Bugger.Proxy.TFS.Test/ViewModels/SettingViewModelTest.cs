@@ -72,25 +72,25 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
             view.ShowDialogAction = (x) =>
                 {
                     UriHelpViewModel uriHelpViewModel = x.GetViewModel<UriHelpViewModel>();
-                    uriHelpViewModel.ServerName = "https://tfs.codeplex.com:443/tfs/TFS12";
+                    uriHelpViewModel.ServerName = TheCodePlexUri;
                     uriHelpViewModel.SubmitCommand.Execute(null);
                 };
             this.viewModel.UriHelpCommand.Execute(null);
             Assert.IsNotNull(this.viewModel.ConnectUri);
             Assert.AreEqual(
-                new Uri("https://tfs.codeplex.com:443/tfs/TFS12").AbsoluteUri,
+                new Uri(TheCodePlexUri).AbsoluteUri,
                 this.viewModel.ConnectUri.AbsoluteUri);
         }
 
         [TestMethod]
         public void PropertiesWithNotification()
         {
-            AssertHelper.PropertyChangedEvent(this.viewModel, x => x.ConnectUri, () => this.viewModel.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12"));
+            AssertHelper.PropertyChangedEvent(this.viewModel, x => x.ConnectUri, () => this.viewModel.ConnectUri = new Uri(TheCodePlexUri));
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.UserName, () => this.viewModel.UserName = "BigEgg");
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.Password, () => this.viewModel.Password = "Password");
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.BugFilterField, () => this.viewModel.BugFilterField = "Work Item Type");
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.BugFilterValue, () => this.viewModel.BugFilterValue = "Bug");
-            AssertHelper.PropertyChangedEvent(this.viewModel, x => x.PriorityRed, () => this.viewModel.PriorityRed = "1,2");
+            AssertHelper.PropertyChangedEvent(this.viewModel, x => x.PriorityRed, () => this.viewModel.PriorityRed = "1;2");
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.ProgressType, () => this.viewModel.ProgressType = ProgressTypes.Success);
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.ProgressValue, () => this.viewModel.ProgressValue = 100);
 

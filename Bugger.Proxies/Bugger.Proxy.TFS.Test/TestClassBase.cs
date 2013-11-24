@@ -13,8 +13,11 @@ namespace Bugger.Proxy.TFS.Test
     public abstract class TestClassBase
     {
         private readonly CompositionContainer container;
-        //  Replace the [Password] with real password.
-        protected const string ThePassword = "asdf1234";
+
+        protected const string TheCodePlexUri = "https://tfs.codeplex.com:443/tfs/TFS12";
+        protected const string TheUsername = "snd\\BigEgg_cp";
+        protected const string ThePassword = "[Password]";
+        protected const string TheQueryUsername = "BigEgg_cp";
 
 
         protected TestClassBase()

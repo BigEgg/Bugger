@@ -32,6 +32,7 @@ namespace Bugger.Proxy.TFS
 
         private readonly ObservableCollection<string> stateValues;
         private List<string> ignoreField;
+        private const string PriorityRedSeparator = ";";
         private readonly List<TFSField> tfsFieldsCache;
 
         private readonly DelegateCommand testConnectionCommand;
@@ -86,6 +87,7 @@ namespace Bugger.Proxy.TFS
                 this.settingViewModel.TestConnectionCommand = this.testConnectionCommand;
             }
 
+            RemoveWeakEventListener(this.settingViewModel, SettingViewModelPropertyChanged);
             this.settingViewModel.ClearMappingData();
 
             this.settingViewModel.ConnectUri = this.document.ConnectUri;
@@ -322,7 +324,10 @@ namespace Bugger.Proxy.TFS
             {
                 List<string> redFilter = string.IsNullOrWhiteSpace(this.document.PriorityRed)
                                            ? new List<string>()
-                                           : this.document.PriorityRed.Split(';').Select(x => x.Trim()).ToList();
+                                           : this.document.PriorityRed
+                                                          .Split(new string[] { PriorityRedSeparator }, StringSplitOptions.RemoveEmptyEntries)
+                                                          .Select(x => x.Trim())
+                                                          .ToList();
 
                 foreach (string userName in userNames)
                 {
@@ -348,6 +353,12 @@ namespace Bugger.Proxy.TFS
         #region Private Methods
         private void UpdateSettingDialogPriorityValues()
         {
+            foreach (var checkString in this.settingViewModel.PriorityValues)
+            {
+                RemoveWeakEventListener(checkString, PriorityValuePropertyChanged);
+            }
+            this.settingViewModel.PriorityValues.Clear();
+
             string fieldName = this.settingViewModel.PropertyMappingCollection["Priority"];
             if (string.IsNullOrWhiteSpace(fieldName))
             {
@@ -355,25 +366,21 @@ namespace Bugger.Proxy.TFS
                 return;
             }
 
-            foreach (var checkString in this.settingViewModel.PriorityValues)
-            {
-                RemoveWeakEventListener(checkString, PriorityValuePropertyChanged);
-            }
-            this.settingViewModel.PriorityValues.Clear();
+            TFSField priorityField = this.settingViewModel.TFSFields.FirstOrDefault(x => x.Name == fieldName);
+            if (priorityField == null) { return; }
 
-            TFSField priorityField = this.settingViewModel.TFSFields.First(x => x.Name == fieldName);
             foreach (var value in priorityField.AllowedValues)
             {
                 CheckString checkValue = new CheckString(value);
-                checkValue.IsChecked = !string.IsNullOrWhiteSpace(this.settingViewModel.PriorityRed)
-                                       && this.settingViewModel.PriorityRed.Contains(value);
+                checkValue.IsChecked = !string.IsNullOrWhiteSpace(this.document.PriorityRed)
+                                       && this.document.PriorityRed.Contains(value);
 
                 AddWeakEventListener(checkValue, PriorityValuePropertyChanged);
 
                 this.settingViewModel.PriorityValues.Add(checkValue);
             }
 
-            this.settingViewModel.PriorityRed = string.Join("; ",
+            this.settingViewModel.PriorityRed = string.Join(PriorityRedSeparator,
                                                             this.settingViewModel.PriorityValues
                                                                                  .Where(x => x.IsChecked)
                                                                                  .Select(x => x.Name));
@@ -427,11 +434,13 @@ namespace Bugger.Proxy.TFS
                 var value = workItemType.AllowedValues.FirstOrDefault(x => string.Compare(x, "Bugs", true) == 0);
                 this.settingViewModel.BugFilterValue = value ?? string.Empty;
             }
+
+            UpdateSettingDialogPriorityValues();
         }
 
         private void SettingViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "PropertyMappingList")
+            if (e.PropertyName == "PropertyMappingCollection")
             {
                 UpdateSettingDialogPriorityValues();
             }
@@ -445,7 +454,7 @@ namespace Bugger.Proxy.TFS
 
         private void PriorityValuePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            this.settingViewModel.PriorityRed = string.Join("; ",
+            this.settingViewModel.PriorityRed = string.Join(PriorityRedSeparator,
                                                             this.settingViewModel.PriorityValues
                                                                                  .Where(x => x.IsChecked)
                                                                                  .Select(x => x.Name));

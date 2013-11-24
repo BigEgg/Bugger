@@ -37,7 +37,7 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
         {
             Assert.IsFalse(viewModel.SubmitCommand.CanExecute(null));
 
-            viewModel.ServerName = "https://tfs.codeplex.com:443/tfs/TFS12";
+            viewModel.ServerName = TheCodePlexUri;
             Assert.IsTrue(viewModel.SubmitCommand.CanExecute(null));
 
             viewModel.ServerName = "!serverName!";

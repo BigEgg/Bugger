@@ -53,7 +53,7 @@ namespace Bugger.Proxy.TFS.Test.Documents
             document.BugFilterValue = "Bugs";
             document.UserName = "BigEgg";
             document.Password = "Password";
-            document.PriorityRed = "1,2";
+            document.PriorityRed = "1;2";
             document.PropertyMappingCollection["ID"] = "ID";
 
             SettingDocumentType.Save(document);
@@ -65,7 +65,7 @@ namespace Bugger.Proxy.TFS.Test.Documents
             Assert.AreEqual(document.BugFilterValue, openDocument.BugFilterValue);
             Assert.AreEqual(document.UserName = "BigEgg", openDocument.UserName);
             Assert.AreEqual(document.Password = "Password", openDocument.Password);
-            Assert.AreEqual(document.PriorityRed = "1,2", openDocument.PriorityRed);
+            Assert.AreEqual(document.PriorityRed = "1;2", openDocument.PriorityRed);
             Assert.AreEqual(document.PropertyMappingCollection["ID"], openDocument.PropertyMappingCollection["ID"]);
         }
     }
