@@ -10,15 +10,14 @@ namespace Bugger.Proxy.TFS.Presentation.DesignData
     public class SampleTFSSettingViewModel : TFSSettingViewModel
     {
         public SampleTFSSettingViewModel()
-            : base(new MockTFSSettingView())
+            : base(new MockTFSSettingView(), new MockUriHelperVIew())
         {
-            this.Settings = new Documents.SettingDocument();
-            this.Settings.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");
-            this.Settings.BugFilterField = "Work Item Type";
-            this.Settings.BugFilterValue = "Bugs";
-            this.Settings.UserName = "BigEgg";
-            this.Settings.Password = "Password";
-            this.Settings.PriorityRed = "1,2";
+            this.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");
+            this.BugFilterField = "Work Item Type";
+            this.BugFilterValue = "Bugs";
+            this.UserName = "BigEgg";
+            this.Password = "Password";
+            this.PriorityRed = "High;Medium";
 
             var field = new TFSField("Work Item Type");
             field.AllowedValues.Add("Work Item");
@@ -33,6 +32,11 @@ namespace Bugger.Proxy.TFS.Presentation.DesignData
         private class MockTFSSettingView : MockView, ITFSSettingView
         {
             public string Title { get { return Resources.SettingViewTitle; } }
+        }
+
+        private class MockUriHelperVIew : MockDialogView, IUriHelpView
+        {
+
         }
     }
 }
