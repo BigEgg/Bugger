@@ -60,7 +60,7 @@ namespace Bugger.Proxy.TFS.Test.Documents
             Assert.IsTrue(File.Exists(SettingDocumentType.FilePath));
 
             SettingDocument openDocument = SettingDocumentType.Open();
-            Assert.AreEqual(document.ConnectUri, openDocument.ConnectUri.AbsoluteUri);
+            Assert.AreEqual(document.ConnectUri.AbsoluteUri, openDocument.ConnectUri.AbsoluteUri);
             Assert.AreEqual(document.BugFilterField, openDocument.BugFilterField);
             Assert.AreEqual(document.BugFilterValue, openDocument.BugFilterValue);
             Assert.AreEqual(document.UserName = "BigEgg", openDocument.UserName);

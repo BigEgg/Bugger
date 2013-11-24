@@ -15,44 +15,54 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using Bugger.Proxy.TFS.Models;
+using System.Threading;
+using System.Diagnostics;
+using System.Windows.Threading;
 
 namespace Bugger.Proxy.TFS.Test
 {
     [TestClass]
     public class TFSProxyTest : TestClassBase
     {
-        private TFSProxy proxy;
+        private static TFSProxy proxy;
+        private static TFSSettingViewModel viewModel;
+        private static int order = 0;
 
         protected override void OnTestInitialize()
         {
-            this.proxy = Container.GetExportedValue<ITracingSystemProxy>() as TFSProxy;
+            if (proxy == null)
+            {
+                proxy = Container.GetExportedValue<ITracingSystemProxy>() as TFSProxy;
+            }
         }
 
         [TestMethod]
         public void GeneralTFSProxyTest()
         {
+            if (order++ != 0) { throw new NotSupportedException("This unit test must run as order."); }
+
             Assert.AreEqual("TFS", proxy.ProxyName);
-            Assert.IsTrue(this.proxy.IsInitialized);
-            Assert.IsFalse(this.proxy.CanQuery);
-            Assert.IsNotNull(this.proxy.StateValues);
-            Assert.IsFalse(this.proxy.StateValues.Any());
+            Assert.IsTrue(proxy.IsInitialized);
+            Assert.IsFalse(proxy.CanQuery);
+            Assert.IsNotNull(proxy.StateValues);
+            Assert.IsFalse(proxy.StateValues.Any());
         }
 
         [TestMethod]
         public void InitializeSettingDialogTest()
         {
-            Assert.IsFalse(this.proxy.CanQuery);
+            if (order++ != 1) { throw new NotSupportedException("This unit test must run as order."); }
 
-            var view = this.proxy.InitializeSettingDialog();
+            var view = proxy.InitializeSettingDialog();
             Assert.IsNotNull(view);
             Assert.IsInstanceOfType(view, typeof(ITFSSettingView));
 
-            var viewModel = (view as ITFSSettingView).GetViewModel<TFSSettingViewModel>();
+            viewModel = (view as ITFSSettingView).GetViewModel<TFSSettingViewModel>();
             Assert.IsNotNull(viewModel);
 
             Assert.IsNull(viewModel.ConnectUri);
-            Assert.IsNull(viewModel.UserName);
-            Assert.IsNull(viewModel.Password);
+            Assert.AreEqual(string.Empty, viewModel.UserName);
+            Assert.AreEqual(string.Empty, viewModel.Password);
 
             foreach (var mapping in viewModel.PropertyMappingCollection)
             {
@@ -63,8 +73,8 @@ namespace Bugger.Proxy.TFS.Test
             Assert.IsFalse(viewModel.TFSFields.Any());
             Assert.IsNotNull(viewModel.BugFilterFields);
             Assert.IsFalse(viewModel.BugFilterFields.Any());
-            Assert.IsNull(viewModel.BugFilterField);
-            Assert.IsNull(viewModel.BugFilterValue);
+            Assert.AreEqual(string.Empty, viewModel.BugFilterField);
+            Assert.AreEqual(string.Empty, viewModel.BugFilterValue);
 
             Assert.IsNotNull(viewModel.PriorityValues);
             Assert.IsFalse(viewModel.PriorityValues.Any());
@@ -74,104 +84,281 @@ namespace Bugger.Proxy.TFS.Test
             Assert.AreEqual(0, viewModel.ProgressValue);
         }
 
-        //[TestMethod]
-        //public void SaveCommandTest()
-        //{
-        //    this.viewModel.Settings.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");
-        //    this.viewModel.Settings.BugFilterField = "WorkItemType";
-        //    this.viewModel.Settings.BugFilterValue = "Issue";
-        //    this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
-        //    this.viewModel.Settings.Password = ThePassword;
-        //    this.viewModel.Settings.PropertyMappingCollection["ID"] = "ID";
-        //    this.viewModel.Settings.PropertyMappingCollection["Title"] = "Title";
-        //    this.viewModel.Settings.PropertyMappingCollection["Description"] = "Description";
-        //    this.viewModel.Settings.PropertyMappingCollection["AssignedTo"] = "Assigned To";
-        //    this.viewModel.Settings.PropertyMappingCollection["State"] = "State";
-        //    this.viewModel.Settings.PropertyMappingCollection["ChangedDate"] = "Changed Date";
-        //    this.viewModel.Settings.PropertyMappingCollection["CreatedBy"] = "Created By";
-        //    this.viewModel.Settings.PropertyMappingCollection["Priority"] = "Code Studio Rank";
+        [TestMethod]
+        public void InitializeSettingDialogWithDataTest()
+        {
+            if (order++ != 10) { throw new NotSupportedException("This unit test must run as order."); }
 
-        //    Assert.IsTrue(this.viewModel.SaveCommand.CanExecute(null));
+            var view = proxy.InitializeSettingDialog();
+            Assert.IsNotNull(view);
+            Assert.IsInstanceOfType(view, typeof(ITFSSettingView));
 
-        //    this.viewModel.SaveCommand.Execute(null);
-        //    Assert.IsTrue(File.Exists(SettingDocumentType.FilePath));
-        //}
+            viewModel = (view as ITFSSettingView).GetViewModel<TFSSettingViewModel>();
+            Assert.IsNotNull(viewModel);
 
+            Assert.AreEqual(new Uri("https://tfs.codeplex.com:443/tfs/TFS12").AbsoluteUri, viewModel.ConnectUri.AbsoluteUri);
+            Assert.AreEqual("snd\\BigEgg_cp", viewModel.UserName);
+            Assert.AreEqual(ThePassword, viewModel.Password);
 
-        //[TestMethod]
-        //public void CanTestConnectionCommandTest()
-        //{
-        //    MockUriHelpView view = Container.GetExportedValue<IUriHelpView>() as MockUriHelpView;
-        //    view.ShowDialogAction = (x) =>
-        //    {
-        //        UriHelpViewModel uriHelpViewModel = x.GetViewModel<UriHelpViewModel>();
-        //        uriHelpViewModel.CancelCommand.Execute(null);
-        //    };
-        //    this.viewModel.UriHelpCommand.Execute(null);
-        //    Assert.IsFalse(viewModel.TestConnectionCommand.CanExecute(null));
+            Assert.AreEqual("ID", viewModel.PropertyMappingCollection["ID"]);
+            Assert.AreEqual("Title", viewModel.PropertyMappingCollection["Title"]);
+            Assert.AreEqual("Description", viewModel.PropertyMappingCollection["Description"]);
+            Assert.AreEqual("Assigned To", viewModel.PropertyMappingCollection["AssignedTo"]);
+            Assert.AreEqual("State", viewModel.PropertyMappingCollection["State"]);
+            Assert.AreEqual("Changed Date", viewModel.PropertyMappingCollection["ChangedDate"]);
+            Assert.AreEqual("Created By", viewModel.PropertyMappingCollection["CreatedBy"]);
+            Assert.AreEqual("Code Studio Rank", viewModel.PropertyMappingCollection["Priority"]);
 
-        //    view.ShowDialogAction = (x) =>
-        //    {
-        //        UriHelpViewModel uriHelpViewModel = x.GetViewModel<UriHelpViewModel>();
-        //        uriHelpViewModel.ServerName = "https://tfs.codeplex.com:443/tfs/TFS12";
-        //        uriHelpViewModel.SubmitCommand.Execute(null);
-        //    };
-        //    this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
-        //    this.viewModel.UriHelpCommand.Execute(null);
-        //    Assert.IsTrue(viewModel.TestConnectionCommand.CanExecute(null));
-        //}
+            Assert.IsNotNull(viewModel.TFSFields);
+            Assert.IsTrue(viewModel.TFSFields.Any());
 
-        //[TestMethod]
-        //public void TestConnectionCommandTest()
-        //{
-        //    MockUriHelpView view = Container.GetExportedValue<IUriHelpView>() as MockUriHelpView;
-        //    view.ShowDialogAction = (x) =>
-        //    {
-        //        UriHelpViewModel uriHelpViewModel = x.GetViewModel<UriHelpViewModel>();
-        //        uriHelpViewModel.ServerName = "https://tfs.codeplex.com:443/tfs/TFS12";
-        //        uriHelpViewModel.SubmitCommand.Execute(null);
-        //    };
-        //    this.viewModel.UriHelpCommand.Execute(null);
-        //    this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
+            Assert.AreEqual("Work Item Type", viewModel.BugFilterField);
+            Assert.AreEqual("Work Item", viewModel.BugFilterValue);
+            Assert.AreEqual(string.Empty, viewModel.PriorityRed);
 
-        //    MockMessageService messageService = Container.GetExportedValue<IMessageService>() as MockMessageService;
-        //    messageService.Clear();
-        //    Assert.IsNull(messageService.Message);
-        //    this.viewModel.TestConnectionCommand.Execute(null);
-        //    Assert.AreEqual(Resources.CannotConnect, messageService.Message);
-        //    Assert.AreEqual(MessageType.Message, messageService.MessageType);
+            Assert.AreEqual(ProgressTypes.Success, viewModel.ProgressType);
+            Assert.AreEqual(100, viewModel.ProgressValue);
+        }
 
-        //    this.viewModel.Settings.Password = ThePassword;
-        //    this.viewModel.TestConnectionCommand.Execute(null);
-        //    Assert.IsTrue(this.viewModel.CanConnect);
-        //    Assert.IsTrue(this.viewModel.TFSFields.Any());
-        //}
+        [TestMethod]
+        public void ValidateBeforeCloseSettingDialogBusyTest()
+        {
+            if (order++ != 2) { throw new NotSupportedException("This unit test must run as order."); }
+
+            Assert.IsNotNull(viewModel);
+            Assert.AreEqual(ProgressTypes.NotWorking, viewModel.ProgressType);
+
+            viewModel.ProgressType = ProgressTypes.OnAutoFillMapSettings;
+            Assert.AreEqual(SettingDialogValidateionResult.Busy, proxy.ValidateBeforeCloseSettingDialog());
+            viewModel.ProgressType = ProgressTypes.OnConnectProgress;
+            Assert.AreEqual(SettingDialogValidateionResult.Busy, proxy.ValidateBeforeCloseSettingDialog());
+            viewModel.ProgressType = ProgressTypes.OnGetFiledsProgress;
+            Assert.AreEqual(SettingDialogValidateionResult.Busy, proxy.ValidateBeforeCloseSettingDialog());
+
+            viewModel.ProgressType = ProgressTypes.NotWorking;
+        }
+
+        [TestMethod]
+        public void ValidateBeforeCloseSettingDialogConnectFailedTest()
+        {
+            if (order++ != 3) { throw new NotSupportedException("This unit test must run as order."); }
+
+            Assert.IsNull(viewModel.ConnectUri);
+            Assert.AreEqual(string.Empty, viewModel.UserName);
+            Assert.AreEqual(string.Empty, viewModel.Password);
+            Assert.AreEqual(SettingDialogValidateionResult.ConnectFailed, proxy.ValidateBeforeCloseSettingDialog());
+            viewModel.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");
+            Assert.AreEqual(SettingDialogValidateionResult.ConnectFailed, proxy.ValidateBeforeCloseSettingDialog());
+            viewModel.UserName = "snd\\BigEgg_cp";
+            viewModel.ProgressType = ProgressTypes.FailedOnConnect;
+            Assert.AreEqual(SettingDialogValidateionResult.ConnectFailed, proxy.ValidateBeforeCloseSettingDialog());
+            viewModel.ProgressType = ProgressTypes.FailedOnGetFileds;
+            Assert.AreEqual(SettingDialogValidateionResult.ConnectFailed, proxy.ValidateBeforeCloseSettingDialog());
+
+            viewModel.ProgressType = ProgressTypes.NotWorking;
+            Assert.AreEqual(SettingDialogValidateionResult.ConnectFailed, proxy.ValidateBeforeCloseSettingDialog());
+        }
+
+        [TestMethod]
+        public void ValidateBeforeCloseSettingDialogUnvalidTest()
+        {
+            if (order++ != 11) { throw new NotSupportedException("This unit test must run as order."); }
+
+            var idMapping = viewModel.PropertyMappingCollection["ID"];
+            viewModel.PropertyMappingCollection["ID"] = string.Empty;
+            Assert.AreEqual(SettingDialogValidateionResult.UnValid, proxy.ValidateBeforeCloseSettingDialog());
+            viewModel.PropertyMappingCollection["ID"] = idMapping;
+
+            var bugFilterField = viewModel.BugFilterField;
+            viewModel.BugFilterField = string.Empty;
+            Assert.AreEqual(SettingDialogValidateionResult.UnValid, proxy.ValidateBeforeCloseSettingDialog());
+            viewModel.BugFilterField = bugFilterField;
+
+            var bugFilterValue = viewModel.BugFilterValue;
+            viewModel.BugFilterValue = string.Empty;
+            Assert.AreEqual(SettingDialogValidateionResult.UnValid, proxy.ValidateBeforeCloseSettingDialog());
+            viewModel.BugFilterValue = bugFilterValue;
+        }
+
+        [TestMethod]
+        public void ValidateBeforeCloseSettingDialogValidTest()
+        {
+            if (order++ != 8) { throw new NotSupportedException("This unit test must run as order."); }
+
+            Assert.AreEqual(SettingDialogValidateionResult.Valid, proxy.ValidateBeforeCloseSettingDialog());
+        }
+
+        [TestMethod]
+        public void AfterCloseSettingDialogSubmitTest()
+        {
+            if (order++ != 9) { throw new NotSupportedException("This unit test must run as order."); }
+
+            Assert.IsFalse(File.Exists(SettingDocumentType.FilePath));
+            proxy.AfterCloseSettingDialog(true);
+            Assert.IsTrue(File.Exists(SettingDocumentType.FilePath));
+
+            var doc = SettingDocumentType.Open();
+            Assert.AreEqual(viewModel.ConnectUri.AbsoluteUri, doc.ConnectUri.AbsoluteUri);
+            Assert.AreEqual(viewModel.UserName, doc.UserName);
+            Assert.AreEqual(viewModel.Password, doc.Password);
+
+            Assert.AreEqual(viewModel.PropertyMappingCollection["ID"], doc.PropertyMappingCollection["ID"]);
+            Assert.AreEqual(viewModel.PropertyMappingCollection["Title"], doc.PropertyMappingCollection["Title"]);
+            Assert.AreEqual(viewModel.PropertyMappingCollection["Description"], doc.PropertyMappingCollection["Description"]);
+            Assert.AreEqual(viewModel.PropertyMappingCollection["AssignedTo"], doc.PropertyMappingCollection["AssignedTo"]);
+            Assert.AreEqual(viewModel.PropertyMappingCollection["State"], doc.PropertyMappingCollection["State"]);
+            Assert.AreEqual(viewModel.PropertyMappingCollection["ChangedDate"], doc.PropertyMappingCollection["ChangedDate"]);
+            Assert.AreEqual(viewModel.PropertyMappingCollection["CreatedBy"], doc.PropertyMappingCollection["CreatedBy"]);
+            Assert.AreEqual(viewModel.PropertyMappingCollection["Priority"], doc.PropertyMappingCollection["Priority"]);
+
+            Assert.AreEqual(viewModel.BugFilterField, doc.BugFilterField);
+            Assert.AreEqual(viewModel.BugFilterValue, doc.BugFilterValue);
+            Assert.AreEqual(viewModel.PriorityRed, doc.PriorityRed);
+
+            Assert.IsTrue(proxy.CanQuery);
+        }
+
+        [TestMethod]
+        public void AfterCloseSettingDialogCancelTest()
+        {
+            if (order++ != 12) { throw new NotSupportedException("This unit test must run as order."); }
+
+            proxy.AfterCloseSettingDialog(true);
+            Assert.IsTrue(File.Exists(SettingDocumentType.FilePath));
+
+            var idMapping = viewModel.PropertyMappingCollection["ID"];
+            var bugFilterField = viewModel.BugFilterField;
+            var bugFilterValue = viewModel.BugFilterValue;
+
+            viewModel.PropertyMappingCollection["ID"] = string.Empty;
+            viewModel.BugFilterField = string.Empty;
+            viewModel.BugFilterValue = string.Empty;
+            Assert.AreEqual(SettingDialogValidateionResult.UnValid, proxy.ValidateBeforeCloseSettingDialog());
+
+            proxy.AfterCloseSettingDialog(false);
+
+            var doc = SettingDocumentType.Open();
+            Assert.AreEqual(idMapping, doc.PropertyMappingCollection["ID"]);
+            Assert.AreEqual(bugFilterField, doc.BugFilterField);
+            Assert.AreEqual(bugFilterValue, doc.BugFilterValue);
+
+            Assert.IsTrue(proxy.CanQuery);
+        }
+
+        [TestMethod]
+        public void CanTestConnectionCommandTest()
+        {
+            if (order++ != 4) { throw new NotSupportedException("This unit test must run as order."); }
+
+            viewModel.ConnectUri = null;
+            viewModel.UserName = string.Empty;
+            Assert.IsFalse(viewModel.TestConnectionCommand.CanExecute(null));
+            viewModel.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");
+            Assert.IsFalse(viewModel.TestConnectionCommand.CanExecute(null));
+            viewModel.UserName = "snd\\BigEgg_cp";
+            Assert.IsTrue(viewModel.TestConnectionCommand.CanExecute(null));
+        }
+
+        [TestMethod]
+        public void TestConnectionCommandFailedOnConnectTest()
+        {
+            if (order++ != 5) { throw new NotSupportedException("This unit test must run as order."); }
+
+            proxy.TestConnectionCommandExcuteCore();
+
+            Assert.AreEqual(ProgressTypes.FailedOnConnect, viewModel.ProgressType);
+            Assert.AreEqual(100, viewModel.ProgressValue);
+        }
+
+        [TestMethod]
+        public void TestConnectionCommandSuccessTest()
+        {
+            if (order++ != 6) { throw new NotSupportedException("This unit test must run as order."); }
+
+            viewModel.Password = ThePassword;
+
+            proxy.TestConnectionCommandExcuteCore();
+
+            Assert.AreEqual(ProgressTypes.Success, viewModel.ProgressType);
+            Assert.AreEqual(100, viewModel.ProgressValue);
+        }
+
+        [TestMethod]
+        public void AutoMappingTest()
+        {
+            if (order++ != 7) { throw new NotSupportedException("This unit test must run as order."); }
+
+            Assert.AreEqual("ID", viewModel.PropertyMappingCollection["ID"]);
+            Assert.AreEqual("Title", viewModel.PropertyMappingCollection["Title"]);
+            Assert.AreEqual("Description", viewModel.PropertyMappingCollection["Description"]);
+            Assert.AreEqual("Assigned To", viewModel.PropertyMappingCollection["AssignedTo"]);
+            Assert.AreEqual("State", viewModel.PropertyMappingCollection["State"]);
+            Assert.AreEqual("Changed Date", viewModel.PropertyMappingCollection["ChangedDate"]);
+            Assert.AreEqual("Created By", viewModel.PropertyMappingCollection["CreatedBy"]);
+            Assert.AreEqual("Code Studio Rank", viewModel.PropertyMappingCollection["Priority"]);
+
+            Assert.AreEqual("Work Item Type", viewModel.BugFilterField);
+            //  Code Plex don't have a type named "Bugs"
+            Assert.AreEqual(string.Empty, viewModel.BugFilterValue);
+
+            Assert.AreEqual(string.Empty, viewModel.PriorityRed);
+
+            viewModel.BugFilterValue = "Work Item";
+        }
+
+        [TestMethod]
+        public void SettingViewModelConnectionPropertyChangedTest()
+        {
+            if (order++ != 13) { throw new NotSupportedException("This unit test must run as order."); }
+
+        }
+
+        [TestMethod]
+        public void SettingViewModelPriorityMappingChangedTest()
+        {
+            if (order++ != 14) { throw new NotSupportedException("This unit test must run as order."); }
+
+        }
+
+        [TestMethod]
+        public void SettingViewModelPriorityValuePropertyChangedTest()
+        {
+            if (order++ != 15) { throw new NotSupportedException("This unit test must run as order."); }
+
+        }
+
+        [TestMethod]
+        public void QueryTest()
+        {
+            if (order++ != 16) { throw new NotSupportedException("This unit test must run as order."); }
+
+        }
 
         //[TestMethod]
         //public void QueryTest()
         //{
-        //    AssertHelper.ExpectedException<NotSupportedException>(() => this.proxy.Query("snd\\BigEgg_cp"));
+        //    AssertHelper.ExpectedException<NotSupportedException>(() => proxy.Query("snd\\BigEgg_cp"));
 
-        //    this.viewModel.Settings.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");
-        //    this.viewModel.Settings.BugFilterField = "Work Item Type";
-        //    this.viewModel.Settings.BugFilterValue = "Work Item";
-        //    this.viewModel.Settings.UserName = "snd\\BigEgg_cp";
-        //    this.viewModel.Settings.Password = ThePassword;
-        //    this.viewModel.Settings.PropertyMappingCollection["ID"] = "ID";
-        //    this.viewModel.Settings.PropertyMappingCollection["Title"] = "Title";
-        //    this.viewModel.Settings.PropertyMappingCollection["Description"] = "Description";
-        //    this.viewModel.Settings.PropertyMappingCollection["AssignedTo"] = "Assigned To";
-        //    this.viewModel.Settings.PropertyMappingCollection["State"] = "State";
-        //    this.viewModel.Settings.PropertyMappingCollection["ChangedDate"] = "Changed Date";
-        //    this.viewModel.Settings.PropertyMappingCollection["CreatedBy"] = "Created By";
-        //    this.viewModel.Settings.PropertyMappingCollection["Priority"] = "Code Studio Rank";
+        //    viewModel.Settings.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");
+        //    viewModel.Settings.BugFilterField = "Work Item Type";
+        //    viewModel.Settings.BugFilterValue = "Work Item";
+        //    viewModel.Settings.UserName = "snd\\BigEgg_cp";
+        //    viewModel.Settings.Password = ThePassword;
+        //    viewModel.Settings.PropertyMappingCollection["ID"] = "ID";
+        //    viewModel.Settings.PropertyMappingCollection["Title"] = "Title";
+        //    viewModel.Settings.PropertyMappingCollection["Description"] = "Description";
+        //    viewModel.Settings.PropertyMappingCollection["AssignedTo"] = "Assigned To";
+        //    viewModel.Settings.PropertyMappingCollection["State"] = "State";
+        //    viewModel.Settings.PropertyMappingCollection["ChangedDate"] = "Changed Date";
+        //    viewModel.Settings.PropertyMappingCollection["CreatedBy"] = "Created By";
+        //    viewModel.Settings.PropertyMappingCollection["Priority"] = "Code Studio Rank";
 
-        //    Assert.IsTrue(this.proxy.CanQuery);
-        //    ReadOnlyCollection<Bug> bugs = this.proxy.Query("BigEgg_cp");
+        //    Assert.IsTrue(proxy.CanQuery);
+        //    ReadOnlyCollection<Bug> bugs = proxy.Query("BigEgg_cp");
         //    Assert.IsNotNull(bugs);
         //    Assert.IsTrue(bugs.Any());
 
-        //    bugs = this.proxy.Query("BigEgg_cp", false);
+        //    bugs = proxy.Query("BigEgg_cp", false);
         //    Assert.IsNotNull(bugs);
         //    Assert.IsTrue(bugs.Any());
         //}

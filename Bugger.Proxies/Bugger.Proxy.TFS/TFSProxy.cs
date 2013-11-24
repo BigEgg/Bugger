@@ -86,7 +86,7 @@ namespace Bugger.Proxy.TFS
                 this.settingViewModel.TestConnectionCommand = this.testConnectionCommand;
             }
 
-            this.settingViewModel.ClearData();
+            this.settingViewModel.ClearMappingData();
 
             this.settingViewModel.ConnectUri = this.document.ConnectUri;
             this.settingViewModel.UserName = this.document.UserName;
@@ -154,7 +154,7 @@ namespace Bugger.Proxy.TFS
             this.document.PropertyMappingCollection.Clear();
             foreach (var mapping in this.settingViewModel.PropertyMappingCollection)
             {
-                this.document.PropertyMappingCollection.Add(mapping);
+                this.document.PropertyMappingCollection.Add(mapping.Key, mapping.Value);
             }
 
             this.tfsFieldsCache.Clear();
@@ -193,17 +193,17 @@ namespace Bugger.Proxy.TFS
         public override SettingDialogValidateionResult ValidateBeforeCloseSettingDialog()
         {
             if (this.settingViewModel.ProgressType == ProgressTypes.OnAutoFillMapSettings
-                && this.settingViewModel.ProgressType == ProgressTypes.OnConnectProgress
-                && this.settingViewModel.ProgressType == ProgressTypes.OnGetFiledsProgress)
+                || this.settingViewModel.ProgressType == ProgressTypes.OnConnectProgress
+                || this.settingViewModel.ProgressType == ProgressTypes.OnGetFiledsProgress)
             {
                 return SettingDialogValidateionResult.Busy;
             }
 
-            if (this.settingViewModel.ConnectUri != null
-                && this.settingViewModel.ConnectUri.IsAbsoluteUri
-                && !string.IsNullOrWhiteSpace(this.settingViewModel.UserName)
-                && this.settingViewModel.ProgressType == ProgressTypes.FailedOnConnect
-                && this.settingViewModel.ProgressType == ProgressTypes.FailedOnGetFileds)
+            if (this.settingViewModel.ConnectUri == null
+                || !this.settingViewModel.ConnectUri.IsAbsoluteUri
+                || string.IsNullOrWhiteSpace(this.settingViewModel.UserName)
+                || this.settingViewModel.ProgressType == ProgressTypes.FailedOnConnect
+                || this.settingViewModel.ProgressType == ProgressTypes.FailedOnGetFileds)
             {
                 return SettingDialogValidateionResult.ConnectFailed;
             }
@@ -219,8 +219,8 @@ namespace Bugger.Proxy.TFS
             }
 
             if (string.IsNullOrWhiteSpace(this.settingViewModel.BugFilterField)
-                && string.IsNullOrWhiteSpace(this.settingViewModel.BugFilterValue)
-                && this.settingViewModel.PropertyMappingCollection
+                || string.IsNullOrWhiteSpace(this.settingViewModel.BugFilterValue)
+                || this.settingViewModel.PropertyMappingCollection
                                         .Where(x => !ignoreField.Contains(x.Key))
                                         .Any(x =>
                                          {
@@ -385,51 +385,47 @@ namespace Bugger.Proxy.TFS
 
             if (tfsFields.Any(x => x.Name == "ID"))
             {
-                this.document.PropertyMappingCollection["ID"] = "ID";
+                this.settingViewModel.PropertyMappingCollection["ID"] = "ID";
             }
             if (tfsFields.Any(x => x.Name == "Title"))
             {
-                this.document.PropertyMappingCollection["Title"] = "Title";
+                this.settingViewModel.PropertyMappingCollection["Title"] = "Title";
             }
             if (tfsFields.Any(x => x.Name == "Description"))
             {
-                this.document.PropertyMappingCollection["Description"] = "Description";
+                this.settingViewModel.PropertyMappingCollection["Description"] = "Description";
             }
             if (tfsFields.Any(x => x.Name == "Assigned To"))
             {
-                this.document.PropertyMappingCollection["AssignedTo"] = "Assigned To";
+                this.settingViewModel.PropertyMappingCollection["AssignedTo"] = "Assigned To";
             }
             if (tfsFields.Any(x => x.Name == "State"))
             {
-                this.document.PropertyMappingCollection["State"] = "State";
+                this.settingViewModel.PropertyMappingCollection["State"] = "State";
             }
             if (tfsFields.Any(x => x.Name == "Changed Date"))
             {
-                this.document.PropertyMappingCollection["ChangedDate"] = "Changed Date";
+                this.settingViewModel.PropertyMappingCollection["ChangedDate"] = "Changed Date";
             }
             if (tfsFields.Any(x => x.Name == "Created By"))
             {
-                this.document.PropertyMappingCollection["CreatedBy"] = "Created By";
+                this.settingViewModel.PropertyMappingCollection["CreatedBy"] = "Created By";
             }
             if (tfsFields.Any(x => x.Name == "Code Studio Rank"))
             {
-                this.document.PropertyMappingCollection["Priority"] = "Code Studio Rank";
+                this.settingViewModel.PropertyMappingCollection["Priority"] = "Code Studio Rank";
             }
             if (tfsFields.Any(x => x.Name == "Severity"))
             {
-                this.document.PropertyMappingCollection["Severity"] = "Severity";
+                this.settingViewModel.PropertyMappingCollection["Severity"] = "Severity";
             }
 
             var workItemType = tfsFields.FirstOrDefault(x => x.Name == "Work Item Type");
             if (workItemType != null)
             {
-                this.document.BugFilterField = "Work Item Type";
+                this.settingViewModel.BugFilterField = "Work Item Type";
                 var value = workItemType.AllowedValues.FirstOrDefault(x => string.Compare(x, "Bugs", true) == 0);
-
-                if (string.IsNullOrEmpty(value))
-                {
-                    this.document.BugFilterValue = "value";
-                }
+                this.settingViewModel.BugFilterValue = value ?? string.Empty;
             }
         }
 
@@ -441,7 +437,7 @@ namespace Bugger.Proxy.TFS
             }
             else if (e.PropertyName == "ConnectUri" || e.PropertyName == "UserName" || e.PropertyName == "Password")
             {
-                this.settingViewModel.ClearData();
+                this.settingViewModel.ClearMappingData();
             }
 
             UpdateCommands();
@@ -469,61 +465,65 @@ namespace Bugger.Proxy.TFS
 
         private void TestConnectionCommandExcute()
         {
-            this.settingViewModel.ClearData();
-
-            this.settingViewModel.ProgressType = ProgressTypes.OnConnectProgress;
-            this.settingViewModel.ProgressValue = 0;
             Task.Factory.StartNew(() =>
             {
-                //  Connect
-                TfsTeamProjectCollection tpc = null;
-                if (!tfsHelper.TryConnection(this.document.ConnectUri, this.document.UserName,
-                                             this.document.Password, out tpc))
-                {
-                    this.settingViewModel.ProgressType = ProgressTypes.FailedOnConnect;
-                    this.settingViewModel.ProgressValue = 100;
-                    return;
-                }
-
-
-                //  Query TFS Fields
-                this.settingViewModel.ProgressType = ProgressTypes.OnGetFiledsProgress;
-                this.settingViewModel.ProgressValue = 50;
-
-                var fields = tfsHelper.GetFields(tpc);
-                if (fields == null || !fields.Any())
-                {
-                    this.settingViewModel.ProgressType = ProgressTypes.FailedOnGetFileds;
-                    this.settingViewModel.ProgressValue = 100;
-                }
-
-                this.settingViewModel.ProgressValue = 80;
-                foreach (var field in fields)
-                {
-                    this.settingViewModel.TFSFields.Add(field);
-                    if (field.AllowedValues.Any())
-                    {
-                        this.settingViewModel.BugFilterFields.Add(field);
-                    }
-                }
-
-                //  Auto Fill Map Settings
-                this.settingViewModel.ProgressValue = 90;
-                this.settingViewModel.ProgressType = ProgressTypes.OnAutoFillMapSettings;
-                try
-                {
-                    AutoFillMapSettings(fields);
-                }
-                catch
-                {
-                    this.settingViewModel.ProgressType = ProgressTypes.SuccessWithError;
-                    this.settingViewModel.ProgressValue = 100;
-                    return;
-                }
-
-                this.settingViewModel.ProgressValue = 100;
-                this.settingViewModel.ProgressType = ProgressTypes.Success;
+                TestConnectionCommandExcuteCore();
             }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        internal void TestConnectionCommandExcuteCore()
+        {
+            this.settingViewModel.ClearMappingData();
+            this.settingViewModel.ProgressType = ProgressTypes.OnConnectProgress;
+            this.settingViewModel.ProgressValue = 0;
+
+            //  Connect
+            TfsTeamProjectCollection tpc = null;
+            if (!tfsHelper.TryConnection(this.settingViewModel.ConnectUri, this.settingViewModel.UserName,
+                                         this.settingViewModel.Password, out tpc))
+            {
+                this.settingViewModel.ProgressType = ProgressTypes.FailedOnConnect;
+                this.settingViewModel.ProgressValue = 100;
+                return;
+            }
+
+            //  Query TFS Fields
+            this.settingViewModel.ProgressType = ProgressTypes.OnGetFiledsProgress;
+            this.settingViewModel.ProgressValue = 50;
+
+            var fields = tfsHelper.GetFields(tpc);
+            if (fields == null || !fields.Any())
+            {
+                this.settingViewModel.ProgressType = ProgressTypes.FailedOnGetFileds;
+                this.settingViewModel.ProgressValue = 100;
+            }
+
+            this.settingViewModel.ProgressValue = 80;
+            foreach (var field in fields)
+            {
+                this.settingViewModel.TFSFields.Add(field);
+                if (field.AllowedValues.Any())
+                {
+                    this.settingViewModel.BugFilterFields.Add(field);
+                }
+            }
+
+            //  Auto Fill Map Settings
+            this.settingViewModel.ProgressValue = 90;
+            this.settingViewModel.ProgressType = ProgressTypes.OnAutoFillMapSettings;
+            try
+            {
+                AutoFillMapSettings(fields);
+            }
+            catch
+            {
+                this.settingViewModel.ProgressType = ProgressTypes.SuccessWithError;
+                this.settingViewModel.ProgressValue = 100;
+                return;
+            }
+
+            this.settingViewModel.ProgressValue = 100;
+            this.settingViewModel.ProgressType = ProgressTypes.Success;
         }
 
         private void UpdateCommands()

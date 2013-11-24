@@ -60,7 +60,7 @@ namespace Bugger.Proxy.TFS.ViewModels
                 AddWeakEventListener(mapping, PropertyMappingModelPropertyChanged);
             }
 
-            ClearData();
+            ClearMappingData();
         }
 
         #region Properties
@@ -194,7 +194,7 @@ namespace Bugger.Proxy.TFS.ViewModels
 
         #region Methods
         #region Public Methods
-        public void ClearData()
+        public void ClearMappingData()
         {
             TFSFields.Clear();
             BugFilterFields.Clear();

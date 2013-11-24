@@ -22,6 +22,12 @@ namespace Bugger.Proxy.TFS.Documents
 
                 this.propertyMappingCollection.Add(propertyDescriptor.Name, string.Empty);
             }
+
+            UserName = string.Empty;
+            Password = string.Empty;
+            BugFilterField = string.Empty;
+            BugFilterValue = string.Empty;
+            PriorityRed = string.Empty;
         }
 
         #region Properties
