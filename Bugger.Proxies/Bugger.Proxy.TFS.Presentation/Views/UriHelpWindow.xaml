@@ -4,12 +4,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:p="clr-namespace:Bugger.Proxy.TFS.Presentation.Properties"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:dd="clr-namespace:Bugger.Proxy.TFS.Presentation.DesignData"
         xmlns:vm="clr-namespace:Bugger.Proxy.TFS.ViewModels;assembly=Bugger.Proxy.TFS"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:UriHelpViewModel}"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleUriHelpViewModel, IsDesignTimeCreatable=True}"
         xmlns:Converters="clr-namespace:BigEgg.Framework.Presentation.Converters;assembly=BigEgg.Framework"
         Title="{Binding Title, Mode=OneWay}"
         Width="400" Height="300" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
-    
+
     <Window.Resources>
         <Converters:InvertBooleanConverter x:Key="InvertBooleanConverter"/>
     </Window.Resources>

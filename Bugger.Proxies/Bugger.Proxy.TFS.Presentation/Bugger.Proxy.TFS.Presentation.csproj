@@ -59,6 +59,7 @@
     <Compile Include="Converters\ProgressTypesToMessageConverter.cs" />
     <Compile Include="Converters\ProgressTypesToVisibilityConverter.cs" />
     <Compile Include="DesignData\SampleTFSSettingViewModel.cs" />
+    <Compile Include="DesignData\SampleUriHelpViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
