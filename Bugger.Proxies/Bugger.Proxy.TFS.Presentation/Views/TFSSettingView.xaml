@@ -52,19 +52,19 @@
                 </Grid.RowDefinitions>
                 <Label Content="{x:Static p:Resources.NameOrURIofTFS}" Grid.Row="0" Grid.ColumnSpan="4"
                        VerticalAlignment="Center" HorizontalAlignment="Left" Target="{Binding ElementName=tfsName}" />
-                <TextBox x:Name="tfsName" Text="{Binding Settings.ConnectUri, Mode=OneWay}"
+                <TextBox x:Name="tfsName" Text="{Binding ConnectUri, Mode=OneWay}"
                          Margin="0,0,25,0" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="3" IsReadOnly="True" />
-                <Button Content="{x:Static p:Resources.GenerateUri}" Command="{Binding UriHelpCommand}" Grid.Column="3"
+                <Button Content="{x:Static p:Resources.GenerateUri}" Command="{Binding UriHelpCommand, Mode=OneWay}" Grid.Column="3"
                         Margin="-10,0,0,0" Grid.Row="1" VerticalAlignment="Center" Height="25" />
                 <Label Content="{x:Static p:Resources.UserName}" Margin="0,0,15,0" Grid.Row="2"
                        VerticalAlignment="Center" Grid.ColumnSpan="2" Target="{Binding ElementName=userName}" />
                 <Label Content="{x:Static p:Resources.Password}" Grid.Column="2" Margin="15,0,0,0" Grid.Row="2"
                        VerticalAlignment="Center" Grid.ColumnSpan="2" Target="{Binding ElementName=password}" />
-                <TextBox x:Name="userName" Text="{Binding Settings.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="0,0,15,0"
+                <TextBox x:Name="userName" Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="0,0,15,0"
                          Grid.Row="3" VerticalAlignment="Center" />
                 <PasswordBox x:Name="password" LostFocus="PasswordChanged" Grid.ColumnSpan="2" Grid.Column="2"
                              Margin="15,0,0,0" Grid.Row="3" VerticalAlignment="Center" />
-                <Button Content="{x:Static p:Resources.TestConnection}" Command="{Binding TestConnectionCommand}" Grid.Column="3" Margin="-10,0,0,0" Grid.Row="4"
+                <Button Content="{x:Static p:Resources.TestConnection}" Command="{Binding TestConnectionCommand, Mode=OneWay}" Grid.Column="3" Margin="-10,0,0,0" Grid.Row="4"
                         VerticalAlignment="Bottom" Height="25" />
                 <TextBlock Grid.Row="4" Grid.ColumnSpan="3" Text="{Binding ProgressType, Converter={x:Static c:ProgressTypesToMessageConverter.Default}}" Margin="0,0,50,0" 
                            Visibility="{Binding ProgressType, Converter={x:Static c:ProgressTypesToVisibilityConverter.Default}}" VerticalAlignment="Bottom"/>
@@ -90,7 +90,7 @@
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="{x:Static p:Resources.MapTitle}" VerticalAlignment="Center" Grid.ColumnSpan="4"/>
-                <ListView ItemsSource="{Binding Settings.PropertyMappingCollection}" Grid.Row="1" Grid.ColumnSpan="4" Margin="0,0,0,10">
+                <ListView ItemsSource="{Binding PropertyMappingCollection}" Grid.Row="1" Grid.ColumnSpan="4" Margin="0,0,0,10">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="170" Header="{x:Static p:Resources.BugProperty}" DisplayMemberBinding="{Binding Key}"/>
@@ -109,15 +109,15 @@
                     </ListView.View>
                 </ListView>
                 <Label Content="{x:Static p:Resources.BugFilter}" Grid.Row="2" VerticalAlignment="Center"/>
-                <ComboBox x:Name="bugFilter" Grid.Row="2" Grid.IsSharedSizeScope="True" Grid.Column="1" VerticalAlignment="Center" ItemsSource="{Binding BugFilterFields}" SelectedValue="{Binding Settings.BugFilterField}" SelectedValuePath="Name">
+                <ComboBox x:Name="bugFilter" Grid.Row="2" Grid.IsSharedSizeScope="True" Grid.Column="1" VerticalAlignment="Center" ItemsSource="{Binding BugFilterFields}" SelectedValue="{Binding BugFilterField}" SelectedValuePath="Name">
                     <ComboBox.ItemTemplateSelector>
                         <ts:TFSFieldComboTemplateSelector/>
                     </ComboBox.ItemTemplateSelector>
                 </ComboBox>
                 <TextBlock Text="{x:Static p:Resources.Equal}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" ItemsSource="{Binding SelectedItem.AllowedValues, ElementName=bugFilter}" SelectedItem="{Binding Settings.BugFilterValue}"/>
+                <ComboBox Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" ItemsSource="{Binding SelectedItem.AllowedValues, ElementName=bugFilter}" SelectedItem="{Binding BugFilterValue}"/>
                 <Label Content="{x:Static p:Resources.PriorityRed}" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Target="{Binding ElementName=priorityRed}"/>
-                <ComboBox x:Name="priorityRed" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" Text="{Binding Settings.PriorityRed, Mode=OneWay}" ItemsSource="{Binding PriorityValues}" IsReadOnly="True" IsEditable="True" Margin="0,4">
+                <ComboBox x:Name="priorityRed" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center" Text="{Binding PriorityRed, Mode=OneWay}" ItemsSource="{Binding PriorityValues}" IsReadOnly="True" IsEditable="True" Margin="0,4">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
