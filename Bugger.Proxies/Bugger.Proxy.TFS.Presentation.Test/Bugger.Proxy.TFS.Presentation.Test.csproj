@@ -39,11 +39,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -59,6 +61,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Converters\ItemsToStringConverterTest.cs" />
+    <Compile Include="Converters\ProgressTypesToColorConverterTest.cs" />
+    <Compile Include="Converters\ProgressTypesToIndeterminateConverterTest.cs" />
+    <Compile Include="Converters\ProgressTypesToMessageConverterTest.cs" />
+    <Compile Include="Converters\ProgressTypesToVisibilityConverterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +75,10 @@
     <ProjectReference Include="..\Bugger.Proxy.TFS.Presentation\Bugger.Proxy.TFS.Presentation.csproj">
       <Project>{0c5cd96e-9b43-4065-8a02-83b96989e242}</Project>
       <Name>Bugger.Proxy.TFS.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bugger.Proxy.TFS\Bugger.Proxy.TFS.csproj">
+      <Project>{5714b0c6-82f3-4cc6-b33e-e3f8835c38fc}</Project>
+      <Name>Bugger.Proxy.TFS</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

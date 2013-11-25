@@ -6,7 +6,7 @@ using Bugger.Proxy.TFS.Presentation.Properties;
 
 namespace Bugger.Proxy.TFS.Presentation.Converters
 {
-    class ProgressTypesToMessageConverter : IValueConverter
+    public class ProgressTypesToMessageConverter : IValueConverter
     {
         private static readonly ProgressTypesToMessageConverter defaultInstance = new ProgressTypesToMessageConverter();
 
