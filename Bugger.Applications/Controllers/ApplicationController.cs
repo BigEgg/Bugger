@@ -161,7 +161,7 @@ namespace Bugger.Applications.Controllers
             settingsViewModel.FilterStatusValues = Settings.Default.FilterStatusValues;
             settingsViewModel.FloatingWindowOpacity = Settings.Default.FloatingWindowOpacity;
 
-            SettingDialogViewModel settingDialog = new SettingDialogViewModel(settingDialogView, proxyService, settingsViewModel);
+            SettingDialogViewModel settingDialog = new SettingDialogViewModel(settingDialogView, proxyService, this.messageService, settingsViewModel);
 
             bool? result = settingDialog.ShowDialog(this.floatingViewModel.View);
 

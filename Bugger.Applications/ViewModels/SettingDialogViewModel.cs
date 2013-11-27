@@ -11,6 +11,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using Bugger.Proxy;
+using BigEgg.Framework.Applications.Services;
+using System.Globalization;
 
 namespace Bugger.Applications.ViewModels
 {
@@ -18,6 +20,7 @@ namespace Bugger.Applications.ViewModels
     {
         #region Fields
         private readonly IProxyService proxyService;
+        private readonly IMessageService messageService;
         private readonly DelegateCommand submitCommand;
         private readonly DelegateCommand cancelCommand;
         private readonly ObservableCollection<object> views;
@@ -26,19 +29,26 @@ namespace Bugger.Applications.ViewModels
         private ITracingSystemProxy settingActiveProxy;
         #endregion
 
-        public SettingDialogViewModel(ISettingDialogView view, IProxyService proxyService, SettingsViewModel settingsViewModel)
+        public SettingDialogViewModel(ISettingDialogView view, IProxyService proxyService, IMessageService messageService, SettingsViewModel settingsViewModel)
             : base(view)
         {
             this.proxyService = proxyService;
             this.settingsViewModel = settingsViewModel;
+            this.messageService = messageService;
+
             this.submitCommand = new DelegateCommand(SubmitSettingCommand, CanSubmitSetting);
             this.cancelCommand = new DelegateCommand(() => Close(false));
 
             this.views = new ObservableCollection<object>();
             this.views.Add(this.settingsViewModel.View);
-            if (this.proxyService.ActiveProxy != null && this.proxyService.ActiveProxy.SettingView != null)
-                this.views.Add(this.proxyService.ActiveProxy.SettingView);
-
+            if (this.proxyService.ActiveProxy != null)
+            {
+                var settingView = this.proxyService.ActiveProxy.InitializeSettingDialog();
+                if (settingView != null)
+                {
+                    this.views.Add(settingView);
+                }
+            }
             SelectView = this.settingsViewModel.View;
 
             AddWeakEventListener(this.settingsViewModel, SettingsViewModelPropertyChanged);
@@ -70,7 +80,9 @@ namespace Bugger.Applications.ViewModels
         public void OnCancelSettings()
         {
             if (this.settingActiveProxy != null)
-                this.settingActiveProxy.OnCancelSettings();
+            {
+                this.settingActiveProxy.AfterCloseSettingDialog(false);
+            }
         }
         #endregion
 
@@ -78,17 +90,46 @@ namespace Bugger.Applications.ViewModels
         private void SubmitSettingCommand()
         {
             if (this.settingActiveProxy != null)
-                this.settingActiveProxy.OnSumbitSettings();
+            {
+                var validateResult = this.settingActiveProxy.ValidateBeforeCloseSettingDialog();
 
-            this.proxyService.ActiveProxy = this.settingActiveProxy;
+                bool result;
+                switch (validateResult)
+                {
+                    case SettingDialogValidateionResult.Busy:
+                        messageService.ShowWarning(this.View, string.Format(CultureInfo.CurrentCulture, Resources.ProxySettingBusy));
+                        break;
+                    case SettingDialogValidateionResult.ConnectFailed:
+                        result = messageService.ShowYesNoQuestion(this.View, string.Format(CultureInfo.CurrentCulture, Resources.ProxySettingCannotConnect));
+                        if (result)
+                        {
+                            this.settingActiveProxy.AfterCloseSettingDialog(true);
+                            this.proxyService.ActiveProxy = this.settingActiveProxy;
+                            Close(true);
+                        }
+                        break;
+                    case SettingDialogValidateionResult.UnValid:
+                        result = messageService.ShowYesNoQuestion(this.View, string.Format(CultureInfo.CurrentCulture, Resources.ProxySettingUnValid));
+                        if (result)
+                        {
+                            this.settingActiveProxy.AfterCloseSettingDialog(true);
+                            this.proxyService.ActiveProxy = this.settingActiveProxy;
+                            Close(true);
+                        }
+                        break;
+                    case SettingDialogValidateionResult.Valid:
+                        this.settingActiveProxy.AfterCloseSettingDialog(true);
+                        this.proxyService.ActiveProxy = this.settingActiveProxy;
+                        Close(true);
+                        break;
+                }
+            }
 
-            Close(true);
         }
 
         private bool CanSubmitSetting()
         {
-            return string.IsNullOrEmpty(this.settingsViewModel.Validate())
-                && this.settingActiveProxy.CanQuery;
+            return string.IsNullOrEmpty(this.settingsViewModel.Validate());
         }
 
         private void SettingsViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -99,9 +140,11 @@ namespace Bugger.Applications.ViewModels
                 {
                     RemoveWeakEventListener(this.settingActiveProxy, ActiveProxyPropertyChanged);
                     RemoveWeakEventListener(this.settingActiveProxy.StateValues, StateValuesCollectionChanged);
-                    if (this.settingActiveProxy.SettingView != null)
+
+                    var settingView = this.settingActiveProxy.InitializeSettingDialog();
+                    if (settingView != null)
                     {
-                        this.views.Remove(this.settingActiveProxy.SettingView);
+                        this.views.Remove(settingView);
                     }
                 }
 
@@ -113,9 +156,10 @@ namespace Bugger.Applications.ViewModels
                 {
                     AddWeakEventListener(this.settingActiveProxy, ActiveProxyPropertyChanged);
                     AddWeakEventListener(this.settingActiveProxy.StateValues, StateValuesCollectionChanged);
-                    if (this.settingActiveProxy.SettingView != null)
+                    var settingView = this.settingActiveProxy.InitializeSettingDialog();
+                    if (settingView != null)
                     {
-                        this.views.Add(this.settingActiveProxy.SettingView);
+                        this.views.Add(settingView);
                     }
                 }
             }

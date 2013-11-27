@@ -126,6 +126,15 @@
   <data name="FloatingWindowOpacityRange" xml:space="preserve">
     <value>悬浮窗透明度必须在{1}到{2}之间</value>
   </data>
+  <data name="ProxySettingBusy" xml:space="preserve">
+    <value>当前代理忙，请稍后再试。</value>
+  </data>
+  <data name="ProxySettingCannotConnect" xml:space="preserve">
+    <value>当前代理貌似不能正常连接，你确定仍然要保存么？</value>
+  </data>
+  <data name="ProxySettingUnValid" xml:space="preserve">
+    <value>当前代理的一些配置有错，你确定仍然要保存么？</value>
+  </data>
   <data name="RefreshMinutesRange" xml:space="preserve">
     <value>刷新时间必须在{1}到{2}之间</value>
   </data>

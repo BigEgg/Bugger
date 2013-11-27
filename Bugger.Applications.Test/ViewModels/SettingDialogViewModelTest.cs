@@ -4,6 +4,7 @@ using Bugger.Applications.Views;
 using Bugger.Proxy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using Bugger.Applications.Test.Services;
 
 namespace Bugger.Applications.Test.ViewModels
 {
@@ -37,7 +38,7 @@ namespace Bugger.Applications.Test.ViewModels
             this.settingsViewModel.IsFilterCreatedBy = this.isFilterCreatedBy;
 
             ISettingDialogView dialogView = Container.GetExportedValue<ISettingDialogView>();
-            this.dialogViewModel = new SettingDialogViewModel(dialogView, proxyService, settingsViewModel);
+            this.dialogViewModel = new SettingDialogViewModel(dialogView, proxyService, new MockMessageService(), settingsViewModel);
         }
 
         [TestMethod]
@@ -55,7 +56,7 @@ namespace Bugger.Applications.Test.ViewModels
         public void SettingsViewModelValidationTest()
         {
             Assert.IsTrue(this.dialogViewModel.SubmitCommand.CanExecute(null));
-            
+
             this.settingsViewModel.UserName = string.Empty;
             Assert.IsFalse(this.dialogViewModel.SubmitCommand.CanExecute(null));
         }
