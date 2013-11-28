@@ -148,7 +148,9 @@ namespace Bugger.Applications.ViewModels
                     }
                 }
 
-                this.settingActiveProxy = this.proxyService.Proxies.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
+                var newActiveProxy = this.proxyService.Proxies.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
+                newActiveProxy.Initialize();
+                this.settingActiveProxy = newActiveProxy;
 
                 StateValuesCollectionChanged(null, null);
 

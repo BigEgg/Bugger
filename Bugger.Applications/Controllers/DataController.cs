@@ -11,6 +11,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Threading;
 using System.Threading.Tasks;
+using Bugger.Proxy;
 
 namespace Bugger.Applications.Controllers
 {
@@ -64,9 +65,9 @@ namespace Bugger.Applications.Controllers
         #endregion
 
         #region Properties
-        private ProxyService ProxyService
+        private ITracingSystemProxy ActiveProxy
         {
-            get { return this.proxyController.ProxyService; }
+            get { return this.proxyController.ProxyService.ActiveProxy; }
         }
         #endregion
 
@@ -75,7 +76,7 @@ namespace Bugger.Applications.Controllers
         #region Commands Methods
         private bool CanRefreshBugsCommandExecute()
         {
-            return this.ProxyService.ActiveProxy == null ? false : this.ProxyService.ActiveProxy.CanQuery;
+            return this.ActiveProxy == null ? false : this.ActiveProxy.CanQuery;
         }
 
         private void RefreshBugsCommandExecute()
@@ -83,7 +84,7 @@ namespace Bugger.Applications.Controllers
             if (!string.IsNullOrWhiteSpace(Settings.Default.UserName))
             {
                 Task.Factory.StartNew(
-                    () => this.ProxyService.ActiveProxy.Query(
+                    () => this.ActiveProxy.Query(
                         Settings.Default.UserName,
                         Settings.Default.IsFilterCreatedBy))
                 .ContinueWith((result) =>
@@ -99,7 +100,7 @@ namespace Bugger.Applications.Controllers
             if (!string.IsNullOrWhiteSpace(Settings.Default.TeamMembers))
             {
                 Task.Factory.StartNew(
-                    () => this.ProxyService.ActiveProxy.Query(
+                    () => this.ActiveProxy.Query(
                         Settings.Default.TeamMembers.Split(';').Select(x => x.Trim()).ToList(),
                         Settings.Default.IsFilterCreatedBy))
                 .ContinueWith((result) =>
