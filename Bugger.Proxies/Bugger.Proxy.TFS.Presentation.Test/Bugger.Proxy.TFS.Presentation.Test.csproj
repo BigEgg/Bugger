@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Converters\ItemsToStringConverterTest.cs" />
     <Compile Include="Converters\ProgressTypesToColorConverterTest.cs" />
+    <Compile Include="Converters\ProgressTypesToEnableConverterTest.cs" />
     <Compile Include="Converters\ProgressTypesToIndeterminateConverterTest.cs" />
     <Compile Include="Converters\ProgressTypesToMessageConverterTest.cs" />
     <Compile Include="Converters\ProgressTypesToVisibilityConverterTest.cs" />
