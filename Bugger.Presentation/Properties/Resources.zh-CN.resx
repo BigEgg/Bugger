@@ -259,4 +259,22 @@
   <data name="SettingOpacityMenu" xml:space="preserve">
     <value>透明度(_O)</value>
   </data>
+  <data name="SettingStatusInitiatingProxy" xml:space="preserve">
+    <value>正在初始化代理，请稍后...</value>
+  </data>
+  <data name="SettingStatusInitiatingProxyFailed" xml:space="preserve">
+    <value>莫名其妙的问题发生了，初始化代理失败，%&gt;_&lt;%</value>
+  </data>
+  <data name="SettingStatusProxyBusy" xml:space="preserve">
+    <value>当前代理忙，请稍后再试。</value>
+  </data>
+  <data name="SettingStatusProxyCannotConnect" xml:space="preserve">
+    <value>当前代理貌似不能正常连接，你确定仍然要保存么？</value>
+  </data>
+  <data name="SettingStatusProxyUnvalid" xml:space="preserve">
+    <value>当前代理的一些配置有错，你确定仍然要保存么？</value>
+  </data>
+  <data name="SettingStatusValidatingProxySettings" xml:space="preserve">
+    <value>正在验证代理的配置，请稍后...</value>
+  </data>
 </root>

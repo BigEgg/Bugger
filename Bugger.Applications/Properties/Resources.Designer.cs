@@ -88,33 +88,6 @@ namespace Bugger.Applications.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot save the settings while the proxy&apos;s setting still busy..
-        /// </summary>
-        internal static string ProxySettingBusy {
-            get {
-                return ResourceManager.GetString("ProxySettingBusy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The proxy&apos;s setting cannot connect successfully. Do you still want to save it?.
-        /// </summary>
-        internal static string ProxySettingCannotConnect {
-            get {
-                return ResourceManager.GetString("ProxySettingCannotConnect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to There may have some setting unvalid in the proxy setting. Do you still want to save it?.
-        /// </summary>
-        internal static string ProxySettingUnValid {
-            get {
-                return ResourceManager.GetString("ProxySettingUnValid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The refresh minutes must be between {1} and {2}..
         /// </summary>
         internal static string RefreshMinutesRange {

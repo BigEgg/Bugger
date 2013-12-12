@@ -378,6 +378,60 @@ namespace Bugger.Presentation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Initiating the Proxy, please wait....
+        /// </summary>
+        public static string SettingStatusInitiatingProxy {
+            get {
+                return ResourceManager.GetString("SettingStatusInitiatingProxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown reason happend, the initiation progress failed..
+        /// </summary>
+        public static string SettingStatusInitiatingProxyFailed {
+            get {
+                return ResourceManager.GetString("SettingStatusInitiatingProxyFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot save the settings while the proxy&apos;s setting still busy..
+        /// </summary>
+        public static string SettingStatusProxyBusy {
+            get {
+                return ResourceManager.GetString("SettingStatusProxyBusy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The proxy&apos;s setting cannot connect successfully. Do you still want to save it?.
+        /// </summary>
+        public static string SettingStatusProxyCannotConnect {
+            get {
+                return ResourceManager.GetString("SettingStatusProxyCannotConnect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There may have some setting unvalid in the proxy setting. Do you still want to save it?.
+        /// </summary>
+        public static string SettingStatusProxyUnvalid {
+            get {
+                return ResourceManager.GetString("SettingStatusProxyUnvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validating the Proxy&apos;s settings, please wait....
+        /// </summary>
+        public static string SettingStatusValidatingProxySettings {
+            get {
+                return ResourceManager.GetString("SettingStatusValidatingProxySettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _Submit.
         /// </summary>
         public static string SettingSubmit {
