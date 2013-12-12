@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p="clr-namespace:Bugger.Presentation.Properties"
         xmlns:dd="clr-namespace:Bugger.Presentation.DesignData"
+        xmlns:c="clr-namespace:Bugger.Presentation.Converters"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleSettingDialogViewModel, IsDesignTimeCreatable=True}"
         Title="{Binding Title}" Height="550" Width="550" ResizeMode="NoResize"
@@ -17,6 +18,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="5" />
             <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <TabControl Grid.ColumnSpan="3" ItemsSource="{Binding Views}" SelectedItem="{Binding SelectView}"
@@ -45,11 +47,16 @@
                 </ControlTemplate>
             </TabControl.Template>
         </TabControl>
+        <ProgressBar Grid.Row="1" Grid.ColumnSpan="3" Value="100" Foreground="{Binding SettingDialogStatus, Converter={x:Static c:SettingDialogStatusToColorConverter.Default}}"
+                             Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding SettingDialogStatus, Converter={x:Static c:SettingDialogStatusToIndeterminateConverter.Default}}"
+                             Visibility="{Binding SettingDialogStatus, Converter={x:Static c:SettingDialogStatusToVisibilityConverter.Default}}"/>
+        <TextBlock Grid.Row="2" Grid.ColumnSpan="1" Text="{Binding ProgressType, Converter={x:Static c:SettingDialogStatusToMessageConverter.Default}}" Margin="0,0,50,0" 
+                             Visibility="{Binding ProgressType, Converter={x:Static c:SettingDialogStatusToVisibilityConverter.Default}}" VerticalAlignment="Center"/>
         <Button Content="{x:Static p:Resources.SettingSubmit}" Grid.Column="1" HorizontalAlignment="Right" Margin="0"
-                Grid.Row="1" VerticalAlignment="Bottom" Width="75" Height="25"
+                Grid.Row="2" VerticalAlignment="Bottom" Width="75" Height="25"
                 Command="{Binding SubmitCommand, Mode=OneWay}" />
         <Button Content="{x:Static p:Resources.SettingCancel}" Grid.Column="2" HorizontalAlignment="Right" Margin="0"
-                Grid.Row="1" VerticalAlignment="Bottom" Width="75" IsCancel="True" Height="25"
+                Grid.Row="2" VerticalAlignment="Bottom" Width="75" IsCancel="True" Height="25"
                 Command="{Binding CancelCommand, Mode=OneWay}" />
     </Grid>
 </Window>

@@ -11,7 +11,7 @@ namespace Bugger.Presentation.Test.Conveters
         [TestMethod]
         public void ConvertTest()
         {
-            var converter = SettingDialogStatusToColorConverter.Default;
+            var converter = SettingDialogStatusToMessageConverter.Default;
 
             var result = converter.Convert(SettingDialogStatus.InitiatingProxyFailed, null, null, null) as string;
             Assert.AreEqual(Resources.SettingStatusInitiatingProxyFailed, result);

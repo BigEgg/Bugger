@@ -79,7 +79,7 @@ namespace Bugger.Applications.ViewModels
         public SettingDialogStatus SettingDialogStatus
         {
             get { return this.settingDialogStatus; }
-            private set
+            set
             {
                 if (this.settingDialogStatus != value)
                 {

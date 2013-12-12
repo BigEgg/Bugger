@@ -9,13 +9,13 @@ namespace Bugger.Presentation.DesignData
     public class SampleSettingDialogViewModel : SettingDialogViewModel
     {
         public SampleSettingDialogViewModel()
-            : base(new MockSettingDialogWindow(), new MockProxyService(), new MockMessageService(),  new SampleSettingsViewModel())
+            : base(new MockSettingDialogWindow(), new MockProxyService(), new MockMessageService(), new SampleSettingsViewModel())
         {
-
+            SettingDialogStatus = Applications.Models.SettingDialogStatus.InitiatingProxyFailed;
         }
 
         private class MockSettingDialogWindow : MockDialogView, ISettingDialogView
-        {}
+        { }
 
         internal class MockMessageService : IMessageService
         {
