@@ -39,6 +39,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -63,9 +64,17 @@
   <ItemGroup>
     <Compile Include="Conveters\BugTypeToImageConverterTest.cs" />
     <Compile Include="Conveters\ByteToOpacityConverterTest.cs" />
+    <Compile Include="Conveters\SettingDialogStatusToColorConverterTest.cs" />
+    <Compile Include="Conveters\SettingDialogStatusToIndeterminateConverterTest.cs" />
+    <Compile Include="Conveters\SettingDialogStatusToMessageConverterTest.cs" />
+    <Compile Include="Conveters\SettingDialogStatusToVisibilityConverterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bugger.Applications\Bugger.Applications.csproj">
+      <Project>{398d1756-2c56-454a-a7ec-e996bb146c2e}</Project>
+      <Name>Bugger.Applications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bugger.Domain\Bugger.Domain.csproj">
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
       <Name>Bugger.Domain</Name>
