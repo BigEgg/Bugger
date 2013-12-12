@@ -1,20 +1,19 @@
-﻿using BigEgg.Framework.Applications.Commands;
+﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using BigEgg.Framework.Applications.Commands;
+using BigEgg.Framework.Applications.Services;
 using BigEgg.Framework.Applications.ViewModels;
 using BigEgg.Framework.Foundation;
 using Bugger.Applications.Models;
 using Bugger.Applications.Properties;
 using Bugger.Applications.Services;
 using Bugger.Applications.Views;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Input;
 using Bugger.Proxy;
-using BigEgg.Framework.Applications.Services;
-using System.Globalization;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace Bugger.Applications.ViewModels
 {
@@ -29,7 +28,7 @@ namespace Bugger.Applications.ViewModels
         private SettingsViewModel settingsViewModel;
 
         private ITracingSystemProxy settingActiveProxy;
-        private SettingSubmitStatus submitStatus;
+        private SettingDialogStatus settingDialogStatus;
         #endregion
 
         public SettingDialogViewModel(ISettingDialogView view, IProxyService proxyService, IMessageService messageService, SettingsViewModel settingsViewModel)
@@ -77,15 +76,15 @@ namespace Bugger.Applications.ViewModels
 
         public object SelectView { get; set; }
 
-        public SettingSubmitStatus SubmitStatus
+        public SettingDialogStatus SettingDialogStatus
         {
-            get { return this.submitStatus; }
+            get { return this.settingDialogStatus; }
             private set
             {
-                if (this.submitStatus != value)
+                if (this.settingDialogStatus != value)
                 {
-                    this.submitStatus = value;
-                    RaisePropertyChanged("SubmitStatus");
+                    this.settingDialogStatus = value;
+                    RaisePropertyChanged("SettingDialogStatus");
                 }
             }
         }
@@ -107,9 +106,9 @@ namespace Bugger.Applications.ViewModels
         {
             if (this.settingActiveProxy != null)
             {
-                if (this.SubmitStatus == SettingSubmitStatus.ProxyBusy ||
-                    this.SubmitStatus == SettingSubmitStatus.ProxyCannotConnect ||
-                    this.SubmitStatus == SettingSubmitStatus.ProxyUnvalid)
+                if (this.SettingDialogStatus == SettingDialogStatus.ProxyBusy ||
+                    this.SettingDialogStatus == SettingDialogStatus.ProxyCannotConnect ||
+                    this.SettingDialogStatus == SettingDialogStatus.ProxyUnvalid)
                 {
                     this.settingActiveProxy.AfterCloseSettingDialog(true);
                     this.proxyService.ActiveProxy = this.settingActiveProxy;
@@ -118,26 +117,26 @@ namespace Bugger.Applications.ViewModels
 
                 Task.Factory.StartNew(() =>
                 {
-                    this.SubmitStatus = SettingSubmitStatus.ValidatingProxySettings;
+                    this.SettingDialogStatus = SettingDialogStatus.ValidatingProxySettings;
                     UpdateCommands();
                     var validateResult = this.settingActiveProxy.ValidateBeforeCloseSettingDialog();
 
                     switch (validateResult)
                     {
                         case SettingDialogValidateionResult.Busy:
-                            this.SubmitStatus = SettingSubmitStatus.ProxyBusy;
+                            this.SettingDialogStatus = SettingDialogStatus.ProxyBusy;
                             UpdateCommands();
                             break;
                         case SettingDialogValidateionResult.ConnectFailed:
-                            this.SubmitStatus = SettingSubmitStatus.ProxyCannotConnect;
+                            this.SettingDialogStatus = SettingDialogStatus.ProxyCannotConnect;
                             UpdateCommands();
                             break;
                         case SettingDialogValidateionResult.UnValid:
-                            this.SubmitStatus = SettingSubmitStatus.ProxyUnvalid;
+                            this.SettingDialogStatus = SettingDialogStatus.ProxyUnvalid;
                             UpdateCommands();
                             break;
                         case SettingDialogValidateionResult.Valid:
-                            this.SubmitStatus = SettingSubmitStatus.ProxyValid;
+                            this.SettingDialogStatus = SettingDialogStatus.ProxyValid;
                             this.settingActiveProxy.AfterCloseSettingDialog(true);
                             this.proxyService.ActiveProxy = this.settingActiveProxy;
                             Close(true);
@@ -149,9 +148,9 @@ namespace Bugger.Applications.ViewModels
 
         private bool CanSubmitSetting()
         {
-            return this.SubmitStatus != SettingSubmitStatus.ValidatingProxySettings &&
-                   this.SubmitStatus != SettingSubmitStatus.InitiatingProxy &&
-                   this.SubmitStatus != SettingSubmitStatus.InitiatingProxyFailed &&
+            return this.SettingDialogStatus != SettingDialogStatus.ValidatingProxySettings &&
+                   this.SettingDialogStatus != SettingDialogStatus.InitiatingProxy &&
+                   this.SettingDialogStatus != SettingDialogStatus.InitiatingProxyFailed &&
                    string.IsNullOrEmpty(this.settingsViewModel.Validate());
         }
 
@@ -164,7 +163,7 @@ namespace Bugger.Applications.ViewModels
         #region Private Methods
         private void SettingsViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            this.SubmitStatus = SettingSubmitStatus.NotWorking;
+            this.SettingDialogStatus = SettingDialogStatus.NotWorking;
 
             if (e.PropertyName == "ActiveProxy")
             {
@@ -183,12 +182,12 @@ namespace Bugger.Applications.ViewModels
                 var newActiveProxy = this.proxyService.Proxies.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
                 Task.Factory.StartNew(() =>
                 {
-                    this.SubmitStatus = SettingSubmitStatus.InitiatingProxy;
+                    this.SettingDialogStatus = SettingDialogStatus.InitiatingProxy;
                     UpdateCommands();
 
                     newActiveProxy.Initialize();
                     this.settingActiveProxy = newActiveProxy;
-                    this.SubmitStatus = SettingSubmitStatus.NotWorking;
+                    this.SettingDialogStatus = SettingDialogStatus.NotWorking;
 
                     StateValuesCollectionChanged(null, null);
 
@@ -205,7 +204,7 @@ namespace Bugger.Applications.ViewModels
                 }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext())
                 .ContinueWith((result) =>
                 {
-                    this.SubmitStatus = SettingSubmitStatus.InitiatingProxyFailed;
+                    this.SettingDialogStatus = SettingDialogStatus.InitiatingProxyFailed;
                 }, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.FromCurrentSynchronizationContext());
             }
 
@@ -214,7 +213,7 @@ namespace Bugger.Applications.ViewModels
 
         private void ActiveProxyPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            this.SubmitStatus = SettingSubmitStatus.NotWorking;
+            this.SettingDialogStatus = SettingDialogStatus.NotWorking;
 
             UpdateCommands();
         }

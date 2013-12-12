@@ -1,6 +1,6 @@
 ﻿namespace Bugger.Applications.Models
 {
-    public enum SettingSubmitStatus
+    public enum SettingDialogStatus
     {
         NotWorking,
         InitiatingProxy,
