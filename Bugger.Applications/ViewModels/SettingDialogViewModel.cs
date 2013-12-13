@@ -167,28 +167,39 @@ namespace Bugger.Applications.ViewModels
 
             if (e.PropertyName == "ActiveProxy")
             {
-                if (this.settingActiveProxy != null)
-                {
-                    RemoveWeakEventListener(this.settingActiveProxy, ActiveProxyPropertyChanged);
-                    RemoveWeakEventListener(this.settingActiveProxy.StateValues, StateValuesCollectionChanged);
-
-                    var settingView = this.settingActiveProxy.InitializeSettingDialog();
-                    if (settingView != null)
-                    {
-                        this.views.Remove(settingView);
-                    }
-                }
-
                 var newActiveProxy = this.proxyService.Proxies.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
-                Task.Factory.StartNew(() =>
+                if (newActiveProxy == null) { return; }
+
+                var InitializationTask = Task.Factory.StartNew(() =>
                 {
                     this.SettingDialogStatus = SettingDialogStatus.InitiatingProxy;
                     UpdateCommands();
 
                     newActiveProxy.Initialize();
-                    this.settingActiveProxy = newActiveProxy;
                     this.SettingDialogStatus = SettingDialogStatus.NotWorking;
 
+                }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+
+                InitializationTask.ContinueWith((result) =>
+                {
+                    this.SettingDialogStatus = SettingDialogStatus.InitiatingProxyFailed;
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.FromCurrentSynchronizationContext());
+
+                InitializationTask.ContinueWith((result) =>
+                {
+                    if (this.settingActiveProxy != null)
+                    {
+                        RemoveWeakEventListener(this.settingActiveProxy, ActiveProxyPropertyChanged);
+                        RemoveWeakEventListener(this.settingActiveProxy.StateValues, StateValuesCollectionChanged);
+
+                        var settingView = this.settingActiveProxy.InitializeSettingDialog();
+                        if (settingView != null)
+                        {
+                            this.views.Remove(settingView);
+                        }
+                    }
+
+                    this.settingActiveProxy = newActiveProxy;
                     StateValuesCollectionChanged(null, null);
 
                     if (this.settingActiveProxy != null)
@@ -201,11 +212,7 @@ namespace Bugger.Applications.ViewModels
                             this.views.Add(settingView);
                         }
                     }
-                }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext())
-                .ContinueWith((result) =>
-                {
-                    this.SettingDialogStatus = SettingDialogStatus.InitiatingProxyFailed;
-                }, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.FromCurrentSynchronizationContext());
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
             }
 
             UpdateCommands();
