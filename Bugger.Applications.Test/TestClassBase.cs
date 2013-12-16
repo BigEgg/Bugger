@@ -33,11 +33,11 @@ namespace Bugger.Applications.Test
                 typeof(MockAboutDialogView), typeof(MockSettingDialogView)
             ));
             catalog.Catalogs.Add(new TypeCatalog(
-                typeof(FakeProxy), typeof(TFSProxy),
-                typeof(TFSSettingViewModel)
+                typeof(FakeProxy)
             ));
             catalog.Catalogs.Add(new TypeCatalog(
-                typeof(MockTFSSettingView)
+                typeof(TFSProxy), typeof(TFSHelper),
+                typeof(MockTFSSettingView), typeof(MockUriHelpView)
             ));
             container = new CompositionContainer(catalog);
             CompositionBatch batch = new CompositionBatch();

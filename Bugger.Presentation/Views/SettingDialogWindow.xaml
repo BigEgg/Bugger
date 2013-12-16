@@ -50,8 +50,8 @@
         <ProgressBar Grid.Row="1" Grid.ColumnSpan="3" Value="100" Foreground="{Binding SettingDialogStatus, Converter={x:Static c:SettingDialogStatusToColorConverter.Default}}"
                              Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding SettingDialogStatus, Converter={x:Static c:SettingDialogStatusToIndeterminateConverter.Default}}"
                              Visibility="{Binding SettingDialogStatus, Converter={x:Static c:SettingDialogStatusToVisibilityConverter.Default}}"/>
-        <TextBlock Grid.Row="2" Grid.ColumnSpan="1" Text="{Binding ProgressType, Converter={x:Static c:SettingDialogStatusToMessageConverter.Default}}" Margin="0,0,50,0" 
-                             Visibility="{Binding ProgressType, Converter={x:Static c:SettingDialogStatusToVisibilityConverter.Default}}" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="2" Grid.ColumnSpan="1" Text="{Binding SettingDialogStatus, Converter={x:Static c:SettingDialogStatusToMessageConverter.Default}}" Margin="0" 
+                             Visibility="{Binding SettingDialogStatus, Converter={x:Static c:SettingDialogStatusToVisibilityConverter.Default}}" VerticalAlignment="Center"/>
         <Button Content="{x:Static p:Resources.SettingSubmit}" Grid.Column="1" HorizontalAlignment="Right" Margin="0"
                 Grid.Row="2" VerticalAlignment="Bottom" Width="75" Height="25"
                 Command="{Binding SubmitCommand, Mode=OneWay}" />
