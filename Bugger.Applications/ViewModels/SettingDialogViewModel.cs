@@ -104,46 +104,53 @@ namespace Bugger.Applications.ViewModels
         #region Command Methods
         private void SubmitSettingCommand()
         {
-            if (this.settingActiveProxy != null)
+            if (this.SettingDialogStatus == SettingDialogStatus.ProxyBusy ||
+                this.SettingDialogStatus == SettingDialogStatus.ProxyCannotConnect ||
+                this.SettingDialogStatus == SettingDialogStatus.ProxyUnvalid)
             {
-                if (this.SettingDialogStatus == SettingDialogStatus.ProxyBusy ||
-                    this.SettingDialogStatus == SettingDialogStatus.ProxyCannotConnect ||
-                    this.SettingDialogStatus == SettingDialogStatus.ProxyUnvalid)
+                this.settingActiveProxy.AfterCloseSettingDialog(true);
+                this.proxyService.ActiveProxy = this.settingActiveProxy;
+                Close(true);
+            }
+
+            this.SettingDialogStatus = SettingDialogStatus.ValidatingProxySettings;
+            UpdateCommands();
+            Task.Factory.StartNew(() =>
+            {
+                return this.settingActiveProxy.ValidateBeforeCloseSettingDialog();
+            })
+            .ContinueWith(task =>
+            {
+                switch (task.Result)
+                {
+                    case SettingDialogValidateionResult.Busy:
+                        this.SettingDialogStatus = SettingDialogStatus.ProxyBusy;
+                        return false;
+                    case SettingDialogValidateionResult.ConnectFailed:
+                        this.SettingDialogStatus = SettingDialogStatus.ProxyCannotConnect;
+                        return false;
+                    case SettingDialogValidateionResult.UnValid:
+                        this.SettingDialogStatus = SettingDialogStatus.ProxyUnvalid;
+                        return false;
+                    case SettingDialogValidateionResult.Valid:
+                        this.SettingDialogStatus = SettingDialogStatus.ProxyValid;
+                        return true;
+                }
+                return false;
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
+            .ContinueWith(task =>
+            {
+                if (task.Result)
                 {
                     this.settingActiveProxy.AfterCloseSettingDialog(true);
                     this.proxyService.ActiveProxy = this.settingActiveProxy;
                     Close(true);
                 }
-
-                Task.Factory.StartNew(() =>
+                else
                 {
-                    this.SettingDialogStatus = SettingDialogStatus.ValidatingProxySettings;
                     UpdateCommands();
-                    var validateResult = this.settingActiveProxy.ValidateBeforeCloseSettingDialog();
-
-                    switch (validateResult)
-                    {
-                        case SettingDialogValidateionResult.Busy:
-                            this.SettingDialogStatus = SettingDialogStatus.ProxyBusy;
-                            UpdateCommands();
-                            break;
-                        case SettingDialogValidateionResult.ConnectFailed:
-                            this.SettingDialogStatus = SettingDialogStatus.ProxyCannotConnect;
-                            UpdateCommands();
-                            break;
-                        case SettingDialogValidateionResult.UnValid:
-                            this.SettingDialogStatus = SettingDialogStatus.ProxyUnvalid;
-                            UpdateCommands();
-                            break;
-                        case SettingDialogValidateionResult.Valid:
-                            this.SettingDialogStatus = SettingDialogStatus.ProxyValid;
-                            this.settingActiveProxy.AfterCloseSettingDialog(true);
-                            this.proxyService.ActiveProxy = this.settingActiveProxy;
-                            Close(true);
-                            break;
-                    }
-                }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
-            }
+                }
+            }, TaskContinuationOptions.OnlyOnRanToCompletion);
         }
 
         private bool CanSubmitSetting()
@@ -151,7 +158,8 @@ namespace Bugger.Applications.ViewModels
             return this.SettingDialogStatus != SettingDialogStatus.ValidatingProxySettings &&
                    this.SettingDialogStatus != SettingDialogStatus.InitiatingProxy &&
                    this.SettingDialogStatus != SettingDialogStatus.InitiatingProxyFailed &&
-                   string.IsNullOrEmpty(this.settingsViewModel.Validate());
+                   string.IsNullOrEmpty(this.settingsViewModel.Validate()) &&
+                   this.settingActiveProxy != null;
         }
 
         private void UpdateCommands()
@@ -170,22 +178,24 @@ namespace Bugger.Applications.ViewModels
                 var newActiveProxy = this.proxyService.Proxies.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
                 if (newActiveProxy == null) { return; }
 
+                this.SettingDialogStatus = SettingDialogStatus.InitiatingProxy;
+                UpdateCommands();
+
                 var InitializationTask = Task.Factory.StartNew(() =>
                 {
-                    this.SettingDialogStatus = SettingDialogStatus.InitiatingProxy;
-                    UpdateCommands();
-
                     newActiveProxy.Initialize();
-                    this.SettingDialogStatus = SettingDialogStatus.NotWorking;
+                });
 
-                }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
-
-                InitializationTask.ContinueWith((result) =>
+                InitializationTask.ContinueWith(task =>
                 {
                     this.SettingDialogStatus = SettingDialogStatus.InitiatingProxyFailed;
                 }, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.FromCurrentSynchronizationContext());
 
-                InitializationTask.ContinueWith((result) =>
+                InitializationTask.ContinueWith(task =>
+                {
+                    this.SettingDialogStatus = SettingDialogStatus.NotWorking;
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
+                .ContinueWith(task =>
                 {
                     if (this.settingActiveProxy != null)
                     {
@@ -212,7 +222,7 @@ namespace Bugger.Applications.ViewModels
                             this.views.Add(settingView);
                         }
                     }
-                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
+                }, TaskContinuationOptions.OnlyOnRanToCompletion);
             }
 
             UpdateCommands();
