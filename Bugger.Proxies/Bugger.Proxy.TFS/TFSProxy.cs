@@ -474,65 +474,104 @@ namespace Bugger.Proxy.TFS
 
         private void TestConnectionCommandExcute()
         {
-            Task.Factory.StartNew(() =>
-            {
-                TestConnectionCommandExcuteCore();
-            }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+            TestConnectionCommandExcuteCore();
         }
 
-        internal void TestConnectionCommandExcuteCore()
+        internal Task TestConnectionCommandExcuteCore()
         {
             this.settingViewModel.ClearMappingData();
             this.settingViewModel.ProgressType = ProgressTypes.OnConnectProgress;
             this.settingViewModel.ProgressValue = 0;
 
-            //  Connect
-            TfsTeamProjectCollection tpc = null;
-            if (!tfsHelper.TryConnection(this.settingViewModel.ConnectUri, this.settingViewModel.UserName,
-                                         this.settingViewModel.Password, out tpc))
+            var testConnectionTask = Task.Factory.StartNew(() =>
             {
-                this.settingViewModel.ProgressType = ProgressTypes.FailedOnConnect;
-                this.settingViewModel.ProgressValue = 100;
-                return;
-            }
-
-            //  Query TFS Fields
-            this.settingViewModel.ProgressType = ProgressTypes.OnGetFiledsProgress;
-            this.settingViewModel.ProgressValue = 50;
-
-            var fields = tfsHelper.GetFields(tpc);
-            if (fields == null || !fields.Any())
+                //  Connect
+                TfsTeamProjectCollection tpc = null;
+                tfsHelper.TryConnection(this.settingViewModel.ConnectUri, this.settingViewModel.UserName,
+                                             this.settingViewModel.Password, out tpc);
+                return tpc;
+            })
+            .ContinueWith(task =>
             {
-                this.settingViewModel.ProgressType = ProgressTypes.FailedOnGetFileds;
-                this.settingViewModel.ProgressValue = 100;
-            }
-
-            this.settingViewModel.ProgressValue = 80;
-            foreach (var field in fields)
-            {
-                this.settingViewModel.TFSFields.Add(field);
-                if (field.AllowedValues.Any())
+                if (task.Result == null)
                 {
-                    this.settingViewModel.BugFilterFields.Add(field);
+                    this.settingViewModel.ProgressType = ProgressTypes.FailedOnConnect;
+                    this.settingViewModel.ProgressValue = 100;
+                    throw new OperationCanceledException();
                 }
-            }
-
-            //  Auto Fill Map Settings
-            this.settingViewModel.ProgressValue = 90;
-            this.settingViewModel.ProgressType = ProgressTypes.OnAutoFillMapSettings;
-            try
+                else
+                {
+                    this.settingViewModel.ProgressType = ProgressTypes.OnGetFiledsProgress;
+                    this.settingViewModel.ProgressValue = 50;
+                    return task.Result;
+                }
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
+            .ContinueWith(task =>
             {
-                AutoFillMapSettings(fields);
-            }
-            catch
+                //  Query TFS Fields
+                return tfsHelper.GetFields(task.Result);
+            }, TaskContinuationOptions.OnlyOnRanToCompletion)
+            .ContinueWith(task =>
             {
-                this.settingViewModel.ProgressType = ProgressTypes.SuccessWithError;
-                this.settingViewModel.ProgressValue = 100;
-                return;
-            }
+                if (task.Result == null)
+                {
+                    this.settingViewModel.ProgressType = ProgressTypes.FailedOnGetFileds;
+                    this.settingViewModel.ProgressValue = 100;
+                    throw new OperationCanceledException();
+                }
+                else
+                {
+                    this.settingViewModel.ProgressValue = 80;
+                    return task.Result;
+                }
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
+            .ContinueWith(task =>
+            {
+                this.settingViewModel.TFSFields.Clear();
+                this.settingViewModel.BugFilterFields.Clear();
+                foreach (var field in task.Result)
+                {
+                    this.settingViewModel.TFSFields.Add(field);
+                    if (field.AllowedValues.Any())
+                    {
+                        this.settingViewModel.BugFilterFields.Add(field);
+                    }
+                }
+                return task.Result;
+            }, TaskContinuationOptions.OnlyOnRanToCompletion)
+            .ContinueWith(task =>
+            {
+                this.settingViewModel.ProgressValue = 90;
+                this.settingViewModel.ProgressType = ProgressTypes.OnAutoFillMapSettings;
+                return task.Result;
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
+            .ContinueWith(task =>
+            {
+                try
+                {
+                    AutoFillMapSettings(task.Result);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }, TaskContinuationOptions.OnlyOnRanToCompletion)
+            .ContinueWith(task =>
+            {
+                if (task.Result)
+                {
+                    this.settingViewModel.ProgressValue = 100;
+                    this.settingViewModel.ProgressType = ProgressTypes.Success;
+                }
+                else
+                {
+                    this.settingViewModel.ProgressType = ProgressTypes.SuccessWithError;
+                    this.settingViewModel.ProgressValue = 100;
+                }
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
 
-            this.settingViewModel.ProgressValue = 100;
-            this.settingViewModel.ProgressType = ProgressTypes.Success;
+            return testConnectionTask;
         }
 
         private void UpdateCommands()

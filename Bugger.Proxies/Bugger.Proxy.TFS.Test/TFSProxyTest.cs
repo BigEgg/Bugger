@@ -267,7 +267,8 @@ namespace Bugger.Proxy.TFS.Test
         {
             if (order++ != 5) { throw new NotSupportedException("This unit test must run as order."); }
 
-            proxy.TestConnectionCommandExcuteCore();
+            var task = proxy.TestConnectionCommandExcuteCore();
+            task.Wait();
 
             Assert.AreEqual(ProgressTypes.FailedOnConnect, viewModel.ProgressType);
             Assert.AreEqual(100, viewModel.ProgressValue);
@@ -280,7 +281,8 @@ namespace Bugger.Proxy.TFS.Test
 
             viewModel.Password = ThePassword;
 
-            proxy.TestConnectionCommandExcuteCore();
+            var task = proxy.TestConnectionCommandExcuteCore();
+            task.Wait();
 
             Assert.AreEqual(ProgressTypes.Success, viewModel.ProgressType);
             Assert.AreEqual(100, viewModel.ProgressValue);
