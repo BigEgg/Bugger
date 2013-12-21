@@ -277,15 +277,6 @@ namespace Bugger.Proxy.TFS.Presentation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Save.
-        /// </summary>
-        public static string Save {
-            get {
-                return ResourceManager.GetString("Save", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to TFS Proxy.
         /// </summary>
         public static string SettingViewTitle {

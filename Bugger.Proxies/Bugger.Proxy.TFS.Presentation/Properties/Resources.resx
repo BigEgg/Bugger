@@ -183,9 +183,6 @@
   <data name="PriorityRed" xml:space="preserve">
     <value>Set bug _Red when priority</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>_Save</value>
-  </data>
   <data name="SplitBy" xml:space="preserve">
     <value>Split the value by ";"</value>
   </data>

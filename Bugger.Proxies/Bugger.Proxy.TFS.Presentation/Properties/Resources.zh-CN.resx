@@ -183,9 +183,6 @@
   <data name="PriorityRed" xml:space="preserve">
     <value>设置Bug为红色当优先级为(_R)</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>保存(_S)</value>
-  </data>
   <data name="SplitBy" xml:space="preserve">
     <value>输入分号(";")来代表不同的值</value>
   </data>

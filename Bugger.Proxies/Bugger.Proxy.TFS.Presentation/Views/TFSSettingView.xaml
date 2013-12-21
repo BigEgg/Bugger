@@ -29,12 +29,10 @@
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
             <RowDefinition Height="170" />
             <RowDefinition Height="310" />
         </Grid.RowDefinitions>
-        <Button Content="{x:Static p:Resources.Save}" Command="{Binding SaveCommand}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Margin="0"/>
-        <GroupBox Grid.Row="1" Header="{x:Static p:Resources.ConnectSettingsTitle}"
+        <GroupBox Grid.Row="0" Header="{x:Static p:Resources.ConnectSettingsTitle}"
                   IsEnabled="{Binding ProgressType, Converter={x:Static c:ProgressTypesToConnectionEnableConverter.Default}}">
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
@@ -74,7 +72,7 @@
                              Visibility="{Binding ProgressType, Converter={x:Static c:ProgressTypesToVisibilityConverter.Default}}"/>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="2" Margin="0,10,0,0" Header="{x:Static p:Resources.MappingSettingsTitle}"
+        <GroupBox Grid.Row="1" Margin="0,10,0,0" Header="{x:Static p:Resources.MappingSettingsTitle}"
                   IsEnabled="{Binding ProgressType, Converter={x:Static c:ProgressTypesToMappingEnableConverter.Default}}">
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
