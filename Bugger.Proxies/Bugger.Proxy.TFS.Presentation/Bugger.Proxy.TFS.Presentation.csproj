@@ -53,7 +53,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\ProgressTypesToEnableConverter.cs" />
+    <Compile Include="Converters\ProgressTypesToConnectionEnableConverter.cs" />
+    <Compile Include="Converters\ProgressTypesToMappingEnableConverter.cs" />
     <Compile Include="Converters\ItemsToStringConverter.cs" />
     <Compile Include="Converters\ProgressTypesToColorConverter.cs" />
     <Compile Include="Converters\ProgressTypesToIndeterminateConverter.cs" />

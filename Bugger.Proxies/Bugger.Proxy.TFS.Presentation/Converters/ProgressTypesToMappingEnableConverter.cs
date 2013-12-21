@@ -5,11 +5,11 @@ using Bugger.Proxy.TFS.Models;
 
 namespace Bugger.Proxy.TFS.Presentation.Converters
 {
-    public class ProgressTypesToEnableConverter : IValueConverter
+    public class ProgressTypesToMappingEnableConverter : IValueConverter
     {
-        private static readonly ProgressTypesToEnableConverter defaultInstance = new ProgressTypesToEnableConverter();
+        private static readonly ProgressTypesToMappingEnableConverter defaultInstance = new ProgressTypesToMappingEnableConverter();
 
-        public static ProgressTypesToEnableConverter Default { get { return defaultInstance; } }
+        public static ProgressTypesToMappingEnableConverter Default { get { return defaultInstance; } }
 
 
         /// <summary>

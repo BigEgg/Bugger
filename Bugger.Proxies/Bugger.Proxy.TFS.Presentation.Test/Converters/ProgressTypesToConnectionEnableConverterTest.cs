@@ -5,21 +5,21 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Bugger.Proxy.TFS.Presentation.Test.Converters
 {
     [TestClass]
-    public class ProgressTypesToEnableConverterTest
+    public class ProgressTypesToConnectionEnableConverterTest
     {
         [TestMethod]
         public void ConvertTest()
         {
-            var converter = ProgressTypesToEnableConverter.Default;
+            var converter = ProgressTypesToConnectionEnableConverter.Default;
 
             var result = (bool)converter.Convert(ProgressTypes.FailedOnConnect, null, null, null);
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
 
             result = (bool)converter.Convert(ProgressTypes.FailedOnGetFileds, null, null, null);
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
 
             result = (bool)converter.Convert(ProgressTypes.NotWorking, null, null, null);
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
 
             result = (bool)converter.Convert(ProgressTypes.OnAutoFillMapSettings, null, null, null);
             Assert.IsFalse(result);
