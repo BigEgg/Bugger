@@ -16,9 +16,13 @@ Alpha 4 (v0.4.0)
 Alpha 3 (v0.3.0) <----- Currently Working
     Application:
         Can change the Opacity of Floating window by setting (✓)
-        Validate the proxy's setting when submit the setting dialog.
+        Validate the proxy's setting when submit the setting dialog. (✓)
+        Use multi-threading to avoid UI hang when the setting dialog. (✓)
+            Show progress and out come when the setting dialog. (✓)
+        Use multi-threading to avoid UI hang change the activy proxy. (✓)
+            Show progress and out come when change the activy proxy. (✓)
         Show progress and out come when query bugs.
-        Optimized the startup time. (✓)
+        Optimized the startup time.
     Proxies
         Support cancel event for proxy restore data when setting dialog cancelled. (✓)
         Support validate event before the submit, to valid the settings. (✓)
