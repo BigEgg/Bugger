@@ -193,10 +193,6 @@ namespace Bugger.Applications.ViewModels
 
                 InitializationTask.ContinueWith(task =>
                 {
-                    this.SettingDialogStatus = SettingDialogStatus.NotWorking;
-                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
-                .ContinueWith(task =>
-                {
                     if (this.settingActiveProxy != null)
                     {
                         RemoveWeakEventListener(this.settingActiveProxy, ActiveProxyPropertyChanged);
@@ -222,7 +218,8 @@ namespace Bugger.Applications.ViewModels
                             this.views.Add(settingView);
                         }
                     }
-                }, TaskContinuationOptions.OnlyOnRanToCompletion);
+                    this.SettingDialogStatus = SettingDialogStatus.NotWorking;
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
             }
 
             UpdateCommands();
