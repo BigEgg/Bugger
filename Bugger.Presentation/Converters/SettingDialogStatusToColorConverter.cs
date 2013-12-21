@@ -1,8 +1,8 @@
-﻿using System;
-using System.Drawing;
+﻿using Bugger.Applications.Models;
+using System;
 using System.Globalization;
 using System.Windows.Data;
-using Bugger.Applications.Models;
+using System.Windows.Media;
 
 namespace Bugger.Presentation.Converters
 {

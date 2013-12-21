@@ -1,7 +1,7 @@
-﻿using System.Drawing;
-using Bugger.Applications.Models;
+﻿using Bugger.Applications.Models;
 using Bugger.Presentation.Converters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Windows.Media;
 
 namespace Bugger.Presentation.Test.Conveters
 {
