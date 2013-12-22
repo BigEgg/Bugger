@@ -27,6 +27,7 @@ namespace Bugger.Applications.Controllers
 
         private readonly DelegateCommand refreshBugsCommand;
 
+        private TaskScheduler currentSynchronizationTaskScheduler;
         private Timer autoRefreshTimer = null;
         private bool timerStarted;
         #endregion
@@ -55,6 +56,8 @@ namespace Bugger.Applications.Controllers
 
             floatingViewModel.RefreshBugsCommand = this.refreshBugsCommand;
             mainViewModel.RefreshBugsCommand = this.refreshBugsCommand;
+
+            currentSynchronizationTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
 
             TimerStart();
         }
@@ -137,20 +140,26 @@ namespace Bugger.Applications.Controllers
                     this.dataService.UserBugsQueryState = QueryStatus.FillData;
                     this.dataService.UserBugsProgressValue = 50;
                     return task.Result;
-                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler)
                 .ContinueWith(task =>
                 {
                     this.dataService.UserBugs.Clear();
-                    int interval = 50 / task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State))
-                                                   .Count();
-                    foreach (var bug in task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)))
+                    if (task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)).Any())
                     {
-                        this.dataService.UserBugsProgressValue += interval;
-                        this.dataService.UserBugs.Add(bug);
+                        int interval = 50 / task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State))
+                                                       .Count();
+                        foreach (var bug in task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)))
+                        {
+                            this.dataService.UserBugsProgressValue += interval;
+                            this.dataService.UserBugs.Add(bug);
+                        }
                     }
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler)
+                .ContinueWith(task =>
+                {
                     this.dataService.UserBugsQueryState = QueryStatus.Success;
                     this.dataService.UserBugsProgressValue = 100;
-                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler);
             }
             else
             {
@@ -171,20 +180,26 @@ namespace Bugger.Applications.Controllers
                     this.dataService.TeamBugsQueryState = QueryStatus.FillData;
                     this.dataService.TeamBugsProgressValue = 50;
                     return task.Result;
-                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler)
                 .ContinueWith(task =>
                 {
                     this.dataService.TeamBugs.Clear();
-                    int interval = 50 / task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State))
-                                                   .Count();
-                    foreach (var bug in task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)))
+                    if (task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)).Any())
                     {
-                        this.dataService.TeamBugsProgressValue += interval;
-                        this.dataService.TeamBugs.Add(bug);
+                        int interval = 50 / task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State))
+                                                            .Count();
+                        foreach (var bug in task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)))
+                        {
+                            this.dataService.TeamBugsProgressValue += interval;
+                            this.dataService.TeamBugs.Add(bug);
+                        }
                     }
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler)
+                .ContinueWith(task =>
+                {
                     this.dataService.TeamBugsQueryState = QueryStatus.Success;
                     this.dataService.TeamBugsProgressValue = 100;
-                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler);
             }
             else
             {
