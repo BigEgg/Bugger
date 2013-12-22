@@ -8,7 +8,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleFloatingViewModel, IsDesignTimeCreatable=True}"
         Icon="{Binding Mode=OneWay, Source={StaticResource BuggerImageSource}}"
-        Height="20" Width="100" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" 
+        Height="30" Width="100" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" 
         Background="White" Topmost="True" Opacity="{Binding Opacity, Mode=OneWay, Converter={x:Static c:ByteToOpacityConverter.Default}}"
         MouseDoubleClick="window_MouseDoubleClick" MouseDown="window_MouseDown" ShowInTaskbar="False">
     <Window.Resources>
@@ -75,6 +75,11 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
         <Grid Grid.ColumnSpan="1" IsHitTestVisible="False">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
@@ -94,5 +99,11 @@
         <Button x:Name="refresh" Command="{Binding RefreshBugsCommand}" Grid.Column="2" Opacity="0">
             <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Mode=OneWay, Source={StaticResource RefreshImageSource}}" IsHitTestVisible="False"/>
         </Button>
+        <ProgressBar Grid.Row="1" Grid.ColumnSpan="2" Value="{Binding DataService.UserBugsProgressValue}" Foreground="{Binding DataService.UserBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
+                             Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding DataService.UserBugsQueryState, Converter={x:Static c:QueryStatusToIndeterminateConverter.Default}}"
+                             Visibility="{Binding DataService.UserBugsQueryState, Converter={x:Static c:QueryStatusToVisibilityConverter.Default}}"/>
+        <ProgressBar Grid.Row="2" Grid.ColumnSpan="2" Value="{Binding DataService.TeamBugsProgressValue}" Foreground="{Binding DataService.TeamBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
+                             Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding DataService.TeamBugsQueryState, Converter={x:Static c:QueryStatusToIndeterminateConverter.Default}}"
+                             Visibility="{Binding DataService.TeamBugsQueryState, Converter={x:Static c:QueryStatusToVisibilityConverter.Default}}"/>
     </Grid>
 </Window>

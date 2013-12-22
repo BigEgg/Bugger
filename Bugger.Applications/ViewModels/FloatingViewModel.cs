@@ -68,6 +68,8 @@ namespace Bugger.Applications.ViewModels
         }
 
         #region Properties
+        public IDataService DataService { get { return this.dataService; } }
+
         public int RedBugCount
         {
             get { return this.dataService.UserBugs.Count(x => x.Type == BugType.Red); }

@@ -28,7 +28,7 @@ namespace Bugger.Presentation.DesignData
             this.teamBugs = new MultiThreadingObservableCollection<Bug>();
             this.refreshTime = DateTime.Now;
 
-            this.userBugsQueryState = QueryStatus.Failed;
+            this.userBugsQueryState = QueryStatus.Qureying;
             this.userBugsProgressValue = 50;
             this.teamBugsQueryState = QueryStatus.QureyPause;
             this.teamBugsProgressValue = 100;
