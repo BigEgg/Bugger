@@ -48,6 +48,8 @@ namespace Bugger.Applications.ViewModels
         }
 
         #region Properties
+        public IDataService DataService { get { return this.dataService; } }
+
         public string Title { get { return Resources.ApplicationName; } }
 
         public bool IsShutDown { get; internal set; }
