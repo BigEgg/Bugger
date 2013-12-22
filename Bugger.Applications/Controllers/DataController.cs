@@ -86,13 +86,14 @@ namespace Bugger.Applications.Controllers
             TimerCallback tcb = TimerCallbackMethods;
             this.autoRefreshTimer = new Timer(tcb, null, 10000, Settings.Default.AutoQueryMinutes * 1000 * 1000);
 
+            this.dataService.UserBugsQueryState = QueryStatus.NotWorking;
+            this.dataService.TeamBugsQueryState = QueryStatus.NotWorking;
             this.timerStarted = true;
         }
 
         public void TimerStop()
         {
-            if (!this.timerStarted)
-                return;
+            if (!this.timerStarted) { return; }
 
             if (this.autoRefreshTimer != null)
             {
@@ -101,6 +102,8 @@ namespace Bugger.Applications.Controllers
                 this.autoRefreshTimer = null;
             }
 
+            this.dataService.UserBugsQueryState = QueryStatus.QureyPause;
+            this.dataService.TeamBugsQueryState = QueryStatus.QureyPause;
             this.timerStarted = false;
         }
         #endregion
