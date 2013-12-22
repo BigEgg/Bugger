@@ -88,6 +88,8 @@ namespace Bugger.Applications.Controllers
 
             this.dataService.UserBugsQueryState = QueryStatus.NotWorking;
             this.dataService.TeamBugsQueryState = QueryStatus.NotWorking;
+            this.dataService.UserBugsProgressValue = 0;
+            this.dataService.TeamBugsProgressValue = 0;
             this.timerStarted = true;
         }
 
@@ -104,6 +106,8 @@ namespace Bugger.Applications.Controllers
 
             this.dataService.UserBugsQueryState = QueryStatus.QureyPause;
             this.dataService.TeamBugsQueryState = QueryStatus.QureyPause;
+            this.dataService.UserBugsProgressValue = 100;
+            this.dataService.TeamBugsProgressValue = 100;
             this.timerStarted = false;
         }
         #endregion
@@ -151,6 +155,7 @@ namespace Bugger.Applications.Controllers
             else
             {
                 this.dataService.UserBugsQueryState = QueryStatus.Failed;
+                this.dataService.UserBugsProgressValue = 100;
             }
 
             if (!string.IsNullOrWhiteSpace(Settings.Default.TeamMembers))
@@ -184,6 +189,7 @@ namespace Bugger.Applications.Controllers
             else
             {
                 this.dataService.UserBugsQueryState = QueryStatus.Failed;
+                this.dataService.UserBugsProgressValue = 100;
             }
         }
         #endregion
