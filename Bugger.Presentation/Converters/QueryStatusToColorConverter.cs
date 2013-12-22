@@ -2,14 +2,15 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace Bugger.Presentation.Converters
 {
-    public class SettingDialogStatusToIndeterminateConverter : IValueConverter
+    public class QueryStatusToColorConverter : IValueConverter
     {
-        private static readonly SettingDialogStatusToIndeterminateConverter defaultInstance = new SettingDialogStatusToIndeterminateConverter();
+        private static readonly QueryStatusToColorConverter defaultInstance = new QueryStatusToColorConverter();
 
-        public static SettingDialogStatusToIndeterminateConverter Default { get { return defaultInstance; } }
+        public static QueryStatusToColorConverter Default { get { return defaultInstance; } }
 
 
         /// <summary>
@@ -24,8 +25,19 @@ namespace Bugger.Presentation.Converters
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var type = (SettingDialogStatus)value;
-            return type == SettingDialogStatus.InitiatingProxy || type == SettingDialogStatus.ValidatingProxySettings;
+            var type = (QueryStatus)value;
+            if (type == QueryStatus.Failed)
+            {
+                return Brushes.Red;
+            }
+            else if (type == QueryStatus.QureyPause)
+            {
+                return Brushes.Orange;
+            }
+            else
+            {
+                return Brushes.Green;
+            }
         }
 
         /// <summary>

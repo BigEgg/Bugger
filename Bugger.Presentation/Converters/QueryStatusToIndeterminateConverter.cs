@@ -5,11 +5,11 @@ using System.Windows.Data;
 
 namespace Bugger.Presentation.Converters
 {
-    public class SettingDialogStatusToIndeterminateConverter : IValueConverter
+    public class QueryStatusToIndeterminateConverter : IValueConverter
     {
-        private static readonly SettingDialogStatusToIndeterminateConverter defaultInstance = new SettingDialogStatusToIndeterminateConverter();
+        private static readonly QueryStatusToIndeterminateConverter defaultInstance = new QueryStatusToIndeterminateConverter();
 
-        public static SettingDialogStatusToIndeterminateConverter Default { get { return defaultInstance; } }
+        public static QueryStatusToIndeterminateConverter Default { get { return defaultInstance; } }
 
 
         /// <summary>
@@ -24,8 +24,8 @@ namespace Bugger.Presentation.Converters
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var type = (SettingDialogStatus)value;
-            return type == SettingDialogStatus.InitiatingProxy || type == SettingDialogStatus.ValidatingProxySettings;
+            var type = (QueryStatus)value;
+            return type == QueryStatus.Qureying;
         }
 
         /// <summary>

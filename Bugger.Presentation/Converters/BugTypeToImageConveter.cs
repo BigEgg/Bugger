@@ -1,6 +1,5 @@
 ﻿using Bugger.Domain.Models;
 using System;
-using System.Drawing;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;

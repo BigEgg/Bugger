@@ -64,6 +64,9 @@
   <ItemGroup>
     <Compile Include="Conveters\BugTypeToImageConverterTest.cs" />
     <Compile Include="Conveters\ByteToOpacityConverterTest.cs" />
+    <Compile Include="Conveters\QueryStatusToColorConverterTest.cs" />
+    <Compile Include="Conveters\QueryStatusToIndeterminateConverterTest.cs" />
+    <Compile Include="Conveters\QueryStatusToVisibilityConverterTest.cs" />
     <Compile Include="Conveters\SettingDialogStatusToColorConverterTest.cs" />
     <Compile Include="Conveters\SettingDialogStatusToIndeterminateConverterTest.cs" />
     <Compile Include="Conveters\SettingDialogStatusToMessageConverterTest.cs" />

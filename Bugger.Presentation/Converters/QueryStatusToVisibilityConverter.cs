@@ -1,15 +1,16 @@
 ﻿using Bugger.Applications.Models;
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
 namespace Bugger.Presentation.Converters
 {
-    public class SettingDialogStatusToIndeterminateConverter : IValueConverter
+    public class QueryStatusToVisibilityConverter : IValueConverter
     {
-        private static readonly SettingDialogStatusToIndeterminateConverter defaultInstance = new SettingDialogStatusToIndeterminateConverter();
+        private static readonly QueryStatusToVisibilityConverter defaultInstance = new QueryStatusToVisibilityConverter();
 
-        public static SettingDialogStatusToIndeterminateConverter Default { get { return defaultInstance; } }
+        public static QueryStatusToVisibilityConverter Default { get { return defaultInstance; } }
 
 
         /// <summary>
@@ -24,8 +25,8 @@ namespace Bugger.Presentation.Converters
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var type = (SettingDialogStatus)value;
-            return type == SettingDialogStatus.InitiatingProxy || type == SettingDialogStatus.ValidatingProxySettings;
+            var type = (QueryStatus)value;
+            return type == QueryStatus.NotWorking ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>

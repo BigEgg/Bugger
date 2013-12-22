@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Windows.Data;
-using Bugger.Applications.Models;
+﻿using Bugger.Applications.Models;
 using Bugger.Presentation.Properties;
+using System;
+using System.Globalization;
+using System.Windows.Data;
 
 namespace Bugger.Presentation.Converters
 {

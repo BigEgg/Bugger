@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Bugger.Applications.Models;
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using Bugger.Applications.Models;
 
 namespace Bugger.Presentation.Converters
 {
