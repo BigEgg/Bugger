@@ -149,9 +149,11 @@ namespace Bugger.Applications.Controllers
 
         private void SettingDialogCommandExcute()
         {
-            ISettingDialogView settingDialogView = container.GetExportedValue<ISettingDialogView>();
-            ISettingsView settingsView = container.GetExportedValue<ISettingsView>();
-            IProxyService proxyService = this.proxyController.ProxyService;
+            var settingDialogView = container.GetExportedValue<ISettingDialogView>();
+            var settingsView = container.GetExportedValue<ISettingsView>();
+            var proxyService = this.proxyController.ProxyService;
+
+            this.dataController.TimerStop();
 
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsView, proxyService, Settings.Default.TeamMembers);
             settingsViewModel.ActiveProxy = proxyService.ActiveProxy.ProxyName;
@@ -178,6 +180,8 @@ namespace Bugger.Applications.Controllers
                 Settings.Default.FloatingWindowOpacity = settingsViewModel.FloatingWindowOpacity;
                 Settings.Default.Save();
             }
+
+            this.dataController.TimerStart();
 
             floatingViewModel.Opacity = Settings.Default.FloatingWindowOpacity;
         }
