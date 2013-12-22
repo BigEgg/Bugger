@@ -1,4 +1,5 @@
 ﻿using BigEgg.Framework.UnitTesting;
+using Bugger.Applications.Models;
 using Bugger.Applications.Services;
 using Bugger.Domain.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,6 +18,10 @@ namespace Bugger.Applications.Test.Services
 
             Assert.AreEqual(dataService.UserBugs.Count, 0);
             Assert.AreEqual(dataService.TeamBugs.Count, 0);
+            Assert.AreEqual(dataService.UserBugsProgressValue, 0);
+            Assert.AreEqual(dataService.UserBugsQueryState, QueryStatus.NotWorking);
+            Assert.AreEqual(dataService.TeamBugsProgressValue, 0);
+            Assert.AreEqual(dataService.TeamBugsQueryState, QueryStatus.NotWorking);
 
             dataService.UserBugs.Add(
                 new Bug()
