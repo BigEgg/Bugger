@@ -21,7 +21,7 @@ Alpha 3 (v0.3.0) <----- Currently Working
             Show progress and out come when the setting dialog. (✓)
         Use multi-threading to avoid UI hang change the activy proxy. (✓)
             Show progress and out come when change the activy proxy. (✓)
-        Show progress and out come when query bugs.
+        Show progress and out come when query bugs. (✓)
         Optimized the startup time.
     Proxies
         Support cancel event for proxy restore data when setting dialog cancelled. (✓)
