@@ -150,7 +150,7 @@ namespace Bugger.Proxy.TFS
 
             if (!submit)
             {
-                UpdateStateValues(this.document.PropertyMappingCollection["State"]);
+                UpdateStateValues(this.document.PropertyMappingCollection["State"], this.tfsFieldsCache);
                 return;
             }
 
@@ -289,15 +289,7 @@ namespace Bugger.Proxy.TFS
             if (fields == null || !fields.Any()) { return; }
 
             this.tfsFieldsCache.AddRange(tfsHelper.GetFields(tpc));
-            var stateFieldName = this.document.PropertyMappingCollection["State"];
-            if (!string.IsNullOrWhiteSpace(stateFieldName))
-            {
-                var values = this.tfsFieldsCache.First(x => x.Name == stateFieldName).AllowedValues;
-                foreach (var value in values)
-                {
-                    this.stateValues.Add(value);
-                }
-            }
+            UpdateStateValues(this.document.PropertyMappingCollection["State"], this.tfsFieldsCache);
             this.CanQuery = true;
         }
 
@@ -391,10 +383,9 @@ namespace Bugger.Proxy.TFS
                                                                                  .Select(x => x.Name));
         }
 
-        private void UpdateStateValues(string stateColumnName)
+        private void UpdateStateValues(string stateFieldName, ICollection<TFSField> tfsFields)
         {
-            var field = this.settingViewModel.TFSFields
-                                             .FirstOrDefault(x => x.Name == stateColumnName);
+            var field = tfsFields.FirstOrDefault(x => x.Name == stateFieldName);
             if (field != null && field.Name != stateColumn)
             {
                 stateColumn = field.Name;
@@ -463,7 +454,7 @@ namespace Bugger.Proxy.TFS
             if (e.PropertyName == "PropertyMappingCollection")
             {
                 UpdateSettingDialogPriorityValues();
-                UpdateStateValues(this.settingViewModel.PropertyMappingCollection["State"]);
+                UpdateStateValues(this.settingViewModel.PropertyMappingCollection["State"], this.settingViewModel.TFSFields);
             }
             else if (e.PropertyName == "ConnectUri" || e.PropertyName == "UserName" || e.PropertyName == "Password")
             {
