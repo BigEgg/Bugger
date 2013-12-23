@@ -25,6 +25,13 @@
         <DataTemplate x:Key="TFSFieldComboCollapsed">
             <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
         </DataTemplate>
+        <Style TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <Grid Margin="10">
@@ -59,7 +66,7 @@
                        VerticalAlignment="Center" Grid.ColumnSpan="2" Target="{Binding ElementName=userName}" />
                 <Label Content="{x:Static p:Resources.Password}" Grid.Column="2" Margin="15,0,0,0" Grid.Row="2"
                        VerticalAlignment="Center" Grid.ColumnSpan="2" Target="{Binding ElementName=password}" />
-                <TextBox x:Name="userName" Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="0,0,15,0"
+                <TextBox x:Name="userName" Text="{Binding UserName, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" Grid.ColumnSpan="2" Margin="0,0,15,0"
                          Grid.Row="3" VerticalAlignment="Center" />
                 <PasswordBox x:Name="password" LostFocus="PasswordChanged" Grid.ColumnSpan="2" Grid.Column="2"
                              Margin="15,0,0,0" Grid.Row="3" VerticalAlignment="Center" />

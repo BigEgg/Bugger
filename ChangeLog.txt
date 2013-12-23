@@ -2,7 +2,6 @@
 
 Alpha 4 (v0.4.0)
     Application:
-        Show validation message in views.
         Add extension manager to manage the proxies.
         When open the application, show setting dialog if the settings is not being set.
     Proxies
@@ -15,7 +14,8 @@ Alpha 4 (v0.4.0)
 
 Alpha 3 (v0.3.0) <----- Currently Working
     Application:
-        Can change the Opacity of Floating window by setting (✓)
+        Show validation message in views. (✓)
+        Can change the Opacity of Floating window by setting. (✓)
         Validate the proxy's setting when submit the setting dialog. (✓)
         Use multi-threading to avoid UI hang when the setting dialog. (✓)
             Show progress and out come when the setting dialog. (✓)
