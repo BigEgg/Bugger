@@ -25,41 +25,50 @@
             <MenuItem Header="{x:Static p:Resources.AboutMenu}" Command="{Binding AboutCommand}"/>
         </Menu>
 
-        <TabControl Margin="10" x:Name="documentView" ItemsSource="{Binding DocumentViews}">
-            <TabItem Header="{Binding DataService, Mode=OneWay}">
-                <TabItem.HeaderTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="5"/>
-                            </Grid.RowDefinitions>
-                            <ProgressBar Grid.Row="1" Width="100" Value="{Binding UserBugsProgressValue}" Foreground="{Binding UserBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
+        <Grid Margin="10,5,10,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ProgressBar Grid.Row="0" Grid.ColumnSpan="2" Value="100" Foreground="Green"
+                             Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding DataService.InitializeStatus, Converter={x:Static c:InitializeStatusToIndeterminateConverter.Default}}"
+                             Visibility="{Binding DataService.InitializeStatus, Converter={x:Static c:InitializeStatusToVisibilityConverter.Default}}"/>
+            <TabControl Grid.Row="1" x:Name="documentView" ItemsSource="{Binding DocumentViews}">
+                <TabItem Header="{Binding DataService, Mode=OneWay}">
+                    <TabItem.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="5"/>
+                                </Grid.RowDefinitions>
+                                <ProgressBar Grid.Row="1" Width="100" Value="{Binding UserBugsProgressValue}" Foreground="{Binding UserBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
                                          Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding UserBugsQueryState, Converter={x:Static c:QueryStatusToIndeterminateConverter.Default}}"
                                          Visibility="{Binding UserBugsQueryState, Converter={x:Static c:QueryStatusToVisibilityConverter.Default}}"/>
-                            <TextBlock Text="{x:Static p:Resources.UserBugsTitle}"/>
-                        </Grid>
-                    </DataTemplate>
-                </TabItem.HeaderTemplate>
-                <ContentControl Content="{Binding ShellService.UserBugsView}" Margin="0,0,5,0"/>
-            </TabItem>
-            <TabItem Header="{Binding DataService, Mode=OneWay}">
-                <TabItem.HeaderTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="5"/>
-                            </Grid.RowDefinitions>
-                            <ProgressBar Grid.Row="1" Width="100" Value="{Binding TeamBugsProgressValue}" Foreground="{Binding TeamBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
+                                <TextBlock Text="{x:Static p:Resources.UserBugsTitle}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </TabItem.HeaderTemplate>
+                    <ContentControl Content="{Binding ShellService.UserBugsView}" Margin="0,0,5,0"/>
+                </TabItem>
+                <TabItem Header="{Binding DataService, Mode=OneWay}">
+                    <TabItem.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="5"/>
+                                </Grid.RowDefinitions>
+                                <ProgressBar Grid.Row="1" Width="100" Value="{Binding TeamBugsProgressValue}" Foreground="{Binding TeamBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
                                              Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding TeamBugsQueryState, Converter={x:Static c:QueryStatusToIndeterminateConverter.Default}}"
                                              Visibility="{Binding TeamBugsQueryState, Converter={x:Static c:QueryStatusToVisibilityConverter.Default}}"/>
-                            <TextBlock Text="{x:Static p:Resources.TeamBugsTitle}"/>
-                        </Grid>
-                    </DataTemplate>
-                </TabItem.HeaderTemplate>
-                <ContentControl Content="{Binding ShellService.TeamBugsView}" Margin="0,0,5,0"/>
-            </TabItem>
-        </TabControl>
+                                <TextBlock Text="{x:Static p:Resources.TeamBugsTitle}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </TabItem.HeaderTemplate>
+                    <ContentControl Content="{Binding ShellService.TeamBugsView}" Margin="0,0,5,0"/>
+                </TabItem>
+            </TabControl>
+        </Grid>
     </DockPanel>
 </Window>

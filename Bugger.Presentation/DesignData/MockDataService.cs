@@ -33,13 +33,13 @@ namespace Bugger.Presentation.DesignData
             this.userBugsProgressValue = 50;
             this.teamBugsQueryState = QueryStatus.QureyPause;
             this.teamBugsProgressValue = 100;
-            this.initializeStatus = InitializeStatus.Done;
+            this.initializeStatus = InitializeStatus.Initializing;
 
             InitializeBugs();
         }
 
         #region Properties
-        public MultiThreadingObservableCollection<Bug> UserBugs 
+        public MultiThreadingObservableCollection<Bug> UserBugs
         {
             get { return this.userBugs; }
         }

@@ -66,6 +66,8 @@
     </Compile>
     <Compile Include="Converters\BugTypeToImageConveter.cs" />
     <Compile Include="Converters\ByteToOpacityConverter.cs" />
+    <Compile Include="Converters\InitializeStatusToIndeterminateConverter.cs" />
+    <Compile Include="Converters\InitializeStatusToVisibilityConverter.cs" />
     <Compile Include="Converters\QueryStatusToVisibilityConverter.cs" />
     <Compile Include="Converters\QueryStatusToIndeterminateConverter.cs" />
     <Compile Include="Converters\QueryStatusToColorConverter.cs" />

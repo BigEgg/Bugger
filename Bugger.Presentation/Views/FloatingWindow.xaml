@@ -76,16 +76,20 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <ProgressBar Grid.Row="1" Value="{Binding DataService.UserBugsProgressValue}" Foreground="{Binding DataService.UserBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
+        <ProgressBar Grid.Row="0" Grid.ColumnSpan="2" Value="100" Foreground="Green"
+                             Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding DataService.InitializeStatus, Converter={x:Static c:InitializeStatusToIndeterminateConverter.Default}}"
+                             Visibility="{Binding DataService.InitializeStatus, Converter={x:Static c:InitializeStatusToVisibilityConverter.Default}}"/>
+        <ProgressBar Grid.Row="2" Value="{Binding DataService.UserBugsProgressValue}" Foreground="{Binding DataService.UserBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
                              Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding DataService.UserBugsQueryState, Converter={x:Static c:QueryStatusToIndeterminateConverter.Default}}"
                              Visibility="{Binding DataService.UserBugsQueryState, Converter={x:Static c:QueryStatusToVisibilityConverter.Default}}"/>
-        <ProgressBar Grid.Row="1" Grid.Column="1" Value="{Binding DataService.TeamBugsProgressValue}" Foreground="{Binding DataService.TeamBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
+        <ProgressBar Grid.Row="2" Grid.Column="1" Value="{Binding DataService.TeamBugsProgressValue}" Foreground="{Binding DataService.TeamBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
                              Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding DataService.TeamBugsQueryState, Converter={x:Static c:QueryStatusToIndeterminateConverter.Default}}"
                              Visibility="{Binding DataService.TeamBugsQueryState, Converter={x:Static c:QueryStatusToVisibilityConverter.Default}}"/>
-        <Grid Grid.ColumnSpan="1" Grid.RowSpan="2" IsHitTestVisible="False">
+        <Grid Grid.ColumnSpan="1" Grid.RowSpan="3" IsHitTestVisible="False">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
@@ -93,7 +97,7 @@
             <Image HorizontalAlignment="Center" Margin="3" VerticalAlignment="Center" Source="{Binding Mode=OneWay, Source={StaticResource RedGiftboxImageSource}}"/>
             <TextBlock Grid.Column="1" Margin="10,0" Text="{Binding RedBugCount, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
-        <Grid Grid.ColumnSpan="1" Grid.Column="1" Grid.RowSpan="2" IsHitTestVisible="False">
+        <Grid Grid.ColumnSpan="1" Grid.Column="1" Grid.RowSpan="3" IsHitTestVisible="False">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
@@ -101,7 +105,7 @@
             <Image HorizontalAlignment="Center" Margin="3" VerticalAlignment="Center" Source="{Binding Mode=OneWay, Source={StaticResource YellowGiftboxImageSource}}"/>
             <TextBlock Grid.Column="1" Margin="10,0" Text="{Binding YellowBugCount, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
-        <Button x:Name="refresh" Command="{Binding RefreshBugsCommand}" Grid.Column="2" Grid.RowSpan="2" Opacity="0">
+        <Button x:Name="refresh" Command="{Binding RefreshBugsCommand}" Grid.Column="2" Grid.RowSpan="3" Opacity="0">
             <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Mode=OneWay, Source={StaticResource RefreshImageSource}}" IsHitTestVisible="False"/>
         </Button>
     </Grid>
