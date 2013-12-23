@@ -538,7 +538,7 @@ namespace Bugger.Proxy.TFS
                     }
                 }
                 return task.Result;
-            }, TaskContinuationOptions.OnlyOnRanToCompletion)
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
             .ContinueWith(task =>
             {
                 this.settingViewModel.ProgressValue = 90;
@@ -556,7 +556,7 @@ namespace Bugger.Proxy.TFS
                 {
                     return false;
                 }
-            }, TaskContinuationOptions.OnlyOnRanToCompletion)
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
             .ContinueWith(task =>
             {
                 if (task.Result)
