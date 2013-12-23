@@ -20,6 +20,7 @@ namespace Bugger.Presentation.DesignData
         private QueryStatus teamBugsQueryState;
         private int userBugsProgressValue;
         private int teamBugsProgressValue;
+        private InitializeStatus initializeStatus;
         #endregion
 
         public MockDataService()
@@ -32,6 +33,7 @@ namespace Bugger.Presentation.DesignData
             this.userBugsProgressValue = 50;
             this.teamBugsQueryState = QueryStatus.QureyPause;
             this.teamBugsProgressValue = 100;
+            this.initializeStatus = InitializeStatus.Done;
 
             InitializeBugs();
         }
@@ -97,6 +99,19 @@ namespace Bugger.Presentation.DesignData
                 {
                     this.teamBugsProgressValue = value;
                     RaisePropertyChanged("TeamBugsProgressValue");
+                }
+            }
+        }
+
+        public InitializeStatus InitializeStatus
+        {
+            get { return this.initializeStatus; }
+            set
+            {
+                if (this.initializeStatus != value)
+                {
+                    this.initializeStatus = value;
+                    RaisePropertyChanged("InitializeStatus");
                 }
             }
         }

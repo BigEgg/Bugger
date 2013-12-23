@@ -21,5 +21,7 @@ namespace Bugger.Applications.Services
         int UserBugsProgressValue { get; set; }
 
         int TeamBugsProgressValue { get; set; }
+
+        InitializeStatus InitializeStatus { get; set; }
     }
 }

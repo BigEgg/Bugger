@@ -18,6 +18,7 @@ namespace Bugger.Applications.Services
         private QueryStatus teamBugsQueryState;
         private int userBugsProgressValue;
         private int teamBugsProgressValue;
+        private InitializeStatus initializeStatus;
         #endregion
 
         [ImportingConstructor]
@@ -30,6 +31,7 @@ namespace Bugger.Applications.Services
             this.userBugsProgressValue = 0;
             this.teamBugsQueryState = QueryStatus.QureyPause;
             this.teamBugsProgressValue = 0;
+            this.initializeStatus = InitializeStatus.Initializing;
         }
 
         #region Properties
@@ -98,6 +100,19 @@ namespace Bugger.Applications.Services
                 {
                     this.teamBugsProgressValue = value;
                     RaisePropertyChanged("TeamBugsProgressValue");
+                }
+            }
+        }
+
+        public InitializeStatus InitializeStatus
+        {
+            get { return this.initializeStatus; }
+            set
+            {
+                if (this.initializeStatus != value)
+                {
+                    this.initializeStatus = value;
+                    RaisePropertyChanged("InitializeStatus");
                 }
             }
         }

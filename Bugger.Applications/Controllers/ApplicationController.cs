@@ -24,6 +24,7 @@ namespace Bugger.Applications.Controllers
         private readonly DataController dataController;
         private readonly ProxyController proxyController;
         private readonly IMessageService messageService;
+        private readonly IDataService dataService;
 
         private readonly FloatingViewModel floatingViewModel;
         private readonly MainViewModel mainViewModel;
@@ -52,6 +53,8 @@ namespace Bugger.Applications.Controllers
             this.proxyController = proxyController;
             this.messageService = messageService;
 
+            this.dataService = container.GetExportedValue<IDataService>();
+
             this.floatingViewModel = container.GetExportedValue<FloatingViewModel>();
             this.mainViewModel = container.GetExportedValue<MainViewModel>();
             this.userBugsViewModel = container.GetExportedValue<UserBugsViewModel>();
@@ -66,7 +69,7 @@ namespace Bugger.Applications.Controllers
             this.showMainWindowCommand = new DelegateCommand(ShowMainWindowCommandExcute);
             this.englishCommand = new DelegateCommand(() => SelectLanguage(new CultureInfo("en-US")));
             this.chineseCommand = new DelegateCommand(() => SelectLanguage(new CultureInfo("zh-CN")));
-            this.settingCommand = new DelegateCommand(SettingDialogCommandExcute);
+            this.settingCommand = new DelegateCommand(SettingDialogCommandExcute, CanSettingDialogCommandExcute);
             this.aboutCommand = new DelegateCommand(AboutDialogCommandExcute);
             this.exitCommand = new DelegateCommand(ExitCommandExcute);
         }
@@ -92,11 +95,14 @@ namespace Bugger.Applications.Controllers
             this.proxyController.ActiveProxyInitializeTask
                 .ContinueWith(task =>
                 {
+                    dataService.InitializeStatus = Models.InitializeStatus.Done;
+                    UpdateCommands();
+
                     if (task.Result)
                     {
                         this.dataController.TimerStart();
                     }
-                }, TaskContinuationOptions.OnlyOnRanToCompletion);
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public void ShutDown()
@@ -135,7 +141,6 @@ namespace Bugger.Applications.Controllers
         #endregion
 
         #region Methods
-        #region Private Methods
         #region Commands Methods
         private void ShowMainWindowCommandExcute()
         {
@@ -195,8 +200,14 @@ namespace Bugger.Applications.Controllers
 
             floatingViewModel.Opacity = Settings.Default.FloatingWindowOpacity;
         }
+
+        private bool CanSettingDialogCommandExcute()
+        {
+            return dataService.InitializeStatus == Models.InitializeStatus.Done;
+        }
         #endregion
 
+        #region Private Methods
         private static void InitializeCultures()
         {
             if (!String.IsNullOrEmpty(Settings.Default.Culture))
@@ -221,6 +232,11 @@ namespace Bugger.Applications.Controllers
                     Resources.ResourceManager.GetString("RestartApplication", uiCulture));
             }
             this.newLanguage = uiCulture;
+        }
+
+        private void UpdateCommands()
+        {
+            this.settingCommand.RaiseCanExecuteChanged();
         }
         #endregion
         #endregion
