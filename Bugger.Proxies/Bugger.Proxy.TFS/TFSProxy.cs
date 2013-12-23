@@ -30,6 +30,7 @@ namespace Bugger.Proxy.TFS
         private SettingDocument document;
         private TFSSettingViewModel settingViewModel;
 
+        private string stateColumn = string.Empty;
         private readonly ObservableCollection<string> stateValues;
         private List<string> ignoreField;
         private const string PriorityRedSeparator = ";";
@@ -147,7 +148,11 @@ namespace Bugger.Proxy.TFS
         {
             RemoveWeakEventListener(this.settingViewModel, SettingViewModelPropertyChanged);
 
-            if (!submit) { return; }
+            if (!submit)
+            {
+                UpdateStateValues(this.document.PropertyMappingCollection["State"]);
+                return;
+            }
 
             this.document.ConnectUri = this.settingViewModel.ConnectUri;
             this.document.UserName = this.settingViewModel.UserName;
@@ -386,6 +391,21 @@ namespace Bugger.Proxy.TFS
                                                                                  .Select(x => x.Name));
         }
 
+        private void UpdateStateValues(string stateColumnName)
+        {
+            var field = this.settingViewModel.TFSFields
+                                             .FirstOrDefault(x => x.Name == stateColumnName);
+            if (field != null && field.Name != stateColumn)
+            {
+                stateColumn = field.Name;
+                StateValues.Clear();
+                foreach (var value in field.AllowedValues)
+                {
+                    StateValues.Add(value);
+                }
+            }
+        }
+
         private void AutoFillMapSettings(List<TFSField> tfsFields)
         {
             if (tfsFields == null) { throw new ArgumentException("tfsFields"); }
@@ -443,6 +463,7 @@ namespace Bugger.Proxy.TFS
             if (e.PropertyName == "PropertyMappingCollection")
             {
                 UpdateSettingDialogPriorityValues();
+                UpdateStateValues(this.settingViewModel.PropertyMappingCollection["State"]);
             }
             else if (e.PropertyName == "ConnectUri" || e.PropertyName == "UserName" || e.PropertyName == "Password")
             {
