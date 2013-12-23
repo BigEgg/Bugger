@@ -22,7 +22,7 @@ Alpha 3 (v0.3.0) <----- Currently Working
         Use multi-threading to avoid UI hang change the activy proxy. (✓)
             Show progress and out come when change the activy proxy. (✓)
         Show progress and out come when query bugs. (✓)
-        Optimized the startup time.
+        Optimized the startup time. (✓)
     Proxies
         Support cancel event for proxy restore data when setting dialog cancelled. (✓)
         Support validate event before the submit, to valid the settings. (✓)
