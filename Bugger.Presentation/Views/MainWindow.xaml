@@ -34,9 +34,9 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="5"/>
                             </Grid.RowDefinitions>
-                            <ProgressBar Grid.Row="1" Value="{Binding UserBugsProgressValue}" Foreground="{Binding UserBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
-                                             Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding UserBugsQueryState, Converter={x:Static c:QueryStatusToIndeterminateConverter.Default}}"
-                                             Visibility="{Binding UserBugsQueryState, Converter={x:Static c:QueryStatusToVisibilityConverter.Default}}"/>
+                            <ProgressBar Grid.Row="1" Width="100" Value="{Binding UserBugsProgressValue}" Foreground="{Binding UserBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
+                                         Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding UserBugsQueryState, Converter={x:Static c:QueryStatusToIndeterminateConverter.Default}}"
+                                         Visibility="{Binding UserBugsQueryState, Converter={x:Static c:QueryStatusToVisibilityConverter.Default}}"/>
                             <TextBlock Text="{x:Static p:Resources.UserBugsTitle}"/>
                         </Grid>
                     </DataTemplate>
@@ -51,7 +51,7 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="5"/>
                             </Grid.RowDefinitions>
-                            <ProgressBar Grid.Row="1" Value="{Binding TeamBugsProgressValue}" Foreground="{Binding TeamBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
+                            <ProgressBar Grid.Row="1" Width="100" Value="{Binding TeamBugsProgressValue}" Foreground="{Binding TeamBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
                                              Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding TeamBugsQueryState, Converter={x:Static c:QueryStatusToIndeterminateConverter.Default}}"
                                              Visibility="{Binding TeamBugsQueryState, Converter={x:Static c:QueryStatusToVisibilityConverter.Default}}"/>
                             <TextBlock Text="{x:Static p:Resources.TeamBugsTitle}"/>
