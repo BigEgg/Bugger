@@ -9,7 +9,7 @@
         xmlns:vm="clr-namespace:Bugger.Proxy.TFS.ViewModels;assembly=Bugger.Proxy.TFS"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleUriHelpViewModel, IsDesignTimeCreatable=True}"
         Title="{Binding Title, Mode=OneWay}"
-        Width="400" Height="300" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
+        Width="400" Height="300" ResizeMode="NoResize" Topmost="True" Closing="Window_Closing" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
     <Window.Resources>
         <Style TargetType="{x:Type TextBox}">
             <Style.Triggers>
@@ -36,7 +36,7 @@
         </Grid.RowDefinitions>
 
         <Label Content="{x:Static p:Resources.NameOrURIofTFS}" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Left" Target="{Binding ElementName=TFSName}"/>
-        <TextBox x:Name="TFSName" Text="{Binding ServerName, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="4" Margin="0,4"/>
+        <TextBox x:Name="TFSName" Text="{Binding ServerName, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" Grid.Row="1" VerticalAlignment="Center" Grid.ColumnSpan="4" Margin="0,4"/>
         <GroupBox Header="{x:Static p:Resources.ConnectionDetails}" Margin="0" Grid.Row="2" Grid.ColumnSpan="4" IsEnabled="{Binding CanEditConnectionDetail}">
             <Grid Margin="5">
                 <Grid.RowDefinitions>
@@ -52,8 +52,8 @@
                 <Label Content="{x:Static p:Resources.Path}" VerticalAlignment="Center" Target="{Binding ElementName=TFSPath}"/>
                 <Label Content="{x:Static p:Resources.PortNumber}" VerticalAlignment="Center" Grid.Row="1" Target="{Binding ElementName=TFSPort}"/>
                 <Label Content="{x:Static p:Resources.Protocal}" VerticalAlignment="Center" Grid.Row="2" Target="{Binding ElementName=httpRadioButton}"/>
-                <TextBox x:Name="TFSPath" Grid.ColumnSpan="2" Grid.Column="1" Text="{Binding Path, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" VerticalAlignment="Center"/>
-                <TextBox x:Name="TFSPort" Grid.Column="1" Margin="0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Port, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" VerticalAlignment="Center"/>
+                <TextBox x:Name="TFSPath" Grid.ColumnSpan="2" Grid.Column="1" Text="{Binding Path, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" VerticalAlignment="Center"/>
+                <TextBox x:Name="TFSPort" Grid.Column="1" Margin="0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" VerticalAlignment="Center"/>
                 <RadioButton x:Name="httpRadioButton" Content="{x:Static p:Resources.HTTP}" Grid.Column="1" HorizontalAlignment="Left" Margin="0" Grid.Row="2" VerticalAlignment="Center" IsChecked="{Binding IsHttpsProtocal, Converter={x:Static c:InvertBooleanConverter.Default}}"/>
                 <RadioButton Content="{x:Static p:Resources.HTTPS}" Grid.Column="2" HorizontalAlignment="Left" Margin="0" Grid.Row="2" VerticalAlignment="Center" IsChecked="{Binding IsHttpsProtocal}"/>
             </Grid>

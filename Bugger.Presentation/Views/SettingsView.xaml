@@ -79,11 +79,11 @@
                 <Label Content="{x:Static p:Resources.SettingUserName}" VerticalAlignment="Center"
                        Target="{Binding ElementName=userName}" />
                 <TextBox x:Name="userName" Grid.Column="1" VerticalAlignment="Center"
-                         Text="{Binding UserName, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+                         Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                 <Label Content="{x:Static p:Resources.SettingRefreshMinutes}" VerticalAlignment="Center"
                        Target="{Binding ElementName=refreshMinutes}" Grid.Row="1" />
                 <TextBox x:Name="refreshMinutes" Grid.Column="1" VerticalAlignment="Center"
-                         Text="{Binding RefreshMinutes, ValidatesOnExceptions=true, ValidatesOnDataErrors=true, NotifyOnValidationError=true}"
+                         Text="{Binding RefreshMinutes, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=true, ValidatesOnDataErrors=true, NotifyOnValidationError=true}"
                          Grid.Row="1" />
                 <Label Content="{x:Static p:Resources.SettingIsFilterCreatedBy}" VerticalAlignment="Center"
                        Target="{Binding ElementName=filterCreatedBy}" Grid.Row="2" />

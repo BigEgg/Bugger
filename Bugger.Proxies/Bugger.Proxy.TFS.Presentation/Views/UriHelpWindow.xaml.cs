@@ -15,7 +15,14 @@ namespace Bugger.Proxy.TFS.Presentation
         public void ShowDialog(object owner)
         {
             Owner = owner as Window;
+            this.Visibility = Visibility.Visible;
             ShowDialog();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Visibility = Visibility.Hidden;
         }
     }
 }
