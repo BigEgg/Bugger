@@ -68,9 +68,7 @@ namespace Bugger.Applications.ViewModels
             this.addNewTeamMemberCommand = new DelegateCommand(AddNewTeamMemberCommandExecute, CanAddNewTeamMemberCommandExecute);
             this.removeTeamMemberCommand = new DelegateCommand(RemoveTeamMemberCommandExecute, CanRemoveTeamMemberCommandExecute);
 
-            this.selectedTeamMember = this.teamMembers.FirstOrDefault();
             this.selectedTeamMembers = new ObservableCollection<string>();
-            this.selectedTeamMembers.Add(selectedTeamMember);
             this.newTeamMember = string.Empty;
         }
 
@@ -102,6 +100,7 @@ namespace Bugger.Applications.ViewModels
                 if (this.selectedTeamMember != value)
                 {
                     this.selectedTeamMember = value;
+                    UpdateCommands();
                     RaisePropertyChanged("SelectedTeamMember");
                 }
             }
@@ -223,7 +222,6 @@ namespace Bugger.Applications.ViewModels
                 this.TeamMembers.Add(this.newTeamMember);
             }
             this.SelectedTeamMembers.Clear();
-            this.SelectedTeamMembers.Add(this.newTeamMember);
             this.SelectedTeamMember = this.newTeamMember;
             this.NewTeamMember = string.Empty;
 
@@ -238,19 +236,18 @@ namespace Bugger.Applications.ViewModels
         private void RemoveTeamMemberCommandExecute()
         {
             IEnumerable<string> itemsToExclude = this.SelectedTeamMembers.Except(new[] { this.SelectedTeamMember });
-            string nextBranch = CollectionHelper.GetNextElementOrDefault(this.TeamMembers.Except(itemsToExclude),
+            string nextTeamMember = CollectionHelper.GetNextElementOrDefault(this.TeamMembers.Except(itemsToExclude),
                 this.SelectedTeamMember);
 
-            foreach (string item in this.SelectedTeamMembers)
+            var removeList = this.SelectedTeamMembers.ToList();
+
+            foreach (var item in removeList)
             {
                 this.TeamMembers.Remove(item);
             }
 
-
-            this.SelectedTeamMember = nextBranch ?? this.TeamMembers.LastOrDefault();
+            this.SelectedTeamMember = nextTeamMember ?? this.TeamMembers.LastOrDefault();
             this.SelectedTeamMembers.Clear();
-            if (this.SelectedTeamMember != null)
-                this.SelectedTeamMembers.Add(this.SelectedTeamMember);
 
             UpdateCommands();
         }
