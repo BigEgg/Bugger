@@ -150,7 +150,7 @@ namespace Bugger.Applications.ViewModels
                 {
                     UpdateCommands();
                 }
-            }, TaskContinuationOptions.OnlyOnRanToCompletion);
+            }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private bool CanSubmitSetting()

@@ -7,7 +7,7 @@
         xmlns:c="clr-namespace:Bugger.Presentation.Converters"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleSettingDialogViewModel, IsDesignTimeCreatable=True}"
-        Title="{Binding Title}" Height="550" Width="550" ResizeMode="NoResize"
+        Title="{Binding Title}" Height="480" Width="550" ResizeMode="NoResize"
         Icon="{Binding Mode=OneWay, Source={StaticResource BuggerImageSource}}"
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Topmost="True">
     <Grid Margin="10">

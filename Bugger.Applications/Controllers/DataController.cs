@@ -117,14 +117,14 @@ namespace Bugger.Applications.Controllers
         private bool CanRefreshBugsCommandExecute()
         {
             return this.ActiveProxy != null &&
-                   this.dataService.UserBugsQueryState == QueryStatus.Failed &&
-                   this.dataService.UserBugsQueryState == QueryStatus.NotWorking &&
-                   this.dataService.UserBugsQueryState == QueryStatus.QureyPause &&
-                   this.dataService.UserBugsQueryState == QueryStatus.Success &&
-                   this.dataService.TeamBugsQueryState == QueryStatus.Failed &&
-                   this.dataService.TeamBugsQueryState == QueryStatus.NotWorking &&
-                   this.dataService.TeamBugsQueryState == QueryStatus.QureyPause &&
-                   this.dataService.TeamBugsQueryState == QueryStatus.Success &&
+                   (this.dataService.UserBugsQueryState == QueryStatus.Failed ||
+                    this.dataService.UserBugsQueryState == QueryStatus.NotWorking ||
+                    this.dataService.UserBugsQueryState == QueryStatus.QureyPause ||
+                    this.dataService.UserBugsQueryState == QueryStatus.Success) &&
+                   (this.dataService.TeamBugsQueryState == QueryStatus.Failed ||
+                    this.dataService.TeamBugsQueryState == QueryStatus.NotWorking ||
+                    this.dataService.TeamBugsQueryState == QueryStatus.QureyPause ||
+                    this.dataService.TeamBugsQueryState == QueryStatus.Success) &&
                    this.ActiveProxy.CanQuery;
         }
 
