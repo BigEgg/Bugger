@@ -12,6 +12,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bugger.Applications.Controllers
 {
@@ -88,10 +89,19 @@ namespace Bugger.Applications.Controllers
 
             this.proxyController.Initialize();
             this.dataController.Initialize();
+            this.proxyController.ActiveProxyInitializeTask
+                .ContinueWith(task =>
+                {
+                    if (task.Result)
+                    {
+                        this.dataController.TimerStart();
+                    }
+                }, TaskContinuationOptions.OnlyOnRanToCompletion);
         }
 
         public void ShutDown()
         {
+            this.dataController.TimerStop();
             this.dataController.Shutdown();
 
             if (this.newLanguage != null)

@@ -26,9 +26,9 @@ namespace Bugger.Applications.Services
             this.userBugs = new MultiThreadingObservableCollection<Bug>();
             this.teamBugs = new MultiThreadingObservableCollection<Bug>();
             this.refreshTime = DateTime.Now;
-            this.userBugsQueryState = QueryStatus.NotWorking;
+            this.userBugsQueryState = QueryStatus.QureyPause;
             this.userBugsProgressValue = 0;
-            this.teamBugsQueryState = QueryStatus.NotWorking;
+            this.teamBugsQueryState = QueryStatus.QureyPause;
             this.teamBugsProgressValue = 0;
         }
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bugger.Applications.Controllers
 {
@@ -24,6 +25,19 @@ namespace Bugger.Applications.Controllers
 
             IEnumerable<ITracingSystemProxy> proxys = this.container.GetExportedValues<ITracingSystemProxy>();
             this.proxyService = new ProxyService(proxys);
+
+            ActiveProxyInitializeTask = new Task<bool>(() =>
+            {
+                if (this.proxyService.ActiveProxy != null)
+                {
+                    this.proxyService.ActiveProxy.Initialize();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            });
         }
 
         #region Implement Controller base class
@@ -42,10 +56,7 @@ namespace Bugger.Applications.Controllers
                 this.proxyService.ActiveProxy = null;
             }
 
-            if (this.proxyService.ActiveProxy != null)
-            {
-                this.proxyService.ActiveProxy.Initialize();
-            }
+            ActiveProxyInitializeTask.Start();
         }
 
         public void Shutdown()
@@ -54,6 +65,8 @@ namespace Bugger.Applications.Controllers
 
         #region Properties
         public ProxyService ProxyService { get { return this.proxyService; } }
+
+        public Task<bool> ActiveProxyInitializeTask { get; set; }
         #endregion
     }
 }

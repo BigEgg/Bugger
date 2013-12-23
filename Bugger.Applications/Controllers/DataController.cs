@@ -58,8 +58,6 @@ namespace Bugger.Applications.Controllers
             mainViewModel.RefreshBugsCommand = this.refreshBugsCommand;
 
             currentSynchronizationTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-
-            TimerStart();
         }
 
         public void Shutdown()
@@ -118,7 +116,16 @@ namespace Bugger.Applications.Controllers
         #region Commands Methods
         private bool CanRefreshBugsCommandExecute()
         {
-            return this.ActiveProxy == null ? false : this.ActiveProxy.CanQuery;
+            return this.ActiveProxy != null &&
+                   this.dataService.UserBugsQueryState == QueryStatus.Failed &&
+                   this.dataService.UserBugsQueryState == QueryStatus.NotWorking &&
+                   this.dataService.UserBugsQueryState == QueryStatus.QureyPause &&
+                   this.dataService.UserBugsQueryState == QueryStatus.Success &&
+                   this.dataService.TeamBugsQueryState == QueryStatus.Failed &&
+                   this.dataService.TeamBugsQueryState == QueryStatus.NotWorking &&
+                   this.dataService.TeamBugsQueryState == QueryStatus.QureyPause &&
+                   this.dataService.TeamBugsQueryState == QueryStatus.Success &&
+                   this.ActiveProxy.CanQuery;
         }
 
         private void RefreshBugsCommandExecute()
@@ -131,14 +138,16 @@ namespace Bugger.Applications.Controllers
             {
                 this.dataService.UserBugsQueryState = QueryStatus.Qureying;
                 this.dataService.UserBugsProgressValue = 0;
+                UpdateCommands();
 
                 Task.Factory.StartNew(() => this.ActiveProxy.Query(
                                             Settings.Default.UserName,
                                             Settings.Default.IsFilterCreatedBy))
                 .ContinueWith(task =>
                 {
-                    this.dataService.UserBugsQueryState = QueryStatus.FillData;
+                    this.dataService.UserBugsQueryState = QueryStatus.FillingData;
                     this.dataService.UserBugsProgressValue = 50;
+                    UpdateCommands();
                     return task.Result;
                 }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler)
                 .ContinueWith(task =>
@@ -158,12 +167,14 @@ namespace Bugger.Applications.Controllers
                 .ContinueWith(task =>
                 {
                     this.dataService.UserBugsQueryState = QueryStatus.Success;
+                    UpdateCommands();
                     this.dataService.UserBugsProgressValue = 100;
                 }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler);
             }
             else
             {
                 this.dataService.UserBugsQueryState = QueryStatus.Failed;
+                UpdateCommands();
                 this.dataService.UserBugsProgressValue = 100;
             }
 
@@ -171,14 +182,16 @@ namespace Bugger.Applications.Controllers
             {
                 this.dataService.TeamBugsQueryState = QueryStatus.Qureying;
                 this.dataService.TeamBugsProgressValue = 0;
+                UpdateCommands();
 
                 Task.Factory.StartNew(() => this.ActiveProxy.Query(
                                             Settings.Default.TeamMembers.Split(';').Select(x => x.Trim()).ToList(),
                                             Settings.Default.IsFilterCreatedBy))
                 .ContinueWith(task =>
                 {
-                    this.dataService.TeamBugsQueryState = QueryStatus.FillData;
+                    this.dataService.TeamBugsQueryState = QueryStatus.FillingData;
                     this.dataService.TeamBugsProgressValue = 50;
+                    UpdateCommands();
                     return task.Result;
                 }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler)
                 .ContinueWith(task =>
@@ -199,12 +212,14 @@ namespace Bugger.Applications.Controllers
                 {
                     this.dataService.TeamBugsQueryState = QueryStatus.Success;
                     this.dataService.TeamBugsProgressValue = 100;
+                    UpdateCommands();
                 }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler);
             }
             else
             {
                 this.dataService.UserBugsQueryState = QueryStatus.Failed;
                 this.dataService.UserBugsProgressValue = 100;
+                UpdateCommands();
             }
         }
         #endregion

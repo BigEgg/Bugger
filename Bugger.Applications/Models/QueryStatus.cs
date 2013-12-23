@@ -5,7 +5,7 @@
         NotWorking,
         Qureying,
         QureyPause,
-        FillData,
+        FillingData,
         Success,
         Failed
     }

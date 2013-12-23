@@ -16,7 +16,7 @@ namespace Bugger.Presentation.Test.Conveters
             var result = converter.Convert(QueryStatus.Failed, null, null, null);
             Assert.AreEqual(Brushes.Red, result);
 
-            result = converter.Convert(QueryStatus.FillData, null, null, null);
+            result = converter.Convert(QueryStatus.FillingData, null, null, null);
             Assert.AreEqual(Brushes.Green, result);
 
             result = converter.Convert(QueryStatus.NotWorking, null, null, null);
