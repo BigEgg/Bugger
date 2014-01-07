@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Windows.Input;
+using BigEgg.Framework.Applications.Commands;
 
 namespace Bugger.Applications.ViewModels
 {
@@ -18,6 +19,7 @@ namespace Bugger.Applications.ViewModels
         #region Fields
         private readonly IDataService dataService;
 
+        private DelegateCommand<byte?> setOpacityCommand;
         private ICommand showMainWindowCommand;
         private ICommand refreshBugsCommand;
         private ICommand englishCommand;
@@ -25,6 +27,8 @@ namespace Bugger.Applications.ViewModels
         private ICommand aboutCommand;
         private ICommand settingCommand;
         private ICommand exitCommand;
+
+        private byte opacity;
         #endregion
 
         [ImportingConstructor]
@@ -43,20 +47,40 @@ namespace Bugger.Applications.ViewModels
                 ViewCore.Left = Settings.Default.FloatingWindowLeft;
                 ViewCore.Top = Settings.Default.FloatingWindowTop;
             }
+            else
+            {
+                ViewCore.Left = presentationService.VirtualScreenWidth - 200;
+                ViewCore.Top = 50;
+            }
+
+            if (Settings.Default.FloatingWindowOpacity <= 100 && Settings.Default.FloatingWindowOpacity >= 20)
+            {
+                Opacity = Settings.Default.FloatingWindowOpacity;
+            }
+            else
+            {
+                Opacity = 80;
+            }
 
             AddWeakEventListener(this.dataService.UserBugs, UserBugsCollectionChanged);
+
+            this.setOpacityCommand = new DelegateCommand<byte?>(opacity => SetOpacity(Convert.ToByte(opacity)));
         }
 
         #region Properties
+        public IDataService DataService { get { return this.dataService; } }
+
         public int RedBugCount
         {
-            get { return this.dataService.UserBugs.Count(x=>x.Type == BugType.Red); }
+            get { return this.dataService.UserBugs.Count(x => x.Type == BugType.Red); }
         }
 
         public int YellowBugCount
         {
             get { return this.dataService.UserBugs.Count(x => x.Type == BugType.Yellow); }
         }
+
+        public DelegateCommand<byte?> SetOpacityCommand { get { return this.setOpacityCommand; } }
 
         public ICommand ShowMainWindowCommand
         {
@@ -148,6 +172,19 @@ namespace Bugger.Applications.ViewModels
                 }
             }
         }
+
+        public byte Opacity
+        {
+            get { return this.opacity; }
+            set
+            {
+                if (this.opacity != value)
+                {
+                    this.opacity = value;
+                    RaisePropertyChanged("Opacity");
+                }
+            }
+        }
         #endregion
 
         public event CancelEventHandler Closing;
@@ -178,12 +215,21 @@ namespace Bugger.Applications.ViewModels
         {
             Settings.Default.FloatingWindowLeft = ViewCore.Left;
             Settings.Default.FloatingWindowTop = ViewCore.Top;
+            Settings.Default.FloatingWindowOpacity = this.opacity;
         }
 
         private void UserBugsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             RaisePropertyChanged("RedBugCount");
             RaisePropertyChanged("YellowBugCount");
+        }
+
+        private void SetOpacity(byte? opacity)
+        {
+            if (opacity.HasValue && opacity >= 20 && opacity <= 100)
+            {
+                Opacity = opacity.Value;
+            }
         }
         #endregion
         #endregion

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bugger.Applications.Controllers
 {
@@ -22,30 +23,40 @@ namespace Bugger.Applications.Controllers
         {
             this.container = container;
 
-            IEnumerable<ISourceControlProxy> proxys = this.container.GetExportedValues<ISourceControlProxy>();
+            IEnumerable<ITracingSystemProxy> proxys = this.container.GetExportedValues<ITracingSystemProxy>();
             this.proxyService = new ProxyService(proxys);
+
+            ActiveProxyInitializeTask = new Task<bool>(() =>
+            {
+                if (this.proxyService.ActiveProxy != null)
+                {
+                    this.proxyService.ActiveProxy.Initialize();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            });
         }
 
         #region Implement Controller base class
         protected override void OnInitialize()
         {
-            foreach (var proxy in this.proxyService.Proxys)
+            if (this.ProxyService.Proxies.Any(x => x.ProxyName == Settings.Default.ActiveProxy))
             {
-                proxy.Initialize();
+                this.proxyService.ActiveProxy = this.proxyService.Proxies.First(x => x.ProxyName == Settings.Default.ActiveProxy);
             }
-
-            if (this.ProxyService.Proxys.Any(x => x.ProxyName == Settings.Default.ActiveProxy))
+            else if (this.ProxyService.Proxies.Any())
             {
-                this.proxyService.ActiveProxy = this.proxyService.Proxys.First(x => x.ProxyName == Settings.Default.ActiveProxy);
-            }
-            else if (this.ProxyService.Proxys.Any())
-            {
-                this.proxyService.ActiveProxy = this.proxyService.Proxys.First();
+                this.proxyService.ActiveProxy = this.proxyService.Proxies.First();
             }
             else
             {
                 this.proxyService.ActiveProxy = null;
             }
+
+            ActiveProxyInitializeTask.Start();
         }
 
         public void Shutdown()
@@ -54,6 +65,8 @@ namespace Bugger.Applications.Controllers
 
         #region Properties
         public ProxyService ProxyService { get { return this.proxyService; } }
+
+        public Task<bool> ActiveProxyInitializeTask { get; set; }
         #endregion
     }
 }

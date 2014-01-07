@@ -253,4 +253,28 @@ For anyone want to have a gadget as a simple dashboard for bugs, this is what he
   <data name="SettingFilterBugStatus" xml:space="preserve">
     <value>Filter bug's _status</value>
   </data>
+  <data name="SettingDialogMenu" xml:space="preserve">
+    <value>_Setting...</value>
+  </data>
+  <data name="SettingOpacityMenu" xml:space="preserve">
+    <value>_Opacity</value>
+  </data>
+  <data name="SettingStatusInitiatingProxy" xml:space="preserve">
+    <value>Initiating the Proxy, please wait...</value>
+  </data>
+  <data name="SettingStatusInitiatingProxyFailed" xml:space="preserve">
+    <value>Unknown reason happend, the initiation progress failed.</value>
+  </data>
+  <data name="SettingStatusProxyBusy" xml:space="preserve">
+    <value>Cannot save the settings while the proxy's setting still busy.</value>
+  </data>
+  <data name="SettingStatusProxyCannotConnect" xml:space="preserve">
+    <value>The proxy's setting cannot connect successfully. Do you still want to save it?</value>
+  </data>
+  <data name="SettingStatusProxyUnvalid" xml:space="preserve">
+    <value>There may have some setting unvalid in the proxy setting. Do you still want to save it?</value>
+  </data>
+  <data name="SettingStatusValidatingProxySettings" xml:space="preserve">
+    <value>Validating the Proxy's settings, please wait...</value>
+  </data>
 </root>

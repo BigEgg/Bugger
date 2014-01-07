@@ -16,7 +16,7 @@ namespace Bugger.Proxy.FakeProxy.Test
             Assert.AreEqual(0, proxy.StateValues.Count);
 
             proxy.Initialize();
-            Assert.AreEqual(3, proxy.StateValues.Count);
+            Assert.AreEqual(4, proxy.StateValues.Count);
         }
 
         [TestMethod]

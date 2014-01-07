@@ -7,6 +7,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleSettingsViewModel, IsDesignTimeCreatable=True}"
              d:DesignWidth="500" MinWidth="500" d:DesignHeight="350" MinHeight="330">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*" />
@@ -25,7 +34,7 @@
                 </Grid.ColumnDefinitions>
                 <Label Content="{x:Static p:Resources.SettingActiveProxy}" VerticalAlignment="Center"
                        Target="{Binding ElementName=activeProxy}" />
-                <ComboBox x:Name="activeProxy" Grid.Column="1" ItemsSource="{Binding Proxys}" IsReadOnly="True"
+                <ComboBox x:Name="activeProxy" Grid.Column="1" ItemsSource="{Binding Proxies}" IsReadOnly="True"
                           VerticalAlignment="Center" SelectedItem="{Binding ActiveProxy}" />
             </Grid>
         </GroupBox>
@@ -70,11 +79,11 @@
                 <Label Content="{x:Static p:Resources.SettingUserName}" VerticalAlignment="Center"
                        Target="{Binding ElementName=userName}" />
                 <TextBox x:Name="userName" Grid.Column="1" VerticalAlignment="Center"
-                         Text="{Binding UserName, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
+                         Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" />
                 <Label Content="{x:Static p:Resources.SettingRefreshMinutes}" VerticalAlignment="Center"
                        Target="{Binding ElementName=refreshMinutes}" Grid.Row="1" />
                 <TextBox x:Name="refreshMinutes" Grid.Column="1" VerticalAlignment="Center"
-                         Text="{Binding RefreshMinutes, ValidatesOnExceptions=true, ValidatesOnDataErrors=true, NotifyOnValidationError=true}"
+                         Text="{Binding RefreshMinutes, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=true, ValidatesOnDataErrors=true, NotifyOnValidationError=true}"
                          Grid.Row="1" />
                 <Label Content="{x:Static p:Resources.SettingIsFilterCreatedBy}" VerticalAlignment="Center"
                        Target="{Binding ElementName=filterCreatedBy}" Grid.Row="2" />

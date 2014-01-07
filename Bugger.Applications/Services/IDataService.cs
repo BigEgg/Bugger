@@ -1,4 +1,5 @@
 ﻿using BigEgg.Framework.Applications.Collections;
+using Bugger.Applications.Models;
 using Bugger.Domain.Models;
 using System;
 using System.ComponentModel;
@@ -12,5 +13,15 @@ namespace Bugger.Applications.Services
         MultiThreadingObservableCollection<Bug> TeamBugs { get; }
 
         DateTime RefreshTime { get; set; }
+
+        QueryStatus UserBugsQueryState { get; set; }
+
+        QueryStatus TeamBugsQueryState { get; set; }
+
+        int UserBugsProgressValue { get; set; }
+
+        int TeamBugsProgressValue { get; set; }
+
+        InitializeStatus InitializeStatus { get; set; }
     }
 }

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:p="clr-namespace:Bugger.Presentation.Properties"
+        xmlns:c="clr-namespace:Bugger.Presentation.Converters"
         xmlns:dd="clr-namespace:Bugger.Presentation.DesignData"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleMainViewModel, IsDesignTimeCreatable=True}"
@@ -24,13 +25,50 @@
             <MenuItem Header="{x:Static p:Resources.AboutMenu}" Command="{Binding AboutCommand}"/>
         </Menu>
 
-        <TabControl Margin="10" x:Name="documentView" ItemsSource="{Binding DocumentViews}">
-            <TabItem Header="{x:Static p:Resources.UserBugsTitle}">
-                <ContentControl Content="{Binding ShellService.UserBugsView}" Margin="0,0,5,0"/>
-            </TabItem>
-            <TabItem Header="{x:Static p:Resources.TeamBugsTitle}">
-                <ContentControl Content="{Binding ShellService.TeamBugsView}" Margin="0,0,5,0"/>
-            </TabItem>
-        </TabControl>
+        <Grid Margin="10,5,10,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ProgressBar Grid.Row="0" Grid.ColumnSpan="2" Value="100" Foreground="Green"
+                             Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding DataService.InitializeStatus, Converter={x:Static c:InitializeStatusToIndeterminateConverter.Default}}"
+                             Visibility="{Binding DataService.InitializeStatus, Converter={x:Static c:InitializeStatusToVisibilityConverter.Default}}"/>
+            <TabControl Grid.Row="1" x:Name="documentView" ItemsSource="{Binding DocumentViews}">
+                <TabItem Header="{Binding DataService, Mode=OneWay}">
+                    <TabItem.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="5"/>
+                                </Grid.RowDefinitions>
+                                <ProgressBar Grid.Row="1" Width="100" Value="{Binding UserBugsProgressValue}" Foreground="{Binding UserBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
+                                         Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding UserBugsQueryState, Converter={x:Static c:QueryStatusToIndeterminateConverter.Default}}"
+                                         Visibility="{Binding UserBugsQueryState, Converter={x:Static c:QueryStatusToVisibilityConverter.Default}}"/>
+                                <TextBlock Text="{x:Static p:Resources.UserBugsTitle}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </TabItem.HeaderTemplate>
+                    <ContentControl Content="{Binding ShellService.UserBugsView}" Margin="0,0,5,0"/>
+                </TabItem>
+                <TabItem Header="{Binding DataService, Mode=OneWay}">
+                    <TabItem.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="5"/>
+                                </Grid.RowDefinitions>
+                                <ProgressBar Grid.Row="1" Width="100" Value="{Binding TeamBugsProgressValue}" Foreground="{Binding TeamBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
+                                             Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding TeamBugsQueryState, Converter={x:Static c:QueryStatusToIndeterminateConverter.Default}}"
+                                             Visibility="{Binding TeamBugsQueryState, Converter={x:Static c:QueryStatusToVisibilityConverter.Default}}"/>
+                                <TextBlock Text="{x:Static p:Resources.TeamBugsTitle}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </TabItem.HeaderTemplate>
+                    <ContentControl Content="{Binding ShellService.TeamBugsView}" Margin="0,0,5,0"/>
+                </TabItem>
+            </TabControl>
+        </Grid>
     </DockPanel>
 </Window>

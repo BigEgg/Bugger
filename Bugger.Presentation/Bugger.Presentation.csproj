@@ -65,6 +65,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\BugTypeToImageConveter.cs" />
+    <Compile Include="Converters\ByteToOpacityConverter.cs" />
+    <Compile Include="Converters\InitializeStatusToIndeterminateConverter.cs" />
+    <Compile Include="Converters\InitializeStatusToVisibilityConverter.cs" />
+    <Compile Include="Converters\QueryStatusToVisibilityConverter.cs" />
+    <Compile Include="Converters\QueryStatusToIndeterminateConverter.cs" />
+    <Compile Include="Converters\QueryStatusToColorConverter.cs" />
+    <Compile Include="Converters\SettingDialogStatusToColorConverter.cs" />
+    <Compile Include="Converters\SettingDialogStatusToIndeterminateConverter.cs" />
+    <Compile Include="Converters\SettingDialogStatusToMessageConverter.cs" />
+    <Compile Include="Converters\SettingDialogStatusToVisibilityConverter.cs" />
     <Compile Include="DesignData\FakeProxy.cs" />
     <Compile Include="DesignData\MockDataService.cs" />
     <Compile Include="DesignData\MockProxyService.cs" />
@@ -137,7 +147,7 @@
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
       <Name>Bugger.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxys\Bugger.Proxy.csproj">
+    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxy\Bugger.Proxy.csproj">
       <Project>{e8727087-75f2-435f-bd11-78b4dff59a40}</Project>
       <Name>Bugger.Proxy</Name>
     </ProjectReference>

@@ -1,5 +1,6 @@
 ﻿using BigEgg.Framework.Applications.Collections;
 using BigEgg.Framework.Applications.ViewModels;
+using Bugger.Applications.Models;
 using Bugger.Applications.Services;
 using Bugger.Domain.Models;
 using System;
@@ -14,6 +15,12 @@ namespace Bugger.Presentation.DesignData
         private MultiThreadingObservableCollection<Bug> userBugs;
         private MultiThreadingObservableCollection<Bug> teamBugs;
         private DateTime refreshTime;
+
+        private QueryStatus userBugsQueryState;
+        private QueryStatus teamBugsQueryState;
+        private int userBugsProgressValue;
+        private int teamBugsProgressValue;
+        private InitializeStatus initializeStatus;
         #endregion
 
         public MockDataService()
@@ -22,11 +29,17 @@ namespace Bugger.Presentation.DesignData
             this.teamBugs = new MultiThreadingObservableCollection<Bug>();
             this.refreshTime = DateTime.Now;
 
+            this.userBugsQueryState = QueryStatus.Qureying;
+            this.userBugsProgressValue = 50;
+            this.teamBugsQueryState = QueryStatus.QureyPause;
+            this.teamBugsProgressValue = 100;
+            this.initializeStatus = InitializeStatus.Initializing;
+
             InitializeBugs();
         }
 
         #region Properties
-        public MultiThreadingObservableCollection<Bug> UserBugs 
+        public MultiThreadingObservableCollection<Bug> UserBugs
         {
             get { return this.userBugs; }
         }
@@ -37,6 +50,71 @@ namespace Bugger.Presentation.DesignData
         }
 
         public DateTime RefreshTime { get; set; }
+
+        public QueryStatus UserBugsQueryState
+        {
+            get { return this.userBugsQueryState; }
+            set
+            {
+                if (this.userBugsQueryState != value)
+                {
+                    this.userBugsQueryState = value;
+                    RaisePropertyChanged("UserBugsQueryState");
+                }
+            }
+        }
+
+        public int UserBugsProgressValue
+        {
+            get { return this.userBugsProgressValue; }
+            set
+            {
+                if (this.userBugsProgressValue != value)
+                {
+                    this.userBugsProgressValue = value;
+                    RaisePropertyChanged("UserBugsProgressValue");
+                }
+            }
+        }
+
+        public QueryStatus TeamBugsQueryState
+        {
+            get { return this.teamBugsQueryState; }
+            set
+            {
+                if (this.teamBugsQueryState != value)
+                {
+                    this.teamBugsQueryState = value;
+                    RaisePropertyChanged("TeamBugsQueryState");
+                }
+            }
+        }
+
+        public int TeamBugsProgressValue
+        {
+            get { return this.teamBugsProgressValue; }
+            set
+            {
+                if (this.teamBugsProgressValue != value)
+                {
+                    this.teamBugsProgressValue = value;
+                    RaisePropertyChanged("TeamBugsProgressValue");
+                }
+            }
+        }
+
+        public InitializeStatus InitializeStatus
+        {
+            get { return this.initializeStatus; }
+            set
+            {
+                if (this.initializeStatus != value)
+                {
+                    this.initializeStatus = value;
+                    RaisePropertyChanged("InitializeStatus");
+                }
+            }
+        }
         #endregion
 
         #region Methods

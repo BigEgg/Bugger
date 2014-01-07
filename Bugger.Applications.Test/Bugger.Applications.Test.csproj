@@ -100,19 +100,19 @@
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
       <Name>Bugger.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxys.FakeProxy\Bugger.Proxy.FakeProxy.csproj">
+    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxy.FakeProxy\Bugger.Proxy.FakeProxy.csproj">
       <Project>{9d384026-d73b-4ba9-9ae3-7d2172c438ce}</Project>
       <Name>Bugger.Proxy.FakeProxy</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxys.TFS.Presentation.Fake\Bugger.Proxy.TFS.Presentation.Fake.csproj">
+    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxy.TFS.Presentation.Fake\Bugger.Proxy.TFS.Presentation.Fake.csproj">
       <Project>{02ab8e76-2073-4f30-b891-1a1b60ae5101}</Project>
       <Name>Bugger.Proxy.TFS.Presentation.Fake</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxys.TFS\Bugger.Proxy.TFS.csproj">
+    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxy.TFS\Bugger.Proxy.TFS.csproj">
       <Project>{5714b0c6-82f3-4cc6-b33e-e3f8835c38fc}</Project>
       <Name>Bugger.Proxy.TFS</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxys\Bugger.Proxy.csproj">
+    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxy\Bugger.Proxy.csproj">
       <Project>{e8727087-75f2-435f-bd11-78b4dff59a40}</Project>
       <Name>Bugger.Proxy</Name>
     </ProjectReference>

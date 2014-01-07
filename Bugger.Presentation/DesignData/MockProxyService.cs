@@ -9,20 +9,20 @@ namespace Bugger.Presentation.DesignData
     public class MockProxyService : DataModel, IProxyService
     {
         #region Fields
-        private readonly IEnumerable<ISourceControlProxy> proxys;
-        private ISourceControlProxy activeProxy;
+        private readonly IEnumerable<ITracingSystemProxy> proxys;
+        private ITracingSystemProxy activeProxy;
         #endregion
 
         public MockProxyService()
         {
-            this.proxys = new List<ISourceControlProxy> { new FakeProxy() };
+            this.proxys = new List<ITracingSystemProxy> { new FakeProxy() };
             this.activeProxy = this.proxys.First();
         }
 
         #region Properties
-        public IEnumerable<ISourceControlProxy> Proxys { get { return this.proxys; } }
+        public IEnumerable<ITracingSystemProxy> Proxies { get { return this.proxys; } }
 
-        public ISourceControlProxy ActiveProxy
+        public ITracingSystemProxy ActiveProxy
         {
             get { return this.activeProxy; }
             set

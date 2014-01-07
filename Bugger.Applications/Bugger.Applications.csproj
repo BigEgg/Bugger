@@ -47,6 +47,9 @@
     <Compile Include="Controllers\IApplicationController.cs" />
     <Compile Include="Controllers\ProxyController.cs" />
     <Compile Include="Models\CheckString.cs" />
+    <Compile Include="Models\InitializeStatus.cs" />
+    <Compile Include="Models\QueryStatus.cs" />
+    <Compile Include="Models\SettingDialogStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -89,7 +92,7 @@
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
       <Name>Bugger.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxys\Bugger.Proxy.csproj">
+    <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxy\Bugger.Proxy.csproj">
       <Project>{e8727087-75f2-435f-bd11-78b4dff59a40}</Project>
       <Name>Bugger.Proxy</Name>
     </ProjectReference>

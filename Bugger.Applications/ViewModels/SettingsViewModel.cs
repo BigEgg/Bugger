@@ -20,20 +20,34 @@ namespace Bugger.Applications.ViewModels
         #region Fields
         private const string TeamMemberSplitString = "; ";
 
+        #region Relative with Team Member
         private readonly ObservableCollection<string> teamMembers;
         private readonly ObservableCollection<string> selectedTeamMembers;
-        private readonly ObservableCollection<CheckString> statusValues;
-        private readonly ReadOnlyCollection<string> proxys;
         private readonly DelegateCommand addNewTeamMemberCommand;
         private readonly DelegateCommand removeTeamMemberCommand;
 
         private string selectedTeamMember;
-        private string activeProxy;
-        private string userName;
         private string newTeamMember;
-        private int refreshMinutes;
+        #endregion
+
+        #region Relative with Proxies
+        private readonly ReadOnlyCollection<string> proxies;
+
+        private string activeProxy;
+        #endregion
+
+        #region Relative with Proxy Settings
+        private readonly ObservableCollection<CheckString> statusValues;
+
+        private string userName;
         private bool isFilterCreatedBy;
         private string filterStatusValues;
+        #endregion
+
+        #region Relative with Application
+        private int refreshMinutes;
+        private byte floatingWindowOpacity;
+        #endregion
         #endregion
 
         public SettingsViewModel(ISettingsView view, IProxyService proxyService, string teamMembers)
@@ -44,9 +58,9 @@ namespace Bugger.Applications.ViewModels
             this.teamMembers = new ObservableCollection<string>(
                 teamMembers.Split(TeamMemberSplitString.ToArray(), StringSplitOptions.RemoveEmptyEntries)
                 .Select(x => x.Trim()));
-            this.proxys = new ReadOnlyCollection<string>(
-                proxyService.Proxys.Select(x => x.ProxyName).ToList());
-            this.activeProxy = 
+            this.proxies = new ReadOnlyCollection<string>(
+                proxyService.Proxies.Select(x => x.ProxyName).ToList());
+            this.activeProxy =
                 proxyService.ActiveProxy == null ? string.Empty : proxyService.ActiveProxy.ProxyName;
 
             this.statusValues = new ObservableCollection<CheckString>();
@@ -54,9 +68,7 @@ namespace Bugger.Applications.ViewModels
             this.addNewTeamMemberCommand = new DelegateCommand(AddNewTeamMemberCommandExecute, CanAddNewTeamMemberCommandExecute);
             this.removeTeamMemberCommand = new DelegateCommand(RemoveTeamMemberCommandExecute, CanRemoveTeamMemberCommandExecute);
 
-            this.selectedTeamMember = this.teamMembers.FirstOrDefault();
             this.selectedTeamMembers = new ObservableCollection<string>();
-            this.selectedTeamMembers.Add(selectedTeamMember);
             this.newTeamMember = string.Empty;
         }
 
@@ -69,11 +81,10 @@ namespace Bugger.Applications.ViewModels
         #endregion
 
         #region Properties
+        #region Relative with Team Member
         public ICommand AddNewTeamMemberCommand { get { return this.addNewTeamMemberCommand; } }
 
         public ICommand RemoveTeamMemberCommand { get { return this.removeTeamMemberCommand; } }
-
-        public ReadOnlyCollection<string> Proxys { get { return this.proxys; } }
 
         public ObservableCollection<string> TeamMembers { get { return this.teamMembers; } }
 
@@ -89,10 +100,15 @@ namespace Bugger.Applications.ViewModels
                 if (this.selectedTeamMember != value)
                 {
                     this.selectedTeamMember = value;
+                    UpdateCommands();
                     RaisePropertyChanged("SelectedTeamMember");
                 }
             }
         }
+        #endregion
+
+        #region Relative with Proxies
+        public ReadOnlyCollection<string> Proxies { get { return this.proxies; } }
 
         [Required(ErrorMessageResourceName = "ActiveProxyMandatory", ErrorMessageResourceType = typeof(Resources))]
         public string ActiveProxy
@@ -107,7 +123,9 @@ namespace Bugger.Applications.ViewModels
                 }
             }
         }
+        #endregion
 
+        #region Relative with Proxy Settings
         [Required(ErrorMessageResourceName = "UserNameMandatory", ErrorMessageResourceType = typeof(Resources))]
         public string UserName
         {
@@ -136,20 +154,6 @@ namespace Bugger.Applications.ViewModels
             }
         }
 
-        [Range(1, 720, ErrorMessageResourceName = "RefreshMinutesRange", ErrorMessageResourceType = typeof(Resources))]
-        public int RefreshMinutes
-        {
-            get { return this.refreshMinutes; }
-            set
-            {
-                if (this.refreshMinutes != value)
-                {
-                    this.refreshMinutes = value;
-                    RaisePropertyChanged("RefreshMinutes");
-                }
-            }
-        }
-
         public bool IsFilterCreatedBy
         {
             get { return this.isFilterCreatedBy; }
@@ -160,7 +164,7 @@ namespace Bugger.Applications.ViewModels
                     this.isFilterCreatedBy = value;
                     RaisePropertyChanged("IsFilterCreatedBy");
                 }
-            }        
+            }
         }
 
         public string FilterStatusValues
@@ -179,6 +183,37 @@ namespace Bugger.Applications.ViewModels
         public ObservableCollection<CheckString> StatusValues { get { return this.statusValues; } }
         #endregion
 
+        #region Relative with Application
+        [Range(1, 720, ErrorMessageResourceName = "RefreshMinutesRange", ErrorMessageResourceType = typeof(Resources))]
+        public int RefreshMinutes
+        {
+            get { return this.refreshMinutes; }
+            set
+            {
+                if (this.refreshMinutes != value)
+                {
+                    this.refreshMinutes = value;
+                    RaisePropertyChanged("RefreshMinutes");
+                }
+            }
+        }
+
+        [Range(20, 100, ErrorMessageResourceName = "FloatingWindowOpacityRange", ErrorMessageResourceType = typeof(Resources))]
+        public byte FloatingWindowOpacity
+        {
+            get { return this.floatingWindowOpacity; }
+            set
+            {
+                if (this.floatingWindowOpacity != value)
+                {
+                    this.floatingWindowOpacity = value;
+                    RaisePropertyChanged("FloatingWindowOpacity");
+                }
+            }
+        }
+        #endregion
+        #endregion
+
         #region Private Methods
         private void AddNewTeamMemberCommandExecute()
         {
@@ -187,7 +222,6 @@ namespace Bugger.Applications.ViewModels
                 this.TeamMembers.Add(this.newTeamMember);
             }
             this.SelectedTeamMembers.Clear();
-            this.SelectedTeamMembers.Add(this.newTeamMember);
             this.SelectedTeamMember = this.newTeamMember;
             this.NewTeamMember = string.Empty;
 
@@ -202,19 +236,18 @@ namespace Bugger.Applications.ViewModels
         private void RemoveTeamMemberCommandExecute()
         {
             IEnumerable<string> itemsToExclude = this.SelectedTeamMembers.Except(new[] { this.SelectedTeamMember });
-            string nextBranch = CollectionHelper.GetNextElementOrDefault(this.TeamMembers.Except(itemsToExclude),
+            string nextTeamMember = CollectionHelper.GetNextElementOrDefault(this.TeamMembers.Except(itemsToExclude),
                 this.SelectedTeamMember);
 
-            foreach (string item in this.SelectedTeamMembers)
+            var removeList = this.SelectedTeamMembers.ToList();
+
+            foreach (var item in removeList)
             {
                 this.TeamMembers.Remove(item);
             }
 
-
-            this.SelectedTeamMember = nextBranch ?? this.TeamMembers.LastOrDefault();
+            this.SelectedTeamMember = nextTeamMember ?? this.TeamMembers.LastOrDefault();
             this.SelectedTeamMembers.Clear();
-            if (this.SelectedTeamMember != null)
-                this.SelectedTeamMembers.Add(this.SelectedTeamMember);
 
             UpdateCommands();
         }

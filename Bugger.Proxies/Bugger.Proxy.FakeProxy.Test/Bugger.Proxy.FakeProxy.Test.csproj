@@ -69,11 +69,11 @@
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
       <Name>Bugger.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxys.FakeProxy\Bugger.Proxy.FakeProxy.csproj">
+    <ProjectReference Include="..\Bugger.Proxy.FakeProxy\Bugger.Proxy.FakeProxy.csproj">
       <Project>{9D384026-D73B-4BA9-9AE3-7D2172C438CE}</Project>
       <Name>Bugger.Proxy.FakeProxy</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Proxys\Bugger.Proxy.csproj">
+    <ProjectReference Include="..\Bugger.Proxy\Bugger.Proxy.csproj">
       <Project>{e8727087-75f2-435f-bd11-78b4dff59a40}</Project>
       <Name>Bugger.Proxy</Name>
     </ProjectReference>

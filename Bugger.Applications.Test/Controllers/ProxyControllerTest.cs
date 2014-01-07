@@ -14,7 +14,7 @@ namespace Bugger.Applications.Test.Controllers
             controller.Initialize();
 
             Assert.IsNotNull(controller.ProxyService);
-            Assert.IsTrue(controller.ProxyService.Proxys.Any());
+            Assert.IsTrue(controller.ProxyService.Proxies.Any());
             Assert.IsNotNull(controller.ProxyService.ActiveProxy);
         }
     }

@@ -12,6 +12,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bugger.Applications.Controllers
 {
@@ -23,6 +24,7 @@ namespace Bugger.Applications.Controllers
         private readonly DataController dataController;
         private readonly ProxyController proxyController;
         private readonly IMessageService messageService;
+        private readonly IDataService dataService;
 
         private readonly FloatingViewModel floatingViewModel;
         private readonly MainViewModel mainViewModel;
@@ -51,6 +53,8 @@ namespace Bugger.Applications.Controllers
             this.proxyController = proxyController;
             this.messageService = messageService;
 
+            this.dataService = container.GetExportedValue<IDataService>();
+
             this.floatingViewModel = container.GetExportedValue<FloatingViewModel>();
             this.mainViewModel = container.GetExportedValue<MainViewModel>();
             this.userBugsViewModel = container.GetExportedValue<UserBugsViewModel>();
@@ -65,7 +69,7 @@ namespace Bugger.Applications.Controllers
             this.showMainWindowCommand = new DelegateCommand(ShowMainWindowCommandExcute);
             this.englishCommand = new DelegateCommand(() => SelectLanguage(new CultureInfo("en-US")));
             this.chineseCommand = new DelegateCommand(() => SelectLanguage(new CultureInfo("zh-CN")));
-            this.settingCommand = new DelegateCommand(SettingDialogCommandExcute);
+            this.settingCommand = new DelegateCommand(SettingDialogCommandExcute, CanSettingDialogCommandExcute);
             this.aboutCommand = new DelegateCommand(AboutDialogCommandExcute);
             this.exitCommand = new DelegateCommand(ExitCommandExcute);
         }
@@ -88,10 +92,22 @@ namespace Bugger.Applications.Controllers
 
             this.proxyController.Initialize();
             this.dataController.Initialize();
+            this.proxyController.ActiveProxyInitializeTask
+                .ContinueWith(task =>
+                {
+                    dataService.InitializeStatus = Models.InitializeStatus.Done;
+                    UpdateCommands();
+
+                    if (task.Result)
+                    {
+                        this.dataController.TimerStart();
+                    }
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public void ShutDown()
         {
+            this.dataController.TimerStop();
             this.dataController.Shutdown();
 
             if (this.newLanguage != null)
@@ -125,7 +141,6 @@ namespace Bugger.Applications.Controllers
         #endregion
 
         #region Methods
-        #region Private Methods
         #region Commands Methods
         private void ShowMainWindowCommandExcute()
         {
@@ -149,9 +164,11 @@ namespace Bugger.Applications.Controllers
 
         private void SettingDialogCommandExcute()
         {
-            ISettingDialogView settingDialogView = container.GetExportedValue<ISettingDialogView>();
-            ISettingsView settingsView = container.GetExportedValue<ISettingsView>();
-            IProxyService proxyService = this.proxyController.ProxyService;
+            var settingDialogView = container.GetExportedValue<ISettingDialogView>();
+            var settingsView = container.GetExportedValue<ISettingsView>();
+            var proxyService = this.proxyController.ProxyService;
+
+            this.dataController.TimerStop();
 
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsView, proxyService, Settings.Default.TeamMembers);
             settingsViewModel.ActiveProxy = proxyService.ActiveProxy.ProxyName;
@@ -159,14 +176,15 @@ namespace Bugger.Applications.Controllers
             settingsViewModel.RefreshMinutes = Settings.Default.AutoQueryMinutes;
             settingsViewModel.IsFilterCreatedBy = Settings.Default.IsFilterCreatedBy;
             settingsViewModel.FilterStatusValues = Settings.Default.FilterStatusValues;
+            settingsViewModel.FloatingWindowOpacity = Settings.Default.FloatingWindowOpacity;
 
-            SettingDialogViewModel settingDialog = new SettingDialogViewModel(settingDialogView, proxyService, settingsViewModel);
+            SettingDialogViewModel settingDialog = new SettingDialogViewModel(settingDialogView, proxyService, this.messageService, settingsViewModel);
 
             bool? result = settingDialog.ShowDialog(this.floatingViewModel.View);
 
             if (result == true)
             {
-                proxyService.ActiveProxy = proxyService.Proxys.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
+                proxyService.ActiveProxy = proxyService.Proxies.First(x => x.ProxyName == settingsViewModel.ActiveProxy);
 
                 Settings.Default.ActiveProxy = settingsViewModel.ActiveProxy;
                 Settings.Default.UserName = settingsViewModel.UserName;
@@ -174,11 +192,22 @@ namespace Bugger.Applications.Controllers
                 Settings.Default.TeamMembers = settingsViewModel.TeamMembersString;
                 Settings.Default.IsFilterCreatedBy = settingsViewModel.IsFilterCreatedBy;
                 Settings.Default.FilterStatusValues = settingsViewModel.FilterStatusValues;
+                Settings.Default.FloatingWindowOpacity = settingsViewModel.FloatingWindowOpacity;
                 Settings.Default.Save();
             }
+
+            this.dataController.TimerStart();
+
+            floatingViewModel.Opacity = Settings.Default.FloatingWindowOpacity;
+        }
+
+        private bool CanSettingDialogCommandExcute()
+        {
+            return dataService.InitializeStatus == Models.InitializeStatus.Done;
         }
         #endregion
 
+        #region Private Methods
         private static void InitializeCultures()
         {
             if (!String.IsNullOrEmpty(Settings.Default.Culture))
@@ -203,6 +232,11 @@ namespace Bugger.Applications.Controllers
                     Resources.ResourceManager.GetString("RestartApplication", uiCulture));
             }
             this.newLanguage = uiCulture;
+        }
+
+        private void UpdateCommands()
+        {
+            this.settingCommand.RaiseCanExecuteChanged();
         }
         #endregion
         #endregion

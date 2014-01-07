@@ -6,8 +6,8 @@ namespace Bugger.Applications.Services
 {
     public interface IProxyService : INotifyPropertyChanged
     {
-        IEnumerable<ISourceControlProxy> Proxys { get; }
+        IEnumerable<ITracingSystemProxy> Proxies { get; }
 
-        ISourceControlProxy ActiveProxy { get; set; }
+        ITracingSystemProxy ActiveProxy { get; set; }
     }
 }

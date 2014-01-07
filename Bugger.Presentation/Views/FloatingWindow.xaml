@@ -2,13 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:c="clr-namespace:Bugger.Presentation.Converters"
         xmlns:p="clr-namespace:Bugger.Presentation.Properties"
         xmlns:dd="clr-namespace:Bugger.Presentation.DesignData"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         mc:Ignorable="d" d:DataContext="{d:DesignInstance dd:SampleFloatingViewModel, IsDesignTimeCreatable=True}"
         Icon="{Binding Mode=OneWay, Source={StaticResource BuggerImageSource}}"
         Height="20" Width="100" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" 
-        Background="White" Topmost="True" Opacity="0.8" 
+        Background="White" Topmost="True" Opacity="{Binding Opacity, Mode=OneWay, Converter={x:Static c:ByteToOpacityConverter.Default}}"
         MouseDoubleClick="window_MouseDoubleClick" MouseDown="window_MouseDown" ShowInTaskbar="False">
     <Window.Resources>
         <Storyboard x:Key="OnMouseEnter">
@@ -19,7 +20,7 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="120"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="refresh">
-            	<EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="OnMouseLeave">
@@ -27,7 +28,7 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="window">
-                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0.8"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="{Binding Opacity, Mode=OneWay, Converter={x:Static c:ByteToOpacityConverter.Default}}"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="window">
                 <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="100"/>
@@ -39,12 +40,21 @@
             <MenuItem Header="{x:Static p:Resources.ShowMainWindowMenu}" Command="{Binding ShowMainWindowCommand}"/>
             <MenuItem Header="{x:Static p:Resources.RefreshMenu}" Command="{Binding RefreshBugsCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource RefreshImage}}"/>
             <Separator/>
-            <MenuItem Header="{x:Static p:Resources.LanguageMenu}">
-                <MenuItem Header="{x:Static p:Resources.EnglishMenu}" Command="{Binding EnglishCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagEnImage}}"/>
-                <MenuItem Header="{x:Static p:Resources.ChineseMenu}" Command="{Binding ChineseCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagCNImage}}"/>
+            <MenuItem Header="{x:Static p:Resources.SettingMenu}">
+                <MenuItem Header="{x:Static p:Resources.LanguageMenu}">
+                    <MenuItem Header="{x:Static p:Resources.EnglishMenu}" Command="{Binding EnglishCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagEnImage}}"/>
+                    <MenuItem Header="{x:Static p:Resources.ChineseMenu}" Command="{Binding ChineseCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource FlagCNImage}}"/>
+                </MenuItem>
+                <MenuItem Header="{x:Static p:Resources.SettingOpacityMenu}">
+                    <MenuItem Header="100%" Command="{Binding SetOpacityCommand}" CommandParameter="100"/>
+                    <MenuItem Header="80%" Command="{Binding SetOpacityCommand}" CommandParameter="80"/>
+                    <MenuItem Header="60%" Command="{Binding SetOpacityCommand}" CommandParameter="60"/>
+                    <MenuItem Header="40%" Command="{Binding SetOpacityCommand}" CommandParameter="40"/>
+                    <MenuItem Header="20%" Command="{Binding SetOpacityCommand}" CommandParameter="20"/>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="{x:Static p:Resources.SettingDialogMenu}" Command="{Binding SettingCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource SettingImage}}"/>
             </MenuItem>
-            <Separator/>
-            <MenuItem Header="{x:Static p:Resources.SettingMenu}" Command="{Binding SettingCommand}" Icon="{Binding Mode=OneWay, Source={StaticResource SettingImage}}"/>
             <Separator/>
             <MenuItem Header="{x:Static p:Resources.AboutMenu}" Command="{Binding AboutCommand}"/>
             <Separator/>
@@ -65,7 +75,21 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.ColumnSpan="1" IsHitTestVisible="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <ProgressBar Grid.Row="0" Grid.ColumnSpan="2" Value="100" Foreground="Green"
+                             Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding DataService.InitializeStatus, Converter={x:Static c:InitializeStatusToIndeterminateConverter.Default}}"
+                             Visibility="{Binding DataService.InitializeStatus, Converter={x:Static c:InitializeStatusToVisibilityConverter.Default}}"/>
+        <ProgressBar Grid.Row="2" Value="{Binding DataService.UserBugsProgressValue}" Foreground="{Binding DataService.UserBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
+                             Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding DataService.UserBugsQueryState, Converter={x:Static c:QueryStatusToIndeterminateConverter.Default}}"
+                             Visibility="{Binding DataService.UserBugsQueryState, Converter={x:Static c:QueryStatusToVisibilityConverter.Default}}"/>
+        <ProgressBar Grid.Row="2" Grid.Column="1" Value="{Binding DataService.TeamBugsProgressValue}" Foreground="{Binding DataService.TeamBugsQueryState, Converter={x:Static c:QueryStatusToColorConverter.Default}}"
+                             Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="{Binding DataService.TeamBugsQueryState, Converter={x:Static c:QueryStatusToIndeterminateConverter.Default}}"
+                             Visibility="{Binding DataService.TeamBugsQueryState, Converter={x:Static c:QueryStatusToVisibilityConverter.Default}}"/>
+        <Grid Grid.ColumnSpan="1" Grid.RowSpan="3" IsHitTestVisible="False">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
@@ -73,7 +97,7 @@
             <Image HorizontalAlignment="Center" Margin="3" VerticalAlignment="Center" Source="{Binding Mode=OneWay, Source={StaticResource RedGiftboxImageSource}}"/>
             <TextBlock Grid.Column="1" Margin="10,0" Text="{Binding RedBugCount, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
-        <Grid Grid.ColumnSpan="1" Grid.Column="1" IsHitTestVisible="False">
+        <Grid Grid.ColumnSpan="1" Grid.Column="1" Grid.RowSpan="3" IsHitTestVisible="False">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
@@ -81,7 +105,7 @@
             <Image HorizontalAlignment="Center" Margin="3" VerticalAlignment="Center" Source="{Binding Mode=OneWay, Source={StaticResource YellowGiftboxImageSource}}"/>
             <TextBlock Grid.Column="1" Margin="10,0" Text="{Binding YellowBugCount, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
-        <Button x:Name="refresh" Command="{Binding RefreshBugsCommand}" Grid.Column="2" Opacity="0">
+        <Button x:Name="refresh" Command="{Binding RefreshBugsCommand}" Grid.Column="2" Grid.RowSpan="3" Opacity="0">
             <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Mode=OneWay, Source={StaticResource RefreshImageSource}}" IsHitTestVisible="False"/>
         </Button>
     </Grid>

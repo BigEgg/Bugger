@@ -11,6 +11,8 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Threading;
 using System.Threading.Tasks;
+using Bugger.Proxy;
+using Bugger.Applications.Models;
 
 namespace Bugger.Applications.Controllers
 {
@@ -25,6 +27,7 @@ namespace Bugger.Applications.Controllers
 
         private readonly DelegateCommand refreshBugsCommand;
 
+        private TaskScheduler currentSynchronizationTaskScheduler;
         private Timer autoRefreshTimer = null;
         private bool timerStarted;
         #endregion
@@ -54,7 +57,7 @@ namespace Bugger.Applications.Controllers
             floatingViewModel.RefreshBugsCommand = this.refreshBugsCommand;
             mainViewModel.RefreshBugsCommand = this.refreshBugsCommand;
 
-            TimerStart();
+            currentSynchronizationTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
         }
 
         public void Shutdown()
@@ -64,59 +67,15 @@ namespace Bugger.Applications.Controllers
         #endregion
 
         #region Properties
-        private ProxyService ProxyService
+        private ITracingSystemProxy ActiveProxy
         {
-            get { return this.proxyController.ProxyService; }
+            get { return this.proxyController.ProxyService.ActiveProxy; }
         }
         #endregion
 
         #region Methods
-        #region Private Methods
-        #region Commands Methods
-        private bool CanRefreshBugsCommandExecute()
-        {
-            return this.ProxyService.ActiveProxy == null ? false : this.ProxyService.ActiveProxy.CanQuery;
-        }
-
-        private void RefreshBugsCommandExecute()
-        {
-            if (!string.IsNullOrWhiteSpace(Settings.Default.UserName))
-            {
-                Task.Factory.StartNew(
-                    () => this.ProxyService.ActiveProxy.Query(
-                        Settings.Default.UserName,
-                        Settings.Default.IsFilterCreatedBy))
-                .ContinueWith((result) =>
-                {
-                    this.dataService.UserBugs.Clear();
-                    foreach (var bug in result.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)))
-                    {
-                        this.dataService.UserBugs.Add(bug);
-                    }
-                }, TaskContinuationOptions.OnlyOnRanToCompletion);
-            }
-
-            if (!string.IsNullOrWhiteSpace(Settings.Default.TeamMembers))
-            {
-                Task.Factory.StartNew(
-                    () => this.ProxyService.ActiveProxy.Query(
-                        Settings.Default.TeamMembers.Split(';').Select(x => x.Trim()).ToList(),
-                        Settings.Default.IsFilterCreatedBy))
-                .ContinueWith((result) =>
-                {
-                    this.dataService.TeamBugs.Clear();
-                    foreach (var bug in result.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)))
-                        this.dataService.TeamBugs.Add(bug);
-                }, TaskContinuationOptions.OnlyOnRanToCompletion);
-            }
-
-            Task.WaitAll();
-
-            this.dataService.RefreshTime = DateTime.Now;
-        }
-        #endregion
-
-        private void TimerStart()
+        #region Public Methods
+        public void TimerStart()
         {
             if (this.timerStarted)
                 return;
@@ -126,15 +85,18 @@ namespace Bugger.Applications.Controllers
 
             // Create an inferred delegate that invokes methods for the timer.
             TimerCallback tcb = TimerCallbackMethods;
-            this.autoRefreshTimer = new Timer(tcb, null, 0, Settings.Default.AutoQueryMinutes * 1000 * 1000);
+            this.autoRefreshTimer = new Timer(tcb, null, 10000, Settings.Default.AutoQueryMinutes * 1000 * 1000);
 
+            this.dataService.UserBugsQueryState = QueryStatus.NotWorking;
+            this.dataService.TeamBugsQueryState = QueryStatus.NotWorking;
+            this.dataService.UserBugsProgressValue = 0;
+            this.dataService.TeamBugsProgressValue = 0;
             this.timerStarted = true;
         }
 
-        private void TimerStop()
+        public void TimerStop()
         {
-            if (!this.timerStarted)
-                return;
+            if (!this.timerStarted) { return; }
 
             if (this.autoRefreshTimer != null)
             {
@@ -143,9 +105,126 @@ namespace Bugger.Applications.Controllers
                 this.autoRefreshTimer = null;
             }
 
+            this.dataService.UserBugsQueryState = QueryStatus.QureyPause;
+            this.dataService.TeamBugsQueryState = QueryStatus.QureyPause;
+            this.dataService.UserBugsProgressValue = 100;
+            this.dataService.TeamBugsProgressValue = 100;
             this.timerStarted = false;
         }
+        #endregion
 
+        #region Commands Methods
+        private bool CanRefreshBugsCommandExecute()
+        {
+            return this.ActiveProxy != null &&
+                   (this.dataService.UserBugsQueryState == QueryStatus.Failed ||
+                    this.dataService.UserBugsQueryState == QueryStatus.NotWorking ||
+                    this.dataService.UserBugsQueryState == QueryStatus.QureyPause ||
+                    this.dataService.UserBugsQueryState == QueryStatus.Success) &&
+                   (this.dataService.TeamBugsQueryState == QueryStatus.Failed ||
+                    this.dataService.TeamBugsQueryState == QueryStatus.NotWorking ||
+                    this.dataService.TeamBugsQueryState == QueryStatus.QureyPause ||
+                    this.dataService.TeamBugsQueryState == QueryStatus.Success) &&
+                   this.ActiveProxy.CanQuery;
+        }
+
+        private void RefreshBugsCommandExecute()
+        {
+            this.dataService.UserBugsQueryState = QueryStatus.NotWorking;
+            this.dataService.TeamBugsQueryState = QueryStatus.NotWorking;
+            this.dataService.RefreshTime = DateTime.Now;
+
+            if (!string.IsNullOrWhiteSpace(Settings.Default.UserName))
+            {
+                this.dataService.UserBugsQueryState = QueryStatus.Qureying;
+                this.dataService.UserBugsProgressValue = 0;
+                UpdateCommands();
+
+                Task.Factory.StartNew(() => this.ActiveProxy.Query(
+                                            Settings.Default.UserName,
+                                            Settings.Default.IsFilterCreatedBy))
+                .ContinueWith(task =>
+                {
+                    this.dataService.UserBugsQueryState = QueryStatus.FillingData;
+                    this.dataService.UserBugsProgressValue = 50;
+                    UpdateCommands();
+                    return task.Result;
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler)
+                .ContinueWith(task =>
+                {
+                    this.dataService.UserBugs.Clear();
+                    if (task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)).Any())
+                    {
+                        int interval = 50 / task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State))
+                                                       .Count();
+                        foreach (var bug in task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)))
+                        {
+                            this.dataService.UserBugsProgressValue += interval;
+                            this.dataService.UserBugs.Add(bug);
+                        }
+                    }
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler)
+                .ContinueWith(task =>
+                {
+                    this.dataService.UserBugsQueryState = QueryStatus.Success;
+                    UpdateCommands();
+                    this.dataService.UserBugsProgressValue = 100;
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler);
+            }
+            else
+            {
+                this.dataService.UserBugsQueryState = QueryStatus.Failed;
+                UpdateCommands();
+                this.dataService.UserBugsProgressValue = 100;
+            }
+
+            if (!string.IsNullOrWhiteSpace(Settings.Default.TeamMembers))
+            {
+                this.dataService.TeamBugsQueryState = QueryStatus.Qureying;
+                this.dataService.TeamBugsProgressValue = 0;
+                UpdateCommands();
+
+                Task.Factory.StartNew(() => this.ActiveProxy.Query(
+                                            Settings.Default.TeamMembers.Split(';').Select(x => x.Trim()).ToList(),
+                                            Settings.Default.IsFilterCreatedBy))
+                .ContinueWith(task =>
+                {
+                    this.dataService.TeamBugsQueryState = QueryStatus.FillingData;
+                    this.dataService.TeamBugsProgressValue = 50;
+                    UpdateCommands();
+                    return task.Result;
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler)
+                .ContinueWith(task =>
+                {
+                    this.dataService.TeamBugs.Clear();
+                    if (task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)).Any())
+                    {
+                        int interval = 50 / task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State))
+                                                            .Count();
+                        foreach (var bug in task.Result.Where(x => Settings.Default.FilterStatusValues.Contains(x.State)))
+                        {
+                            this.dataService.TeamBugsProgressValue += interval;
+                            this.dataService.TeamBugs.Add(bug);
+                        }
+                    }
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler)
+                .ContinueWith(task =>
+                {
+                    this.dataService.TeamBugsQueryState = QueryStatus.Success;
+                    this.dataService.TeamBugsProgressValue = 100;
+                    UpdateCommands();
+                }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, currentSynchronizationTaskScheduler);
+            }
+            else
+            {
+                this.dataService.UserBugsQueryState = QueryStatus.Failed;
+                this.dataService.UserBugsProgressValue = 100;
+                UpdateCommands();
+            }
+        }
+        #endregion
+
+        #region Private Methods
         // This method is called by the timer delegate.
         private void TimerCallbackMethods(Object obj)
         {

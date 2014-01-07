@@ -47,5 +47,8 @@
     <Setting Name="FilterStatusValues" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="FloatingWindowOpacity" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

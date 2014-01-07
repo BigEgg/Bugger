@@ -1,4 +1,7 @@
-﻿using Bugger.Applications.Views;
+﻿using BigEgg.Framework.Applications.Views;
+using Bugger.Applications.ViewModels;
+using Bugger.Applications.Views;
+using System;
 using System.ComponentModel.Composition;
 using System.Windows;
 
@@ -10,9 +13,14 @@ namespace Bugger.Presentation.Views
     [Export(typeof(ISettingDialogView))]
     public partial class SettingDialogWindow : Window, ISettingDialogView
     {
+        private Lazy<SettingDialogViewModel> viewModel;
+
+
         public SettingDialogWindow()
         {
             InitializeComponent();
+
+            viewModel = new Lazy<SettingDialogViewModel>(() => ViewHelper.GetViewModel<SettingDialogViewModel>(this));
         }
 
 
@@ -27,6 +35,7 @@ namespace Bugger.Presentation.Views
         {
             e.Cancel = true;
             this.Visibility = Visibility.Hidden;
+            viewModel.Value.OnCancelSettings();
         }
     }
 }

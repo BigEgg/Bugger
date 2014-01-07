@@ -123,6 +123,9 @@
   <data name="ApplicationName" xml:space="preserve">
     <value>Bugger</value>
   </data>
+  <data name="FloatingWindowOpacityRange" xml:space="preserve">
+    <value>The opacity must be between {1} and {2}.</value>
+  </data>
   <data name="RefreshMinutesRange" xml:space="preserve">
     <value>The refresh minutes must be between {1} and {2}.</value>
   </data>

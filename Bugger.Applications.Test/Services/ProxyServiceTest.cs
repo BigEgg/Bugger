@@ -10,19 +10,19 @@ namespace Bugger.Applications.Test.Services
     [TestClass]
     public class ProxyServiceTest : TestClassBase
     {
-        private IEnumerable<ISourceControlProxy> proxys;
+        private IEnumerable<ITracingSystemProxy> proxys;
         private IProxyService proxyService;
 
         protected override void OnTestInitialize()
         {
-            this.proxys = Container.GetExportedValues<ISourceControlProxy>();
+            this.proxys = Container.GetExportedValues<ITracingSystemProxy>();
             this.proxyService = new ProxyService(proxys);
         }
 
         [TestMethod]
         public void GeneralProxyServiceTest()
         {
-            Assert.AreEqual(this.proxys.Count(), this.proxyService.Proxys.Count());
+            Assert.AreEqual(this.proxys.Count(), this.proxyService.Proxies.Count());
             Assert.IsNull(this.proxyService.ActiveProxy);
         }
 

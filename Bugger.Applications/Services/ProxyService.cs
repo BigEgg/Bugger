@@ -8,19 +8,19 @@ namespace Bugger.Applications.Services
     internal class ProxyService : DataModel, IProxyService
     {
         #region Fields
-        private readonly IEnumerable<ISourceControlProxy> proxys;
-        private ISourceControlProxy activeProxy;
+        private readonly IEnumerable<ITracingSystemProxy> proxys;
+        private ITracingSystemProxy activeProxy;
         #endregion
 
-        public ProxyService(IEnumerable<ISourceControlProxy> proxys)
+        public ProxyService(IEnumerable<ITracingSystemProxy> proxys)
         {
             this.proxys = proxys;
         }
 
         #region Properties
-        public IEnumerable<ISourceControlProxy> Proxys { get { return this.proxys; } }
+        public IEnumerable<ITracingSystemProxy> Proxies { get { return this.proxys; } }
 
-        public ISourceControlProxy ActiveProxy
+        public ITracingSystemProxy ActiveProxy
         {
             get { return this.activeProxy; }
             set

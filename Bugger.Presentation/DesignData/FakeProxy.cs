@@ -1,18 +1,19 @@
-﻿using Bugger.Domain.Models;
-using Bugger.Proxy;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Bugger.Domain.Models;
+using Bugger.Proxy;
 
 namespace Bugger.Presentation.DesignData
 {
     /// <summary>
     /// This class is for test only.
     /// </summary>
-    public class FakeProxy : SourceControlProxy
+    public class FakeProxy : TracingSystemProxyBase
     {
         #region Fields
+        private readonly ObservableCollection<string> status;
         private List<Bug> bugs;
         #endregion
 
@@ -22,9 +23,16 @@ namespace Bugger.Presentation.DesignData
         public FakeProxy()
             : base("Fake")
         {
+            this.status = new ObservableCollection<string>();
+
             this.bugs = new List<Bug>();
             this.CanQuery = true;
         }
+
+        #region Properties
+        public override ObservableCollection<string> StateValues { get { return this.status; } }
+        #endregion
+
 
         #region Methods
         #region Protected Methods
@@ -37,7 +45,7 @@ namespace Bugger.Presentation.DesignData
                 Description = "Description for Bug1.",
                 Type = BugType.Red,
                 AssignedTo = "BigEgg",
-                State = "Implement",
+                State = "Design",
                 ChangedDate = new DateTime(2013, 4, 10),
                 CreatedBy = "BigEgg",
                 Priority = "High",
@@ -114,7 +122,7 @@ namespace Bugger.Presentation.DesignData
                 Title = "Bug7",
                 Description = "Description for Bug7.",
                 AssignedTo = "User1",
-                State = "Implement",
+                State = "Design",
                 ChangedDate = new DateTime(2013, 4, 11),
                 CreatedBy = "Pupil",
                 Priority = "High",
@@ -139,7 +147,7 @@ namespace Bugger.Presentation.DesignData
                 Title = "Bug9",
                 Description = "Description for Bug9.",
                 AssignedTo = "BigEgg",
-                State = "Implement",
+                State = "Design",
                 ChangedDate = new DateTime(2013, 4, 12),
                 CreatedBy = "User1",
                 Priority = "Low",
@@ -234,21 +242,28 @@ namespace Bugger.Presentation.DesignData
                 Priority = "High",
                 Severity = "High"
             });
+
+            this.status.Add("Design");
+            this.status.Add("Implement");
+            this.status.Add("Resolve");
+            this.status.Add("Closed");
         }
 
         protected override ReadOnlyCollection<Bug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
         {
-            List<Bug> queriedBugs = new List<Bug>();
+            List<Bug> queriedResult = new List<Bug>();
 
             foreach (string userName in userNames)
             {
                 if (isFilterCreatedBy)
-                    queriedBugs.AddRange(this.bugs.Where(x => x.AssignedTo == userName || x.CreatedBy == userName));
+                    queriedResult.AddRange(this.bugs
+                        .Where(x => x.AssignedTo.ToLower() == userName.ToLower()
+                            || x.CreatedBy.ToLower() == userName.ToLower()));
                 else
-                    queriedBugs.AddRange(this.bugs.Where(x => x.AssignedTo == userName));
+                    queriedResult.AddRange(this.bugs.Where(x => x.AssignedTo.ToLower() == userName.ToLower()));
             }
 
-            return new ReadOnlyCollection<Bug>(queriedBugs);
+            return new ReadOnlyCollection<Bug>(queriedResult.Distinct().ToList());
         }
         #endregion
         #endregion
