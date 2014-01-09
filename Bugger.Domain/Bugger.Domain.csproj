@@ -40,6 +40,14 @@
     <Compile Include="Models\Bug.cs" />
     <Compile Include="Models\BugType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\BugViewModelBase.cs" />
+    <Compile Include="Views\IBugView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">
+      <Project>{ee01d20c-0f89-4219-a615-e5566a73814e}</Project>
+      <Name>BigEgg.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
