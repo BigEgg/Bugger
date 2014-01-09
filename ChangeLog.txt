@@ -4,6 +4,7 @@ Alpha 4 (v0.4.0) <----- Currently Working
     Application:
         Add extension manager to manage the proxies.
         When open the application, show setting dialog if the settings is not being set.
+        Custom the bug's view by the proxy.
     Proxies:
         TFS Proxy:
             Use XML file to save the default automation fill logic.
@@ -24,7 +25,7 @@ Alpha 3 (v0.3.0) <----- Currently Release
         Show progress and out come when query bugs. (✓)
         Optimized the startup time. (✓)
     Proxies:
-        Support cancel event for proxy restore data when setting dialog cancelled. (✓)
+        Support cancel event for proxy restore data when setting dialog canceled. (✓)
         Support validate event before the submit, to valid the settings. (✓)
         TFS Proxy:
             Use multi-threading to avoid UI hang when test connection. (✓)
