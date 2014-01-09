@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Applications", "Bugger.Applications\Bugger.Applications.csproj", "{398D1756-2C56-454A-A7EC-E996BB146C2E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "98 Frameworks", "98 Frameworks", "{F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}"
@@ -64,7 +66,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 Bugger.Presentation", "0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 JIRA", "03 JIRA", "{8959A747-B7DB-4E8E-998C-E9DE5B901D1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.JIRA", "Bugger.Proxies\Bugger.Proxy.JIRA\Bugger.Proxy.JIRA.csproj", "{E42DB976-993D-41A9-8351-E7788205A95A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.Jira", "Bugger.Proxies\Bugger.Proxy.JIRA\Bugger.Proxy.Jira.csproj", "{E42DB976-993D-41A9-8351-E7788205A95A}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -148,7 +150,7 @@ Global
 		SccProjectTopLevelParentUniqueName19 = Bugger.sln
 		SccProjectName19 = Bugger.Architecture
 		SccLocalPath19 = Bugger.Architecture
-		SccProjectUniqueName20 = Bugger.Proxies\\Bugger.Proxy.JIRA\\Bugger.Proxy.JIRA.csproj
+		SccProjectUniqueName20 = Bugger.Proxies\\Bugger.Proxy.JIRA\\Bugger.Proxy.Jira.csproj
 		SccProjectTopLevelParentUniqueName20 = Bugger.sln
 		SccProjectName20 = Bugger.Proxies/Bugger.Proxy.JIRA
 		SccLocalPath20 = Bugger.Proxies\\Bugger.Proxy.JIRA
