@@ -17,7 +17,7 @@ namespace Bugger.Presentation
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : Application, IDisposable
     {
         private AggregateCatalog catalog;
         private CompositionContainer container;
@@ -32,6 +32,14 @@ namespace Bugger.Presentation
         }
 
 
+        #region Implement the IDisposable interface
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Override the Windows Class Methods
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -81,7 +89,10 @@ namespace Bugger.Presentation
 
             base.OnExit(e);
         }
+        #endregion
 
+        #region Methods
+        #region Private Methods
         private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             HandleException(e.Exception, false);
@@ -103,11 +114,13 @@ namespace Bugger.Presentation
             {
                 MessageBox.Show(
                     string.Format(
-                        CultureInfo.CurrentCulture, 
-                        Bugger.Presentation.Properties.Resources.UnknownError, 
+                        CultureInfo.CurrentCulture,
+                        Bugger.Presentation.Properties.Resources.UnknownError,
                         e.ToString()),
                     ApplicationInfo.ProductName, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        #endregion
+        #endregion
     }
 }

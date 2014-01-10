@@ -26,7 +26,7 @@ namespace Bugger.Presentation.Views
 
         public MainViewModel ViewModel { get { return this.viewModel.Value; } }
         
-        public void Show()
+        public new void Show()
         {
             this.Visibility = Visibility.Visible;
         }
