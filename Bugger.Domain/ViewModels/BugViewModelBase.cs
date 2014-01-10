@@ -1,4 +1,5 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
+using Bugger.Domain.Models;
 using Bugger.Domain.Views;
 
 namespace Bugger.Domain.ViewModels
@@ -10,6 +11,10 @@ namespace Bugger.Domain.ViewModels
     public abstract class BugViewModelBase<TView> : ViewModel<TView>
         where TView : IBugView
     {
+        #region Fields
+        private BugType type;
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BugViewModelBase{TView}"/> class.
         /// And attaches itself as <c>DataContext</c> to the view.
@@ -20,5 +25,20 @@ namespace Bugger.Domain.ViewModels
         {
 
         }
+
+
+        #region Properties
+        /// <summary>
+        /// Gets or sets the type of this bug..
+        /// </summary>
+        /// <value>
+        /// The type of this bug.
+        /// </value>
+        public BugType Type
+        {
+            get { return type; }
+            set { type = value; }
+        }
+        #endregion
     }
 }
