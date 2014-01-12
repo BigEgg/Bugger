@@ -1,5 +1,5 @@
 ﻿using Bugger.Domain.Models;
-using System;
+using Bugger.Proxy.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -48,7 +48,7 @@ namespace Bugger.Proxy
         /// <returns>
         /// The bugs.
         /// </returns>
-        ReadOnlyCollection<Bug> Query(string userName, bool isFilterCreatedBy = true);
+        ReadOnlyCollection<IBugViewModel> Query(string userName, bool isFilterCreatedBy = true);
 
         /// <summary>
         /// Query the bugs with the specified team members name list which the bug assign to.
@@ -58,7 +58,7 @@ namespace Bugger.Proxy
         /// <returns>
         /// The bugs.
         /// </returns>
-        ReadOnlyCollection<Bug> Query(List<string> teamMembers, bool isFilterCreatedBy = false);
+        ReadOnlyCollection<IBugViewModel> Query(List<string> teamMembers, bool isFilterCreatedBy = false);
 
 
         #region SettingDialog

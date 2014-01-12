@@ -1,6 +1,6 @@
 ﻿using BigEgg.Framework.Applications.Views;
 
-namespace Bugger.Domain.Views
+namespace Bugger.Proxy.Views
 {
     /// <summary>
     /// Represents a view for the bug
