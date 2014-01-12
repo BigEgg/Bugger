@@ -1,5 +1,5 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Domain.Models;
+using Bugger.Proxy.TFS.Models;
 using System;
 using System.ComponentModel;
 
@@ -15,7 +15,7 @@ namespace Bugger.Proxy.TFS.Documents
         {
             this.propertyMappingCollection = new PropertyMappingDictionary();
 
-            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(Bug));
+            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(ITFSBugModel));
             foreach (PropertyDescriptor propertyDescriptor in propertyDescriptorCollection)
             {
                 if (propertyDescriptor.Name == "Type") continue;

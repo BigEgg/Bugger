@@ -74,6 +74,14 @@ namespace Bugger.Proxy
         public abstract ObservableCollection<string> StateValues { get; }
 
         /// <summary>
+        /// Gets the type of the bug view model.
+        /// </summary>
+        /// <value>
+        /// The type of the bug view model.
+        /// </value>
+        public abstract Type BugViewModelType { get; }
+
+        /// <summary>
         /// Get the flag of the Initialization of the Controller.
         /// </summary>
         public bool IsInitialized { get; private set; }

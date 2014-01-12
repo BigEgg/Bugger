@@ -1,5 +1,6 @@
 ﻿using Bugger.Domain.Models;
 using Bugger.Proxy.TFS.Models;
+using Bugger.Proxy.TFS.ViewModels;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using System;
@@ -108,7 +109,7 @@ namespace Bugger.Proxy.TFS
         /// or
         /// tpc
         /// </exception>
-        public List<Bug> GetBugs(
+        public List<TFSBugViewModel> GetBugs(
             TfsTeamProjectCollection tpc,
             string userName, bool isFilterCreatedBy, PropertyMappingDictionary propertyMappingList,
             string bugFilterField, string bugFilterValue, IEnumerable<string> redFilter)
@@ -141,7 +142,7 @@ namespace Bugger.Proxy.TFS
 
                 if (collection == null) { return null; }
 
-                var bugs = new List<Bug>();
+                var bugs = new List<TFSBugViewModel>();
                 foreach (WorkItem item in collection)
                 {
                     bugs.Add(Map(item, propertyMappingList, redFilter));
@@ -157,16 +158,16 @@ namespace Bugger.Proxy.TFS
 
 
         /// <summary>
-        /// Maps the specified workitem to the bug model.
+        /// Maps the specified work item to the bug model.
         /// </summary>
-        /// <param name="workitem">The workitem.</param>
+        /// <param name="workitem">The work item.</param>
         /// <param name="propertyMappingList">The property mapping list.</param>
         /// <param name="redFilter">The red bug filter.</param>
         /// <returns></returns>
-        private Bug Map(WorkItem workitem, PropertyMappingDictionary propertyMappingList,
+        private TFSBugViewModel Map(WorkItem workitem, PropertyMappingDictionary propertyMappingList,
                         IEnumerable<string> redFilter)
         {
-            Bug bug = new Bug();
+            var bug = new TFSBugViewModel();
             object value = null;
 
             //  ID

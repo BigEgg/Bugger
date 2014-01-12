@@ -1,6 +1,7 @@
 ﻿using Bugger.Domain.Models;
 using Bugger.Domain.ViewModels;
 using Bugger.Proxy.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -36,6 +37,14 @@ namespace Bugger.Proxy
         ///   <c>true</c> if this source control proxy can query the bugs.; otherwise, <c>false</c>.
         /// </value>
         bool CanQuery { get; }
+
+        /// <summary>
+        /// Gets the type of the bug view model.
+        /// </summary>
+        /// <value>
+        /// The type of the bug view model.
+        /// </value>
+        Type BugViewModelType { get; }
         #endregion
 
         #region Methods

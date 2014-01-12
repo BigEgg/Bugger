@@ -1,4 +1,5 @@
 ﻿using Bugger.Domain.Models;
+using Bugger.Domain.ViewModels;
 using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Views;
 using Bugger.Proxy.ViewModels;
@@ -22,6 +23,11 @@ namespace Bugger.Proxy.TFS.ViewModels
         private string priority;
         private string severity;
         #endregion
+
+        public TFSBugViewModel(ITFSBugView view)
+            : base(view)
+        {
+        }
 
         #region Properties
         /// <summary>
