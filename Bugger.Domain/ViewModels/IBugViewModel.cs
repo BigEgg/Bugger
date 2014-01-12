@@ -1,4 +1,6 @@
-﻿namespace Bugger.Domain.Models
+﻿using Bugger.Domain.Models;
+
+namespace Bugger.Domain.ViewModels
 {
     /// <summary>
     /// The interface of the base bug view model.
@@ -37,8 +39,7 @@
         /// If true, set the IsUpdate property to <c>true</c>.
         /// </summary>
         /// <param name="oldModel">The old bug view model.</param>
-        /// <param name="newModel">The new bug view model.</param>
-        void CheckUpdate(IBugViewModel oldModel, IBugViewModel newModel);
+        void CheckUpdate(IBugViewModel oldModel);
         #endregion
     }
 }

@@ -1,7 +1,7 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Domain.Models;
+using Bugger.Domain.ViewModels;
 using Bugger.Proxy.Views;
-using System;
 
 namespace Bugger.Proxy.ViewModels
 {
@@ -70,12 +70,7 @@ namespace Bugger.Proxy.ViewModels
         /// If true, set the IsUpdate property to <c>true</c>.
         /// </summary>
         /// <param name="oldModel">The old bug view model.</param>
-        /// <param name="newModel">The new bug view model.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public void CheckUpdate(IBugViewModel oldModel, IBugViewModel newModel)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void CheckUpdate(IBugViewModel oldModel);
         #endregion
         #endregion
     }

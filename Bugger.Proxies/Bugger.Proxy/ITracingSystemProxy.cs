@@ -1,4 +1,5 @@
 ﻿using Bugger.Domain.Models;
+using Bugger.Domain.ViewModels;
 using Bugger.Proxy.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

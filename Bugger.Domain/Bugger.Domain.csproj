@@ -38,7 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BugType.cs" />
-    <Compile Include="Models\IBugViewModel.cs" />
+    <Compile Include="ViewModels\IBugViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
