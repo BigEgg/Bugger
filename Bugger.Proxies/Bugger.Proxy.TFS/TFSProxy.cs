@@ -6,6 +6,7 @@ using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Properties;
 using Bugger.Proxy.TFS.ViewModels;
 using Bugger.Proxy.TFS.Views;
+using Bugger.Proxy.Views;
 using Microsoft.TeamFoundation.Client;
 using System;
 using System.Collections.Generic;
@@ -301,7 +302,7 @@ namespace Bugger.Proxy.TFS
         /// <returns>
         /// The bugs.
         /// </returns>
-        protected override ReadOnlyCollection<Bug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
+        protected override ReadOnlyCollection<IBugViewModel> QueryCore(List<string> userNames, bool isFilterCreatedBy)
         {
             List<Bug> bugs = new List<Bug>();
 

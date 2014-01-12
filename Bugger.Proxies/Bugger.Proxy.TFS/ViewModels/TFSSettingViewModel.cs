@@ -49,11 +49,9 @@ namespace Bugger.Proxy.TFS.ViewModels
             this.bugFilterFields = new ObservableCollection<TFSField>();
             this.priorityValues = new ObservableCollection<CheckString>();
 
-            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(Bug));
+            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(ITFSBugModel));
             foreach (PropertyDescriptor propertyDescriptor in propertyDescriptorCollection)
             {
-                if (propertyDescriptor.Name == "Type") continue;
-
                 var mapping = new MappingModel(propertyDescriptor.Name);
                 this.propertyMappingCollection.Add(mapping);
 

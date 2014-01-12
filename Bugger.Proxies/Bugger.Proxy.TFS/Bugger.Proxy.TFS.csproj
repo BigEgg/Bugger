@@ -60,6 +60,7 @@
     <Compile Include="Documents\SettingDocument.cs" />
     <Compile Include="Documents\SettingDocumentType.cs" />
     <Compile Include="Models\CheckString.cs" />
+    <Compile Include="Models\ITFSBugModel.cs" />
     <Compile Include="Models\ProgressTypes.cs" />
     <Compile Include="Models\TFSField.cs" />
     <Compile Include="PropertyMappingDictionary.cs" />
@@ -71,8 +72,10 @@
     </Compile>
     <Compile Include="TFSHelper.cs" />
     <Compile Include="TFSProxy.cs" />
+    <Compile Include="ViewModels\TFSBugViewModel.cs" />
     <Compile Include="ViewModels\TFSSettingViewModel.cs" />
     <Compile Include="ViewModels\UriHelpViewModel.cs" />
+    <Compile Include="Views\ITFSBugView.cs" />
     <Compile Include="Views\ITFSSettingView.cs" />
     <Compile Include="Views\IUriHelpView.cs" />
   </ItemGroup>
