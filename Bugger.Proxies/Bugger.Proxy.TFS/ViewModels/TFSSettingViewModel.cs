@@ -1,13 +1,13 @@
 ﻿using BigEgg.Framework.Applications.Commands;
 using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Domain.Models;
 using Bugger.Proxy.TFS.Models;
+using Bugger.Proxy.TFS.Models.Attributes;
 using Bugger.Proxy.TFS.Properties;
 using Bugger.Proxy.TFS.Views;
 using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace Bugger.Proxy.TFS.ViewModels
@@ -49,8 +49,10 @@ namespace Bugger.Proxy.TFS.ViewModels
             this.bugFilterFields = new ObservableCollection<TFSField>();
             this.priorityValues = new ObservableCollection<CheckString>();
 
-            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(ITFSBugModel));
-            foreach (PropertyDescriptor propertyDescriptor in propertyDescriptorCollection)
+            IgnoreMappingAttribute ignore = new IgnoreMappingAttribute() { Ignore = true };
+            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(TFSBug));
+            foreach (PropertyDescriptor propertyDescriptor in propertyDescriptorCollection.Cast<PropertyDescriptor>()
+                                                                                          .Where(x => !x.Attributes.Contains(ignore)))
             {
                 var mapping = new MappingModel(propertyDescriptor.Name);
                 this.propertyMappingCollection.Add(mapping);

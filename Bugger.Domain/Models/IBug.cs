@@ -7,12 +7,12 @@
     {
         #region Properties
         /// <summary>
-        /// Gets or sets the type of this bug.
+        /// Gets the type of this bug.
         /// </summary>
         /// <value>
         /// The type of this bug.
         /// </value>
-        BugType Type { get; set; }
+        BugType Type { get; }
         #endregion
 
         #region Methods

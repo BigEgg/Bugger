@@ -1,7 +1,7 @@
 ﻿using BigEgg.Framework.Applications.Commands;
 using BigEgg.Framework.Applications.Services;
 using Bugger.Domain.Models;
-using Bugger.Domain.ViewModels;
+using Bugger.Proxy.Models;
 using Bugger.Proxy.TFS.Documents;
 using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Properties;
@@ -72,14 +72,6 @@ namespace Bugger.Proxy.TFS
         /// The status values.
         /// </value>
         public override ObservableCollection<string> StateValues { get { return this.stateValues; } }
-
-        /// <summary>
-        /// Gets the type of the bug view model.
-        /// </summary>
-        /// <value>
-        /// The type of the bug view model.
-        /// </value>
-        public override Type BugViewModelType { get { return typeof(TFSBugViewModel); } }
         #endregion
 
         #region Methods
@@ -311,18 +303,18 @@ namespace Bugger.Proxy.TFS
         /// <returns>
         /// The bugs.
         /// </returns>
-        protected override ReadOnlyCollection<IBugViewModel> QueryCore(List<string> userNames, bool isFilterCreatedBy)
+        protected override ReadOnlyCollection<IBug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
         {
-            List<IBugViewModel> bugs = new List<IBugViewModel>();
+            var bugs = new List<IBug>();
 
-            if (!this.CanQuery) { return new ReadOnlyCollection<IBugViewModel>(bugs); }
+            if (!this.CanQuery) { return new ReadOnlyCollection<IBug>(bugs); }
 
             if (this.document == null || this.document.ConnectUri == null ||
                 string.IsNullOrWhiteSpace(this.document.ConnectUri.AbsoluteUri) ||
                 string.IsNullOrWhiteSpace(this.document.UserName))
             {
                 this.CanQuery = false;
-                return new ReadOnlyCollection<IBugViewModel>(bugs);
+                return new ReadOnlyCollection<IBug>(bugs);
             }
 
             TfsTeamProjectCollection tpc = null;
@@ -347,12 +339,12 @@ namespace Bugger.Proxy.TFS
                     bugs.AddRange(bugCollection);
                 }
 
-                return new ReadOnlyCollection<IBugViewModel>(bugs.Distinct().ToList());
+                return new ReadOnlyCollection<IBug>(bugs.Distinct().ToList());
             }
             else
             {
                 this.CanQuery = false;
-                return new ReadOnlyCollection<IBugViewModel>(bugs);
+                return new ReadOnlyCollection<IBug>(bugs);
             }
         }
         #endregion

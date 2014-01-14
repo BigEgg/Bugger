@@ -1,9 +1,10 @@
 ﻿using Bugger.Domain.Models;
+using Bugger.Proxy.TFS.Models.Attributes;
 using System;
 
 namespace Bugger.Proxy.TFS.Models
 {
-    public class TFSBug : IBug, ITFSBugModel
+    public class TFSBug : IBug
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TFSBug"/> class.
@@ -21,6 +22,7 @@ namespace Bugger.Proxy.TFS.Models
         /// <value>
         /// The type of this bug.
         /// </value>
+        [IgnoreMapping(Ignore = true)]
         public BugType Type { get; internal set; }
 
         /// <summary>

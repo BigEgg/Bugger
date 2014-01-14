@@ -1,6 +1,8 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Proxy.TFS.Models;
+using Bugger.Proxy.TFS.Models.Attributes;
 using System;
+using System.Linq;
 using System.ComponentModel;
 
 namespace Bugger.Proxy.TFS.Documents
@@ -15,11 +17,11 @@ namespace Bugger.Proxy.TFS.Documents
         {
             this.propertyMappingCollection = new PropertyMappingDictionary();
 
-            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(ITFSBugModel));
-            foreach (PropertyDescriptor propertyDescriptor in propertyDescriptorCollection)
+            IgnoreMappingAttribute ignore = new IgnoreMappingAttribute() { Ignore = true };
+            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(TFSBug));
+            foreach (PropertyDescriptor propertyDescriptor in propertyDescriptorCollection.Cast<PropertyDescriptor>()
+                                                                                          .Where(x => !x.Attributes.Contains(ignore)))
             {
-                if (propertyDescriptor.Name == "Type") continue;
-
                 this.propertyMappingCollection.Add(propertyDescriptor.Name, string.Empty);
             }
 

@@ -56,10 +56,10 @@ namespace Bugger.Proxy.TFS
         /// </summary>
         /// <param name="tpc">The TFS Team Project Collection.</param>
         /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">tpc</exception>
+        /// <exception cref="System.ArgumentNullException">The Team Project Collection class cannot be null.</exception>
         public List<TFSField> GetFields(TfsTeamProjectCollection tpc)
         {
-            if (tpc == null) { throw new ArgumentNullException("tpc"); }
+            if (tpc == null) { throw new ArgumentNullException("The Team Project Collection class cannot be null."); }
 
             try
             {
@@ -107,14 +107,14 @@ namespace Bugger.Proxy.TFS
         /// or
         /// redFilter
         /// or
-        /// tpc
+        /// The Team Project Collection class cannot be null.
         /// </exception>
-        public List<TFSBugViewModel> GetBugs(
+        public List<TFSBug> GetBugs(
             TfsTeamProjectCollection tpc,
             string userName, bool isFilterCreatedBy, PropertyMappingDictionary propertyMappingList,
             string bugFilterField, string bugFilterValue, IEnumerable<string> redFilter)
         {
-            if (tpc == null) { throw new ArgumentNullException("tpc"); }
+            if (tpc == null) { throw new ArgumentNullException("The Team Project Collection class cannot be null."); }
             if (string.IsNullOrWhiteSpace(userName)) { throw new ArgumentNullException("userName"); }
             if (propertyMappingList == null) { throw new ArgumentNullException("propertyMappingList"); }
             if (string.IsNullOrWhiteSpace(bugFilterField)) { throw new ArgumentNullException("usebugFilterFieldrName"); }
@@ -142,7 +142,7 @@ namespace Bugger.Proxy.TFS
 
                 if (collection == null) { return null; }
 
-                var bugs = new List<TFSBugViewModel>();
+                var bugs = new List<TFSBug>();
                 foreach (WorkItem item in collection)
                 {
                     bugs.Add(Map(item, propertyMappingList, redFilter));
@@ -164,10 +164,10 @@ namespace Bugger.Proxy.TFS
         /// <param name="propertyMappingList">The property mapping list.</param>
         /// <param name="redFilter">The red bug filter.</param>
         /// <returns></returns>
-        private TFSBugViewModel Map(WorkItem workitem, PropertyMappingDictionary propertyMappingList,
+        private TFSBug Map(WorkItem workitem, PropertyMappingDictionary propertyMappingList,
                         IEnumerable<string> redFilter)
         {
-            var bug = new TFSBugViewModel();
+            var bug = new TFSBug();
             object value = null;
 
             //  ID
@@ -214,8 +214,8 @@ namespace Bugger.Proxy.TFS
             }
 
             bug.Type = string.IsNullOrWhiteSpace(bug.Priority)
-                           ? BugType.Yellow
-                           : (redFilter.Contains(bug.Priority) ? BugType.Red : BugType.Yellow);
+                       ? BugType.Yellow
+                       : (redFilter.Contains(bug.Priority) ? BugType.Red : BugType.Yellow);
 
             return bug;
         }
