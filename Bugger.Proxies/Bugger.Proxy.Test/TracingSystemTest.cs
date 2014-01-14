@@ -14,16 +14,14 @@ namespace Bugger.Proxy.Test
         [TestMethod]
         public void ConstructorTest()
         {
-            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockTracingSystemProxy("  ", "  "));
-            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockTracingSystemProxy(null, "  "));
-            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockTracingSystemProxy("proxyName", "  "));
-            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockTracingSystemProxy("proxyName", null));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockTracingSystemProxy("  "));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockTracingSystemProxy(null));
         }
 
         [TestMethod]
         public void CheckBaseImplementation()
         {
-            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName", "TheViewTemplateNamw");
+            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
 
             AssertHelper.ExpectedException<ArgumentException>(() => proxy.Query("   "));
             AssertHelper.ExpectedException<ArgumentException>(() => proxy.Query(string.Empty));
@@ -43,10 +41,10 @@ namespace Bugger.Proxy.Test
         [TestMethod]
         public void GeneralSourceControllerTest()
         {
-            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName", "TheViewTemplateNamw");
+            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
 
             Assert.AreEqual("proxyName", proxy.ProxyName);
-            Assert.AreEqual("TheViewTemplateNamw", proxy.BugViewTemplateName);
+            Assert.AreEqual("proxyNameBugViewTemplateName", proxy.BugViewTemplateName);
 
             Assert.AreEqual(0, proxy.StateValues.Count);
             Assert.IsFalse(proxy.CanQuery);
@@ -55,7 +53,7 @@ namespace Bugger.Proxy.Test
         [TestMethod]
         public void PropertiesWithNotification()
         {
-            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName", "TheViewTemplateNamw");
+            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
 
             Assert.IsFalse(proxy.CanQuery);
             AssertHelper.PropertyChangedEvent(proxy, x => x.CanQuery, () => proxy.CanQueryValue = true);
@@ -65,7 +63,7 @@ namespace Bugger.Proxy.Test
         [TestMethod]
         public void QueryTest()
         {
-            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName", "TheViewTemplateNamw");
+            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
 
             proxy.CanQueryValue = true;
 
@@ -76,7 +74,7 @@ namespace Bugger.Proxy.Test
         [TestMethod]
         public void ProxyInitializeTest()
         {
-            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName", "TheViewTemplateNamw");
+            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
 
             Assert.IsFalse(proxy.IsInitialized);
             proxy.Initialize();
@@ -86,7 +84,7 @@ namespace Bugger.Proxy.Test
         [TestMethod]
         public void ProxyValidateSettingDialogTest()
         {
-            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName", "TheViewTemplateNamw");
+            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
 
             var result = proxy.ValidateBeforeCloseSettingDialog();
             Assert.AreEqual(SettingDialogValidateionResult.Valid, result);
@@ -98,8 +96,8 @@ namespace Bugger.Proxy.Test
             private ObservableCollection<string> statsValues;
             #endregion
 
-            public MockTracingSystemProxy(string proxyName, string bugViewTemplateName)
-                : base(proxyName, bugViewTemplateName)
+            public MockTracingSystemProxy(string proxyName)
+                : base(proxyName)
             {
                 statsValues = new ObservableCollection<string>();
             }

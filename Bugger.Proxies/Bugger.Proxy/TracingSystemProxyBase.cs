@@ -22,13 +22,12 @@ namespace Bugger.Proxy
         /// </summary>
         /// <param name="proxyName">Name of the proxy.</param>
         /// <exception cref="System.ArgumentException">proxyName</exception>
-        public TracingSystemProxyBase(string proxyName, string bugViewTemplateName)
+        public TracingSystemProxyBase(string proxyName)
         {
             if (string.IsNullOrWhiteSpace(proxyName)) { throw new ArgumentNullException("proxyName cannot be null or white space."); }
-            if (string.IsNullOrWhiteSpace(bugViewTemplateName)) { throw new ArgumentNullException("bugViewTemplateName cannot be null or white space."); }
 
             this.ProxyName = proxyName;
-            this.BugViewTemplateName = bugViewTemplateName;
+            this.BugViewTemplateName = proxyName + "BugViewTemplateName";
 
             this.canQuery = false;
             this.IsInitialized = false;
