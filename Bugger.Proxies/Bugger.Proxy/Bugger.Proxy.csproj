@@ -38,13 +38,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\ISettingView.cs" />
     <Compile Include="ITracingSystemProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingDialogValidateionResult.cs" />
+    <Compile Include="Models\SettingDialogValidateionResult.cs" />
     <Compile Include="TracingSystemProxyBase.cs" />
-    <Compile Include="ViewModels\BugViewModelBase.cs" />
-    <Compile Include="Views\IBugView.cs" />
+    <Compile Include="Views\ISettingView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">

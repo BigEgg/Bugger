@@ -1,4 +1,4 @@
-﻿namespace Bugger.Proxy
+﻿namespace Bugger.Proxy.Models
 {
     /// <summary>
     /// The validation result of the setting dialog

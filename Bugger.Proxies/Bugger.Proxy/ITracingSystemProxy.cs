@@ -1,7 +1,6 @@
 ﻿using Bugger.Domain.Models;
-using Bugger.Domain.ViewModels;
+using Bugger.Proxy.Models;
 using Bugger.Proxy.Views;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -39,12 +38,12 @@ namespace Bugger.Proxy
         bool CanQuery { get; }
 
         /// <summary>
-        /// Gets the type of the bug view model.
+        /// Gets the name of the bug's view template.
         /// </summary>
         /// <value>
-        /// The type of the bug view model.
+        /// The name of the bug's view template.
         /// </value>
-        Type BugViewModelType { get; }
+        string BugViewTemplateName { get; }
         #endregion
 
         #region Methods
@@ -58,7 +57,7 @@ namespace Bugger.Proxy
         /// <returns>
         /// The bugs.
         /// </returns>
-        ReadOnlyCollection<IBugViewModel> Query(string userName, bool isFilterCreatedBy = true);
+        ReadOnlyCollection<IBug> Query(string userName, bool isFilterCreatedBy = true);
 
         /// <summary>
         /// Query the bugs with the specified team members name list which the bug assign to.
@@ -68,7 +67,7 @@ namespace Bugger.Proxy
         /// <returns>
         /// The bugs.
         /// </returns>
-        ReadOnlyCollection<IBugViewModel> Query(List<string> teamMembers, bool isFilterCreatedBy = false);
+        ReadOnlyCollection<IBug> Query(List<string> teamMembers, bool isFilterCreatedBy = false);
 
 
         #region SettingDialog

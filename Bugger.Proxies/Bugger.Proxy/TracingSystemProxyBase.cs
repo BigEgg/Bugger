@@ -1,5 +1,6 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Domain.ViewModels;
+using Bugger.Domain.Models;
+using Bugger.Proxy.Models;
 using Bugger.Proxy.Views;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,6 @@ namespace Bugger.Proxy
     public abstract class TracingSystemProxyBase : DataModel, ITracingSystemProxy
     {
         #region Fields
-        private string proxyName;
         private bool canQuery;
         #endregion
 
@@ -22,12 +22,16 @@ namespace Bugger.Proxy
         /// </summary>
         /// <param name="proxyName">Name of the proxy.</param>
         /// <exception cref="System.ArgumentException">proxyName</exception>
-        public TracingSystemProxyBase(string proxyName)
+        public TracingSystemProxyBase(string proxyName, string bugViewTemplateName)
         {
-            if (string.IsNullOrWhiteSpace(proxyName)) { throw new ArgumentException("proxyName"); }
+            if (string.IsNullOrWhiteSpace(proxyName)) { throw new ArgumentNullException("proxyName cannot be null or white space."); }
+            if (string.IsNullOrWhiteSpace(bugViewTemplateName)) { throw new ArgumentNullException("bugViewTemplateName cannot be null or white space."); }
 
-            this.proxyName = proxyName;
+            this.ProxyName = proxyName;
+            this.BugViewTemplateName = bugViewTemplateName;
+
             this.canQuery = false;
+            this.IsInitialized = false;
         }
 
         #region Properties
@@ -37,14 +41,7 @@ namespace Bugger.Proxy
         /// <value>
         /// The name of the proxy.
         /// </value>
-        public string ProxyName
-        {
-            get { return this.proxyName; }
-            protected set
-            {
-                this.proxyName = value;
-            }
-        }
+        public string ProxyName { get; private set; }
 
         /// <summary>
         /// Determines whether this source control proxy can query the bugs.
@@ -74,17 +71,18 @@ namespace Bugger.Proxy
         public abstract ObservableCollection<string> StateValues { get; }
 
         /// <summary>
-        /// Gets the type of the bug view model.
-        /// </summary>
-        /// <value>
-        /// The type of the bug view model.
-        /// </value>
-        public abstract Type BugViewModelType { get; }
-
-        /// <summary>
         /// Get the flag of the Initialization of the Controller.
         /// </summary>
         public bool IsInitialized { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the bug's view template.
+        /// </summary>
+        /// <value>
+        /// The name of the bug's view template.
+        /// </value>
+        public string BugViewTemplateName { get; private set; }
+
         #endregion
 
         #region Methods
@@ -118,7 +116,7 @@ namespace Bugger.Proxy
         /// </returns>
         /// <exception cref="System.ArgumentException">userName</exception>
         /// <exception cref="System.NotSupportedException">The Query operation is not supported. CanQuery returned false.</exception>
-        public ReadOnlyCollection<IBugViewModel> Query(string userName, bool isFilterCreatedBy = true)
+        public ReadOnlyCollection<IBug> Query(string userName, bool isFilterCreatedBy = true)
         {
             if (string.IsNullOrWhiteSpace(userName)) { throw new ArgumentException("userName"); }
 
@@ -135,14 +133,14 @@ namespace Bugger.Proxy
         /// </returns>
         /// <exception cref="System.ArgumentException">teamMembers</exception>
         /// <exception cref="System.NotSupportedException">The Query operation is not supported. CanQuery returned false.</exception>
-        public ReadOnlyCollection<IBugViewModel> Query(List<string> teamMembers, bool isFilterCreatedBy = true)
+        public ReadOnlyCollection<IBug> Query(List<string> teamMembers, bool isFilterCreatedBy = true)
         {
             if (teamMembers == null) { throw new ArgumentException("teamMembers"); }
             if (!CanQuery) { throw new NotSupportedException("The Query operation is not supported. CanQuery returned false."); }
 
             if (teamMembers.Count == 0)
             {
-                return new ReadOnlyCollection<IBugViewModel>(new List<IBugViewModel>());
+                return new ReadOnlyCollection<IBug>(new List<IBug>());
             }
 
             return QueryCore(teamMembers, isFilterCreatedBy);
@@ -186,7 +184,7 @@ namespace Bugger.Proxy
         /// The bugs.
         /// </returns>
         /// <exception cref="System.NotImplementedException">The Query Method not implemented in the base class.</exception>
-        protected virtual ReadOnlyCollection<IBugViewModel> QueryCore(List<string> userNames, bool isFilterCreatedBy)
+        protected virtual ReadOnlyCollection<IBug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
         {
             throw new NotImplementedException("The Query Method not implemented in the base class.");
         }

@@ -1,6 +1,6 @@
-﻿using BigEgg.Framework.Applications.ViewModels;
-using BigEgg.Framework.UnitTesting;
+﻿using BigEgg.Framework.UnitTesting;
 using Bugger.Domain.Models;
+using Bugger.Proxy.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -14,14 +14,16 @@ namespace Bugger.Proxy.Test
         [TestMethod]
         public void ConstructorTest()
         {
-            AssertHelper.ExpectedException<ArgumentException>(() => new MockTracingSystemProxy("  "));
-            AssertHelper.ExpectedException<ArgumentException>(() => new MockTracingSystemProxy(null));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockTracingSystemProxy("  ", "  "));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockTracingSystemProxy(null, "  "));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockTracingSystemProxy("proxyName", "  "));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockTracingSystemProxy("proxyName", null));
         }
 
         [TestMethod]
         public void CheckBaseImplementation()
         {
-            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
+            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName", "TheViewTemplateNamw");
 
             AssertHelper.ExpectedException<ArgumentException>(() => proxy.Query("   "));
             AssertHelper.ExpectedException<ArgumentException>(() => proxy.Query(string.Empty));
@@ -41,9 +43,11 @@ namespace Bugger.Proxy.Test
         [TestMethod]
         public void GeneralSourceControllerTest()
         {
-            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
+            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName", "TheViewTemplateNamw");
 
             Assert.AreEqual("proxyName", proxy.ProxyName);
+            Assert.AreEqual("TheViewTemplateNamw", proxy.BugViewTemplateName);
+
             Assert.AreEqual(0, proxy.StateValues.Count);
             Assert.IsFalse(proxy.CanQuery);
         }
@@ -51,7 +55,7 @@ namespace Bugger.Proxy.Test
         [TestMethod]
         public void PropertiesWithNotification()
         {
-            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
+            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName", "TheViewTemplateNamw");
 
             Assert.IsFalse(proxy.CanQuery);
             AssertHelper.PropertyChangedEvent(proxy, x => x.CanQuery, () => proxy.CanQueryValue = true);
@@ -61,18 +65,18 @@ namespace Bugger.Proxy.Test
         [TestMethod]
         public void QueryTest()
         {
-            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
+            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName", "TheViewTemplateNamw");
 
             proxy.CanQueryValue = true;
 
-            ReadOnlyCollection<Bug> bugs = proxy.Query(new List<string>());
+            ReadOnlyCollection<IBug> bugs = proxy.Query(new List<string>());
             Assert.AreEqual(0, bugs.Count);
         }
 
         [TestMethod]
         public void ProxyInitializeTest()
         {
-            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
+            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName", "TheViewTemplateNamw");
 
             Assert.IsFalse(proxy.IsInitialized);
             proxy.Initialize();
@@ -82,7 +86,7 @@ namespace Bugger.Proxy.Test
         [TestMethod]
         public void ProxyValidateSettingDialogTest()
         {
-            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
+            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName", "TheViewTemplateNamw");
 
             var result = proxy.ValidateBeforeCloseSettingDialog();
             Assert.AreEqual(SettingDialogValidateionResult.Valid, result);
@@ -94,8 +98,8 @@ namespace Bugger.Proxy.Test
             private ObservableCollection<string> statsValues;
             #endregion
 
-            public MockTracingSystemProxy(string proxyName)
-                : base(proxyName)
+            public MockTracingSystemProxy(string proxyName, string bugViewTemplateName)
+                : base(proxyName, bugViewTemplateName)
             {
                 statsValues = new ObservableCollection<string>();
             }
@@ -121,7 +125,7 @@ namespace Bugger.Proxy.Test
                 }
             }
 
-            public ReadOnlyCollection<Bug> CallQueryCore(List<string> userNames, bool isFilterCreatedBy)
+            public ReadOnlyCollection<IBug> CallQueryCore(List<string> userNames, bool isFilterCreatedBy)
             {
                 return base.QueryCore(userNames, isFilterCreatedBy);
             }
