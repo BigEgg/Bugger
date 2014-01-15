@@ -7,12 +7,15 @@ using System.ComponentModel.Composition;
 
 namespace Bugger.Applications.Services
 {
+    /// <summary>
+    /// The service class that contains all the data that related with the bugs and query progress.
+    /// </summary>
     [Export(typeof(IDataService)), Export]
     internal class DataService : DataModel, IDataService
     {
         #region Fields
-        private readonly MultiThreadingObservableCollection<Bug> userBugs;
-        private readonly MultiThreadingObservableCollection<Bug> teamBugs;
+        private readonly MultiThreadingObservableCollection<IBug> userBugs;
+        private readonly MultiThreadingObservableCollection<IBug> teamBugs;
         private DateTime refreshTime;
         private QueryStatus userBugsQueryState;
         private QueryStatus teamBugsQueryState;
@@ -24,8 +27,8 @@ namespace Bugger.Applications.Services
         [ImportingConstructor]
         public DataService()
         {
-            this.userBugs = new MultiThreadingObservableCollection<Bug>();
-            this.teamBugs = new MultiThreadingObservableCollection<Bug>();
+            this.userBugs = new MultiThreadingObservableCollection<IBug>();
+            this.teamBugs = new MultiThreadingObservableCollection<IBug>();
             this.refreshTime = DateTime.Now;
             this.userBugsQueryState = QueryStatus.QureyPause;
             this.userBugsProgressValue = 0;
@@ -35,10 +38,28 @@ namespace Bugger.Applications.Services
         }
 
         #region Properties
-        public MultiThreadingObservableCollection<Bug> UserBugs { get { return this.userBugs; } }
+        /// <summary>
+        /// Gets the user's bugs.
+        /// </summary>
+        /// <value>
+        /// The user bugs.
+        /// </value>
+        public MultiThreadingObservableCollection<IBug> UserBugs { get { return this.userBugs; } }
 
-        public MultiThreadingObservableCollection<Bug> TeamBugs { get { return this.teamBugs; } }
+        /// <summary>
+        /// Gets the team's bugs.
+        /// </summary>
+        /// <value>
+        /// The team bugs.
+        /// </value>
+        public MultiThreadingObservableCollection<IBug> TeamBugs { get { return this.teamBugs; } }
 
+        /// <summary>
+        /// Gets or sets the refresh time.
+        /// </summary>
+        /// <value>
+        /// The refresh time.
+        /// </value>
         public DateTime RefreshTime
         {
             get { return this.refreshTime; }
@@ -52,6 +73,12 @@ namespace Bugger.Applications.Services
             }
         }
 
+        /// <summary>
+        /// Gets or sets the state of query user bugs.
+        /// </summary>
+        /// <value>
+        /// The state of query user bugs.
+        /// </value>
         public QueryStatus UserBugsQueryState
         {
             get { return this.userBugsQueryState; }
@@ -65,6 +92,12 @@ namespace Bugger.Applications.Services
             }
         }
 
+        /// <summary>
+        /// Gets or sets the progress value of query user bugs.
+        /// </summary>
+        /// <value>
+        /// The progress value of query user bugs.
+        /// </value>
         public int UserBugsProgressValue
         {
             get { return this.userBugsProgressValue; }
@@ -78,6 +111,12 @@ namespace Bugger.Applications.Services
             }
         }
 
+        /// <summary>
+        /// Gets or sets the state of query team bugs.
+        /// </summary>
+        /// <value>
+        /// The state of query team bugs.
+        /// </value>
         public QueryStatus TeamBugsQueryState
         {
             get { return this.teamBugsQueryState; }
@@ -91,6 +130,12 @@ namespace Bugger.Applications.Services
             }
         }
 
+        /// <summary>
+        /// Gets or sets the progress value of query team bugs.
+        /// </summary>
+        /// <value>
+        /// The progress value of query team bugs.
+        /// </value>
         public int TeamBugsProgressValue
         {
             get { return this.teamBugsProgressValue; }
@@ -104,6 +149,12 @@ namespace Bugger.Applications.Services
             }
         }
 
+        /// <summary>
+        /// Gets or sets the initialize status of the data and proxy.
+        /// </summary>
+        /// <value>
+        /// The initialize status.
+        /// </value>
         public InitializeStatus InitializeStatus
         {
             get { return this.initializeStatus; }
