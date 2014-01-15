@@ -1,14 +1,13 @@
-﻿using System;
+﻿using BigEgg.Framework.Applications.Services;
+using Bugger.Domain.Models;
+using Bugger.Proxy.Jira.Properties;
+using Bugger.Proxy.Models;
+using Bugger.Proxy.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BigEgg.Framework.Applications.Services;
-using Bugger.Domain.Models;
-using Bugger.Proxy.Jira.Properties;
 
 namespace Bugger.Proxy.Jira
 {
@@ -98,14 +97,14 @@ namespace Bugger.Proxy.Jira
         /// <returns>
         /// The bugs.
         /// </returns>
-        protected override ReadOnlyCollection<Bug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
+        protected override ReadOnlyCollection<IBug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
         {
             throw new NotImplementedException();
         }
         #endregion
 
         #region Private Methods
-        
+
         #endregion
         #endregion
     }
