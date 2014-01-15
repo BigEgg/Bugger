@@ -4,7 +4,7 @@ using System;
 
 namespace Bugger.Proxy.TFS.Models
 {
-    public class TFSBug : IBug
+    public class TFSBug : IBug, IEquatable<TFSBug>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TFSBug"/> class.
@@ -52,6 +52,28 @@ namespace Bugger.Proxy.TFS.Models
                             this.Priority != other.Priority ||
                             this.Severity != other.Severity;
 
+        }
+        #endregion
+
+        #region Implement IEquatable interface
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>
+        /// true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
+        /// </returns>
+        public bool Equals(TFSBug other)
+        {
+            return this.ID == other.ID
+                && this.Title == other.Title
+                && this.Description == other.Description
+                && this.AssignedTo == other.AssignedTo
+                && this.State == other.State
+                && this.ChangedDate == other.ChangedDate
+                && this.CreatedBy == other.CreatedBy
+                && this.Priority == other.Priority
+                && this.Severity == other.Severity;
         }
         #endregion
 

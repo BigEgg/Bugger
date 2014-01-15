@@ -1,23 +1,14 @@
-﻿using BigEgg.Framework.Applications.Services;
-using BigEgg.Framework.Applications.Views;
-using BigEgg.Framework.UnitTesting;
+﻿using BigEgg.Framework.Applications.Views;
 using Bugger.Domain.Models;
+using Bugger.Proxy.Models;
 using Bugger.Proxy.TFS.Documents;
-using Bugger.Proxy.TFS.Presentation.Fake.Views;
-using Bugger.Proxy.TFS.Properties;
-using Bugger.Proxy.TFS.Test.Services;
+using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.ViewModels;
 using Bugger.Proxy.TFS.Views;
-using BigEgg.Framework.Applications.Views;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using Bugger.Proxy.TFS.Models;
-using System.Threading;
-using System.Diagnostics;
-using System.Windows.Threading;
 
 namespace Bugger.Proxy.TFS.Test
 {
@@ -303,7 +294,7 @@ namespace Bugger.Proxy.TFS.Test
             Assert.AreEqual("Code Studio Rank", viewModel.PropertyMappingCollection["Priority"]);
 
             Assert.AreEqual("Work Item Type", viewModel.BugFilterField);
-            //  Code Plex don't have a type named "Bugs"
+            //  CodePlex don't have a type named "Bugs"
             Assert.AreEqual(string.Empty, viewModel.BugFilterValue);
 
             Assert.IsNotNull(viewModel.PriorityValues);
@@ -465,7 +456,7 @@ namespace Bugger.Proxy.TFS.Test
             if (order++ != 18) { throw new NotSupportedException("This unit test must run as order."); }
 
             Assert.IsTrue(proxy.CanQuery);
-            ReadOnlyCollection<Bug> bugs = proxy.Query(TheQueryUsername);
+            var bugs = proxy.Query(TheQueryUsername);
             Assert.IsNotNull(bugs);
             Assert.IsTrue(bugs.Any());
             Assert.IsTrue(bugs.Any(x => x.Type == BugType.Red));

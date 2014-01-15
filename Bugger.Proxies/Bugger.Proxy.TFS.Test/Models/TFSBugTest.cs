@@ -138,7 +138,7 @@ namespace Bugger.Proxy.TFS.Test.Models
             Assert.IsFalse(item3.IsUpdate);
             AssertHelper.ExpectedException<ArgumentNullException>(() => item3.CheckUpdate(null));
             AssertHelper.ExpectedException<NotSupportedException>(() => item3.CheckUpdate(new MockBug()));
-            AssertHelper.ExpectedException<ArithmeticException>(() => item3.CheckUpdate(item2));
+            AssertHelper.ExpectedException<ArgumentException>(() => item3.CheckUpdate(item2));
 
             item3.CheckUpdate(item1);
             Assert.IsTrue(item3.IsUpdate);
