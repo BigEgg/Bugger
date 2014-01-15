@@ -1,10 +1,10 @@
 ﻿using Bugger.Domain.Models;
+using Bugger.Proxy.FakeProxy.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Text;
 
 namespace Bugger.Proxy.FakeProxy
 {
@@ -16,7 +16,7 @@ namespace Bugger.Proxy.FakeProxy
     {
         #region Fields
         private readonly ObservableCollection<string> status;
-        private List<Bug> bugs;
+        private List<FakeBug> bugs;
         #endregion
 
         /// <summary>
@@ -28,21 +28,30 @@ namespace Bugger.Proxy.FakeProxy
         {
             this.status = new ObservableCollection<string>();
 
-            this.bugs = new List<Bug>();
+            this.bugs = new List<FakeBug>();
             this.CanQuery = true;
         }
 
 
         #region Properties
+        /// <summary>
+        /// Gets the status values.
+        /// </summary>
+        /// <value>
+        /// The status values.
+        /// </value>
         public override ObservableCollection<string> StateValues { get { return this.status; } }
         #endregion
 
 
         #region Methods
         #region Protected Methods
+        /// <summary>
+        /// The method which will execute when the Controller.Initialize() execute.
+        /// </summary>
         protected override void OnInitialize()
         {
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 1,
                 Title = "Bug1",
@@ -55,7 +64,7 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "High",
                 Severity = ""
             });
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 2,
                 Title = "Bug2",
@@ -68,7 +77,7 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "High",
                 Severity = "High"
             });
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 3,
                 Title = "Bug3",
@@ -81,7 +90,7 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "High",
                 Severity = "High"
             });
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 4,
                 Title = "Bug4",
@@ -95,7 +104,7 @@ namespace Bugger.Proxy.FakeProxy
                 Severity = "High"
             });
 
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 5,
                 Title = "Bug5",
@@ -108,7 +117,7 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "High",
                 Severity = "High"
             });
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 6,
                 Title = "Bug6",
@@ -120,7 +129,7 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "High",
                 Severity = "High"
             });
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 7,
                 Title = "Bug7",
@@ -132,7 +141,7 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "High",
                 Severity = "Low"
             });
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 8,
                 Title = "Bug8",
@@ -145,7 +154,7 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "High",
             });
 
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 9,
                 Title = "Bug9",
@@ -157,7 +166,7 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "Low",
                 Severity = "High"
             });
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 10,
                 Title = "Bug10",
@@ -170,7 +179,7 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "Low",
                 Severity = "High"
             });
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 11,
                 Title = "Bug11",
@@ -183,7 +192,7 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "Medium",
                 Severity = "Low"
             });
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 12,
                 Title = "Bug12",
@@ -197,7 +206,7 @@ namespace Bugger.Proxy.FakeProxy
                 Severity = "High"
             });
 
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 13,
                 Title = "Bug13",
@@ -210,7 +219,7 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "High",
                 Severity = "High"
             });
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 14,
                 Title = "Bug14",
@@ -222,7 +231,7 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "High",
                 Severity = "Medium"
             });
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 15,
                 Title = "Bug15",
@@ -234,7 +243,7 @@ namespace Bugger.Proxy.FakeProxy
                 Priority = "Medium",
                 Severity = "High"
             });
-            this.bugs.Add(new Bug()
+            this.bugs.Add(new FakeBug()
             {
                 ID = 16,
                 Title = "Bug16",
@@ -253,21 +262,32 @@ namespace Bugger.Proxy.FakeProxy
             this.status.Add("Closed");
         }
 
-        protected override ReadOnlyCollection<Bug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
+        /// <summary>
+        /// Query the bugs with the specified user names list which the bug assign to.
+        /// </summary>
+        /// <param name="userNames">The user names list which the bug assign to.</param>
+        /// <param name="isFilterCreatedBy">if set to <c>true</c> indicating whether filter the created by field.</param>
+        /// <returns>
+        /// The bugs.
+        /// </returns>
+        protected override ReadOnlyCollection<IBug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
         {
-            List<Bug> queriedResult = new List<Bug>();
+            var queriedResult = new List<IBug>();
 
             foreach (string userName in userNames)
             {
                 if (isFilterCreatedBy)
-                    queriedResult.AddRange(this.bugs
-                        .Where(x => x.AssignedTo.ToLower() == userName.ToLower()
-                            || x.CreatedBy.ToLower() == userName.ToLower()));
+                {
+                    queriedResult.AddRange(this.bugs.Where(x => x.AssignedTo.ToLower() == userName.ToLower() ||
+                                                           x.CreatedBy.ToLower() == userName.ToLower()));
+                }
                 else
+                {
                     queriedResult.AddRange(this.bugs.Where(x => x.AssignedTo.ToLower() == userName.ToLower()));
+                }
             }
 
-            return new ReadOnlyCollection<Bug>(queriedResult.Distinct().ToList());
+            return new ReadOnlyCollection<IBug>(queriedResult.Distinct().ToList());
         }
         #endregion
         #endregion

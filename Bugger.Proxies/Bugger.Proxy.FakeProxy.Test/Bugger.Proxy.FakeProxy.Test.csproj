@@ -58,9 +58,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FakeProxyTest.cs" />
+    <Compile Include="Models\FakeBugTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework.UnitTesting\BigEgg.Framework.UnitTesting.csproj">
+      <Project>{0cc7a8da-a50b-405f-b14c-8b6bbaea42ce}</Project>
+      <Name>BigEgg.Framework.UnitTesting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">
       <Project>{ee01d20c-0f89-4219-a615-e5566a73814e}</Project>
       <Name>BigEgg.Framework</Name>
