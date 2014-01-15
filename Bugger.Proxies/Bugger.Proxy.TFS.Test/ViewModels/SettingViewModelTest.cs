@@ -1,15 +1,14 @@
 ﻿using BigEgg.Framework.Applications.Views;
 using BigEgg.Framework.UnitTesting;
-using Bugger.Domain.Models;
-using Bugger.Proxy.TFS.Documents;
 using Bugger.Proxy.TFS.Models;
+using Bugger.Proxy.TFS.Models.Attributes;
 using Bugger.Proxy.TFS.Presentation.Fake.Views;
 using Bugger.Proxy.TFS.ViewModels;
 using Bugger.Proxy.TFS.Views;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
-using System.IO;
+using System.Linq;
 
 namespace Bugger.Proxy.TFS.Test.ViewModels
 {
@@ -29,12 +28,14 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
         [TestMethod]
         public void GeneralSettingViewModelTest()
         {
-            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(Bug));
+            IgnoreMappingAttribute ignore = new IgnoreMappingAttribute() { Ignore = true };
+            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(TFSBug));
 
             Assert.AreEqual(0, this.viewModel.TFSFields.Count);
             Assert.AreEqual(0, this.viewModel.BugFilterFields.Count);
             Assert.AreEqual(0, this.viewModel.PriorityValues.Count);
-            Assert.AreEqual(propertyDescriptorCollection.Count - 1, this.viewModel.PropertyMappingCollection.Count);
+            Assert.AreEqual(propertyDescriptorCollection.Cast<PropertyDescriptor>().Where(x => !x.Attributes.Contains(ignore)).Count(),
+                            this.viewModel.PropertyMappingCollection.Count);
 
             foreach (var mappingModel in this.viewModel.PropertyMappingCollection)
             {

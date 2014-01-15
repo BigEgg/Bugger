@@ -1,8 +1,10 @@
-﻿using Bugger.Domain.Models;
-using Bugger.Proxy.TFS.Documents;
+﻿using Bugger.Proxy.TFS.Documents;
+using Bugger.Proxy.TFS.Models;
+using Bugger.Proxy.TFS.Models.Attributes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Bugger.Proxy.TFS.Test.Documents
 {
@@ -15,8 +17,10 @@ namespace Bugger.Proxy.TFS.Test.Documents
             SettingDocument document = new SettingDocument();
             Assert.IsNotNull(document.PropertyMappingCollection);
 
-            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(Bug));
-            Assert.AreEqual(propertyDescriptorCollection.Count - 1, document.PropertyMappingCollection.Count);
+            IgnoreMappingAttribute ignore = new IgnoreMappingAttribute() { Ignore = true };
+            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(TFSBug));
+            Assert.AreEqual(propertyDescriptorCollection.Cast<PropertyDescriptor>().Where(x => !x.Attributes.Contains(ignore)).Count(),
+                            document.PropertyMappingCollection.Count);
 
             document.PropertyMappingCollection["ID"] = "ID";
             document.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");
