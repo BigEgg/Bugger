@@ -43,6 +43,7 @@
     <Compile Include="Models\SettingDialogValidateionResult.cs" />
     <Compile Include="TracingSystemProxyBase.cs" />
     <Compile Include="Models\BugBase.cs" />
+    <Compile Include="Views\ISettingView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">
@@ -54,9 +55,7 @@
       <Name>Bugger.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
