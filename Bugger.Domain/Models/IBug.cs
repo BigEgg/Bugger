@@ -8,7 +8,7 @@
         /// <value>
         /// The type of this bug.
         /// </value>
-        BugType bugType { get; set; }
+        BugType Type { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the bug is update.
@@ -16,7 +16,7 @@
         /// <value>
         ///   <c>true</c> if the bug is update; otherwise, <c>false</c>.
         /// </value>
-        bool isUpdate { get; }
+        bool IsUpdate { get; }
 
         /// <summary>
         /// Checks is the bug had been the updated.
