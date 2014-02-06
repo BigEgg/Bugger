@@ -67,8 +67,7 @@ namespace Bugger.Proxy.Test
 
             proxy.CanQueryValue = true;
 
-            var bugs = proxy.Query(new List<string>());
-            Assert.IsInstanceOfType(bugs.GetType(), typeof(ReadOnlyCollection<IBug>));
+            ReadOnlyCollection<IBug> bugs = proxy.Query(new List<string>());
             Assert.AreEqual(0, bugs.Count);
         }
 
