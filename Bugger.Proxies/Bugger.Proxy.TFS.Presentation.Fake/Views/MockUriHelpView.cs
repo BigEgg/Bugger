@@ -11,7 +11,7 @@ namespace Bugger.Proxy.TFS.Presentation.Fake.Views
     public class MockUriHelpView : MockDialogViewBase, IUriHelpView
     {
         public Action<MockUriHelpView> ShowDialogAction { get; set; }
-        public UriHelpViewModel ViewModel { get { return ViewHelper.GetViewModel<UriHelpViewModel>(this); } }
+        public UriHelperDialogViewModel ViewModel { get { return ViewHelper.GetViewModel<UriHelperDialogViewModel>(this); } }
 
         protected override void OnShowDialogAction()
         {

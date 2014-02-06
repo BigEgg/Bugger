@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace Bugger.Proxy.TFS.ViewModels
 {
-    public class UriHelpViewModel : DialogViewModel<IUriHelpView>, IDataErrorInfo 
+    public class UriHelperDialogViewModel : DialogViewModel<IUriHelpView>, IDataErrorInfo
     {
         #region Fields
         protected readonly DataErrorInfoSupport dataErrorInfoSupport;
@@ -26,7 +26,11 @@ namespace Bugger.Proxy.TFS.ViewModels
         private string uriPreview;
         #endregion
 
-        public UriHelpViewModel(IUriHelpView view)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UriHelperDialogViewModel"/> class.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        public UriHelperDialogViewModel(IUriHelpView view)
             : base(view)
         {
             this.dataErrorInfoSupport = new DataErrorInfoSupport(this);
@@ -37,21 +41,48 @@ namespace Bugger.Proxy.TFS.ViewModels
             this.isHttpsProtocal = false;
             this.uriPreview = Resources.InvalidUrl;
 
-            this.submitCommand = new DelegateCommand(() => Close(true), CanSubmitSetting);
+            this.submitCommand = new DelegateCommand(() => Close(true), CanSubmitCommandExecute);
             this.cancelCommand = new DelegateCommand(() => Close(false));
         }
 
         #region Implement IDataErrorInfo interface
+        /// <summary>
+        /// Gets an error message indicating what is wrong with this object.
+        /// </summary>
+        /// <returns>An error message indicating what is wrong with this object. The default is an empty string ("").</returns>
         string IDataErrorInfo.Error { get { return this.dataErrorInfoSupport.Error; } }
 
+        /// <summary>
+        /// Gets the error message for the property with the given name.
+        /// </summary>
+        /// <param name="columnName">Name of the column.</param>
+        /// <returns>The error message for the property. The default is an empty string ("").</returns>
         string IDataErrorInfo.this[string columnName] { get { return this.dataErrorInfoSupport[columnName]; } }
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Gets the submit command.
+        /// </summary>
+        /// <value>
+        /// The submit command.
+        /// </value>
         public ICommand SubmitCommand { get { return this.submitCommand; } }
 
+        /// <summary>
+        /// Gets the cancel command.
+        /// </summary>
+        /// <value>
+        /// The cancel command.
+        /// </value>
         public ICommand CancelCommand { get { return this.cancelCommand; } }
 
+        /// <summary>
+        /// Gets or sets the server name.
+        /// </summary>
+        /// <value>
+        /// The server name.
+        /// </value>
         [Required(ErrorMessageResourceName = "ServerNameMandatory", ErrorMessageResourceType = typeof(Resources))]
         public string ServerName
         {
@@ -68,17 +99,29 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the user can edit connection detail informations.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the user can edit connection detail informations; otherwise, <c>false</c>.
+        /// </value>
         public bool CanEditConnectionDetail
         {
-            get 
+            get
             {
                 if (string.IsNullOrWhiteSpace(serverName))
                     return true;
                 else
-                    return !serverName.StartsWith("http://") && !serverName.StartsWith("https://"); 
+                    return !serverName.StartsWith("http://") && !serverName.StartsWith("https://");
             }
         }
 
+        /// <summary>
+        /// Gets or sets the connection path.
+        /// </summary>
+        /// <value>
+        /// The connection path.
+        /// </value>
         [RequiredIf("CanEditConnectionDetail", true, ErrorMessageResourceName = "PathMandatory", ErrorMessageResourceType = typeof(Resources))]
         public string Path
         {
@@ -94,6 +137,12 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the TFS Server port.
+        /// </summary>
+        /// <value>
+        /// The TFS Server port.
+        /// </value>
         [RequiredIf("CanEditConnectionDetail", true, ErrorMessageResourceName = "PortMandatory", ErrorMessageResourceType = typeof(Resources))]
         [Range(1, 65535, ErrorMessageResourceName = "PortRange", ErrorMessageResourceType = typeof(Resources))]
         public uint Port
@@ -110,7 +159,13 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
-        public bool IsHttpsProtocal
+        /// <summary>
+        /// Gets or sets a value indicating whether the connection is use HTTPS protocol.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the connection is use HTTPS protocol; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsHttpsProtocol
         {
             get { return this.isHttpsProtocal; }
             set
@@ -122,13 +177,19 @@ namespace Bugger.Proxy.TFS.ViewModels
                         this.Port = 443;
                     else if (!value && this.Port == 443)
                         this.Port = 8080;
-                    
+
                     CheckUri();
-                    RaisePropertyChanged("IsHttpsProtocal");
+                    RaisePropertyChanged("IsHttpsProtocol");
                 }
             }
         }
 
+        /// <summary>
+        /// Gets the URI preview string.
+        /// </summary>
+        /// <value>
+        /// The URI preview string.
+        /// </value>
         public string UriPreview
         {
             get { return this.uriPreview; }
@@ -142,6 +203,12 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets the dialog's title.
+        /// </summary>
+        /// <value>
+        /// The title.
+        /// </value>
         public override string Title
         {
             get { return Resources.UriHelpDialogTitle; }
@@ -149,7 +216,10 @@ namespace Bugger.Proxy.TFS.ViewModels
         #endregion
 
         #region Methods
-        #region Private Methdos
+        #region Private Methods
+        /// <summary>
+        /// Checks is the URI is valid.
+        /// </summary>
         private void CheckUri()
         {
             Uri uri = null;
@@ -169,7 +239,7 @@ namespace Bugger.Proxy.TFS.ViewModels
                 else
                 {
                     string uriString = string.Empty;
-                    uriString = (IsHttpsProtocal ? "https://" : "http://") + this.serverName;
+                    uriString = (IsHttpsProtocol ? "https://" : "http://") + this.serverName;
                     uriString = uriString + ":" + this.port.ToString() + "/" + this.path;
                     if (Uri.TryCreate(uriString, UriKind.Absolute, out uri))
                         this.UriPreview = uri.AbsoluteUri;
@@ -180,11 +250,18 @@ namespace Bugger.Proxy.TFS.ViewModels
             UpdateCommands();
         }
 
-        private bool CanSubmitSetting()
+        /// <summary>
+        /// Determines whether the SubmitCommand can execute.
+        /// </summary>
+        /// <returns></returns>
+        private bool CanSubmitCommandExecute()
         {
             return this.UriPreview != Resources.InvalidUrl;
         }
 
+        /// <summary>
+        /// Updates the commands' status.
+        /// </summary>
         private void UpdateCommands()
         {
             this.submitCommand.RaiseCanExecuteChanged();

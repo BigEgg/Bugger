@@ -1,9 +1,6 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Proxy.TFS.Models;
-using Bugger.Proxy.TFS.Models.Attributes;
 using System;
-using System.Linq;
-using System.ComponentModel;
 
 namespace Bugger.Proxy.TFS.Documents
 {
@@ -13,17 +10,12 @@ namespace Bugger.Proxy.TFS.Documents
         private readonly PropertyMappingDictionary propertyMappingCollection;
         #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingDocument"/> class.
+        /// </summary>
         public SettingDocument()
         {
-            this.propertyMappingCollection = new PropertyMappingDictionary();
-
-            IgnoreMappingAttribute ignore = new IgnoreMappingAttribute() { Ignore = true };
-            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(TFSBug));
-            foreach (PropertyDescriptor propertyDescriptor in propertyDescriptorCollection.Cast<PropertyDescriptor>()
-                                                                                          .Where(x => !x.Attributes.Contains(ignore)))
-            {
-                this.propertyMappingCollection.Add(propertyDescriptor.Name, string.Empty);
-            }
+            this.propertyMappingCollection = TFSBugHelper.GetPropertyNames();
 
             UserName = string.Empty;
             Password = string.Empty;
@@ -33,18 +25,60 @@ namespace Bugger.Proxy.TFS.Documents
         }
 
         #region Properties
+        /// <summary>
+        /// Gets the property mapping collection.
+        /// </summary>
+        /// <value>
+        /// The property mapping collection.
+        /// </value>
         public PropertyMappingDictionary PropertyMappingCollection { get { return this.propertyMappingCollection; } }
 
+        /// <summary>
+        /// Gets or sets the connect URI.
+        /// </summary>
+        /// <value>
+        /// The connect URI.
+        /// </value>
         public Uri ConnectUri { get; set; }
 
+        /// <summary>
+        /// Gets or sets the TFS user name.
+        /// </summary>
+        /// <value>
+        /// The TFS user name.
+        /// </value>
         public string UserName { get; set; }
 
+        /// <summary>
+        /// Gets or sets the password.
+        /// </summary>
+        /// <value>
+        /// The password.
+        /// </value>
         public string Password { get; set; }
 
+        /// <summary>
+        /// Gets or sets the bug filter field.
+        /// </summary>
+        /// <value>
+        /// The bug filter field.
+        /// </value>
         public string BugFilterField { get; set; }
 
+        /// <summary>
+        /// Gets or sets the bug filter value.
+        /// </summary>
+        /// <value>
+        /// The bug filter value.
+        /// </value>
         public string BugFilterValue { get; set; }
 
+        /// <summary>
+        /// Gets or sets the priority value to indicate which bug is the red gift.
+        /// </summary>
+        /// <value>
+        /// The priority value.
+        /// </value>
         public string PriorityRed { get; set; }
         #endregion
     }

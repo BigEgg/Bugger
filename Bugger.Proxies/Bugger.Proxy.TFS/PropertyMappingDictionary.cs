@@ -14,6 +14,11 @@ namespace Bugger.Proxy.TFS
         private string value;
         #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MappingModel"/> class.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <exception cref="System.ArgumentNullException">key</exception>
         public MappingModel(string key)
         {
             if (string.IsNullOrWhiteSpace(key)) { throw new ArgumentNullException("key"); }
@@ -23,11 +28,23 @@ namespace Bugger.Proxy.TFS
         }
 
         #region Properties
+        /// <summary>
+        /// Gets the key.
+        /// </summary>
+        /// <value>
+        /// The key.
+        /// </value>
         public string Key
         {
             get { return this.key; }
         }
 
+        /// <summary>
+        /// Gets or sets the value.
+        /// </summary>
+        /// <value>
+        /// The value.
+        /// </value>
         public string Value
         {
             get { return this.value; }

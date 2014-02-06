@@ -10,12 +10,12 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
     [TestClass]
     public class UriHelpViewModelTest : TestClassBase
     {
-        private UriHelpViewModel viewModel;
+        private UriHelperDialogViewModel viewModel;
 
         protected override void OnTestInitialize()
         {
             IUriHelpView view = Container.GetExportedValue<IUriHelpView>();
-            this.viewModel = new UriHelpViewModel(view);
+            this.viewModel = new UriHelperDialogViewModel(view);
         }
 
         [TestMethod]
@@ -28,7 +28,7 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
             Assert.AreEqual((uint)8080, viewModel.Port);
             Assert.AreEqual(string.Empty, viewModel.ServerName);
             Assert.AreEqual(Resources.InvalidUrl, viewModel.UriPreview);
-            Assert.IsFalse(viewModel.IsHttpsProtocal);
+            Assert.IsFalse(viewModel.IsHttpsProtocol);
             Assert.AreEqual(Resources.UriHelpDialogTitle, viewModel.Title);
         }
 
@@ -102,33 +102,33 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
             viewModel.Port = (uint)-0;
             Assert.AreEqual(Resources.InvalidUrl, viewModel.UriPreview);
 
-            Assert.IsFalse(viewModel.IsHttpsProtocal);
+            Assert.IsFalse(viewModel.IsHttpsProtocol);
             viewModel.Port = (uint)8080;
-            viewModel.IsHttpsProtocal = true;
+            viewModel.IsHttpsProtocol = true;
             Assert.AreEqual((uint)443, viewModel.Port);
-            viewModel.IsHttpsProtocal = false;
+            viewModel.IsHttpsProtocol = false;
             Assert.AreEqual((uint)8080, viewModel.Port);
         }
 
         [TestMethod]
         public void IsHttpsProtocalPropertyChangedTes()
         {
-            AssertHelper.PropertyChangedEvent(viewModel, x => x.IsHttpsProtocal, () => viewModel.IsHttpsProtocal = true);
-            Assert.IsTrue(viewModel.IsHttpsProtocal);
+            AssertHelper.PropertyChangedEvent(viewModel, x => x.IsHttpsProtocol, () => viewModel.IsHttpsProtocol = true);
+            Assert.IsTrue(viewModel.IsHttpsProtocol);
             Assert.AreEqual(Resources.InvalidUrl, viewModel.UriPreview);
             Assert.AreEqual((uint)443, viewModel.Port);
 
             viewModel.ServerName = "SomeServer";
             Assert.AreEqual("https://someserver/tfs", viewModel.UriPreview);
-            AssertHelper.PropertyChangedEvent(viewModel, x => x.UriPreview, () => viewModel.IsHttpsProtocal = false);
-            Assert.IsFalse(viewModel.IsHttpsProtocal);
+            AssertHelper.PropertyChangedEvent(viewModel, x => x.UriPreview, () => viewModel.IsHttpsProtocol = false);
+            Assert.IsFalse(viewModel.IsHttpsProtocol);
             Assert.AreEqual("http://someserver:8080/tfs", viewModel.UriPreview);
 
-            viewModel.IsHttpsProtocal = true;
+            viewModel.IsHttpsProtocol = true;
             viewModel.Port = (uint)123;
             Assert.AreEqual("https://someserver:123/tfs", viewModel.UriPreview);
 
-            viewModel.IsHttpsProtocal = false;
+            viewModel.IsHttpsProtocol = false;
             Assert.AreEqual("http://someserver:123/tfs", viewModel.UriPreview);
         }
 

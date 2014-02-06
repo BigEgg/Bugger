@@ -49,10 +49,10 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
             Assert.IsTrue(string.IsNullOrEmpty(this.viewModel.BugFilterValue));
             Assert.IsTrue(string.IsNullOrEmpty(this.viewModel.PriorityRed));
 
-            Assert.IsNotNull(this.viewModel.UriHelpCommand);
+            Assert.IsNotNull(this.viewModel.UriHelperDialogCommand);
             Assert.IsNull(this.viewModel.TestConnectionCommand);
 
-            Assert.AreEqual(ProgressTypes.NotWorking, this.viewModel.ProgressType);
+            Assert.AreEqual(ProgressType.NotWorking, this.viewModel.ProgressType);
             Assert.AreEqual(0, this.viewModel.ProgressValue);
         }
 
@@ -64,19 +64,19 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
             MockUriHelpView view = Container.GetExportedValue<IUriHelpView>() as MockUriHelpView;
             view.ShowDialogAction = (x) =>
             {
-                UriHelpViewModel uriHelpViewModel = x.GetViewModel<UriHelpViewModel>();
+                UriHelperDialogViewModel uriHelpViewModel = x.GetViewModel<UriHelperDialogViewModel>();
                 uriHelpViewModel.CancelCommand.Execute(null);
             };
-            this.viewModel.UriHelpCommand.Execute(null);
+            this.viewModel.UriHelperDialogCommand.Execute(null);
             Assert.IsNull(this.viewModel.ConnectUri);
 
             view.ShowDialogAction = (x) =>
                 {
-                    UriHelpViewModel uriHelpViewModel = x.GetViewModel<UriHelpViewModel>();
+                    UriHelperDialogViewModel uriHelpViewModel = x.GetViewModel<UriHelperDialogViewModel>();
                     uriHelpViewModel.ServerName = TheCodePlexUri;
                     uriHelpViewModel.SubmitCommand.Execute(null);
                 };
-            this.viewModel.UriHelpCommand.Execute(null);
+            this.viewModel.UriHelperDialogCommand.Execute(null);
             Assert.IsNotNull(this.viewModel.ConnectUri);
             Assert.AreEqual(
                 new Uri(TheCodePlexUri).AbsoluteUri,
@@ -92,7 +92,7 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.BugFilterField, () => this.viewModel.BugFilterField = "Work Item Type");
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.BugFilterValue, () => this.viewModel.BugFilterValue = "Bug");
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.PriorityRed, () => this.viewModel.PriorityRed = "1;2");
-            AssertHelper.PropertyChangedEvent(this.viewModel, x => x.ProgressType, () => this.viewModel.ProgressType = ProgressTypes.Success);
+            AssertHelper.PropertyChangedEvent(this.viewModel, x => x.ProgressType, () => this.viewModel.ProgressType = ProgressType.Success);
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.ProgressValue, () => this.viewModel.ProgressValue = 100);
 
             AssertHelper.PropertyChangedEvent(this.viewModel, x => x.PropertyMappingCollection, () => this.viewModel.PropertyMappingCollection["ID"] = "ID");

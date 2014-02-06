@@ -1,13 +1,11 @@
 ﻿using BigEgg.Framework.Applications.Commands;
 using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Proxy.TFS.Models;
-using Bugger.Proxy.TFS.Models.Attributes;
 using Bugger.Proxy.TFS.Properties;
 using Bugger.Proxy.TFS.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Input;
 
 namespace Bugger.Proxy.TFS.ViewModels
@@ -26,15 +24,21 @@ namespace Bugger.Proxy.TFS.ViewModels
         private string bugFilterValue;
         private string priorityRed;
 
-        private readonly DelegateCommand uriHelpCommand;
+        private readonly DelegateCommand openUriHelperDialogCommand;
         private ICommand testConnectionCommand;
 
         private readonly IUriHelpView uriHelpView;
 
-        private ProgressTypes progressType;
+        private ProgressType progressType;
         private int progressValue;
         #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TFSSettingViewModel"/> class.
+        /// </summary>
+        /// <param name="view">The view.</param>
+        /// <param name="uriHelpView">The URI help view.</param>
+        /// <exception cref="System.ArgumentNullException">uriHelpView</exception>
         public TFSSettingViewModel(ITFSSettingView view, IUriHelpView uriHelpView)
             : base(view)
         {
@@ -42,36 +46,61 @@ namespace Bugger.Proxy.TFS.ViewModels
 
             this.uriHelpView = uriHelpView;
 
-            this.uriHelpCommand = new DelegateCommand(OpenUriHelpCommandExcute);
+            this.openUriHelperDialogCommand = new DelegateCommand(OpenUriHelperDialogCommandExecute);
 
             this.propertyMappingCollection = new PropertyMappingDictionary();
             this.tfsFields = new ObservableCollection<TFSField>();
             this.bugFilterFields = new ObservableCollection<TFSField>();
             this.priorityValues = new ObservableCollection<CheckString>();
 
-            IgnoreMappingAttribute ignore = new IgnoreMappingAttribute() { Ignore = true };
-            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(TFSBug));
-            foreach (PropertyDescriptor propertyDescriptor in propertyDescriptorCollection.Cast<PropertyDescriptor>()
-                                                                                          .Where(x => !x.Attributes.Contains(ignore)))
+            this.propertyMappingCollection = TFSBugHelper.GetPropertyNames();
+            foreach (var mappingModel in propertyMappingCollection)
             {
-                var mapping = new MappingModel(propertyDescriptor.Name);
-                this.propertyMappingCollection.Add(mapping);
-
-                AddWeakEventListener(mapping, PropertyMappingModelPropertyChanged);
+                AddWeakEventListener(mappingModel, PropertyMappingModelPropertyChanged);
             }
 
             ClearMappingData();
         }
 
         #region Properties
+        /// <summary>
+        /// Gets the TFS fields.
+        /// </summary>
+        /// <value>
+        /// The TFS fields.
+        /// </value>
         public ObservableCollection<TFSField> TFSFields { get { return this.tfsFields; } }
 
+        /// <summary>
+        /// Gets the bug filter fields.
+        /// </summary>
+        /// <value>
+        /// The bug filter fields.
+        /// </value>
         public ObservableCollection<TFSField> BugFilterFields { get { return this.bugFilterFields; } }
 
+        /// <summary>
+        /// Gets the priority values.
+        /// </summary>
+        /// <value>
+        /// The priority values.
+        /// </value>
         public ObservableCollection<CheckString> PriorityValues { get { return this.priorityValues; } }
 
+        /// <summary>
+        /// Gets the property mapping collection.
+        /// </summary>
+        /// <value>
+        /// The property mapping collection.
+        /// </value>
         public PropertyMappingDictionary PropertyMappingCollection { get { return this.propertyMappingCollection; } }
 
+        /// <summary>
+        /// Gets or sets the connect URI.
+        /// </summary>
+        /// <value>
+        /// The connect URI.
+        /// </value>
         public Uri ConnectUri
         {
             get { return this.connectUri; }
@@ -85,6 +114,12 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the TFS user name.
+        /// </summary>
+        /// <value>
+        /// The TFS user name.
+        /// </value>
         public string UserName
         {
             get { return this.userName; }
@@ -98,6 +133,12 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the password.
+        /// </summary>
+        /// <value>
+        /// The password.
+        /// </value>
         public string Password
         {
             get { return this.password; }
@@ -111,6 +152,12 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the bug filter field.
+        /// </summary>
+        /// <value>
+        /// The bug filter field.
+        /// </value>
         public string BugFilterField
         {
             get { return this.bugFilterField; }
@@ -124,6 +171,12 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the bug filter value.
+        /// </summary>
+        /// <value>
+        /// The bug filter value.
+        /// </value>
         public string BugFilterValue
         {
             get { return this.bugFilterValue; }
@@ -137,6 +190,12 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the priority value to indicate which bug is the red gift.
+        /// </summary>
+        /// <value>
+        /// The priority value.
+        /// </value>
         public string PriorityRed
         {
             get { return this.priorityRed; }
@@ -150,8 +209,20 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
-        public ICommand UriHelpCommand { get { return this.uriHelpCommand; } }
+        /// <summary>
+        /// Gets the OpenUriHelperDialog command.
+        /// </summary>
+        /// <value>
+        /// The URI help command.
+        /// </value>
+        public ICommand OpenUriHelperDialogCommand { get { return this.openUriHelperDialogCommand; } }
 
+        /// <summary>
+        /// Gets the test connection command.
+        /// </summary>
+        /// <value>
+        /// The test connection command.
+        /// </value>
         public ICommand TestConnectionCommand
         {
             get { return this.testConnectionCommand; }
@@ -165,7 +236,13 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
-        public ProgressTypes ProgressType
+        /// <summary>
+        /// Gets or sets the progress type of the setting view-model.
+        /// </summary>
+        /// <value>
+        /// The progress type of the setting view-model.
+        /// </value>
+        public ProgressType ProgressType
         {
             get { return this.progressType; }
             set
@@ -178,6 +255,12 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the progress value.
+        /// </summary>
+        /// <value>
+        /// The progress value.
+        /// </value>
         public int ProgressValue
         {
             get { return this.progressValue; }
@@ -194,6 +277,9 @@ namespace Bugger.Proxy.TFS.ViewModels
 
         #region Methods
         #region Public Methods
+        /// <summary>
+        /// Clears the mapping data.
+        /// </summary>
         public void ClearMappingData()
         {
             TFSFields.Clear();
@@ -209,15 +295,18 @@ namespace Bugger.Proxy.TFS.ViewModels
             BugFilterValue = string.Empty;
             PriorityRed = string.Empty;
 
-            ProgressType = ProgressTypes.NotWorking;
+            ProgressType = ProgressType.NotWorking;
             ProgressValue = 0;
         }
         #endregion
 
         #region Private Methods
-        private void OpenUriHelpCommandExcute()
+        /// <summary>
+        /// The OpenUriHelpCommand execute.
+        /// </summary>
+        private void OpenUriHelperDialogCommandExecute()
         {
-            UriHelpViewModel viewModel = new UriHelpViewModel(this.uriHelpView);
+            UriHelperDialogViewModel viewModel = new UriHelperDialogViewModel(this.uriHelpView);
             if (this.ConnectUri != null)
             {
                 viewModel.ServerName = this.ConnectUri.AbsoluteUri;
@@ -233,6 +322,11 @@ namespace Bugger.Proxy.TFS.ViewModels
             }
         }
 
+        /// <summary>
+        /// Properties the mapping model property changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
         private void PropertyMappingModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             RaisePropertyChanged("PropertyMappingCollection");

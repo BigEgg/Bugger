@@ -17,6 +17,9 @@ namespace Bugger.Proxy.TFS.Documents
         private static string filePath;
         #endregion
 
+        /// <summary>
+        /// Initializes the <see cref="SettingDocumentType"/> class.
+        /// </summary>
         static SettingDocumentType()
         {
             filePath = Path.Combine(
@@ -25,16 +28,30 @@ namespace Bugger.Proxy.TFS.Documents
         }
 
         #region Properties
+        /// <summary>
+        /// Gets the setting file's path.
+        /// </summary>
+        /// <value>
+        /// The setting file's path.
+        /// </value>
         public static string FilePath { get { return filePath; } }
         #endregion
 
         #region Methods
         #region Public Methods
+        /// <summary>
+        /// Create a new setting document.
+        /// </summary>
+        /// <returns>A new setting document</returns>
         public static SettingDocument New()
         {
             return new SettingDocument();
         }
 
+        /// <summary>
+        /// Create the setting document.
+        /// </summary>
+        /// <returns>The setting document</returns>
         public static SettingDocument Open()
         {
             SettingDocument document = new SettingDocument();
@@ -64,6 +81,10 @@ namespace Bugger.Proxy.TFS.Documents
             return document;
         }
 
+        /// <summary>
+        /// Saves the specified setting document.
+        /// </summary>
+        /// <param name="document">The setting document.</param>
         public static void Save(SettingDocument document)
         {
             // Generate additional entropy (will be used as the Initialization vector)
@@ -103,6 +124,17 @@ namespace Bugger.Proxy.TFS.Documents
         #endregion
 
         #region Private Methods
+        /// <summary>
+        /// Decrypts the specified cipher string with the entropy.
+        /// </summary>
+        /// <param name="entropy">The entropy.</param>
+        /// <param name="cipherString">The cipher string.</param>
+        /// <returns>The plain string.</returns>
+        /// <exception cref="System.ArgumentException">
+        /// entropy
+        /// or
+        /// cipherString
+        /// </exception>
         private static string Decrypt(byte[] entropy, string cipherString)
         {
             if (entropy == null) { throw new ArgumentException("entropy"); }
@@ -114,6 +146,17 @@ namespace Bugger.Proxy.TFS.Documents
             return Encoding.Default.GetString(plainText);
         }
 
+        /// <summary>
+        /// Encrypts the specified plain string with the entropy.
+        /// </summary>
+        /// <param name="entropy">The entropy.</param>
+        /// <param name="plainString">The plain string.</param>
+        /// <returns>The cipher string with Base64 format.</returns>
+        /// <exception cref="System.ArgumentException">
+        /// entropy
+        /// or
+        /// plainString
+        /// </exception>
         private static string Encrypt(byte[] entropy, string plainString)
         {
             if (entropy == null) { throw new ArgumentException("entropy"); }

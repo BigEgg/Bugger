@@ -71,7 +71,7 @@ namespace Bugger.Proxy.TFS.Test
             Assert.IsFalse(viewModel.PriorityValues.Any());
             Assert.AreEqual(string.Empty, viewModel.PriorityRed);
 
-            Assert.AreEqual(ProgressTypes.NotWorking, viewModel.ProgressType);
+            Assert.AreEqual(ProgressType.NotWorking, viewModel.ProgressType);
             Assert.AreEqual(0, viewModel.ProgressValue);
         }
 
@@ -108,7 +108,7 @@ namespace Bugger.Proxy.TFS.Test
             Assert.AreEqual("High;Low", viewModel.PriorityRed);
             Assert.IsTrue(viewModel.PriorityValues.Any(x => x.IsChecked));
 
-            Assert.AreEqual(ProgressTypes.Success, viewModel.ProgressType);
+            Assert.AreEqual(ProgressType.Success, viewModel.ProgressType);
             Assert.AreEqual(100, viewModel.ProgressValue);
         }
 
@@ -118,16 +118,16 @@ namespace Bugger.Proxy.TFS.Test
             if (order++ != 2) { throw new NotSupportedException("This unit test must run as order."); }
 
             Assert.IsNotNull(viewModel);
-            Assert.AreEqual(ProgressTypes.NotWorking, viewModel.ProgressType);
+            Assert.AreEqual(ProgressType.NotWorking, viewModel.ProgressType);
 
-            viewModel.ProgressType = ProgressTypes.OnAutoFillMapSettings;
+            viewModel.ProgressType = ProgressType.OnAutoFillMapSettings;
             Assert.AreEqual(SettingDialogValidateionResult.Busy, proxy.ValidateBeforeCloseSettingDialog());
-            viewModel.ProgressType = ProgressTypes.OnConnectProgress;
+            viewModel.ProgressType = ProgressType.OnConnectProgress;
             Assert.AreEqual(SettingDialogValidateionResult.Busy, proxy.ValidateBeforeCloseSettingDialog());
-            viewModel.ProgressType = ProgressTypes.OnGetFiledsProgress;
+            viewModel.ProgressType = ProgressType.OnGetFiledsProgress;
             Assert.AreEqual(SettingDialogValidateionResult.Busy, proxy.ValidateBeforeCloseSettingDialog());
 
-            viewModel.ProgressType = ProgressTypes.NotWorking;
+            viewModel.ProgressType = ProgressType.NotWorking;
         }
 
         [TestMethod]
@@ -142,12 +142,12 @@ namespace Bugger.Proxy.TFS.Test
             viewModel.ConnectUri = new Uri(TheCodePlexUri);
             Assert.AreEqual(SettingDialogValidateionResult.ConnectFailed, proxy.ValidateBeforeCloseSettingDialog());
             viewModel.UserName = TheUsername;
-            viewModel.ProgressType = ProgressTypes.FailedOnConnect;
+            viewModel.ProgressType = ProgressType.FailedOnConnect;
             Assert.AreEqual(SettingDialogValidateionResult.ConnectFailed, proxy.ValidateBeforeCloseSettingDialog());
-            viewModel.ProgressType = ProgressTypes.FailedOnGetFileds;
+            viewModel.ProgressType = ProgressType.FailedOnGetFileds;
             Assert.AreEqual(SettingDialogValidateionResult.ConnectFailed, proxy.ValidateBeforeCloseSettingDialog());
 
-            viewModel.ProgressType = ProgressTypes.NotWorking;
+            viewModel.ProgressType = ProgressType.NotWorking;
             Assert.AreEqual(SettingDialogValidateionResult.ConnectFailed, proxy.ValidateBeforeCloseSettingDialog());
         }
 
@@ -261,7 +261,7 @@ namespace Bugger.Proxy.TFS.Test
             var task = proxy.TestConnectionCommandExcuteCore();
             task.Wait();
 
-            Assert.AreEqual(ProgressTypes.FailedOnConnect, viewModel.ProgressType);
+            Assert.AreEqual(ProgressType.FailedOnConnect, viewModel.ProgressType);
             Assert.AreEqual(100, viewModel.ProgressValue);
         }
 
@@ -275,7 +275,7 @@ namespace Bugger.Proxy.TFS.Test
             var task = proxy.TestConnectionCommandExcuteCore();
             task.Wait();
 
-            Assert.AreEqual(ProgressTypes.Success, viewModel.ProgressType);
+            Assert.AreEqual(ProgressType.Success, viewModel.ProgressType);
             Assert.AreEqual(100, viewModel.ProgressValue);
         }
 
@@ -312,11 +312,11 @@ namespace Bugger.Proxy.TFS.Test
 
             var view = proxy.InitializeSettingDialog();
             viewModel = (view as ITFSSettingView).GetViewModel<TFSSettingViewModel>();
-            Assert.AreEqual(ProgressTypes.Success, viewModel.ProgressType);
+            Assert.AreEqual(ProgressType.Success, viewModel.ProgressType);
             Assert.AreEqual(100, viewModel.ProgressValue);
 
             viewModel.ConnectUri = null;
-            Assert.AreEqual(ProgressTypes.NotWorking, viewModel.ProgressType);
+            Assert.AreEqual(ProgressType.NotWorking, viewModel.ProgressType);
             Assert.AreEqual(0, viewModel.ProgressValue);
 
             foreach (var mapping in viewModel.PropertyMappingCollection)
@@ -345,11 +345,11 @@ namespace Bugger.Proxy.TFS.Test
 
             var view = proxy.InitializeSettingDialog();
             viewModel = (view as ITFSSettingView).GetViewModel<TFSSettingViewModel>();
-            Assert.AreEqual(ProgressTypes.Success, viewModel.ProgressType);
+            Assert.AreEqual(ProgressType.Success, viewModel.ProgressType);
             Assert.AreEqual(100, viewModel.ProgressValue);
 
             viewModel.UserName = "BigEgg";
-            Assert.AreEqual(ProgressTypes.NotWorking, viewModel.ProgressType);
+            Assert.AreEqual(ProgressType.NotWorking, viewModel.ProgressType);
             Assert.AreEqual(0, viewModel.ProgressValue);
 
             foreach (var mapping in viewModel.PropertyMappingCollection)
@@ -378,11 +378,11 @@ namespace Bugger.Proxy.TFS.Test
 
             var view = proxy.InitializeSettingDialog();
             viewModel = (view as ITFSSettingView).GetViewModel<TFSSettingViewModel>();
-            Assert.AreEqual(ProgressTypes.Success, viewModel.ProgressType);
+            Assert.AreEqual(ProgressType.Success, viewModel.ProgressType);
             Assert.AreEqual(100, viewModel.ProgressValue);
 
             viewModel.Password = "Password";
-            Assert.AreEqual(ProgressTypes.NotWorking, viewModel.ProgressType);
+            Assert.AreEqual(ProgressType.NotWorking, viewModel.ProgressType);
             Assert.AreEqual(0, viewModel.ProgressValue);
 
             foreach (var mapping in viewModel.PropertyMappingCollection)
