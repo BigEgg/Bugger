@@ -61,7 +61,7 @@
     <Compile Include="Documents\SettingDocumentType.cs" />
     <Compile Include="Models\CheckString.cs" />
     <Compile Include="Models\ITFSBug.cs" />
-    <Compile Include="Models\ProgressTypes.cs" />
+    <Compile Include="Models\ProgressType.cs" />
     <Compile Include="Models\TFSBugHelper.cs" />
     <Compile Include="Models\TFSField.cs" />
     <Compile Include="PropertyMappingDictionary.cs" />

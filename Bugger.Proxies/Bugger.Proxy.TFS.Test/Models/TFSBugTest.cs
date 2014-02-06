@@ -1,6 +1,7 @@
 ﻿using BigEgg.Framework.UnitTesting;
 using Bugger.Domain.Models;
-using Bugger.Proxy.TFS.Models;
+using Bugger.Proxy.TFS.ViewModels;
+using Bugger.Proxy.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -10,159 +11,403 @@ namespace Bugger.Proxy.TFS.Test.Models
     public class TFSBugTest
     {
         [TestMethod]
-        public void GeneralWorkItemTest()
+        public void GeneralTFSBugTest()
         {
-            var defaultItem = new TFSBug();
-            Assert.AreEqual(BugType.Yellow, defaultItem.Type);
-
-            var item = new TFSBug()
+            TFSBug bug = new TFSBug()
             {
-                ID = 123,
-                Title = "Bug A",
-                Description = "Bug Description.",
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
                 Type = BugType.Red,
                 AssignedTo = "BigEgg",
-                State = "Active",
-                ChangedDate = DateTime.Today,
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
                 CreatedBy = "BigEgg",
                 Priority = "High",
-                Severity = "1"
+                Severity = ""
             };
 
-            Assert.AreEqual(123, item.ID);
-            Assert.AreEqual("Bug A", item.Title);
-            Assert.AreEqual("Bug Description.", item.Description);
-            Assert.AreEqual(BugType.Red, item.Type);
-            Assert.AreEqual("BigEgg", item.AssignedTo);
-            Assert.AreEqual("Active", item.State);
-            Assert.AreEqual(DateTime.Today, item.ChangedDate);
-            Assert.AreEqual("BigEgg", item.CreatedBy);
-            Assert.AreEqual("High", item.Priority);
-            Assert.AreEqual("1", item.Severity);
+            Assert.AreEqual(1, bug.ID);
+            Assert.AreEqual("Bug1", bug.Title);
+            Assert.AreEqual("Description for Bug1.", bug.Description);
+            Assert.AreEqual(BugType.Red, bug.Type);
+            Assert.AreEqual("BigEgg", bug.AssignedTo);
+            Assert.AreEqual("Design", bug.State);
+            Assert.AreEqual(new DateTime(2013, 4, 10), bug.ChangedDate);
+            Assert.AreEqual("BigEgg", bug.CreatedBy);
+            Assert.AreEqual("High", bug.Priority);
+            Assert.AreEqual("", bug.Severity);
+            Assert.IsFalse(bug.IsUpdate);
         }
 
         [TestMethod]
-        public void EqualsTest()
+        public void CheckIsUpdateExeptionTest()
         {
-            var item1 = new TFSBug()
+            TFSBug bug1 = new TFSBug()
             {
-                ID = 123,
-                Title = "Bug A",
-                Description = "Bug Description.",
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
                 Type = BugType.Red,
                 AssignedTo = "BigEgg",
-                State = "Active",
-                ChangedDate = DateTime.Today,
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
                 CreatedBy = "BigEgg",
                 Priority = "High",
-                Severity = "1"
+                Severity = ""
             };
-
-            var item2 = new TFSBug()
+            TFSBug bug2 = new TFSBug()
             {
-                ID = 124,
-                Title = "Bug A",
-                Description = "Bug Description.",
+                ID = 2,
+                Title = "Bug2",
+                Description = "Description for Bug2.",
                 Type = BugType.Red,
                 AssignedTo = "BigEgg",
-                State = "Active",
-                ChangedDate = DateTime.Today,
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
                 CreatedBy = "BigEgg",
                 Priority = "High",
-                Severity = "1"
+                Severity = ""
             };
-
-            var item3 = new TFSBug()
+            TFSBug alteredBug = new TFSBug()
             {
-                ID = 124,
-                Title = "Bug A",
-                Description = "Bug Description.",
+                ID = 1,
+                Title = "AlteredBug",
+                Description = "Description for Bug1.",
                 Type = BugType.Red,
                 AssignedTo = "BigEgg",
-                State = "Active",
-                ChangedDate = DateTime.Today,
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
                 CreatedBy = "BigEgg",
                 Priority = "High",
-                Severity = "1"
+                Severity = ""
             };
 
-            Assert.IsFalse(item1.Equals(item2));
-            Assert.IsTrue(item2.Equals(item3));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => bug1.CheckIsUpdate(null));
+            AssertHelper.ExpectedException<ArgumentException>(() => bug1.CheckIsUpdate(new MockBug()));
+            AssertHelper.ExpectedException<ArgumentException>(() => bug1.CheckIsUpdate(bug2));
         }
 
         [TestMethod]
-        public void CheckUpdateTest()
+        public void CheckIsUpdateTest()
         {
-            var item1 = new TFSBug()
+            TFSBug bug = new TFSBug()
             {
-                ID = 123,
-                Title = "Bug A",
-                Description = "Bug Description.",
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
                 Type = BugType.Red,
                 AssignedTo = "BigEgg",
-                State = "Active",
-                ChangedDate = DateTime.Today,
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
                 CreatedBy = "BigEgg",
                 Priority = "High",
-                Severity = "1"
+                Severity = ""
             };
-
-            var item2 = new TFSBug()
+            TFSBug alteredBug = new TFSBug()
             {
-                ID = 124,
-                Title = "Bug A",
-                Description = "Bug Description.",
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
                 Type = BugType.Red,
                 AssignedTo = "BigEgg",
-                State = "Active",
-                ChangedDate = DateTime.Today,
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
                 CreatedBy = "BigEgg",
                 Priority = "High",
-                Severity = "1"
+                Severity = ""
             };
 
-            var item3 = new TFSBug()
-            {
-                ID = 124,
-                Title = "Bug A",
-                Description = "Bug Description Changed.",
-                Type = BugType.Red,
-                AssignedTo = "BigEgg",
-                State = "Active",
-                ChangedDate = DateTime.Today,
-                CreatedBy = "BigEgg",
-                Priority = "High",
-                Severity = "1"
-            };
-
-            Assert.IsFalse(item3.IsUpdate);
-            AssertHelper.ExpectedException<ArgumentNullException>(() => item3.CheckUpdate(null));
-            AssertHelper.ExpectedException<NotSupportedException>(() => item3.CheckUpdate(new MockBug()));
-            AssertHelper.ExpectedException<ArgumentException>(() => item3.CheckUpdate(item2));
-
-            item3.CheckUpdate(item1);
-            Assert.IsTrue(item3.IsUpdate);
+            Assert.IsFalse(alteredBug.IsUpdate);
+            alteredBug.CheckIsUpdate(bug);
+            Assert.IsFalse(alteredBug.IsUpdate);
         }
 
-        private class MockBug : IBug
+        [TestMethod]
+        public void CheckIsUpdateTest_Title()
         {
-            /// <summary>
-            /// Gets or sets the type of this bug.
-            /// </summary>
-            /// <value>
-            /// The type of this bug.
-            /// </value>
-            public BugType Type { get; set; }
-
-            /// <summary>
-            /// Checks is the new bug model had been the updated.
-            /// If true, set the IsUpdate property to <c>true</c>.
-            /// </summary>
-            /// <param name="oldModel">The old bug model.</param>
-            /// <exception cref="System.NotImplementedException"></exception>
-            public void CheckUpdate(IBug oldModel)
+            TFSBug bug = new TFSBug()
             {
-                throw new NotImplementedException();
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            };
+            TFSBug alteredBug = new TFSBug()
+            {
+                ID = 1,
+                Title = "AlteredBug",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            };
+
+            Assert.IsFalse(alteredBug.IsUpdate);
+            alteredBug.CheckIsUpdate(bug);
+            Assert.IsTrue(alteredBug.IsUpdate);
+        }
+
+        [TestMethod]
+        public void CheckIsUpdateTest_Description()
+        {
+            TFSBug bug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            };
+            TFSBug alteredBug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Altered Bug.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            };
+
+            Assert.IsFalse(alteredBug.IsUpdate);
+            alteredBug.CheckIsUpdate(bug);
+            Assert.IsTrue(alteredBug.IsUpdate);
+        }
+
+        [TestMethod]
+        public void CheckIsUpdateTest_AssignedTo()
+        {
+            TFSBug bug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            };
+            TFSBug alteredBug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "Pupil",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            };
+
+            Assert.IsFalse(alteredBug.IsUpdate);
+            alteredBug.CheckIsUpdate(bug);
+            Assert.IsTrue(alteredBug.IsUpdate);
+        }
+
+        [TestMethod]
+        public void CheckIsUpdateTest_State()
+        {
+            TFSBug bug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            };
+            TFSBug alteredBug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Resolve",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            };
+
+            Assert.IsFalse(alteredBug.IsUpdate);
+            alteredBug.CheckIsUpdate(bug);
+            Assert.IsTrue(alteredBug.IsUpdate);
+        }
+
+        [TestMethod]
+        public void CheckIsUpdateTest_ChangedDate()
+        {
+            TFSBug bug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            };
+            TFSBug alteredBug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2014, 2, 16),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            };
+
+            Assert.IsFalse(alteredBug.IsUpdate);
+            alteredBug.CheckIsUpdate(bug);
+            Assert.IsTrue(alteredBug.IsUpdate);
+        }
+
+        [TestMethod]
+        public void CheckIsUpdateTest_CreatedBy()
+        {
+            TFSBug bug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            };
+            TFSBug alteredBug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "Pupil",
+                Priority = "High",
+                Severity = ""
+            };
+
+            Assert.IsFalse(alteredBug.IsUpdate);
+            alteredBug.CheckIsUpdate(bug);
+            Assert.IsTrue(alteredBug.IsUpdate);
+        }
+
+        [TestMethod]
+        public void CheckIsUpdateTest_Priority()
+        {
+            TFSBug bug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            };
+            TFSBug alteredBug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "Low",
+                Severity = ""
+            };
+
+            Assert.IsFalse(alteredBug.IsUpdate);
+            alteredBug.CheckIsUpdate(bug);
+            Assert.IsTrue(alteredBug.IsUpdate);
+        }
+
+        [TestMethod]
+        public void CheckIsUpdateTest_Severity()
+        {
+            TFSBug bug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = ""
+            };
+            TFSBug alteredBug = new TFSBug()
+            {
+                ID = 1,
+                Title = "Bug1",
+                Description = "Description for Bug1.",
+                Type = BugType.Red,
+                AssignedTo = "BigEgg",
+                State = "Design",
+                ChangedDate = new DateTime(2013, 4, 10),
+                CreatedBy = "BigEgg",
+                Priority = "High",
+                Severity = "High"
+            };
+
+            Assert.IsFalse(alteredBug.IsUpdate);
+            alteredBug.CheckIsUpdate(bug);
+            Assert.IsTrue(alteredBug.IsUpdate);
+        }
+
+
+        private class MockBug : BugBase
+        {
+            public override void CheckIsUpdate(IBug oldModel)
+            {
             }
         }
     }

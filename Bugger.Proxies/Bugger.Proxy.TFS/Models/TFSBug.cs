@@ -143,17 +143,19 @@ namespace Bugger.Proxy.TFS.ViewModels
         /// Checks is the bug had been the updated.
         /// If true, set the IsUpdate property to <c>true</c>.
         /// </summary>
-        /// <param name="oldModel">The old bug.</param>
-        /// <exception cref="System.ArgumentNullException">old Model cannot be null.</exception>
-        /// <exception cref="System.ArgumentException">oldModel must be BugViewModel type.
+        /// <param name="oldBug"></param>
+        /// <exception cref="System.ArgumentNullException">oldBug cannot be null.</exception>
+        /// <exception cref="System.ArgumentException">
+        /// oldBug must be TFSBug type.
         /// or
-        /// Two models' ID are not same, cannot compare.</exception>
-        public override void CheckIsUpdate(IBug oldModel)
+        /// Two models' ID are not same, cannot compare.
+        /// </exception>
+        public override void CheckIsUpdate(IBug oldBug)
         {
-            if (oldModel == null) { throw new ArgumentNullException("old Model cannot be null."); }
-            if (!(oldModel is TFSBug)) { throw new ArgumentException("oldModel must be BugViewModel type."); }
+            if (oldBug == null) { throw new ArgumentNullException("oldBug cannot be null."); }
+            if (!(oldBug is TFSBug)) { throw new ArgumentException("oldBug must be TFSBug type."); }
 
-            var other = oldModel as TFSBug;
+            var other = oldBug as TFSBug;
             if (other.ID != this.ID) { throw new ArgumentException("Two models' ID are not same, cannot compare."); }
 
             this.IsUpdate = this.Title != other.Title ||

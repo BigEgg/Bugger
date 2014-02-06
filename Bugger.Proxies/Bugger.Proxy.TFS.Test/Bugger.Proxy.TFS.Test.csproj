@@ -69,6 +69,7 @@
     <Compile Include="Documents\SettingDocumentTypeTest.cs" />
     <Compile Include="Models\TFSBugTest.cs" />
     <Compile Include="Models\CheckStringTest.cs" />
+    <Compile Include="Models\TFSBugTest.cs" />
     <Compile Include="Models\TFSFieldTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyMappingDictionaryTest.cs" />
