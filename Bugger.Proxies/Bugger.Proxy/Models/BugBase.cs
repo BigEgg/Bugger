@@ -1,5 +1,4 @@
-﻿using BigEgg.Framework.Applications.ViewModels;
-using BigEgg.Framework.Foundation;
+﻿using BigEgg.Framework.Foundation;
 using Bugger.Domain.Models;
 
 namespace Bugger.Proxy.ViewModels
@@ -7,7 +6,7 @@ namespace Bugger.Proxy.ViewModels
     /// <summary>
     /// Abstract base class for a Bug Model implementation.
     /// </summary>
-    public abstract class Bug : Model, IBug
+    public abstract class BugBase : Model, IBug
     {
         #region Fields
         private BugType bugType;
@@ -15,9 +14,9 @@ namespace Bugger.Proxy.ViewModels
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Bug"/> class.
+        /// Initializes a new instance of the <see cref="BugBase"/> class.
         /// </summary>
-        protected Bug()
+        protected BugBase()
         {
             this.bugType = BugType.Yellow;
             this.isUpdate = false;
@@ -39,7 +38,7 @@ namespace Bugger.Proxy.ViewModels
                 if (this.bugType != value)
                 {
                     this.bugType = value;
-                    RaisePropertyChanged("IsUpdate");
+                    RaisePropertyChanged("Type");
                 }
             }
         }
