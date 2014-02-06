@@ -14,7 +14,7 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
 
         protected override void OnTestInitialize()
         {
-            IUriHelpView view = Container.GetExportedValue<IUriHelpView>();
+            IUriHelperDialogView view = Container.GetExportedValue<IUriHelperDialogView>();
             this.viewModel = new UriHelperDialogViewModel(view);
         }
 

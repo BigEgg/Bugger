@@ -73,7 +73,6 @@
     <Compile Include="Models\TFSBugHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyMappingDictionaryTest.cs" />
-    <Compile Include="Services\MockMessageService.cs" />
     <Compile Include="TestClassBase.cs" />
     <Compile Include="TFSHelperTest.cs" />
     <Compile Include="TFSProxyTest.cs">

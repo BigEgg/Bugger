@@ -1,5 +1,4 @@
 ﻿using BigEgg.Framework.Applications.Commands;
-using BigEgg.Framework.Applications.Services;
 using Bugger.Domain.Models;
 using Bugger.Proxy.Models;
 using Bugger.Proxy.TFS.Documents;
@@ -27,7 +26,6 @@ namespace Bugger.Proxy.TFS
     {
         #region Fields
         private readonly CompositionContainer container;
-        private readonly IMessageService messageService;
         private readonly TFSHelper tfsHelper;
         private SettingDocument document;
         private TFSSettingViewModel settingViewModel;
@@ -44,16 +42,21 @@ namespace Bugger.Proxy.TFS
         /// <summary>
         /// Initializes a new instance of the <see cref="TFSProxy" /> class.
         /// </summary>
+        /// <param name="container">The container.</param>
+        /// <param name="tfsHelper">The TFS helper.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// container
+        /// or
+        /// tfsHelper
+        /// </exception>
         [ImportingConstructor]
-        public TFSProxy(CompositionContainer container, IMessageService messageService, TFSHelper tfsHelper)
+        public TFSProxy(CompositionContainer container, TFSHelper tfsHelper)
             : base(Resources.ProxyName)
         {
             if (container == null) { throw new ArgumentNullException("container"); }
-            if (messageService == null) { throw new ArgumentNullException("messageService"); }
             if (tfsHelper == null) { throw new ArgumentNullException("tfsHelper"); }
 
             this.container = container;
-            this.messageService = messageService;
             this.tfsHelper = tfsHelper;
 
             this.testConnectionCommand = new DelegateCommand(TestConnectionCommandExcute, CanTestConnectionCommandExcute);
@@ -85,7 +88,7 @@ namespace Bugger.Proxy.TFS
             if (this.settingViewModel == null)
             {
                 ITFSSettingView view = this.container.GetExportedValue<ITFSSettingView>();
-                IUriHelpView uriHelpView = this.container.GetExportedValue<IUriHelpView>();
+                IUriHelperDialogView uriHelpView = this.container.GetExportedValue<IUriHelperDialogView>();
                 this.settingViewModel = new TFSSettingViewModel(view, uriHelpView);
                 this.settingViewModel.TestConnectionCommand = this.testConnectionCommand;
             }
@@ -261,7 +264,6 @@ namespace Bugger.Proxy.TFS
                 }
                 catch
                 {
-                    this.messageService.ShowError(Resources.CannotOpenFile);
                     this.document = SettingDocumentType.New();
                 }
             }

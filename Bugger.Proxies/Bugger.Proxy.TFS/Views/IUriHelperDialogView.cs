@@ -2,7 +2,7 @@
 
 namespace Bugger.Proxy.TFS.Views
 {
-    public interface IUriHelpView : IDialogView
+    public interface IUriHelperDialogView : IDialogView
     {
     }
 }

@@ -77,7 +77,7 @@
     <Compile Include="ViewModels\TFSSettingViewModel.cs" />
     <Compile Include="ViewModels\UriHelperDialgoViewModel.cs" />
     <Compile Include="Views\ITFSSettingView.cs" />
-    <Compile Include="Views\IUriHelpView.cs" />
+    <Compile Include="Views\IUriHelperDialogView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">

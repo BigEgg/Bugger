@@ -27,7 +27,7 @@ namespace Bugger.Proxy.TFS.ViewModels
         private readonly DelegateCommand openUriHelperDialogCommand;
         private ICommand testConnectionCommand;
 
-        private readonly IUriHelpView uriHelpView;
+        private readonly IUriHelperDialogView uriHelpView;
 
         private ProgressType progressType;
         private int progressValue;
@@ -39,7 +39,7 @@ namespace Bugger.Proxy.TFS.ViewModels
         /// <param name="view">The view.</param>
         /// <param name="uriHelpView">The URI help view.</param>
         /// <exception cref="System.ArgumentNullException">uriHelpView</exception>
-        public TFSSettingViewModel(ITFSSettingView view, IUriHelpView uriHelpView)
+        public TFSSettingViewModel(ITFSSettingView view, IUriHelperDialogView uriHelpView)
             : base(view)
         {
             if (uriHelpView == null) { throw new ArgumentNullException("uriHelpView"); }

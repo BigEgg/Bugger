@@ -1,14 +1,12 @@
 ﻿using BigEgg.Framework.Applications.Views;
 using BigEgg.Framework.UnitTesting;
 using Bugger.Proxy.TFS.Models;
-using Bugger.Proxy.TFS.Models.Attributes;
 using Bugger.Proxy.TFS.Presentation.Fake.Views;
 using Bugger.Proxy.TFS.ViewModels;
 using Bugger.Proxy.TFS.Views;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
-using System.Linq;
 
 namespace Bugger.Proxy.TFS.Test.ViewModels
 {
@@ -20,7 +18,7 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
         protected override void OnTestInitialize()
         {
             ITFSSettingView view = Container.GetExportedValue<ITFSSettingView>();
-            IUriHelpView uriHelpView = Container.GetExportedValue<IUriHelpView>();
+            IUriHelperDialogView uriHelpView = Container.GetExportedValue<IUriHelperDialogView>();
 
             this.viewModel = new TFSSettingViewModel(view, uriHelpView);
         }
@@ -28,14 +26,12 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
         [TestMethod]
         public void GeneralSettingViewModelTest()
         {
-            IgnoreMappingAttribute ignore = new IgnoreMappingAttribute() { Ignore = true };
-            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(TFSBug));
+            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(ITFSBug));
 
             Assert.AreEqual(0, this.viewModel.TFSFields.Count);
             Assert.AreEqual(0, this.viewModel.BugFilterFields.Count);
             Assert.AreEqual(0, this.viewModel.PriorityValues.Count);
-            Assert.AreEqual(propertyDescriptorCollection.Cast<PropertyDescriptor>().Where(x => !x.Attributes.Contains(ignore)).Count(),
-                            this.viewModel.PropertyMappingCollection.Count);
+            Assert.AreEqual(propertyDescriptorCollection.Count, this.viewModel.PropertyMappingCollection.Count);
 
             foreach (var mappingModel in this.viewModel.PropertyMappingCollection)
             {
@@ -49,7 +45,7 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
             Assert.IsTrue(string.IsNullOrEmpty(this.viewModel.BugFilterValue));
             Assert.IsTrue(string.IsNullOrEmpty(this.viewModel.PriorityRed));
 
-            Assert.IsNotNull(this.viewModel.UriHelperDialogCommand);
+            Assert.IsNotNull(this.viewModel.OpenUriHelperDialogCommand);
             Assert.IsNull(this.viewModel.TestConnectionCommand);
 
             Assert.AreEqual(ProgressType.NotWorking, this.viewModel.ProgressType);
@@ -61,13 +57,13 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
         {
             Assert.IsNull(this.viewModel.ConnectUri);
 
-            MockUriHelpView view = Container.GetExportedValue<IUriHelpView>() as MockUriHelpView;
+            MockUriHelperDialogView view = Container.GetExportedValue<IUriHelperDialogView>() as MockUriHelperDialogView;
             view.ShowDialogAction = (x) =>
             {
                 UriHelperDialogViewModel uriHelpViewModel = x.GetViewModel<UriHelperDialogViewModel>();
                 uriHelpViewModel.CancelCommand.Execute(null);
             };
-            this.viewModel.UriHelperDialogCommand.Execute(null);
+            this.viewModel.OpenUriHelperDialogCommand.Execute(null);
             Assert.IsNull(this.viewModel.ConnectUri);
 
             view.ShowDialogAction = (x) =>
@@ -76,7 +72,7 @@ namespace Bugger.Proxy.TFS.Test.ViewModels
                     uriHelpViewModel.ServerName = TheCodePlexUri;
                     uriHelpViewModel.SubmitCommand.Execute(null);
                 };
-            this.viewModel.UriHelperDialogCommand.Execute(null);
+            this.viewModel.OpenUriHelperDialogCommand.Execute(null);
             Assert.IsNotNull(this.viewModel.ConnectUri);
             Assert.AreEqual(
                 new Uri(TheCodePlexUri).AbsoluteUri,

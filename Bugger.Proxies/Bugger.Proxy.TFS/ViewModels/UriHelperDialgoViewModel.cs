@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace Bugger.Proxy.TFS.ViewModels
 {
-    public class UriHelperDialogViewModel : DialogViewModel<IUriHelpView>, IDataErrorInfo
+    public class UriHelperDialogViewModel : DialogViewModel<IUriHelperDialogView>, IDataErrorInfo
     {
         #region Fields
         protected readonly DataErrorInfoSupport dataErrorInfoSupport;
@@ -30,7 +30,7 @@ namespace Bugger.Proxy.TFS.ViewModels
         /// Initializes a new instance of the <see cref="UriHelperDialogViewModel"/> class.
         /// </summary>
         /// <param name="view">The view.</param>
-        public UriHelperDialogViewModel(IUriHelpView view)
+        public UriHelperDialogViewModel(IUriHelperDialogView view)
             : base(view)
         {
             this.dataErrorInfoSupport = new DataErrorInfoSupport(this);
