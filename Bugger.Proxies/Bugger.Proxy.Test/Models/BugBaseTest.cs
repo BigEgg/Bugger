@@ -18,6 +18,9 @@ namespace Bugger.Proxy.Test.Models
 
             AssertHelper.PropertyChangedEvent(bug, x => x.Type, () => bug.Type = BugType.Red);
             AssertHelper.PropertyChangedEvent(bug, x => x.IsUpdate, () => bug.PubIsUpdate = true);
+
+            Assert.AreEqual(BugType.Red, bug.Type);
+            Assert.IsTrue(bug.IsUpdate);
         }
 
 
