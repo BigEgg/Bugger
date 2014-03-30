@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bugger.Domain.Models
+namespace Bugger.Models
 {
     public interface IBug
     {

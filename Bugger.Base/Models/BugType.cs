@@ -1,4 +1,4 @@
-﻿namespace Bugger.Domain.Models
+﻿namespace Bugger.Models
 {
     /// <summary>
     /// The bug type in the Bugger Application. 
