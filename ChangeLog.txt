@@ -3,8 +3,10 @@
 Alpha 4 (v0.4.0) <----- Currently Working
     Application:
         Add extension manager to manage the proxies.
-        When open the application, show setting dialog if the settings is not being set.
         Add the Task Bar progress status.
+        Check application open status
+            When first time open the application, show demo.
+            When open the application, show setting dialog if the settings is not valid.
     Proxies:
         TFS Proxy:
             Use XML file to save the default automation fill logic.
