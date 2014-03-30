@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Applications", "Bugger.Applications\Bugger.Applications.csproj", "{398D1756-2C56-454A-A7EC-E996BB146C2E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "98 Frameworks", "98 Frameworks", "{F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}"
@@ -13,9 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 Bugger.Proxies", "02 Bug
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Test", "..\BigEggCore\Framework\BigEgg.Framework.Test\BigEgg.Framework.Test.csproj", "{4ECBABE4-6EAB-47DB-9AD1-EAD9F6C655A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Domain", "Bugger.Domain\Bugger.Domain.csproj", "{3DCFFAF0-D1E5-4FC1-B37B-4A6A27AE5E4F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Base", "Bugger.Base\Bugger.Base.csproj", "{3DCFFAF0-D1E5-4FC1-B37B-4A6A27AE5E4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Domain.Test", "Bugger.Domain.Test\Bugger.Domain.Test.csproj", "{DEA49F08-2AA4-4711-AE20-8D380F1D47F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Base.Test", "Bugger.Base.Test\Bugger.Base.Test.csproj", "{DEA49F08-2AA4-4711-AE20-8D380F1D47F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Applications.Test", "Bugger.Applications.Test\Bugger.Applications.Test.csproj", "{788C52B8-DD44-4FC2-ACA7-492D6C79956D}"
 EndProject
@@ -50,7 +52,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 Architecture", "00 Archi
 EndProject
 Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "Bugger.Architecture", "Bugger.Architecture\Bugger.Architecture.modelproj", "{EC259AB6-762C-47D9-8DC0-F2B9E020C10E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 Bugger.Domain", "01 Bugger.Domain", "{823D2174-AA3F-411B-B01C-1E4E23D7EA74}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 Bugger.Base", "01 Bugger.Base", "{823D2174-AA3F-411B-B01C-1E4E23D7EA74}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 TFS", "02 TFS", "{55ED89F8-2239-42E8-949C-E93CE9B5CFC0}"
 EndProject
@@ -84,66 +86,66 @@ Global
 		SccProjectTopLevelParentUniqueName4 = Bugger.sln
 		SccProjectName4 = ../BigEggCore/Framework/BigEgg.Framework.Test
 		SccLocalPath4 = ..\\BigEggCore\\Framework\\BigEgg.Framework.Test
-		SccProjectUniqueName5 = Bugger.Domain\\Bugger.Domain.csproj
+		SccProjectUniqueName5 = Bugger.Applications.Test\\Bugger.Applications.Test.csproj
 		SccProjectTopLevelParentUniqueName5 = Bugger.sln
-		SccProjectName5 = Bugger.Domain
-		SccLocalPath5 = Bugger.Domain
-		SccProjectUniqueName6 = Bugger.Domain.Test\\Bugger.Domain.Test.csproj
+		SccProjectName5 = Bugger.Applications.Test
+		SccLocalPath5 = Bugger.Applications.Test
+		SccProjectUniqueName6 = Bugger.Presentation\\Bugger.Presentation.csproj
 		SccProjectTopLevelParentUniqueName6 = Bugger.sln
-		SccProjectName6 = Bugger.Domain.Test
-		SccLocalPath6 = Bugger.Domain.Test
-		SccProjectUniqueName7 = Bugger.Applications.Test\\Bugger.Applications.Test.csproj
+		SccProjectName6 = Bugger.Presentation
+		SccLocalPath6 = Bugger.Presentation
+		SccProjectUniqueName7 = Bugger.Proxies\\Bugger.Proxy\\Bugger.Proxy.csproj
 		SccProjectTopLevelParentUniqueName7 = Bugger.sln
-		SccProjectName7 = Bugger.Applications.Test
-		SccLocalPath7 = Bugger.Applications.Test
-		SccProjectUniqueName8 = Bugger.Presentation\\Bugger.Presentation.csproj
+		SccProjectName7 = Bugger.Proxies/Bugger.Proxy
+		SccLocalPath7 = Bugger.Proxies\\Bugger.Proxy
+		SccProjectUniqueName8 = Bugger.Proxies\\Bugger.Proxy.FakeProxy\\Bugger.Proxy.FakeProxy.csproj
 		SccProjectTopLevelParentUniqueName8 = Bugger.sln
-		SccProjectName8 = Bugger.Presentation
-		SccLocalPath8 = Bugger.Presentation
-		SccProjectUniqueName9 = Bugger.Proxies\\Bugger.Proxy\\Bugger.Proxy.csproj
+		SccProjectName8 = Bugger.Proxies/Bugger.Proxy.FakeProxy
+		SccLocalPath8 = Bugger.Proxies\\Bugger.Proxy.FakeProxy
+		SccProjectUniqueName9 = Bugger.Proxies\\Bugger.Proxy.Test\\Bugger.Proxy.Test.csproj
 		SccProjectTopLevelParentUniqueName9 = Bugger.sln
-		SccProjectName9 = Bugger.Proxies/Bugger.Proxy
-		SccLocalPath9 = Bugger.Proxies\\Bugger.Proxy
-		SccProjectUniqueName10 = Bugger.Proxies\\Bugger.Proxy.FakeProxy\\Bugger.Proxy.FakeProxy.csproj
+		SccProjectName9 = Bugger.Proxies/Bugger.Proxy.Test
+		SccLocalPath9 = Bugger.Proxies\\Bugger.Proxy.Test
+		SccProjectUniqueName10 = Bugger.Proxies\\Bugger.Proxy.TFS\\Bugger.Proxy.TFS.csproj
 		SccProjectTopLevelParentUniqueName10 = Bugger.sln
-		SccProjectName10 = Bugger.Proxies/Bugger.Proxy.FakeProxy
-		SccLocalPath10 = Bugger.Proxies\\Bugger.Proxy.FakeProxy
-		SccProjectUniqueName11 = Bugger.Proxies\\Bugger.Proxy.Test\\Bugger.Proxy.Test.csproj
+		SccProjectName10 = Bugger.Proxies/Bugger.Proxy.TFS
+		SccLocalPath10 = Bugger.Proxies\\Bugger.Proxy.TFS
+		SccProjectUniqueName11 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation\\Bugger.Proxy.TFS.Presentation.csproj
 		SccProjectTopLevelParentUniqueName11 = Bugger.sln
-		SccProjectName11 = Bugger.Proxies/Bugger.Proxy.Test
-		SccLocalPath11 = Bugger.Proxies\\Bugger.Proxy.Test
-		SccProjectUniqueName12 = Bugger.Proxies\\Bugger.Proxy.TFS\\Bugger.Proxy.TFS.csproj
+		SccProjectName11 = Bugger.Proxies/Bugger.Proxy.TFS.Presentation
+		SccLocalPath11 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation
+		SccProjectUniqueName12 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation.Fake\\Bugger.Proxy.TFS.Presentation.Fake.csproj
 		SccProjectTopLevelParentUniqueName12 = Bugger.sln
-		SccProjectName12 = Bugger.Proxies/Bugger.Proxy.TFS
-		SccLocalPath12 = Bugger.Proxies\\Bugger.Proxy.TFS
-		SccProjectUniqueName13 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation\\Bugger.Proxy.TFS.Presentation.csproj
+		SccProjectName12 = Bugger.Proxies/Bugger.Proxy.TFS.Presentation.Fake
+		SccLocalPath12 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation.Fake
+		SccProjectUniqueName13 = Bugger.Proxies\\Bugger.Proxy.TFS.Test\\Bugger.Proxy.TFS.Test.csproj
 		SccProjectTopLevelParentUniqueName13 = Bugger.sln
-		SccProjectName13 = Bugger.Proxies/Bugger.Proxy.TFS.Presentation
-		SccLocalPath13 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation
-		SccProjectUniqueName14 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation.Fake\\Bugger.Proxy.TFS.Presentation.Fake.csproj
+		SccProjectName13 = Bugger.Proxies/Bugger.Proxy.TFS.Test
+		SccLocalPath13 = Bugger.Proxies\\Bugger.Proxy.TFS.Test
+		SccProjectUniqueName14 = Bugger.Presentation.Test\\Bugger.Presentation.Test.csproj
 		SccProjectTopLevelParentUniqueName14 = Bugger.sln
-		SccProjectName14 = Bugger.Proxies/Bugger.Proxy.TFS.Presentation.Fake
-		SccLocalPath14 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation.Fake
-		SccProjectUniqueName15 = Bugger.Proxies\\Bugger.Proxy.TFS.Test\\Bugger.Proxy.TFS.Test.csproj
+		SccProjectName14 = Bugger.Presentation.Test
+		SccLocalPath14 = Bugger.Presentation.Test
+		SccProjectUniqueName15 = Bugger.Proxies\\Bugger.Proxy.FakeProxy.Test\\Bugger.Proxy.FakeProxy.Test.csproj
 		SccProjectTopLevelParentUniqueName15 = Bugger.sln
-		SccProjectName15 = Bugger.Proxies/Bugger.Proxy.TFS.Test
-		SccLocalPath15 = Bugger.Proxies\\Bugger.Proxy.TFS.Test
-		SccProjectUniqueName16 = Bugger.Presentation.Test\\Bugger.Presentation.Test.csproj
+		SccProjectName15 = Bugger.Proxies/Bugger.Proxy.FakeProxy.Test
+		SccLocalPath15 = Bugger.Proxies\\Bugger.Proxy.FakeProxy.Test
+		SccProjectUniqueName16 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation.Test\\Bugger.Proxy.TFS.Presentation.Test.csproj
 		SccProjectTopLevelParentUniqueName16 = Bugger.sln
-		SccProjectName16 = Bugger.Presentation.Test
-		SccLocalPath16 = Bugger.Presentation.Test
-		SccProjectUniqueName17 = Bugger.Proxies\\Bugger.Proxy.FakeProxy.Test\\Bugger.Proxy.FakeProxy.Test.csproj
+		SccProjectName16 = Bugger.Proxies/Bugger.Proxy.TFS.Presentation.Test
+		SccLocalPath16 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation.Test
+		SccProjectUniqueName17 = Bugger.Architecture\\Bugger.Architecture.modelproj
 		SccProjectTopLevelParentUniqueName17 = Bugger.sln
-		SccProjectName17 = Bugger.Proxies/Bugger.Proxy.FakeProxy.Test
-		SccLocalPath17 = Bugger.Proxies\\Bugger.Proxy.FakeProxy.Test
-		SccProjectUniqueName18 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation.Test\\Bugger.Proxy.TFS.Presentation.Test.csproj
+		SccProjectName17 = Bugger.Architecture
+		SccLocalPath17 = Bugger.Architecture
+		SccProjectUniqueName18 = Bugger.Base\\Bugger.Base.csproj
 		SccProjectTopLevelParentUniqueName18 = Bugger.sln
-		SccProjectName18 = Bugger.Proxies/Bugger.Proxy.TFS.Presentation.Test
-		SccLocalPath18 = Bugger.Proxies\\Bugger.Proxy.TFS.Presentation.Test
-		SccProjectUniqueName19 = Bugger.Architecture\\Bugger.Architecture.modelproj
+		SccProjectName18 = Bugger.Base
+		SccLocalPath18 = Bugger.Base
+		SccProjectUniqueName19 = Bugger.Base.Test\\Bugger.Base.Test.csproj
 		SccProjectTopLevelParentUniqueName19 = Bugger.sln
-		SccProjectName19 = Bugger.Architecture
-		SccLocalPath19 = Bugger.Architecture
+		SccProjectName19 = Bugger.Base.Test
+		SccLocalPath19 = Bugger.Base.Test
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -60,8 +60,8 @@
       <Name>Bugger.Applications</Name>
       <Project>{398d1756-2c56-454a-a7ec-e996bb146c2e}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Domain\Bugger.Domain.csproj">
-      <Name>Bugger.Domain</Name>
+    <ProjectReference Include="..\Bugger.Domain\Bugger.Base.csproj">
+      <Name>Bugger.Base</Name>
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Bugger.Presentation\Bugger.Presentation.csproj">
