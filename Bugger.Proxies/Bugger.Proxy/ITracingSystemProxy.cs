@@ -36,14 +36,6 @@ namespace Bugger.Proxy
         ///   <c>true</c> if this source control proxy can query the bugs.; otherwise, <c>false</c>.
         /// </value>
         bool CanQuery { get; }
-
-        /// <summary>
-        /// Gets the name of the bug's view template.
-        /// </summary>
-        /// <value>
-        /// The name of the bug's view template.
-        /// </value>
-        string BugViewTemplateName { get; }
         #endregion
 
         #region Methods

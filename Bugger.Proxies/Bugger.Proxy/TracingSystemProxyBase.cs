@@ -27,8 +27,6 @@ namespace Bugger.Proxy
             if (string.IsNullOrWhiteSpace(proxyName)) { throw new ArgumentNullException("proxyName cannot be null or white space."); }
 
             this.ProxyName = proxyName;
-            this.BugViewTemplateName = proxyName + "BugViewTemplateName";
-
             this.canQuery = false;
             this.IsInitialized = false;
         }
@@ -40,7 +38,7 @@ namespace Bugger.Proxy
         /// <value>
         /// The name of the proxy.
         /// </value>
-        public string ProxyName { get; private set; }
+        public string ProxyName { get; protected set; }
 
         /// <summary>
         /// Determines whether this source control proxy can query the bugs.
@@ -73,15 +71,6 @@ namespace Bugger.Proxy
         /// Get the flag of the Initialization of the Controller.
         /// </summary>
         public bool IsInitialized { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the bug's view template.
-        /// </summary>
-        /// <value>
-        /// The name of the bug's view template.
-        /// </value>
-        public string BugViewTemplateName { get; private set; }
-
         #endregion
 
         #region Methods

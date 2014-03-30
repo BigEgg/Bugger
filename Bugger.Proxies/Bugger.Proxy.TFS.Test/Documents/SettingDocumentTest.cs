@@ -1,5 +1,5 @@
-﻿using Bugger.Proxy.TFS.Documents;
-using Bugger.Proxy.TFS.Models;
+﻿using Bugger.Domain.Models;
+using Bugger.Proxy.TFS.Documents;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
@@ -15,8 +15,8 @@ namespace Bugger.Proxy.TFS.Test.Documents
             SettingDocument document = new SettingDocument();
             Assert.IsNotNull(document.PropertyMappingCollection);
 
-            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(ITFSBug));
-            Assert.AreEqual(propertyDescriptorCollection.Count, document.PropertyMappingCollection.Count);
+            PropertyDescriptorCollection propertyDescriptorCollection = TypeDescriptor.GetProperties(typeof(IBug));
+            Assert.AreEqual(propertyDescriptorCollection.Count - 1, document.PropertyMappingCollection.Count);
 
             document.PropertyMappingCollection["ID"] = "ID";
             document.ConnectUri = new Uri("https://tfs.codeplex.com:443/tfs/TFS12");

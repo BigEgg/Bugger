@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Applications", "Bugger.Applications\Bugger.Applications.csproj", "{398D1756-2C56-454A-A7EC-E996BB146C2E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "98 Frameworks", "98 Frameworks", "{F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}"
@@ -64,13 +62,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 Bugger.Applications", "0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 Bugger.Presentation", "04 Bugger.Presentation", "{C7CFDDD5-F148-4046-8C96-22DC17A3F203}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 JIRA", "03 JIRA", "{8959A747-B7DB-4E8E-998C-E9DE5B901D1A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Proxy.Jira", "Bugger.Proxies\Bugger.Proxy.JIRA\Bugger.Proxy.Jira.csproj", "{E42DB976-993D-41A9-8351-E7788205A95A}"
-EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 21
+		SccNumberOfProjects = 20
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs12
 		SccLocalPath0 = .
@@ -150,10 +144,6 @@ Global
 		SccProjectTopLevelParentUniqueName19 = Bugger.sln
 		SccProjectName19 = Bugger.Architecture
 		SccLocalPath19 = Bugger.Architecture
-		SccProjectUniqueName20 = Bugger.Proxies\\Bugger.Proxy.JIRA\\Bugger.Proxy.Jira.csproj
-		SccProjectTopLevelParentUniqueName20 = Bugger.sln
-		SccProjectName20 = Bugger.Proxies/Bugger.Proxy.JIRA
-		SccLocalPath20 = Bugger.Proxies\\Bugger.Proxy.JIRA
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -225,10 +215,6 @@ Global
 		{EC259AB6-762C-47D9-8DC0-F2B9E020C10E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC259AB6-762C-47D9-8DC0-F2B9E020C10E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC259AB6-762C-47D9-8DC0-F2B9E020C10E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E42DB976-993D-41A9-8351-E7788205A95A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E42DB976-993D-41A9-8351-E7788205A95A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E42DB976-993D-41A9-8351-E7788205A95A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E42DB976-993D-41A9-8351-E7788205A95A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -242,7 +228,6 @@ Global
 		{7B667C9E-38F1-4346-BD16-0A35414ACC14} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 		{A328B80D-120E-4701-B2B8-5DBE6D8E319A} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 		{55ED89F8-2239-42E8-949C-E93CE9B5CFC0} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
-		{8959A747-B7DB-4E8E-998C-E9DE5B901D1A} = {694ABF97-6A12-4F55-8EEC-A28551FA350E}
 		{DEA49F08-2AA4-4711-AE20-8D380F1D47F8} = {823D2174-AA3F-411B-B01C-1E4E23D7EA74}
 		{3DCFFAF0-D1E5-4FC1-B37B-4A6A27AE5E4F} = {823D2174-AA3F-411B-B01C-1E4E23D7EA74}
 		{16E901F8-B205-48F3-B1CD-E631E7F30FFD} = {C7CFDDD5-F148-4046-8C96-22DC17A3F203}
@@ -257,6 +242,5 @@ Global
 		{F6C15702-B96F-4581-B8DA-9DA3D6AD5646} = {55ED89F8-2239-42E8-949C-E93CE9B5CFC0}
 		{5714B0C6-82F3-4CC6-B33E-E3F8835C38FC} = {55ED89F8-2239-42E8-949C-E93CE9B5CFC0}
 		{EC259AB6-762C-47D9-8DC0-F2B9E020C10E} = {1ADB4068-4420-413A-BDB1-AD4DCD0073C2}
-		{E42DB976-993D-41A9-8351-E7788205A95A} = {8959A747-B7DB-4E8E-998C-E9DE5B901D1A}
 	EndGlobalSection
 EndGlobal

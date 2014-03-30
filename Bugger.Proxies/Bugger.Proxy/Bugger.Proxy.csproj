@@ -39,10 +39,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ITracingSystemProxy.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\SettingDialogValidateionResult.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TracingSystemProxyBase.cs" />
-    <Compile Include="Models\BugBase.cs" />
     <Compile Include="Views\ISettingView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -55,7 +54,6 @@
       <Name>Bugger.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

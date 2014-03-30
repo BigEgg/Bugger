@@ -4,7 +4,6 @@ Alpha 4 (v0.4.0) <----- Currently Working
     Application:
         Add extension manager to manage the proxies.
         When open the application, show setting dialog if the settings is not being set.
-        Custom the bug's view by the proxy.
         Add the Task Bar progress status.
     Proxies:
         TFS Proxy:

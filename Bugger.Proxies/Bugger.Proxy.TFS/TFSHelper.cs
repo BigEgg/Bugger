@@ -1,6 +1,5 @@
 ﻿using Bugger.Domain.Models;
 using Bugger.Proxy.TFS.Models;
-using Bugger.Proxy.TFS.ViewModels;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using System;
@@ -109,7 +108,7 @@ namespace Bugger.Proxy.TFS
         /// or
         /// The Team Project Collection class cannot be null.
         /// </exception>
-        public List<TFSBug> GetBugs(
+        public List<IBug> GetBugs(
             TfsTeamProjectCollection tpc,
             string userName, bool isFilterCreatedBy, PropertyMappingDictionary propertyMappingList,
             string bugFilterField, string bugFilterValue, IEnumerable<string> redFilter)
@@ -142,7 +141,7 @@ namespace Bugger.Proxy.TFS
 
                 if (collection == null) { return null; }
 
-                var bugs = new List<TFSBug>();
+                var bugs = new List<IBug>();
                 foreach (WorkItem item in collection)
                 {
                     bugs.Add(Map(item, propertyMappingList, redFilter));
@@ -164,10 +163,10 @@ namespace Bugger.Proxy.TFS
         /// <param name="propertyMappingList">The property mapping list.</param>
         /// <param name="redFilter">The red bug filter.</param>
         /// <returns></returns>
-        private TFSBug Map(WorkItem workitem, PropertyMappingDictionary propertyMappingList,
+        private IBug Map(WorkItem workitem, PropertyMappingDictionary propertyMappingList,
                         IEnumerable<string> redFilter)
         {
-            var bug = new TFSBug();
+            var bug = new Bug();
             object value = null;
 
             //  ID
@@ -214,8 +213,8 @@ namespace Bugger.Proxy.TFS
             }
 
             bug.Type = string.IsNullOrWhiteSpace(bug.Priority)
-                       ? BugType.Yellow
-                       : (redFilter.Contains(bug.Priority) ? BugType.Red : BugType.Yellow);
+                           ? BugType.Yellow
+                           : (redFilter.Contains(bug.Priority) ? BugType.Red : BugType.Yellow);
 
             return bug;
         }

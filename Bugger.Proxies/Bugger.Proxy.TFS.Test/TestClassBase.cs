@@ -1,5 +1,7 @@
 ﻿using Bugger.Proxy.TFS.Documents;
 using Bugger.Proxy.TFS.Presentation.Fake.Views;
+using Bugger.Proxy.TFS.Test.Services;
+using Bugger.Proxy.TFS.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;

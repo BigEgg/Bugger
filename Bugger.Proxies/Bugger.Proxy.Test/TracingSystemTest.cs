@@ -44,8 +44,6 @@ namespace Bugger.Proxy.Test
             MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
 
             Assert.AreEqual("proxyName", proxy.ProxyName);
-            Assert.AreEqual("proxyNameBugViewTemplateName", proxy.BugViewTemplateName);
-
             Assert.AreEqual(0, proxy.StateValues.Count);
             Assert.IsFalse(proxy.CanQuery);
         }

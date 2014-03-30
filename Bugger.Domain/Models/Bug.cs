@@ -1,16 +1,17 @@
-﻿using Bugger.Domain.Models;
-using Bugger.Proxy.TFS.Models;
-using Bugger.Proxy.ViewModels;
-using System;
+﻿using System;
 
-namespace Bugger.Proxy.TFS.ViewModels
+namespace Bugger.Domain.Models
 {
-    public class TFSBug : BugBase, ITFSBug
+    /// <summary>
+    /// The model class use to shows in the UI.
+    /// </summary>
+    public class Bug : IEquatable<Bug>, IBug
     {
         #region Fields
         private int id;
         private string title;
         private string description;
+        private BugType type;
         private string assignedTo;
         private string state;
         private DateTime changedDate;
@@ -19,12 +20,25 @@ namespace Bugger.Proxy.TFS.ViewModels
         private string severity;
         #endregion
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TFSBug"/> class.
-        /// </summary>
-        public TFSBug()
+        public Bug()
         {
+            this.type = BugType.Yellow;
         }
+
+        #region Implement IEquatable interface
+        public bool Equals(Bug other)
+        {
+            return this.ID == other.ID
+                && this.Title == other.Title
+                && this.Description == other.Description
+                && this.AssignedTo == other.AssignedTo
+                && this.State == other.State
+                && this.ChangedDate == other.ChangedDate
+                && this.CreatedBy == other.CreatedBy
+                && this.Priority == other.Priority
+                && this.Severity == other.Severity;
+        }
+        #endregion
 
         #region Properties
         /// <summary>
@@ -61,6 +75,18 @@ namespace Bugger.Proxy.TFS.ViewModels
         {
             get { return this.description; }
             set { this.description = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the type of this bug..
+        /// </summary>
+        /// <value>
+        /// The type of this bug.
+        /// </value>
+        public BugType Type
+        {
+            get { return type; }
+            set { type = value; }
         }
 
         /// <summary>
@@ -137,36 +163,5 @@ namespace Bugger.Proxy.TFS.ViewModels
             set { severity = value; }
         }
         #endregion
-
-
-        /// <summary>
-        /// Checks is the bug had been the updated.
-        /// If true, set the IsUpdate property to <c>true</c>.
-        /// </summary>
-        /// <param name="oldBug"></param>
-        /// <exception cref="System.ArgumentNullException">oldBug cannot be null.</exception>
-        /// <exception cref="System.ArgumentException">
-        /// oldBug must be TFSBug type.
-        /// or
-        /// Two models' ID are not same, cannot compare.
-        /// </exception>
-        public override void CheckIsUpdate(IBug oldBug)
-        {
-            if (oldBug == null) { throw new ArgumentNullException("oldBug cannot be null."); }
-            if (!(oldBug is TFSBug)) { throw new ArgumentException("oldBug must be TFSBug type."); }
-
-            var other = oldBug as TFSBug;
-            if (other.ID != this.ID) { throw new ArgumentException("Two models' ID are not same, cannot compare."); }
-
-            this.IsUpdate = this.Title != other.Title ||
-                            this.Description != other.Description ||
-                            this.AssignedTo != other.AssignedTo ||
-                            this.State != other.State ||
-                            this.ChangedDate != other.ChangedDate ||
-                            this.CreatedBy != other.CreatedBy ||
-                            this.Priority != other.Priority ||
-                            this.Severity != other.Severity;
-
-        }
     }
 }
