@@ -39,6 +39,8 @@
   <ItemGroup>
     <Compile Include="Models\BugType.cs" />
     <Compile Include="Models\IBug.cs" />
+    <Compile Include="Plugins\IPlugin.cs" />
+    <Compile Include="Plugins\PluginCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
