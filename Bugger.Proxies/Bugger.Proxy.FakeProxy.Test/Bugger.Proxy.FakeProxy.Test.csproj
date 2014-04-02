@@ -70,7 +70,7 @@
       <Project>{ee01d20c-0f89-4219-a615-e5566a73814e}</Project>
       <Name>BigEgg.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Bugger.Domain\Bugger.Domain.csproj">
+    <ProjectReference Include="..\..\Bugger.Base\Bugger.Base.csproj">
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
       <Name>Bugger.Domain</Name>
     </ProjectReference>
