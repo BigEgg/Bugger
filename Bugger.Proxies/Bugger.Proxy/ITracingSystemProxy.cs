@@ -1,16 +1,15 @@
-﻿using Bugger.Domain.Models;
+﻿using Bugger.Models;
 using Bugger.Proxy.Models;
 using Bugger.Proxy.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace Bugger.Proxy
 {
     /// <summary>
-    /// The interface of the application proxy for source control system.
+    /// The interface of the proxy for issue tracing system.
     /// </summary>
-    public interface ITracingSystemProxy : INotifyPropertyChanged
+    public interface ITracingSystemProxy
     {
         #region Properties
         /// <summary>
@@ -30,17 +29,15 @@ namespace Bugger.Proxy
         ObservableCollection<string> StateValues { get; }
 
         /// <summary>
-        /// Determines whether this source control proxy can query the bugs.
+        /// Determines whether this issue tracing proxy can query the bugs.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if this source control proxy can query the bugs.; otherwise, <c>false</c>.
+        ///   <c>true</c> if this issue tracing proxy can query the bugs.; otherwise, <c>false</c>.
         /// </value>
         bool CanQuery { get; }
         #endregion
 
         #region Methods
-        void Initialize();
-
         /// <summary>
         /// Query the bugs with the specified user name which the bug assign to.
         /// </summary>

@@ -1,5 +1,5 @@
-﻿using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Domain.Models;
+﻿using Bugger.Models;
+using Bugger.Plugins;
 using Bugger.Proxy.Models;
 using Bugger.Proxy.Views;
 using System;
@@ -11,7 +11,7 @@ namespace Bugger.Proxy
     /// <summary>
     /// The base class of the application proxy for source control system.
     /// </summary>
-    public abstract class TracingSystemProxyBase : DataModel, ITracingSystemProxy
+    public abstract class TracingSystemProxyBase : PluginBase, ITracingSystemProxy
     {
         #region Fields
         private bool canQuery;
@@ -21,14 +21,24 @@ namespace Bugger.Proxy
         /// Initializes a new instance of the <see cref="TracingSystemProxyBase" /> class.
         /// </summary>
         /// <param name="proxyName">Name of the proxy.</param>
-        /// <exception cref="System.ArgumentException">proxyName</exception>
-        public TracingSystemProxyBase(string proxyName)
+        /// <param name="uniqueName">The unique name of this plug-in.</param>
+        /// <param name="pluginName">The name of this plug-in.</param>
+        /// <param name="description">The description of this plug-in.</param>
+        /// <param name="minimumApplicationVersion">The application's minimum version that this plug-in support.</param>
+        /// <param name="maximumApplicationVersion">The application's maximum version that this plug-in support.</param>
+        /// <exception cref="System.ArgumentNullException">proxyName cannot be null or white space.</exception>
+        public TracingSystemProxyBase(string proxyName,
+                                      string uniqueName,
+                                      string pluginName,
+                                      string description,
+                                      Version minimumApplicationVersion,
+                                      Version maximumApplicationVersion)
+            : base(uniqueName, pluginName, description, PluginCategory.Proxy, minimumApplicationVersion, maximumApplicationVersion)
         {
             if (string.IsNullOrWhiteSpace(proxyName)) { throw new ArgumentNullException("proxyName cannot be null or white space."); }
 
             this.ProxyName = proxyName;
             this.canQuery = false;
-            this.IsInitialized = false;
         }
 
         #region Properties
@@ -49,14 +59,7 @@ namespace Bugger.Proxy
         public bool CanQuery
         {
             get { return this.canQuery; }
-            protected set
-            {
-                if (this.canQuery != value)
-                {
-                    this.canQuery = value;
-                    RaisePropertyChanged("CanQuery");
-                }
-            }
+            protected set { this.canQuery = value; }
         }
 
         /// <summary>
@@ -66,34 +69,10 @@ namespace Bugger.Proxy
         /// The status values.
         /// </value>
         public abstract ObservableCollection<string> StateValues { get; }
-
-        /// <summary>
-        /// Get the flag of the Initialization of the Controller.
-        /// </summary>
-        public bool IsInitialized { get; private set; }
         #endregion
 
         #region Methods
         #region Public Methods
-        /// <summary>
-        /// Initialize the Controller.
-        /// </summary>
-        public void Initialize()
-        {
-            try
-            {
-                if (IsInitialized) { return; }
-
-                OnInitialize();
-                IsInitialized = true;
-            }
-            catch
-            {
-                IsInitialized = false;
-                throw;
-            }
-        }
-
         /// <summary>
         /// Query the bugs with the specified user name which the bug assign to.
         /// </summary>
@@ -175,13 +154,6 @@ namespace Bugger.Proxy
         protected virtual ReadOnlyCollection<IBug> QueryCore(List<string> userNames, bool isFilterCreatedBy)
         {
             throw new NotImplementedException("The Query Method not implemented in the base class.");
-        }
-
-        /// <summary>
-        /// The method which will execute when the Controller.Initialize() execute.
-        /// </summary>
-        protected virtual void OnInitialize()
-        {
         }
         #endregion
         #endregion

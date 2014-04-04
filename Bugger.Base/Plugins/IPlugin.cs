@@ -2,6 +2,9 @@
 
 namespace Bugger.Plugins
 {
+    /// <summary>
+    /// The interface of the plug-in of the application.
+    /// </summary>
     public interface IPlugin
     {
         #region Properties

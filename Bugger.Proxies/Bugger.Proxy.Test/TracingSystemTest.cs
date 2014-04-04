@@ -1,5 +1,5 @@
 ﻿using BigEgg.Framework.UnitTesting;
-using Bugger.Domain.Models;
+using Bugger.Models;
 using Bugger.Proxy.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -49,16 +49,6 @@ namespace Bugger.Proxy.Test
         }
 
         [TestMethod]
-        public void PropertiesWithNotification()
-        {
-            MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
-
-            Assert.IsFalse(proxy.CanQuery);
-            AssertHelper.PropertyChangedEvent(proxy, x => x.CanQuery, () => proxy.CanQueryValue = true);
-            Assert.IsTrue(proxy.CanQuery);
-        }
-
-        [TestMethod]
         public void QueryTest()
         {
             MockTracingSystemProxy proxy = new MockTracingSystemProxy("proxyName");
@@ -95,7 +85,7 @@ namespace Bugger.Proxy.Test
             #endregion
 
             public MockTracingSystemProxy(string proxyName)
-                : base(proxyName)
+                : base(proxyName, "MockTracingProxy", "MockTracingProxy", "Some description", new Version("0.4.0"), new Version("0.4.0"))
             {
                 statsValues = new ObservableCollection<string>();
             }
