@@ -58,7 +58,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FakeProxyTest.cs" />
-    <Compile Include="Models\FakeBugTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +81,9 @@
       <Project>{e8727087-75f2-435f-bd11-78b4dff59a40}</Project>
       <Name>Bugger.Proxy</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

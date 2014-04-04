@@ -1,7 +1,8 @@
 ﻿using Bugger.Models;
+using Bugger.Models.Proxies.Models;
 using Bugger.Plugins;
-using Bugger.Proxy.Models;
-using Bugger.Proxy.Views;
+using Bugger.Plugins.Proxies;
+using Bugger.Plugins.Proxies.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
