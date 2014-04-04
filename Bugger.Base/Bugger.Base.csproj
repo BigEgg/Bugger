@@ -37,12 +37,15 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Plugins\Proxies\ITracingSystemProxy.cs" />
     <Compile Include="Models\BugType.cs" />
     <Compile Include="Models\IBug.cs" />
+    <Compile Include="Models\Proxies\SettingDialogValidateionResult.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Plugins\PluginBase.cs" />
     <Compile Include="Plugins\PluginCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Plugins\Proxies\Views\ISettingView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

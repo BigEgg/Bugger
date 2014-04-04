@@ -53,6 +53,7 @@ namespace Bugger.Plugins
             IsInitialized = false;
         }
 
+
         #region Properties
         /// <summary>
         /// Gets the unique name of the plug-in.

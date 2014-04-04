@@ -13,28 +13,20 @@ namespace Bugger.Models
         string ID { get; }
 
         /// <summary>
-        /// Gets a string that describes the title of this bug
+        /// Gets the string that describes the title of this bug
         /// </summary>
         /// <value>
-        /// A string that describes the title of this bug.
+        /// The string that describes the title of this bug.
         /// </value>
         string Title { get; }
 
         /// <summary>
-        /// Gets a string that describes this bug.
+        /// Gets the string that describes this bug.
         /// </summary>
         /// <value>
-        /// A string that describes this bug.
+        /// The string that describes this bug.
         /// </value>
         string Description { get; }
-
-        /// <summary>
-        /// Gets the type of this bug.
-        /// </summary>
-        /// <value>
-        /// The type of this bug.
-        /// </value>
-        BugType Type { get; }
 
         /// <summary>
         /// Gets the string value of the user who this bug currently be assigned to.
@@ -45,10 +37,10 @@ namespace Bugger.Models
         string AssignedTo { get; }
 
         /// <summary>
-        /// Gets a string that describes the state of this bug.
+        /// Gets the string that describes the state of this bug.
         /// </summary>
         /// <value>
-        /// A string that describes the state of this bug.
+        /// The string that describes the state of this bug.
         /// </value>
         string State { get; }
 
@@ -71,10 +63,10 @@ namespace Bugger.Models
         string CreatedBy { get; }
 
         /// <summary>
-        /// Gets a string that describes the priority of this bug.
+        /// Gets the string that describes the priority of this bug.
         /// </summary>
         /// <value>
-        /// A string that describes the priority of this bug.
+        /// The string that describes the priority of this bug.
         /// </value>
         string Priority { get; }
 
@@ -82,9 +74,18 @@ namespace Bugger.Models
         /// Gets the string that describes the severity of this bug.
         /// </summary>
         /// <value>
-        /// A string that describes the severity of this bug.
+        /// The string that describes the severity of this bug.
         /// </value>
         string Severity { get; }
+
+
+        /// <summary>
+        /// Gets the type of this bug.
+        /// </summary>
+        /// <value>
+        /// The type of this bug.
+        /// </value>
+        BugType Type { get; }
 
         /// <summary>
         /// Gets the value indicating whether the bug is update.
