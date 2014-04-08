@@ -40,6 +40,8 @@
   <ItemGroup>
     <Compile Include="Models\Attributes\IgnoreMappingAttribute.cs" />
     <Compile Include="Models\Bug.cs" />
+    <Compile Include="Models\BugHelper.cs" />
+    <Compile Include="Models\PropertyMappingDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TracingSystemProxyBase.cs" />
   </ItemGroup>
