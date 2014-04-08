@@ -12,13 +12,13 @@ namespace Bugger.Test.Plugins
         public void ConstructorExceptionTest()
         {
             AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin(null, null, null, PluginCategory.Proxy, null, null));
-            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin("", null, null, PluginCategory.Proxy, null, null));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin(" ", null, null, PluginCategory.Proxy, null, null));
             AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin("uniqueName", null, null, PluginCategory.Proxy, null, null));
-            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin("uniqueName", "", null, PluginCategory.Proxy, null, null));
-            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin("uniqueName", "pluginName", "", PluginCategory.Proxy, null, null));
-            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin("uniqueName", "pluginName", "", PluginCategory.Proxy, new Version("1.0"), null));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin("uniqueName", " ", null, PluginCategory.Proxy, null, null));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin("uniqueName", "pluginName", " ", PluginCategory.Proxy, null, null));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin("uniqueName", "pluginName", " ", PluginCategory.Proxy, new Version("1.0"), null));
 
-            AssertHelper.ExpectedException<ArgumentException>(() => new MockPlugin("uniqueName", "pluginName", "", PluginCategory.Proxy, new Version("1.0"), new Version("0.1")));
+            AssertHelper.ExpectedException<ArgumentException>(() => new MockPlugin("uniqueName", "pluginName", " ", PluginCategory.Proxy, new Version("1.0"), new Version("0.1")));
         }
 
         [TestMethod]
