@@ -1,6 +1,6 @@
 ﻿using BigEgg.Framework.UnitTesting;
 using Bugger.Models;
-using Bugger.Proxy.Models;
+using Bugger.Models.Proxies.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -45,6 +45,7 @@ namespace Bugger.Proxy.Test
 
             Assert.AreEqual("proxyName", proxy.ProxyName);
             Assert.AreEqual(0, proxy.StateValues.Count);
+            Assert.AreEqual("proxyName Proxy", proxy.PluginName);
             Assert.IsFalse(proxy.CanQuery);
         }
 
@@ -85,7 +86,7 @@ namespace Bugger.Proxy.Test
             #endregion
 
             public MockTracingSystemProxy(string proxyName)
-                : base(proxyName, "MockTracingProxy", "MockTracingProxy", "Some description", new Version("0.4.0"), new Version("0.4.0"))
+                : base(proxyName, "MockTracingProxy", "Some description", new Version("0.4.0"), new Version("0.4.0"))
             {
                 statsValues = new ObservableCollection<string>();
             }
