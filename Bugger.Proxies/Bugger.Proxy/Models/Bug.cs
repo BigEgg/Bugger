@@ -5,7 +5,7 @@ using System;
 
 namespace Bugger.Proxy.Models
 {
-    public class Bug : Model, IBug, IEquatable<IBug>, IComparable<IBug>
+    public class Bug : Model, IBug, IEquatable<IBug>
     {
         #region Fields
         private readonly string id;
@@ -67,6 +67,14 @@ namespace Bugger.Proxy.Models
             this.severity = severity;
         }
 
+        #region Implement IEquatable Interface
+        public bool Equals(IBug other)
+        {
+            if (other == null) { throw new ArgumentNullException("other cannot be null."); }
+
+            return other.ID == this.id;
+        }
+        #endregion
 
         #region Properties
         /// <summary>
@@ -184,5 +192,7 @@ namespace Bugger.Proxy.Models
             }
         }
         #endregion
+
+
     }
 }
