@@ -1,6 +1,8 @@
-﻿namespace Bugger.Plugins.Proxies.Views
+﻿using BigEgg.Framework.Applications.Views;
+
+namespace Bugger.Plugins.Proxies.Views
 {
-    public interface ISettingView
+    public interface ISettingView : IView
     {
         string Title { get; }
     }
