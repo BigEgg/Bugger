@@ -13,9 +13,42 @@ namespace Bugger.Plugins
         private Version maximumApplicationVersion;
         #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PluginBase" /> class.
+        /// </summary>
+        /// <param name="uniqueName">The unique name of this plug-in.</param>
+        /// <param name="pluginName">The name of this plug-in.</param>
+        /// <param name="description">The description of this plug-in.</param>
+        /// <param name="category">The category of this plug-in.</param>
+        /// <param name="minimumApplicationVersion">The application's minimum version that this plug-in support.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// uniqueName cannot be null or empty.
+        /// or
+        /// pluginName cannot be null or empty.
+        /// or
+        /// minimumApplicationVersion cannot be null.
+        /// </exception>
+        public PluginBase(string uniqueName,
+                          string pluginName,
+                          string description,
+                          PluginCategory category,
+                          Version minimumApplicationVersion)
+        {
+            if (string.IsNullOrWhiteSpace(uniqueName)) { throw new ArgumentNullException("uniqueName cannot be null or empty."); }
+            if (string.IsNullOrWhiteSpace(pluginName)) { throw new ArgumentNullException("pluginName cannot be null or empty."); }
+            if (minimumApplicationVersion == null) { throw new ArgumentNullException("minimumApplicationVersion cannot be null."); }
+
+            this.uniqueName = uniqueName;
+            this.pluginName = pluginName;
+            this.description = description;
+            this.category = category;
+            this.minimumApplicationVersion = minimumApplicationVersion;
+
+            IsInitialized = false;
+        }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PluginBase"/> class.
+        /// Initializes a new instance of the <see cref="PluginBase" /> class.
         /// </summary>
         /// <param name="uniqueName">The unique name of this plug-in.</param>
         /// <param name="pluginName">The name of this plug-in.</param>
@@ -27,6 +60,10 @@ namespace Bugger.Plugins
         /// uniqueName cannot be null or empty.
         /// or
         /// pluginName cannot be null or empty.
+        /// or
+        /// minimumApplicationVersion cannot be null.
+        /// or
+        /// maximumApplicationVersion cannot be null.
         /// </exception>
         /// <exception cref="System.ArgumentException">min version cannot larger than max version</exception>
         public PluginBase(string uniqueName,

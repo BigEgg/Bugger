@@ -22,6 +22,16 @@ namespace Bugger.Test.Plugins
         }
 
         [TestMethod]
+        public void ConstructorExceptionTest_IgnoreMaxVersion()
+        {
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin(null, null, null, PluginCategory.Proxy, null));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin(" ", null, null, PluginCategory.Proxy, null));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin("uniqueName", null, null, PluginCategory.Proxy, null));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin("uniqueName", " ", null, PluginCategory.Proxy, null));
+            AssertHelper.ExpectedException<ArgumentNullException>(() => new MockPlugin("uniqueName", "pluginName", " ", PluginCategory.Proxy, null));
+        }
+
+        [TestMethod]
         public void ConstructorTest()
         {
             var plugin = new MockPlugin("uniqueName", "pluginName", "description", PluginCategory.Proxy, new Version("1.0"), new Version("1.0"));
@@ -33,9 +43,30 @@ namespace Bugger.Test.Plugins
             Assert.AreEqual(new Version("1.0"), plugin.MaximumApplicationVersion);
         }
 
+        [TestMethod]
+        public void ConstructorTest_IgnoreMaxVersion()
+        {
+            var plugin = new MockPlugin("uniqueName", "pluginName", "description", PluginCategory.Proxy, new Version("1.0"));
+            Assert.AreEqual("uniqueName", plugin.UniqueName);
+            Assert.AreEqual("pluginName", plugin.PluginName);
+            Assert.AreEqual("description", plugin.Description);
+            Assert.AreEqual(PluginCategory.Proxy, plugin.Category);
+            Assert.AreEqual(new Version("1.0"), plugin.MinimumApplicationVersion);
+            Assert.IsNull(plugin.MaximumApplicationVersion);
+        }
+
 
         private class MockPlugin : PluginBase
         {
+            public MockPlugin(string uniqueName,
+                              string pluginName,
+                              string description,
+                              PluginCategory category,
+                              Version minimumApplicationVersion)
+                : base(uniqueName, pluginName, description, category, minimumApplicationVersion)
+            {
+            }
+
             public MockPlugin(string uniqueName,
                               string pluginName,
                               string description,
@@ -45,7 +76,6 @@ namespace Bugger.Test.Plugins
                 : base(uniqueName, pluginName, description, category, minimumApplicationVersion, maximumApplicationVersion)
             {
             }
-
 
             #region Properties
             public Action OnInitializeAction { get; set; }
