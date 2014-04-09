@@ -1,4 +1,5 @@
-﻿using Bugger.Domain.Models;
+﻿using Bugger.Models;
+using Bugger.Proxy.Models;
 using Bugger.Proxy.TFS.Models;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
@@ -159,64 +160,103 @@ namespace Bugger.Proxy.TFS
         /// <summary>
         /// Maps the specified work item to the bug model.
         /// </summary>
-        /// <param name="workitem">The work item.</param>
+        /// <param name="workItem">The work item.</param>
         /// <param name="propertyMappingList">The property mapping list.</param>
         /// <param name="redFilter">The red bug filter.</param>
         /// <returns></returns>
-        private IBug Map(WorkItem workitem, PropertyMappingDictionary propertyMappingList,
+        private IBug Map(WorkItem workItem, PropertyMappingDictionary propertyMappingList,
                         IEnumerable<string> redFilter)
         {
-            var bug = new Bug();
-            object value = null;
+            string id = MapProperty(workItem, propertyMappingList["ID"]);
+            string title = MapProperty(workItem, propertyMappingList["Title"]);
+            string description = MapProperty(workItem, propertyMappingList["Description"]);
+            string assignedTo = MapProperty(workItem, propertyMappingList["AssignedTo"]);
+            string state = MapProperty(workItem, propertyMappingList["State"]);
+            DateTime changedDate = MapProperty<DateTime>(workItem, propertyMappingList["ChangedDate"]);
+            string createdBy = MapProperty(workItem, propertyMappingList["CreatedBy"]);
+            string priority = MapProperty(workItem, propertyMappingList["Priority"]);
+            string severity = MapProperty(workItem, propertyMappingList["Severity"], string.Empty);
 
-            //  ID
-            value = workitem.Fields[propertyMappingList["ID"]].Value;
-            bug.ID = value == null ? 0 : (int)value;
-
-            //  Title
-            value = workitem.Fields[propertyMappingList["Title"]].Value;
-            bug.Title = value == null ? string.Empty : value.ToString();
-
-            //  Description
-            value = workitem.Fields[propertyMappingList["Description"]].Value;
-            bug.Description = value == null ? string.Empty : value.ToString();
-
-            //  AssignedTo
-            value = workitem.Fields[propertyMappingList["AssignedTo"]].Value;
-            bug.AssignedTo = value == null ? string.Empty : value.ToString();
-
-            //  State
-            value = workitem.Fields[propertyMappingList["State"]].Value;
-            bug.State = value == null ? string.Empty : value.ToString();
-
-            //  ChangedDate
-            value = workitem.Fields[propertyMappingList["ChangedDate"]].Value;
-            bug.ChangedDate = value == null ? DateTime.Today : (DateTime)value;
-
-            //  CreatedBy
-            value = workitem.Fields[propertyMappingList["CreatedBy"]].Value;
-            bug.CreatedBy = value == null ? string.Empty : value.ToString();
-
-            //  Priority
-            value = workitem.Fields[propertyMappingList["Priority"]].Value;
-            bug.Priority = value == null ? string.Empty : value.ToString();
-
-            //  Severity
-            if (string.IsNullOrWhiteSpace(propertyMappingList["Severity"]))
-            {
-                bug.Severity = string.Empty;
-            }
-            else
-            {
-                value = workitem.Fields[propertyMappingList["Severity"]].Value;
-                bug.Severity = value == null ? string.Empty : value.ToString();
-            }
-
+            var bug = new Bug(id, title, description, assignedTo, state, changedDate, createdBy, priority, severity);
             bug.Type = string.IsNullOrWhiteSpace(bug.Priority)
                            ? BugType.Yellow
-                           : (redFilter.Contains(bug.Priority) ? BugType.Red : BugType.Yellow);
+                           : (redFilter.Contains(bug.Priority)
+                                ? BugType.Red
+                                : BugType.Yellow);
 
             return bug;
+        }
+
+        /// <summary>
+        /// Map the property.
+        /// </summary>
+        /// <param name="workItem">The work item.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">propertyName cannot be null or empty.</exception>
+        /// <exception cref="Bugger.Proxy.TFS.UnableMapBugException">Cannot get the this property.</exception>
+        private string MapProperty(WorkItem workItem, string propertyName)
+        {
+            if (string.IsNullOrWhiteSpace(propertyName)) { throw new ArgumentNullException("propertyName cannot be null or empty."); }
+
+            object value = workItem.Fields[propertyName].Value;
+
+            if (value == null) { throw new UnableMapBugException("Cannot get the this property."); }
+            else { return value.ToString(); }
+        }
+
+        /// <summary>
+        /// Map the property.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="workItem">The work item.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">propertyName cannot be null or empty.</exception>
+        /// <exception cref="Bugger.Proxy.TFS.UnableMapBugException">Cannot get the this property.</exception>
+        private T MapProperty<T>(WorkItem workItem, string propertyName)
+        {
+            if (string.IsNullOrWhiteSpace(propertyName)) { throw new ArgumentNullException("propertyName cannot be null or empty."); }
+
+            object value = workItem.Fields[propertyName].Value;
+
+            if (value == null) { throw new UnableMapBugException("Cannot get the this property."); }
+            else { return (T)value; }
+        }
+
+        /// <summary>
+        /// Map the property with default value.
+        /// </summary>
+        /// <param name="workItem">The work item.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns></returns>
+        private string MapProperty(WorkItem workItem, string propertyName, string defaultValue)
+        {
+            if (string.IsNullOrWhiteSpace(propertyName)) { return defaultValue; }
+
+            object value = workItem.Fields[propertyName].Value;
+
+            if (value == null) { return defaultValue; }
+            else { return value.ToString(); }
+        }
+
+        /// <summary>
+        /// Map the property with default value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="workItem">The work item.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns></returns>
+        private T MapProperty<T>(WorkItem workItem, string propertyName, T defaultValue)
+        {
+            if (string.IsNullOrWhiteSpace(propertyName)) { return defaultValue; }
+
+            object value = workItem.Fields[propertyName].Value;
+
+            if (value == null) { return defaultValue; }
+            else { return (T)value; }
         }
     }
 }

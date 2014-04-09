@@ -1,12 +1,10 @@
 ﻿using BigEgg.Framework.Applications.Commands;
-using Bugger.Domain.Models;
-using Bugger.Proxy.Models;
+using Bugger.Plugins.Proxies;
 using Bugger.Proxy.TFS.Documents;
 using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Properties;
 using Bugger.Proxy.TFS.ViewModels;
 using Bugger.Proxy.TFS.Views;
-using Bugger.Proxy.Views;
 using Microsoft.TeamFoundation.Client;
 using System;
 using System.Collections.Generic;

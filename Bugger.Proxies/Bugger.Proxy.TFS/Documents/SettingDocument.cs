@@ -1,5 +1,5 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Proxy.TFS.Models;
+using Bugger.Proxy.Models;
 using System;
 
 namespace Bugger.Proxy.TFS.Documents
@@ -15,7 +15,7 @@ namespace Bugger.Proxy.TFS.Documents
         /// </summary>
         public SettingDocument()
         {
-            this.propertyMappingCollection = TFSBugHelper.GetPropertyNames();
+            this.propertyMappingCollection = BugHelper.GetPropertyNames();
 
             UserName = string.Empty;
             Password = string.Empty;

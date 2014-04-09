@@ -1,5 +1,4 @@
-﻿using BigEgg.Framework.Applications.Views;
-using Bugger.Proxy.Views;
+﻿using Bugger.Plugins.Proxies.Views;
 
 namespace Bugger.Proxy.TFS.Views
 {

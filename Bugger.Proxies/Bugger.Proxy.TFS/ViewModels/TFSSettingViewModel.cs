@@ -1,5 +1,6 @@
 ﻿using BigEgg.Framework.Applications.Commands;
 using BigEgg.Framework.Applications.ViewModels;
+using Bugger.Proxy.Models;
 using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Properties;
 using Bugger.Proxy.TFS.Views;
@@ -53,7 +54,7 @@ namespace Bugger.Proxy.TFS.ViewModels
             this.bugFilterFields = new ObservableCollection<TFSField>();
             this.priorityValues = new ObservableCollection<CheckString>();
 
-            this.propertyMappingCollection = TFSBugHelper.GetPropertyNames();
+            this.propertyMappingCollection = BugHelper.GetPropertyNames();
             foreach (var mappingModel in propertyMappingCollection)
             {
                 AddWeakEventListener(mappingModel, PropertyMappingModelPropertyChanged);
