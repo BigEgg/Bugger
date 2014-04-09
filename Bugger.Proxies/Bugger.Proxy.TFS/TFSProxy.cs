@@ -1,5 +1,8 @@
 ﻿using BigEgg.Framework.Applications.Commands;
+using Bugger.Models;
+using Bugger.Models.Proxies.Models;
 using Bugger.Plugins.Proxies;
+using Bugger.Plugins.Proxies.Views;
 using Bugger.Proxy.TFS.Documents;
 using Bugger.Proxy.TFS.Models;
 using Bugger.Proxy.TFS.Properties;
@@ -49,7 +52,7 @@ namespace Bugger.Proxy.TFS
         /// </exception>
         [ImportingConstructor]
         public TFSProxy(CompositionContainer container, TFSHelper tfsHelper)
-            : base(Resources.ProxyName)
+            : base(Resources.ProxyName, "", "The proxy, which can get the bugs from TFS.", new Version("0.4"))
         {
             if (container == null) { throw new ArgumentNullException("container"); }
             if (tfsHelper == null) { throw new ArgumentNullException("tfsHelper"); }

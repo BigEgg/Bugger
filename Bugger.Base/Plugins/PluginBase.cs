@@ -1,8 +1,9 @@
-﻿using System;
+﻿using BigEgg.Framework.Applications.ViewModels;
+using System;
 
 namespace Bugger.Plugins
 {
-    public abstract class PluginBase : IPlugin
+    public abstract class PluginBase : DataModel, IPlugin
     {
         #region Fields
         private string uniqueName;
