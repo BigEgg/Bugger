@@ -86,7 +86,7 @@ namespace Bugger.Proxy.Test
             #endregion
 
             public MockTracingSystemProxy(string proxyName)
-                : base(proxyName, "MockTracingProxy", "Some description", new Version("0.4.0"), new Version("0.4.0"))
+                : base(proxyName, "MockTracingProxy", proxyName + " Proxy", "Some description", new Version("0.4.0"), new Version("0.4.0"))
             {
                 statsValues = new ObservableCollection<string>();
             }
