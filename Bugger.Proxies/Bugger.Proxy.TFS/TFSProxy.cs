@@ -1,7 +1,7 @@
 ﻿using BigEgg.Framework.Applications.Commands;
 using Bugger.Models;
 using Bugger.Models.Proxies.Models;
-using Bugger.Plugins.Proxies;
+using Bugger.Plugins;
 using Bugger.Plugins.Proxies.Views;
 using Bugger.Proxy.TFS.Documents;
 using Bugger.Proxy.TFS.Models;
@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace Bugger.Proxy.TFS
 {
-    [Export(typeof(ITracingSystemProxy)), Export]
+    [Export(typeof(IPlugin)), Export]
     public class TFSProxy : TracingSystemProxyBase
     {
         #region Fields
@@ -52,7 +52,7 @@ namespace Bugger.Proxy.TFS
         /// </exception>
         [ImportingConstructor]
         public TFSProxy(CompositionContainer container, TFSHelper tfsHelper)
-            : base(Resources.ProxyName, "", "The proxy, which can get the bugs from TFS.", new Version("0.4"))
+            : base(Resources.ProxyName, new Guid().ToString(), "The Tracing System Proxy for TFS", new Version("0.4.0"))
         {
             if (container == null) { throw new ArgumentNullException("container"); }
             if (tfsHelper == null) { throw new ArgumentNullException("tfsHelper"); }
@@ -132,11 +132,11 @@ namespace Bugger.Proxy.TFS
                                 return string.IsNullOrWhiteSpace(x.Value);
                             }))
                 {
-                    this.settingViewModel.ProgressType = ProgressType.SuccessWithError;
+                    this.settingViewModel.ProgressType = SettingViewProgressType.SuccessWithError;
                 }
                 else
                 {
-                    this.settingViewModel.ProgressType = ProgressType.Success;
+                    this.settingViewModel.ProgressType = SettingViewProgressType.Success;
                 }
                 this.settingViewModel.ProgressValue = 100;
             }
@@ -179,8 +179,8 @@ namespace Bugger.Proxy.TFS
 
             this.CanQuery = false;
 
-            if ((this.settingViewModel.ProgressType == ProgressType.Success
-                || this.settingViewModel.ProgressType == ProgressType.SuccessWithError)
+            if ((this.settingViewModel.ProgressType == SettingViewProgressType.Success
+                || this.settingViewModel.ProgressType == SettingViewProgressType.SuccessWithError)
                 &&
                 (!string.IsNullOrWhiteSpace(this.settingViewModel.BugFilterField)
                  && !string.IsNullOrWhiteSpace(this.settingViewModel.BugFilterValue)
@@ -205,9 +205,9 @@ namespace Bugger.Proxy.TFS
         /// </returns>
         public override SettingDialogValidateionResult ValidateBeforeCloseSettingDialog()
         {
-            if (this.settingViewModel.ProgressType == ProgressType.OnAutoFillMapSettings
-                || this.settingViewModel.ProgressType == ProgressType.OnConnectProgress
-                || this.settingViewModel.ProgressType == ProgressType.OnGetFiledsProgress)
+            if (this.settingViewModel.ProgressType == SettingViewProgressType.OnAutoFillMapSettings
+                || this.settingViewModel.ProgressType == SettingViewProgressType.OnConnectProgress
+                || this.settingViewModel.ProgressType == SettingViewProgressType.OnGetFiledsProgress)
             {
                 return SettingDialogValidateionResult.Busy;
             }
@@ -215,13 +215,13 @@ namespace Bugger.Proxy.TFS
             if (this.settingViewModel.ConnectUri == null
                 || !this.settingViewModel.ConnectUri.IsAbsoluteUri
                 || string.IsNullOrWhiteSpace(this.settingViewModel.UserName)
-                || this.settingViewModel.ProgressType == ProgressType.FailedOnConnect
-                || this.settingViewModel.ProgressType == ProgressType.FailedOnGetFileds)
+                || this.settingViewModel.ProgressType == SettingViewProgressType.FailedOnConnect
+                || this.settingViewModel.ProgressType == SettingViewProgressType.FailedOnGetFileds)
             {
                 return SettingDialogValidateionResult.ConnectFailed;
             }
 
-            if (this.settingViewModel.ProgressType == ProgressType.NotWorking)
+            if (this.settingViewModel.ProgressType == SettingViewProgressType.NotWorking)
             {
                 TfsTeamProjectCollection tpc = null;
                 if (!tfsHelper.TryConnection(this.settingViewModel.ConnectUri, this.settingViewModel.UserName,
@@ -481,9 +481,9 @@ namespace Bugger.Proxy.TFS
         #region Commands Methods
         private bool CanTestConnectionCommandExcute()
         {
-            return this.settingViewModel.ProgressType != ProgressType.OnAutoFillMapSettings
-                && this.settingViewModel.ProgressType != ProgressType.OnConnectProgress
-                && this.settingViewModel.ProgressType != ProgressType.OnGetFiledsProgress
+            return this.settingViewModel.ProgressType != SettingViewProgressType.OnAutoFillMapSettings
+                && this.settingViewModel.ProgressType != SettingViewProgressType.OnConnectProgress
+                && this.settingViewModel.ProgressType != SettingViewProgressType.OnGetFiledsProgress
                 && this.settingViewModel.ConnectUri != null
                 && this.settingViewModel.ConnectUri.IsAbsoluteUri
                 && !string.IsNullOrWhiteSpace(this.settingViewModel.UserName);
@@ -497,7 +497,7 @@ namespace Bugger.Proxy.TFS
         internal Task TestConnectionCommandExcuteCore()
         {
             this.settingViewModel.ClearMappingData();
-            this.settingViewModel.ProgressType = ProgressType.OnConnectProgress;
+            this.settingViewModel.ProgressType = SettingViewProgressType.OnConnectProgress;
             this.settingViewModel.ProgressValue = 0;
 
             var testConnectionTask = Task.Factory.StartNew(() =>
@@ -512,13 +512,13 @@ namespace Bugger.Proxy.TFS
             {
                 if (task.Result == null)
                 {
-                    this.settingViewModel.ProgressType = ProgressType.FailedOnConnect;
+                    this.settingViewModel.ProgressType = SettingViewProgressType.FailedOnConnect;
                     this.settingViewModel.ProgressValue = 100;
                     throw new OperationCanceledException();
                 }
                 else
                 {
-                    this.settingViewModel.ProgressType = ProgressType.OnGetFiledsProgress;
+                    this.settingViewModel.ProgressType = SettingViewProgressType.OnGetFiledsProgress;
                     this.settingViewModel.ProgressValue = 50;
                     return task.Result;
                 }
@@ -532,7 +532,7 @@ namespace Bugger.Proxy.TFS
             {
                 if (task.Result == null)
                 {
-                    this.settingViewModel.ProgressType = ProgressType.FailedOnGetFileds;
+                    this.settingViewModel.ProgressType = SettingViewProgressType.FailedOnGetFileds;
                     this.settingViewModel.ProgressValue = 100;
                     throw new OperationCanceledException();
                 }
@@ -559,7 +559,7 @@ namespace Bugger.Proxy.TFS
             .ContinueWith(task =>
             {
                 this.settingViewModel.ProgressValue = 90;
-                this.settingViewModel.ProgressType = ProgressType.OnAutoFillMapSettings;
+                this.settingViewModel.ProgressType = SettingViewProgressType.OnAutoFillMapSettings;
                 return task.Result;
             }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext())
             .ContinueWith(task =>
@@ -579,11 +579,11 @@ namespace Bugger.Proxy.TFS
                 if (task.Result)
                 {
                     this.settingViewModel.ProgressValue = 100;
-                    this.settingViewModel.ProgressType = ProgressType.Success;
+                    this.settingViewModel.ProgressType = SettingViewProgressType.Success;
                 }
                 else
                 {
-                    this.settingViewModel.ProgressType = ProgressType.SuccessWithError;
+                    this.settingViewModel.ProgressType = SettingViewProgressType.SuccessWithError;
                     this.settingViewModel.ProgressValue = 100;
                 }
             }, CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.FromCurrentSynchronizationContext());

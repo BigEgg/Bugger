@@ -5,17 +5,8 @@ namespace Bugger.Plugins
 {
     public abstract class PluginBase : DataModel, IPlugin
     {
-        #region Fields
-        private string uniqueName;
-        private string pluginName;
-        private string description;
-        private PluginCategory category;
-        private Version minimumApplicationVersion;
-        private Version maximumApplicationVersion;
-        #endregion
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="PluginBase" /> class.
+        /// Initializes a new instance of the <see cref="PluginBase"/> class.
         /// </summary>
         /// <param name="uniqueName">The unique name of this plug-in.</param>
         /// <param name="pluginName">The name of this plug-in.</param>
@@ -29,24 +20,14 @@ namespace Bugger.Plugins
         /// or
         /// minimumApplicationVersion cannot be null.
         /// </exception>
+        /// <exception cref="System.ArgumentException">min version cannot larger than max version</exception>
         public PluginBase(string uniqueName,
                           string pluginName,
                           string description,
                           PluginCategory category,
                           Version minimumApplicationVersion)
-        {
-            if (string.IsNullOrWhiteSpace(uniqueName)) { throw new ArgumentNullException("uniqueName cannot be null or empty."); }
-            if (string.IsNullOrWhiteSpace(pluginName)) { throw new ArgumentNullException("pluginName cannot be null or empty."); }
-            if (minimumApplicationVersion == null) { throw new ArgumentNullException("minimumApplicationVersion cannot be null."); }
-
-            this.uniqueName = uniqueName;
-            this.pluginName = pluginName;
-            this.description = description;
-            this.category = category;
-            this.minimumApplicationVersion = minimumApplicationVersion;
-
-            IsInitialized = false;
-        }
+            : this(uniqueName, pluginName, description, category, minimumApplicationVersion, null)
+        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginBase" /> class.
@@ -56,15 +37,13 @@ namespace Bugger.Plugins
         /// <param name="description">The description of this plug-in.</param>
         /// <param name="category">The category of this plug-in.</param>
         /// <param name="minimumApplicationVersion">The application's minimum version that this plug-in support.</param>
-        /// <param name="maximumApplicationVersion">The application's maximum version that this plug-in support.</param>
+        /// <param name="maximumApplicationVersion">The maximum application version.</param>
         /// <exception cref="System.ArgumentNullException">
         /// uniqueName cannot be null or empty.
         /// or
         /// pluginName cannot be null or empty.
         /// or
         /// minimumApplicationVersion cannot be null.
-        /// or
-        /// maximumApplicationVersion cannot be null.
         /// </exception>
         /// <exception cref="System.ArgumentException">min version cannot larger than max version</exception>
         public PluginBase(string uniqueName,
@@ -77,18 +56,23 @@ namespace Bugger.Plugins
             if (string.IsNullOrWhiteSpace(uniqueName)) { throw new ArgumentNullException("uniqueName cannot be null or empty."); }
             if (string.IsNullOrWhiteSpace(pluginName)) { throw new ArgumentNullException("pluginName cannot be null or empty."); }
             if (minimumApplicationVersion == null) { throw new ArgumentNullException("minimumApplicationVersion cannot be null."); }
-            if (maximumApplicationVersion == null) { throw new ArgumentNullException("maximumApplicationVersion cannot be null."); }
 
-            if (minimumApplicationVersion > maximumApplicationVersion) { throw new ArgumentException("min version cannot larger than max version"); }
+            if (maximumApplicationVersion != null)
+            {
+                if (minimumApplicationVersion > maximumApplicationVersion)
+                {
+                    throw new ArgumentException("min version cannot larger than max version");
+                }
+            }
 
-            this.uniqueName = uniqueName;
-            this.pluginName = pluginName;
-            this.description = description;
-            this.category = category;
-            this.minimumApplicationVersion = minimumApplicationVersion;
-            this.maximumApplicationVersion = maximumApplicationVersion;
+            this.UniqueName = uniqueName;
+            this.PluginName = pluginName;
+            this.Description = description;
+            this.Category = category;
+            this.MinimumApplicationVersion = minimumApplicationVersion;
+            this.MaximumApplicationVersion = maximumApplicationVersion;
 
-            IsInitialized = false;
+            this.IsInitialized = false;
         }
 
 
@@ -99,10 +83,7 @@ namespace Bugger.Plugins
         /// <value>
         /// The unique name of the plug-in.
         /// </value>
-        public string UniqueName
-        {
-            get { return this.uniqueName; }
-        }
+        public string UniqueName { get; private set; }
 
         /// <summary>
         /// Gets the name of the plug-in.
@@ -110,10 +91,7 @@ namespace Bugger.Plugins
         /// <value>
         /// The name of the plug-in.
         /// </value>
-        public string PluginName
-        {
-            get { return this.pluginName; }
-        }
+        public string PluginName { get; private set; }
 
         /// <summary>
         /// Gets the description of the plug-in.
@@ -121,10 +99,7 @@ namespace Bugger.Plugins
         /// <value>
         /// The description of the plug-in.
         /// </value>
-        public string Description
-        {
-            get { return this.description; }
-        }
+        public string Description { get; private set; }
 
         /// <summary>
         /// Gets the category of the plug-in.
@@ -132,10 +107,7 @@ namespace Bugger.Plugins
         /// <value>
         /// The category of the plug-in.
         /// </value>
-        public PluginCategory Category
-        {
-            get { return this.category; }
-        }
+        public PluginCategory Category { get; private set; }
 
         /// <summary>
         /// Gets the application's minimum version that the plug-in support.
@@ -143,10 +115,7 @@ namespace Bugger.Plugins
         /// <value>
         /// The application's minimum version that the plug-in support.
         /// </value>
-        public Version MinimumApplicationVersion
-        {
-            get { return this.minimumApplicationVersion; }
-        }
+        public Version MinimumApplicationVersion { get; private set; }
 
         /// <summary>
         /// Gets the application's maximum version that the plug-in support.
@@ -154,10 +123,7 @@ namespace Bugger.Plugins
         /// <value>
         /// The application's maximum version that the plug-in support.
         /// </value>
-        public Version MaximumApplicationVersion
-        {
-            get { return this.maximumApplicationVersion; }
-        }
+        public Version MaximumApplicationVersion { get; private set; }
         #endregion
 
         #region Plug-in Initialized

@@ -30,7 +30,7 @@ namespace Bugger.Proxy.TFS.ViewModels
 
         private readonly IUriHelperDialogView uriHelpView;
 
-        private ProgressType progressType;
+        private SettingViewProgressType progressType;
         private int progressValue;
         #endregion
 
@@ -243,7 +243,7 @@ namespace Bugger.Proxy.TFS.ViewModels
         /// <value>
         /// The progress type of the setting view-model.
         /// </value>
-        public ProgressType ProgressType
+        public SettingViewProgressType ProgressType
         {
             get { return this.progressType; }
             set
@@ -296,7 +296,7 @@ namespace Bugger.Proxy.TFS.ViewModels
             BugFilterValue = string.Empty;
             PriorityRed = string.Empty;
 
-            ProgressType = ProgressType.NotWorking;
+            ProgressType = SettingViewProgressType.NotWorking;
             ProgressValue = 0;
         }
         #endregion

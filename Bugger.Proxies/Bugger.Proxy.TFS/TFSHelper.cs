@@ -177,13 +177,12 @@ namespace Bugger.Proxy.TFS
             string priority = MapProperty(workItem, propertyMappingList["Priority"]);
             string severity = MapProperty(workItem, propertyMappingList["Severity"], string.Empty);
 
-            var bug = new Bug(id, title, description, assignedTo, state, changedDate, createdBy, priority, severity);
-            bug.Type = string.IsNullOrWhiteSpace(bug.Priority)
+            BugType bugType = string.IsNullOrWhiteSpace(priority)
                            ? BugType.Yellow
-                           : (redFilter.Contains(bug.Priority)
-                                ? BugType.Red
-                                : BugType.Yellow);
+                           : (redFilter.Contains(priority) ? BugType.Red : BugType.Yellow);
 
+            var bug = new Bug(id, title, description, assignedTo, state, changedDate, createdBy, priority, severity);
+            bug.Type = bugType;
             return bug;
         }
 
@@ -250,7 +249,7 @@ namespace Bugger.Proxy.TFS
         /// <param name="defaultValue">The default value.</param>
         /// <returns></returns>
         private T MapProperty<T>(WorkItem workItem, string propertyName, T defaultValue)
-        {
+            {
             if (string.IsNullOrWhiteSpace(propertyName)) { return defaultValue; }
 
             object value = workItem.Fields[propertyName].Value;

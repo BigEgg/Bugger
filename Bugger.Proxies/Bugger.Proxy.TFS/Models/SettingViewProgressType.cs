@@ -1,6 +1,6 @@
 ﻿namespace Bugger.Proxy.TFS.Models
 {
-    public enum ProgressType
+    public enum SettingViewProgressType
     {
         NotWorking,
         OnConnectProgress,

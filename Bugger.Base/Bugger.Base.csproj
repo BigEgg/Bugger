@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">
-      <Project>{ee01d20c-0f89-4219-a615-e5566a73814e}</Project>
+      <Project>{EE01D20C-0F89-4219-A615-E5566A73814E}</Project>
       <Name>BigEgg.Framework</Name>
     </ProjectReference>
   </ItemGroup>

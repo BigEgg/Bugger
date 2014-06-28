@@ -23,6 +23,7 @@ namespace Bugger.Proxy
         /// </summary>
         /// <param name="proxyName">Name of the proxy.</param>
         /// <param name="uniqueName">The unique name of this plug-in.</param>
+        /// <param name="pluginName">The name of this plug-in.</param>
         /// <param name="description">The description of this plug-in.</param>
         /// <param name="minimumApplicationVersion">The application's minimum version that this plug-in support.</param>
         /// <exception cref="System.ArgumentNullException">proxyName cannot be null or white space.</exception>
@@ -30,19 +31,15 @@ namespace Bugger.Proxy
                                       string uniqueName,
                                       string description,
                                       Version minimumApplicationVersion)
-            : base(uniqueName, string.Format("%1 Proxy", proxyName), description, PluginCategory.Proxy, minimumApplicationVersion)
-        {
-            if (string.IsNullOrWhiteSpace(proxyName)) { throw new ArgumentNullException("proxyName cannot be null or white space."); }
-
-            this.ProxyName = proxyName;
-            this.canQuery = false;
-        }
+            : this(proxyName, uniqueName, description, minimumApplicationVersion, null)
+        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TracingSystemProxyBase" /> class.
         /// </summary>
         /// <param name="proxyName">Name of the proxy.</param>
         /// <param name="uniqueName">The unique name of this plug-in.</param>
+        /// <param name="pluginName">The name of this plug-in.</param>
         /// <param name="description">The description of this plug-in.</param>
         /// <param name="minimumApplicationVersion">The application's minimum version that this plug-in support.</param>
         /// <param name="maximumApplicationVersion">The application's maximum version that this plug-in support.</param>
