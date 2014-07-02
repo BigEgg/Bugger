@@ -57,8 +57,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Documents\AutoFillMapDocument.cs" />
+    <Compile Include="Documents\AutoFillMapDocumentType.cs" />
     <Compile Include="Documents\SettingDocument.cs" />
     <Compile Include="Documents\SettingDocumentType.cs" />
+    <Compile Include="Models\AutoFillMapModel.cs" />
     <Compile Include="Models\CheckString.cs" />
     <Compile Include="Models\SettingViewProgressType.cs" />
     <Compile Include="Models\TFSField.cs" />

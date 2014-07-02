@@ -11,11 +11,22 @@ namespace Bugger.Proxy.Models
 
 
         /// <summary>
-        /// Gets the new property mapping dictionary of the ITFSBug interface.
+        /// Gets the property names of the IBug interface.
+        /// </summary>
+        /// <returns>The property names</returns>
+        public static IList<string> GetPropertyNames()
+        {
+            GetNamesIfNotGet();
+
+            return propertyNamesCache;
+        }
+
+        /// <summary>
+        /// Gets the new property mapping dictionary of the IBug interface.
         /// </summary>
         /// <param name="bug">The bug interface.</param>
         /// <returns>The new property mapping dictionary.</returns>
-        public static PropertyMappingDictionary GetPropertyNames()
+        public static PropertyMappingDictionary GetPropertyMappingDictionary()
         {
             GetNamesIfNotGet();
 

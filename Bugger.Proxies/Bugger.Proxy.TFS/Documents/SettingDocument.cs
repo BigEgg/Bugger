@@ -1,10 +1,9 @@
-﻿using BigEgg.Framework.Applications.ViewModels;
-using Bugger.Proxy.Models;
+﻿using Bugger.Proxy.Models;
 using System;
 
 namespace Bugger.Proxy.TFS.Documents
 {
-    public class SettingDocument : DataModel
+    public class SettingDocument
     {
         #region Fields
         private readonly PropertyMappingDictionary propertyMappingCollection;
@@ -15,7 +14,7 @@ namespace Bugger.Proxy.TFS.Documents
         /// </summary>
         public SettingDocument()
         {
-            this.propertyMappingCollection = BugHelper.GetPropertyNames();
+            this.propertyMappingCollection = BugHelper.GetPropertyMappingDictionary();
 
             UserName = string.Empty;
             Password = string.Empty;
