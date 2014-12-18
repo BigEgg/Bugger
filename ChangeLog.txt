@@ -1,45 +1,45 @@
 ﻿Bugger change log
 
-Alpha 4 (v0.4.0) <----- Currently Working
+Alpha 4 (v0.4.0)
     Application:
         Add extension manager to manage the proxies.
         When open the application, show setting dialog if the settings is not being set.
-    Proxies:
-        TFS Proxy:
+    Proxies
+        TFS Proxy
             Use XML file to save the default automation fill logic.
-        Jira Proxy:
+        Jira Proxy
             Complete all main functions.
             Complete all views.
             Support multi-lingual (English, Chinese).
 
-Alpha 3 (v0.3.0) <----- Currently Release
+Alpha 3 (v0.3.0) <----- Currently Working
     Application:
         Show validation message in views. (✓)
         Can change the Opacity of Floating window by setting. (✓)
         Validate the proxy's setting when submit the setting dialog. (✓)
         Use multi-threading to avoid UI hang when the setting dialog. (✓)
             Show progress and out come when the setting dialog. (✓)
-        Use multi-threading to avoid UI hang change the active proxy. (✓)
-            Show progress and out come when change the active proxy. (✓)
+        Use multi-threading to avoid UI hang change the activy proxy. (✓)
+            Show progress and out come when change the activy proxy. (✓)
         Show progress and out come when query bugs. (✓)
         Optimized the startup time. (✓)
-    Proxies:
+    Proxies
         Support cancel event for proxy restore data when setting dialog cancelled. (✓)
         Support validate event before the submit, to valid the settings. (✓)
-        TFS Proxy:
+        TFS Proxy
             Use multi-threading to avoid UI hang when test connection. (✓)
                 Show progress and out come when test connection. (✓)
             Automation fill the mapping settings. (✓)
-            Implement cancel event for restoring data. (✓)
-            Implement the submit validation logic. (✓)
+            Implament cancel event for restoring data. (✓)
+            Implament the submit validation logic. (✓)
             Update connect status when change the connect information. (✓)
 
-Alpha 2 (v0.2.0)
+Alpha 2 (v0.2.0) <----- Currently Release
     Application:
         Can filter bug by its status. (✓)
-    Proxies:
+    Proxies
         Improve the communication between proxy to application. (✓)
-        TFS Proxy:
+        TFS Proxy
             Show the allowed value for TFS field. (✓)
             All filter filed show TFS field value to choose. (✓)
 
@@ -48,8 +48,8 @@ Alpha 1 (v0.1.0)
         Complete all main functions. (✓)
         Complete all views. (✓)
         Support multi-lingual (English, Chinese). (✓)
-    Proxies:
-        TFS Proxy:
+    Proxies
+        TFS Proxy
             Complete all main functions. (✓)
             Complete all views. (✓)
             Support multi-lingual (English, Chinese). (✓)
