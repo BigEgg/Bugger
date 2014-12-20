@@ -62,6 +62,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 Bugger.Applications", "0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 Bugger.Presentation", "04 Bugger.Presentation", "{C7CFDDD5-F148-4046-8C96-22DC17A3F203}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "References", "References", "{4873D525-DFD0-4FB7-8416-8DA7B21C3DCB}"
+	ProjectSection(SolutionItems) = preProject
+		References\Microsoft.TeamFoundation.Client.dll = References\Microsoft.TeamFoundation.Client.dll
+		References\Microsoft.TeamFoundation.Common.dll = References\Microsoft.TeamFoundation.Common.dll
+		References\Microsoft.TeamFoundation.WorkItemTracking.Client.dll = References\Microsoft.TeamFoundation.WorkItemTracking.Client.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 20
