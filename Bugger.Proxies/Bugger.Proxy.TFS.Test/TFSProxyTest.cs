@@ -8,7 +8,6 @@ using Bugger.Proxy.TFS.Properties;
 using Bugger.Proxy.TFS.Test.Services;
 using Bugger.Proxy.TFS.ViewModels;
 using Bugger.Proxy.TFS.Views;
-using BigEgg.Framework.Applications.Views;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.ObjectModel;

@@ -96,9 +96,9 @@
       <Project>{398d1756-2c56-454a-a7ec-e996bb146c2e}</Project>
       <Name>Bugger.Applications</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Bugger.Domain\Bugger.Domain.csproj">
-      <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
-      <Name>Bugger.Domain</Name>
+    <ProjectReference Include="..\Bugger.Base\Bugger.Base.csproj">
+      <Project>{3DCFFAF0-D1E5-4FC1-B37B-4A6A27AE5E4F}</Project>
+      <Name>Bugger.Base</Name>
     </ProjectReference>
     <ProjectReference Include="..\Bugger.Proxies\Bugger.Proxy.FakeProxy\Bugger.Proxy.FakeProxy.csproj">
       <Project>{9d384026-d73b-4ba9-9ae3-7d2172c438ce}</Project>
