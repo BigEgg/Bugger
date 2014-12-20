@@ -39,8 +39,11 @@
   <ItemGroup>
     <Compile Include="Models\Bug.cs" />
     <Compile Include="Models\BugType.cs" />
+    <Compile Include="PlugIns\IPlugIn.cs" />
+    <Compile Include="PlugIns\PlugInBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
