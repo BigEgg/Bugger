@@ -1,4 +1,4 @@
-﻿namespace Bugger.Domain.Models
+﻿namespace Bugger.Base.Models
 {
     public enum BugType
     {

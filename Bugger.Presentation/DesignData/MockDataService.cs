@@ -2,7 +2,7 @@
 using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Applications.Models;
 using Bugger.Applications.Services;
-using Bugger.Domain.Models;
+using Bugger.Base.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

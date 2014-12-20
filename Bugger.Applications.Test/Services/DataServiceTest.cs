@@ -1,7 +1,7 @@
 ﻿using BigEgg.Framework.UnitTesting;
 using Bugger.Applications.Models;
 using Bugger.Applications.Services;
-using Bugger.Domain.Models;
+using Bugger.Base.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;

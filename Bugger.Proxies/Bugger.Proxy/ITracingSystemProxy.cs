@@ -1,4 +1,4 @@
-﻿using Bugger.Domain.Models;
+﻿using Bugger.Base.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -1,8 +1,8 @@
-﻿using Bugger.Domain.Models;
+﻿using Bugger.Base.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Bugger.Domain.Test.Models
+namespace Bugger.Base.Test.Models
 {
     [TestClass]
     public class WorkItemTest

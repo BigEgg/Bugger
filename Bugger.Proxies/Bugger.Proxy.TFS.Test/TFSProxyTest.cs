@@ -1,7 +1,7 @@
 ﻿using BigEgg.Framework.Applications.Services;
 using BigEgg.Framework.Applications.Views;
 using BigEgg.Framework.UnitTesting;
-using Bugger.Domain.Models;
+using Bugger.Base.Models;
 using Bugger.Proxy.TFS.Documents;
 using Bugger.Proxy.TFS.Presentation.Fake.Views;
 using Bugger.Proxy.TFS.Properties;

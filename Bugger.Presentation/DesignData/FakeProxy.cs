@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Bugger.Domain.Models;
+using Bugger.Base.Models;
 using Bugger.Proxy;
 
 namespace Bugger.Presentation.DesignData

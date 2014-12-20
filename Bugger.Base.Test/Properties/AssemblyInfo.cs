@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Bugger.Domain.Test")]
+[assembly: AssemblyProduct("Bugger.Base.Test")]
 [assembly: AssemblyCopyright("Copyright © BigEgg 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

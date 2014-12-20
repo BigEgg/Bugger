@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bugger.Domain.Models
+namespace Bugger.Base.Models
 {
     /// <summary>
     /// The model class use to shows in the UI.

@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="cac020b5-a577-4d3d-8d08-4e21a676c93c" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
   <layers>
-    <layer Id="0550101b-1f0a-488f-b5f1-29e0e1c1f2a9" name="Bugger.Domain">
+    <layer Id="0550101b-1f0a-488f-b5f1-29e0e1c1f2a9" name="Bugger.Base">
       <references>
         <reference Id="8641bb2c-80e6-4240-a116-810efe6c8ea4" name="Bugger.Domain">
-          <ArtifactNode Label="Bugger.Domain" Category="CodeSchema_Project" Id="(Assembly=../Bugger.Domain/Bugger.Domain.csproj)">
+          <ArtifactNode Label="Bugger.Domain" Category="CodeSchema_Project" Id="(Assembly=../Bugger.Domain/Bugger.Base.csproj)">
             <Category Ref="File" />
           </ArtifactNode>
-          <ExpandedNode Id="(Assembly=Bugger.Domain)" Label="Bugger.Domain.dll" Category="CodeSchema_Assembly">
+          <ExpandedNode Id="(Assembly=Bugger.Domain)" Label="Bugger.Base.dll" Category="CodeSchema_Assembly">
             <Category Ref="FileSystem.Category.FileOfType.dll" />
             <LinkCategory Ref="Produces" />
             <LinkCategory Ref="Represents" />

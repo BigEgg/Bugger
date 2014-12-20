@@ -1,4 +1,4 @@
-﻿using Bugger.Domain.Models;
+﻿using Bugger.Base.Models;
 using Bugger.Presentation.Converters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

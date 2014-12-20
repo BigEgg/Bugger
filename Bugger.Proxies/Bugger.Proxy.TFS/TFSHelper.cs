@@ -1,4 +1,4 @@
-﻿using Bugger.Domain.Models;
+﻿using Bugger.Base.Models;
 using Bugger.Proxy.TFS.Models;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;

@@ -4,8 +4,8 @@
     <layer Id="2e36113e-fd7b-442d-9a37-3ebbbe6ce696" name="Bugger.Domain">
       <references>
         <reference Id="5d721805-8b29-4cd2-ab8c-4a8d4ad99526" name="Bugger.Domain">
-          <ArtifactNode Label="Bugger.Domain" Category="CodeSchema_Project" Id="(Assembly=../Bugger.Domain/Bugger.Domain.csproj)" />
-          <ExpandedNode Id="(Assembly=Bugger.Domain)" Label="Bugger.Domain.dll" Category="CodeSchema_Assembly">
+          <ArtifactNode Label="Bugger.Domain" Category="CodeSchema_Project" Id="(Assembly=../Bugger.Domain/Bugger.Base.csproj)" />
+          <ExpandedNode Id="(Assembly=Bugger.Domain)" Label="Bugger.Base.dll" Category="CodeSchema_Assembly">
             <Category Ref="FileSystem.Category.FileOfType.dll" />
             <LinkCategory Ref="Produces" />
             <LinkCategory Ref="Represents" />

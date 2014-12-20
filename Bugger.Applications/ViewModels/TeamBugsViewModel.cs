@@ -1,7 +1,7 @@
 ﻿using BigEgg.Framework.Applications.ViewModels;
 using Bugger.Applications.Services;
 using Bugger.Applications.Views;
-using Bugger.Domain.Models;
+using Bugger.Base.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 
