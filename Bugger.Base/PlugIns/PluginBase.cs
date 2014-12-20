@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Bugger.Base.PlugIns;
+using System;
 
 namespace Bugger.Base.Plugins
 {
-    public class PlugInBase : IPlugIn
+    public abstract class PlugInBase : IPlugIn
     {
         #region Constructor
         /// <summary>
@@ -11,6 +12,8 @@ namespace Bugger.Base.Plugins
         /// <param name="uniqueName">The Plug-in's unique name.</param>
         /// <param name="name">The Plug-in name.</param>
         /// <param name="description">The description of the Plug-in.</param>
+        /// <exception cref="System.ArgumentNullException">name</exception>
+        /// <exception cref="System.ArgumentException">name</exception>
         public PlugInBase(Guid uniqueName, string name, string description)
             : this(uniqueName, name, description, null, null)
         { }
@@ -22,6 +25,8 @@ namespace Bugger.Base.Plugins
         /// <param name="name">The Plug-in name.</param>
         /// <param name="description">The description of the Plug-in.</param>
         /// <param name="minimumSupportBuggerVersion">The Plug-in's minimum support bugger version.</param>
+        /// <exception cref="System.ArgumentNullException">name</exception>
+        /// <exception cref="System.ArgumentException">name</exception>
         public PlugInBase(Guid uniqueName, string name, string description, Version minimumSupportBuggerVersion)
             : this(uniqueName, name, description, minimumSupportBuggerVersion, null)
         { }
@@ -34,8 +39,13 @@ namespace Bugger.Base.Plugins
         /// <param name="description">The description of the Plug-in.</param>
         /// <param name="minimumSupportBuggerVersion">The Plug-in's minimum support bugger version.</param>
         /// <param name="maximumSupportBuggerVersion">The Plug-in's maximum support bugger version.</param>
+        /// <exception cref="System.ArgumentNullException">name</exception>
+        /// <exception cref="System.ArgumentException">name</exception>
         public PlugInBase(Guid uniqueName, string name, string description, Version minimumSupportBuggerVersion, Version maximumSupportBuggerVersion)
         {
+            if (uniqueName == null) { throw new ArgumentNullException("name"); }
+            if (string.IsNullOrWhiteSpace(name)) { throw new ArgumentException("name"); }
+
             this.UniqueName = uniqueName;
             this.Name = name;
             this.Description = description;
@@ -94,9 +104,24 @@ namespace Bugger.Base.Plugins
         /// The Plug-in's maximum support bugger version.
         /// </value>
         public Version MaximumSupportBuggerVersion { get; private set; }
+
+        /// <summary>
+        /// Get the flag of the Initialization of the Plug-in.
+        /// </summary>
+        public bool IsInitialized { get; private set; }
+
+        #region Setting View Model
+        /// <summary>
+        /// Gets the Plug-in setting view model.
+        /// </summary>
+        /// <value>
+        /// The Plug-in setting view model.
+        /// </value>
+        public abstract ProxySettingViewModel<IPlugInSettingView> SettingViewModel { get; }
+        #endregion
         #endregion
 
-        #region Methods
+        #region Plug-in Methods
         /// <summary>
         /// Determines whether the specified bugger version is support.
         /// </summary>
@@ -112,6 +137,29 @@ namespace Bugger.Base.Plugins
 
             return true;
         }
+
+
+        /// <summary>
+        /// Initializes the Plug-in.
+        /// </summary>
+        public void Initialize()
+        {
+            try
+            {
+                if (IsInitialized)
+                    return;
+
+                OnInitialize();
+                IsInitialized = true;
+            }
+            catch
+            {
+                IsInitialized = false;
+                throw;
+            }
+        }
+
+        protected abstract void OnInitialize();
         #endregion
     }
 }
