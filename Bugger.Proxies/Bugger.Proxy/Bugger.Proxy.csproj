@@ -45,13 +45,9 @@
     <Compile Include="TracingSystemProxyBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">
-      <Project>{ee01d20c-0f89-4219-a615-e5566a73814e}</Project>
-      <Name>BigEgg.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Bugger.Base\Bugger.Base.csproj">
+    <ProjectReference Include="..\..\Bugger.Domain\Bugger.Domain.csproj">
       <Project>{3dcffaf0-d1e5-4fc1-b37b-4a6a27ae5e4f}</Project>
-      <Name>Bugger.Base</Name>
+      <Name>Bugger.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

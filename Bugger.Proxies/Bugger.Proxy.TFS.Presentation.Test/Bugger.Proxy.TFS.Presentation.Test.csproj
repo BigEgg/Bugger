@@ -70,10 +70,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework.UnitTesting\BigEgg.Framework.UnitTesting.csproj">
-      <Project>{0cc7a8da-a50b-405f-b14c-8b6bbaea42ce}</Project>
-      <Name>BigEgg.Framework.UnitTesting</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Bugger.Proxy.TFS.Presentation\Bugger.Proxy.TFS.Presentation.csproj">
       <Project>{0c5cd96e-9b43-4065-8a02-83b96989e242}</Project>
       <Name>Bugger.Proxy.TFS.Presentation</Name>

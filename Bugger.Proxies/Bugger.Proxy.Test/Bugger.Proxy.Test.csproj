@@ -61,17 +61,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework.UnitTesting\BigEgg.Framework.UnitTesting.csproj">
-      <Project>{0cc7a8da-a50b-405f-b14c-8b6bbaea42ce}</Project>
-      <Name>BigEgg.Framework.UnitTesting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">
-      <Project>{ee01d20c-0f89-4219-a615-e5566a73814e}</Project>
-      <Name>BigEgg.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Bugger.Base\Bugger.Base.csproj">
+    <ProjectReference Include="..\..\Bugger.Domain\Bugger.Domain.csproj">
       <Project>{3DCFFAF0-D1E5-4FC1-B37B-4A6A27AE5E4F}</Project>
-      <Name>Bugger.Base</Name>
+      <Name>Bugger.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Bugger.Proxy\Bugger.Proxy.csproj">
       <Project>{E8727087-75F2-435F-BD11-78B4DFF59A40}</Project>

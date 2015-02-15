@@ -45,14 +45,6 @@
     <Compile Include="Views\MockUriHelpView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework.UnitTesting\BigEgg.Framework.UnitTesting.csproj">
-      <Project>{0cc7a8da-a50b-405f-b14c-8b6bbaea42ce}</Project>
-      <Name>BigEgg.Framework.UnitTesting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">
-      <Project>{EE01D20C-0F89-4219-A615-E5566A73814E}</Project>
-      <Name>BigEgg.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Bugger.Proxy.TFS\Bugger.Proxy.TFS.csproj">
       <Project>{5714b0c6-82f3-4cc6-b33e-e3f8835c38fc}</Project>
       <Name>Bugger.Proxy.TFS</Name>

@@ -135,10 +135,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BigEggCore\Framework\BigEgg.Framework\BigEgg.Framework.csproj">
-      <Project>{ee01d20c-0f89-4219-a615-e5566a73814e}</Project>
-      <Name>BigEgg.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Bugger.Applications\Bugger.Applications.csproj">
       <Project>{398d1756-2c56-454a-a7ec-e996bb146c2e}</Project>
       <Name>Bugger.Applications</Name>
