@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
 
-namespace BigEgg.Framework.Application.Test
+namespace BigEgg.Framework.Application.Test.UnitTesting
 {
     [TestClass]
     public class PropertyChangedEventTest

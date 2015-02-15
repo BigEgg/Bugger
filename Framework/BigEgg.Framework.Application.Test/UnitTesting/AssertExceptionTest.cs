@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace BigEgg.Framework.Application.Test
+namespace BigEgg.Framework.Application.Test.UnitTesting
 {
     [TestClass]
     public class AssertExceptionTest

@@ -69,7 +69,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Applicatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Application.UnitTesting", "Framework\BigEgg.Framework.Application.UnitTest\BigEgg.Framework.Application.UnitTesting.csproj", "{9C8D53DD-FE21-4142-802B-25FCE61CD2A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Application.Test", "Framework\BigEgg.Framework.Application.Test\BigEgg.Framework.Application.Test.csproj", "{FC9662F1-9516-44DC-BEB5-F58D155C5A15}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Application.Test", "Framework\BigEgg.Framework.Application.Test\BigEgg.Framework.Application.Test.csproj", "{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,10 +141,10 @@ Global
 		{9C8D53DD-FE21-4142-802B-25FCE61CD2A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C8D53DD-FE21-4142-802B-25FCE61CD2A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C8D53DD-FE21-4142-802B-25FCE61CD2A5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FC9662F1-9516-44DC-BEB5-F58D155C5A15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC9662F1-9516-44DC-BEB5-F58D155C5A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FC9662F1-9516-44DC-BEB5-F58D155C5A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FC9662F1-9516-44DC-BEB5-F58D155C5A15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -172,6 +172,6 @@ Global
 		{01329142-F933-4811-A40D-20D1DDEDAD14} = {823D2174-AA3F-411B-B01C-1E4E23D7EA74}
 		{AC6AD921-828C-484F-B746-BACFEC5CD856} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
 		{9C8D53DD-FE21-4142-802B-25FCE61CD2A5} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
-		{FC9662F1-9516-44DC-BEB5-F58D155C5A15} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
+		{002F1AE2-64D0-40B3-9BE8-337C1C8944B1} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
 	EndGlobalSection
 EndGlobal

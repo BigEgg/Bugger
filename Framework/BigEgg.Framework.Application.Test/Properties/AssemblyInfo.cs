@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("BigEgg.Framework.Application.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BigEgg.Framework.Application.Test")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCompany("BigEgg")]
+[assembly: AssemblyProduct("BigEgg.Framework")]
+[assembly: AssemblyCopyright("Copyright © BigEgg 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fc9662f1-9516-44dc-beb5-f58d155c5a15")]
+[assembly: Guid("002f1ae2-64d0-40b3-9be8-337c1c8944b1")]
 
 // Version information for an assembly consists of the following four values:
 //
