@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BigEgg.Framework.Application.Foundation;
+using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -12,41 +13,39 @@ namespace BigEgg.Framework.Application.UnitTesting
         /// </summary>
         /// <typeparam name="T">The type of the observable.</typeparam>
         /// <param name="observable">The observable which should raise the property changed event.</param>
-        /// <param name="expression">A simple expression which identifies the property (e.g. x => x.Name).</param>
-        /// <param name="raisePropertyChanged">An action that results in a property changed event of the observable.</param>
+        /// <param name="propertySelector">A simple expression which identifies the property (e.g. x => x.Name).</param>
+        /// <param name="action">An action that results in a property changed event of the observable.</param>
         /// <exception cref="AssertException">This exception is thrown when no or more than one property changed event was 
         /// raised by the observable or the sender object of the event was not the observable object.</exception>
-        public static void PropertyChangedEvent<T>(T observable, Expression<Func<T, object>> expression, Action raisePropertyChanged)
+        public static void IsRaisePropertyChangedEvent<T>(T observable, Expression<Func<T, object>> propertySelector, Action action)
             where T : class, INotifyPropertyChanged
         {
             if (observable == null) { throw new ArgumentNullException("observable"); }
-            if (expression == null) { throw new ArgumentNullException("expression"); }
-            if (raisePropertyChanged == null) { throw new ArgumentNullException("raisePropertyChanged"); }
+            if (propertySelector == null) { throw new ArgumentNullException("propertySelector"); }
+            if (action == null) { throw new ArgumentNullException("action"); }
 
-            string propertyName = GetProperty(expression).Name;
+            string propertyName = GetProperty(propertySelector).Name;
             int propertyChangedCount = 0;
 
-            observable.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+            PropertyChangedEventHandler handler = (sender, e) =>
             {
-                if (observable != sender)
-                {
-                    throw new AssertException("The sender object of the event isn't the observable");
-                }
-
+                if (observable != sender) { throw new AssertException("The sender object of the event isn't the observable"); }
                 if (e.PropertyName == propertyName)
                 {
                     propertyChangedCount++;
                 }
             };
 
-            raisePropertyChanged();
+            observable.PropertyChanged += handler;
+            action();
+            observable.PropertyChanged -= handler;
 
             if (propertyChangedCount < 1)
             {
                 throw new AssertException(string.Format(
                     "The PropertyChanged event for the property '{0}' wasn't raised.", propertyName));
             }
-            else if (propertyChangedCount > 1)
+            if (propertyChangedCount > 1)
             {
                 throw new AssertException(string.Format(
                     "The PropertyChanged event for the property '{0}' was raised more than once.", propertyName));
@@ -54,7 +53,15 @@ namespace BigEgg.Framework.Application.UnitTesting
         }
 
 
-        private static PropertyInfo GetProperty<TType>(Expression<Func<TType, object>> propertySelector)
+        /// <summary>
+        /// Get the model's property info.
+        /// </summary>
+        /// <typeparam name="T">The type of the model.</typeparam>
+        /// <param name="propertySelector">A simple expression which identifies the property (e.g. x => x.Name).</param>
+        /// <returns>The property info.</returns>
+        /// <exception cref="ArgumentException">This exception si thrown when the expression isn't valid, or is the 
+        /// parameter itself, or cannot get the property.</exception>
+        public static PropertyInfo GetProperty<T>(Expression<Func<T, object>> propertySelector)
         {
             Expression expression = propertySelector.Body;
 

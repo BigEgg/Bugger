@@ -18,16 +18,16 @@ namespace BigEgg.Framework.Application.Test.Foundation
         {
             Person luke = new Person();
 
-            AssertHelper.PropertyChangedEvent(luke, x => x.Name, () => luke.Name = "Luke");
+            AssertHelper.IsRaisePropertyChangedEvent(luke, x => x.Name, () => luke.Name = "Luke");
             Assert.AreEqual("Luke", luke.Name);
 
-            AssertHelper.PropertyChangedEvent(luke, x => x.Name, () => luke.Name = "Skywalker");
+            AssertHelper.IsRaisePropertyChangedEvent(luke, x => x.Name, () => luke.Name = "Skywalker");
             Assert.AreEqual("Skywalker", luke.Name);
 
-            AssertHelper.PropertyChangedEvent(luke, x => x.Email, () => luke.Email = "luke.skywalker@tatooine.com");
+            AssertHelper.IsRaisePropertyChangedEvent(luke, x => x.Email, () => luke.Email = "luke.skywalker@tatooine.com");
             Assert.AreEqual("luke.skywalker@tatooine.com", luke.Email);
 
-            AssertHelper.PropertyChangedEvent(luke, x => x.Phone, () => luke.Phone = "42");
+            AssertHelper.IsRaisePropertyChangedEvent(luke, x => x.Phone, () => luke.Phone = "42");
             Assert.AreEqual("42", luke.Phone);
         }
 
@@ -37,8 +37,8 @@ namespace BigEgg.Framework.Application.Test.Foundation
         {
             Person luke = new Person();
 
-            AssertHelper.PropertyChangedEvent(luke, x => x.Name, () => luke.Name = "Luke");
-            AssertHelper.PropertyChangedEvent(luke, x => x.Name, () => luke.Name = "Luke");
+            AssertHelper.IsRaisePropertyChangedEvent(luke, x => x.Name, () => luke.Name = "Luke");
+            AssertHelper.IsRaisePropertyChangedEvent(luke, x => x.Name, () => luke.Name = "Luke");
         }
 
         [TestMethod]
