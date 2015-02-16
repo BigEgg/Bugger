@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -28,6 +29,16 @@ namespace BigEgg.Framework.Application.Test.Foundation
 
             AssertHelper.PropertyChangedEvent(luke, x => x.Phone, () => luke.Phone = "42");
             Assert.AreEqual("42", luke.Phone);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AssertException))]
+        public void RaisePropertyChangedTest_NotRaiseWhenSameValue()
+        {
+            Person luke = new Person();
+
+            AssertHelper.PropertyChangedEvent(luke, x => x.Name, () => luke.Name = "Luke");
+            AssertHelper.PropertyChangedEvent(luke, x => x.Name, () => luke.Name = "Luke");
         }
 
         [TestMethod]
@@ -84,6 +95,16 @@ namespace BigEgg.Framework.Application.Test.Foundation
             }
         }
 
+        [TestMethod]
+        public void SetPropertyTest()
+        {
+            Person person = new Person();
+
+            string name = null;
+            Assert.IsTrue(person.SetProperty(ref name, "Bill", "Name"));
+            Assert.AreEqual("Bill", name);
+            Assert.IsFalse(person.SetProperty(ref name, "Bill", "Name")); // Value has not been changed
+        }
 
 
         [Serializable]
@@ -123,6 +144,11 @@ namespace BigEgg.Framework.Application.Test.Foundation
                         RaisePropertyChanged("Phone");
                     }
                 }
+            }
+
+            public new bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+            {
+                return base.SetProperty(ref field, value, propertyName);
             }
         }
     }
