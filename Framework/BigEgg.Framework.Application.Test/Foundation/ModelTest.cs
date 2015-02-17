@@ -32,7 +32,7 @@ namespace BigEgg.Framework.Application.Test.Foundation
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AssertException))]
+        [ExpectedException(typeof(NoEventRaiseException))]
         public void RaisePropertyChangedTest_NotRaiseWhenSameValue()
         {
             Person luke = new Person();
