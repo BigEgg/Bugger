@@ -44,7 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Foundation\Model.cs" />
+    <Compile Include="Foundation\ValidatableModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BigEgg.Framework\BigEgg.Framework\BigEgg.Framework.csproj">
+      <Project>{86969290-3921-4d3e-9168-0380d55b547a}</Project>
+      <Name>BigEgg.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

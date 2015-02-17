@@ -20,24 +20,30 @@ namespace BigEgg.Framework.Test
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void NotNullOrWhiteSpaceTest_Null()
         {
             Preconditions.NotNullOrWhiteSpace(null);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void NotNullOrWhiteSpaceTest_Empty()
         {
             Preconditions.NotNullOrWhiteSpace("");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void NotNullOrWhiteSpaceTest_WhiteSpace()
         {
             Preconditions.NotNullOrWhiteSpace("  ");
+        }
+
+        [TestMethod]
+        public void NotNullOrWhiteSpaceTest_ValidValue()
+        {
+            Preconditions.NotNullOrWhiteSpace("abc");
         }
     }
 }

@@ -80,7 +80,7 @@ namespace BigEgg.Framework.Application.Test.Foundation
         }
 
         [TestMethod]
-        public void SerializationWithDcsTest()
+        public void SerializationWithDCSTest()
         {
             var serializer = new DataContractSerializer(typeof(Person));
 

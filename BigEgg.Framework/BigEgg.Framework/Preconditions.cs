@@ -29,12 +29,12 @@ namespace BigEgg.Framework
         /// empty, or consists only of white-space characters.
         /// </summary>
         /// <param name="value">The string to test</param>
-        /// <param name="paramName">The name of the parameter that caused the exception.</param>
-        public static void NotNullOrWhiteSpace(string value, string paramName = "")
+        /// <param name="message">The error message that explains the reason for the exception.</param>
+        public static void NotNullOrWhiteSpace(string value, string message = "")
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                throw new ArgumentNullException(paramName);
+                throw new ArgumentException(message);
             }
         }
     }
