@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
 
 namespace BigEgg.Framework.Application.Test.Foundation
 {
@@ -30,10 +31,29 @@ namespace BigEgg.Framework.Application.Test.Foundation
         {
             Person person = new Person();
 
-            AssertHelper.IsRaisePropertyChangedEvent(person, x => x.HasErrors, () => person.Validate());
+            AssertHelper.IsRaisePropertyChangedEvent(person, x => x.HasErrors, () =>
+                AssertHelper.IsRaiseErrorChangedEvent(person, () => person.Validate()));
             Assert.IsTrue(person.HasErrors);
             Assert.AreEqual(Person.NameMadatoryErrorMessage, person.GetErrors().Single().ErrorMessage);
             Assert.AreEqual(Person.NameMadatoryErrorMessage, person.GetErrors("Name").Single().ErrorMessage);
+        }
+
+        [TestMethod]
+        public void EntityValidationErrorTest()
+        {
+            Person person = new Person() { Name = "Bill" };
+            person.Validate();
+            Assert.IsFalse(person.HasErrors);
+
+            var entityError = new ValidationResult("My entity error");
+            person.EntityError = entityError;
+
+            AssertHelper.IsRaisePropertyChangedEvent(person, x => x.HasErrors, () =>
+                AssertHelper.IsRaiseErrorChangedEvent(person, () => person.Validate()));
+            Assert.IsTrue(person.HasErrors);
+            Assert.AreEqual(entityError, person.GetErrors().Single());
+            Assert.AreEqual(entityError, person.GetErrors("").Single());
+            Assert.AreEqual(entityError, person.GetErrors(null).Single());
         }
 
         [TestMethod]
@@ -54,10 +74,30 @@ namespace BigEgg.Framework.Application.Test.Foundation
 
         [TestMethod]
         [ExpectedException(typeof(NoEventRaiseException))]
-        public void ValidateTest_NotRaiseErrosChanged_WhenValid()
+        public void NotRaiseErrosChanged_WhenValid()
         {
             Person person = new Person() { Name = "Bill" };
             AssertHelper.IsRaiseErrorChangedEvent(person, () => person.Validate());
+        }
+
+        [TestMethod]
+        public void SetPropertyAndValidateTest()
+        {
+            Person person = new Person();
+
+            string name = null;
+            Assert.IsTrue(person.SetPropertyAndValidate(ref name, "Bill", "Name"));
+            Assert.IsFalse(person.SetPropertyAndValidate(ref name, "Bill", "Name"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void SetPropertyAndValidateTest_PropertyNameNull()
+        {
+            Person person = new Person();
+
+            string name = null;
+            person.SetPropertyAndValidate(ref name, "Bill", null);
         }
 
         [TestMethod]
@@ -122,26 +162,6 @@ namespace BigEgg.Framework.Application.Test.Foundation
         }
 
         [TestMethod]
-        public void SetPropertyAndValidateTest()
-        {
-            Person person = new Person();
-
-            string name = null;
-            Assert.IsTrue(person.SetPropertyAndValidate(ref name, "Bill", "Name"));
-            Assert.IsFalse(person.SetPropertyAndValidate(ref name, "Bill", "Name"));
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void SetPropertyAndValidateTest_PropertyNameNull()
-        {
-            Person person = new Person();
-
-            string name = null;
-            person.SetPropertyAndValidate(ref name, "Bill", null);
-        }
-
-        [TestMethod]
         public void SerializationTest()
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -182,6 +202,8 @@ namespace BigEgg.Framework.Application.Test.Foundation
             public const string EmailLengthErrorMessage = "The field Email must be a string with a maximum length of 64.";
             private string name;
             private string email;
+            [NonSerialized]
+            private ValidationResult entityError;
 
             [Required(ErrorMessage = NameMadatoryErrorMessage)]
             public string Name
@@ -198,6 +220,13 @@ namespace BigEgg.Framework.Application.Test.Foundation
                 set { SetPropertyAndValidate(ref email, value); }
             }
 
+            public ValidationResult EntityError
+            {
+                get { return entityError; }
+                set { entityError = value; }
+            }
+
+
             public new bool ValidateProperty(object value, string propertyName)
             {
                 return base.ValidateProperty(value, propertyName);
@@ -206,6 +235,13 @@ namespace BigEgg.Framework.Application.Test.Foundation
             public new bool SetPropertyAndValidate<T>(ref T field, T value, string propertyName)
             {
                 return base.SetPropertyAndValidate(ref field, value, propertyName);
+            }
+
+            public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+            {
+                var validationResults = new List<ValidationResult>();
+                if (EntityError != null) { validationResults.Add(EntityError); }
+                return validationResults;
             }
         }
     }

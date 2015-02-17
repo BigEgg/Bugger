@@ -13,7 +13,7 @@ namespace BigEgg.Framework.Application.Foundation
     /// Defines a base class for a model that supports validation.
     /// </summary>
     [Serializable]
-    public class ValidatableModel : Model, INotifyDataErrorInfo
+    public abstract class ValidatableModel : Model, INotifyDataErrorInfo, IValidatableObject
     {
         private static readonly ValidationResult[] NO_ERROR = new ValidationResult[0];
 
@@ -49,6 +49,18 @@ namespace BigEgg.Framework.Application.Foundation
         IEnumerable INotifyDataErrorInfo.GetErrors(string propertyName)
         {
             return GetErrors(propertyName);
+        }
+        #endregion
+
+        #region Implement IValidatableObject Interface
+        /// <summary>
+        /// Determines whether the specified object is valid.
+        /// </summary>
+        /// <param name="validationContext">The validation context.</param>
+        /// <returns>A collection that holds failed-validation information.</returns>
+        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            return new List<ValidationResult>();
         }
         #endregion
 
@@ -122,7 +134,7 @@ namespace BigEgg.Framework.Application.Foundation
                 {
                     var propertyNames = validationResult.MemberNames.Any()
                         ? validationResult.MemberNames.ToList()
-                        : new List<string>();
+                        : new List<string>() { "" };
                     propertyNames.ForEach(propertyName => errors.AddOrUpdate(propertyName, validationResult));
                 });
                 RaiseErrorsChanged();
@@ -173,7 +185,7 @@ namespace BigEgg.Framework.Application.Foundation
         /// <exception cref="ArgumentException">The argument propertyName must not be null or empty.</exception>
         protected bool ValidateProperty(object value, [CallerMemberName] string propertyName = null)
         {
-           Preconditions.NotNullOrWhiteSpace(propertyName, "The argument propertyName must not be null or empty.");
+            Preconditions.NotNullOrWhiteSpace(propertyName, "The argument propertyName must not be null or empty.");
 
             IList<ValidationResult> validationResults = new List<ValidationResult>();
             Validator.TryValidateProperty(value, new ValidationContext(this) { MemberName = propertyName }, validationResults);
