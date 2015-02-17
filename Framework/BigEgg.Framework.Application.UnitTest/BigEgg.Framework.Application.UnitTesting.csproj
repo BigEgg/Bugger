@@ -40,6 +40,12 @@
     <Compile Include="AssertHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BigEgg.Framework.Application\BigEgg.Framework.Application.csproj">
+      <Project>{ac6ad921-828c-484f-b746-bacfec5cd856}</Project>
+      <Name>BigEgg.Framework.Application</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -52,6 +52,151 @@ namespace BigEgg.Framework.Application.UnitTesting
             }
         }
 
+        /// <summary>
+        /// Asserts that the execution of the provided action raises the errors changed event.
+        /// </summary>
+        /// <typeparam name="T">The type of the observable.</typeparam>
+        /// <param name="observable">The observable which should raise the errors changed event.</param>
+        /// <param name="action">An action that results in a errors changed event of the observable.</param>
+        /// <exception cref="AssertException">This exception is thrown when no or more than one errors changed event was 
+        /// raised by the observable or the sender object of the event was not the observable object.</exception>
+        public static void IsRaiseErrorChangedEvent<T>(T observable, Action action)
+            where T : class, INotifyDataErrorInfo
+        {
+            if (observable == null) { throw new ArgumentNullException("observable"); }
+            if (action == null) { throw new ArgumentNullException("action"); }
+
+            int errorChangedCount = 0;
+            EventHandler<DataErrorsChangedEventArgs> handler = (sender, e) =>
+            {
+                if (observable != sender) { throw new AssertException("The sender object of the event isn't the observable"); }
+                errorChangedCount++;
+            };
+
+            observable.ErrorsChanged += handler;
+            action();
+            observable.ErrorsChanged -= handler;
+
+            if (errorChangedCount < 1)
+            {
+                throw new AssertException("The ErrorsChanged event for the entity wasn't raised.");
+            }
+            if (errorChangedCount > 1)
+            {
+                throw new AssertException("The ErrorsChanged event for the entity was raised more than once.");
+            }
+        }
+
+        /// <summary>
+        /// Asserts that the execution of the provided action raises the errors changed event.
+        /// </summary>
+        /// <typeparam name="T">The type of the observable.</typeparam>
+        /// <param name="observable">The observable which should raise the errors changed event.</param>
+        /// <param name="propertySelector">A simple expression which identifies the property (e.g. x => x.Name).</param>
+        /// <param name="action">An action that results in a errors changed event of the observable.</param>
+        /// <exception cref="AssertException">This exception is thrown when no or more than one errors changed event was 
+        /// raised by the observable or the sender object of the event was not the observable object.</exception>
+        public static void IsRaiseErrorChangedEvent<T>(T observable, Expression<Func<T, object>> propertySelector, Action action)
+            where T : class, INotifyDataErrorInfo
+        {
+            if (observable == null) { throw new ArgumentNullException("observable"); }
+            if (propertySelector == null) { throw new ArgumentNullException("propertySelector"); }
+            if (action == null) { throw new ArgumentNullException("action"); }
+
+            string propertyName = GetProperty(propertySelector).Name;
+            int errorChangedCount = 0;
+
+            EventHandler<DataErrorsChangedEventArgs> handler = (sender, e) =>
+            {
+                if (observable != sender) { throw new AssertException("The sender object of the event isn't the observable"); }
+                if (e.PropertyName == propertyName)
+                {
+                    errorChangedCount++;
+                }
+            };
+
+            observable.ErrorsChanged += handler;
+            action();
+            observable.ErrorsChanged -= handler;
+
+            if (errorChangedCount < 1)
+            {
+                throw new AssertException(string.Format(
+                    "The ErrorsChanged event for the property '{0}' wasn't raised.", propertyName));
+            }
+            if (errorChangedCount > 1)
+            {
+                throw new AssertException(string.Format(
+                    "The ErrorsChanged event for the property '{0}' was raised more than once.", propertyName));
+            }
+        }
+
+
+        /// <summary>
+        /// Asserts that the execution of the provided action raises both the errors changed event and property changed event.
+        /// </summary>
+        /// <typeparam name="T">The type of the observable.</typeparam>
+        /// <param name="observable">The observable which should raise both the errors changed event and property changed event.</param>
+        /// <param name="propertySelector">A simple expression which identifies the property (e.g. x => x.Name).</param>
+        /// <param name="action">An action that results in a errors changed event and a property changed event of the observable.</param>
+        /// <exception cref="AssertException">This exception is thrown when no or more than one errors changed event or 
+        /// property changed event was raised by the observable or the sender object of the event was not the observable object.</exception>
+        public static void IsRaiseBothErrorChangedEventAndPropertyChangedEvent<T>(T observable, Expression<Func<T, object>> propertySelector, Action action)
+            where T : ValidatableModel
+        {
+            if (observable == null) { throw new ArgumentNullException("observable"); }
+            if (propertySelector == null) { throw new ArgumentNullException("propertySelector"); }
+            if (action == null) { throw new ArgumentNullException("action"); }
+
+            string propertyName = GetProperty(propertySelector).Name;
+            int errorChangedCount = 0;
+            int propertyChangedCount = 0;
+
+            EventHandler<DataErrorsChangedEventArgs> errorChangedHandler = (sender, e) =>
+            {
+                if (observable != sender) { throw new AssertException("The sender object of the event isn't the observable"); }
+                if (e.PropertyName == propertyName)
+                {
+                    errorChangedCount++;
+                }
+            };
+            PropertyChangedEventHandler propertyChangedHandler = (sender, e) =>
+            {
+                if (observable != sender) { throw new AssertException("The sender object of the event isn't the observable"); }
+                if (e.PropertyName == propertyName)
+                {
+                    propertyChangedCount++;
+                }
+            };
+
+            observable.ErrorsChanged += errorChangedHandler;
+            observable.PropertyChanged += propertyChangedHandler;
+            action();
+            observable.PropertyChanged -= propertyChangedHandler;
+            observable.ErrorsChanged -= errorChangedHandler;
+
+            if (propertyChangedCount < 1)
+            {
+                throw new AssertException(string.Format(
+                    "The PropertyChanged event for the property '{0}' wasn't raised.", propertyName));
+            }
+            if (propertyChangedCount > 1)
+            {
+                throw new AssertException(string.Format(
+                    "The PropertyChanged event for the property '{0}' was raised more than once.", propertyName));
+            }
+            if (errorChangedCount < 1)
+            {
+                throw new AssertException(string.Format(
+                    "The ErrorsChanged event for the property '{0}' wasn't raised.", propertyName));
+            }
+            if (errorChangedCount > 1)
+            {
+                throw new AssertException(string.Format(
+                    "The ErrorsChanged event for the property '{0}' was raised more than once.", propertyName));
+            }
+        }
+
 
         /// <summary>
         /// Get the model's property info.
