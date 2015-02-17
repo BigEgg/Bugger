@@ -20,9 +20,9 @@ namespace BigEgg.Framework.Application.UnitTesting
         public static void IsRaisePropertyChangedEvent<T>(T observable, Expression<Func<T, object>> propertySelector, Action action)
             where T : class, INotifyPropertyChanged
         {
-            if (observable == null) { throw new ArgumentNullException("observable"); }
-            if (propertySelector == null) { throw new ArgumentNullException("propertySelector"); }
-            if (action == null) { throw new ArgumentNullException("action"); }
+            Preconditions.NotNull(observable, "observable");
+            Preconditions.NotNull(propertySelector, "propertySelector");
+            Preconditions.NotNull(action, "action");
 
             string propertyName = GetProperty(propertySelector).Name;
             int propertyChangedCount = 0;
@@ -63,8 +63,8 @@ namespace BigEgg.Framework.Application.UnitTesting
         public static void IsRaiseErrorChangedEvent<T>(T observable, Action action)
             where T : class, INotifyDataErrorInfo
         {
-            if (observable == null) { throw new ArgumentNullException("observable"); }
-            if (action == null) { throw new ArgumentNullException("action"); }
+            Preconditions.NotNull(observable, "observable");
+            Preconditions.NotNull(action, "action");
 
             int errorChangedCount = 0;
             EventHandler<DataErrorsChangedEventArgs> handler = (sender, e) =>
@@ -99,9 +99,9 @@ namespace BigEgg.Framework.Application.UnitTesting
         public static void IsRaiseErrorChangedEvent<T>(T observable, Expression<Func<T, object>> propertySelector, Action action)
             where T : class, INotifyDataErrorInfo
         {
-            if (observable == null) { throw new ArgumentNullException("observable"); }
-            if (propertySelector == null) { throw new ArgumentNullException("propertySelector"); }
-            if (action == null) { throw new ArgumentNullException("action"); }
+            Preconditions.NotNull(observable, "observable");
+            Preconditions.NotNull(propertySelector, "propertySelector");
+            Preconditions.NotNull(action, "action");
 
             string propertyName = GetProperty(propertySelector).Name;
             int errorChangedCount = 0;
@@ -144,9 +144,9 @@ namespace BigEgg.Framework.Application.UnitTesting
         public static void IsRaiseBothErrorChangedEventAndPropertyChangedEvent<T>(T observable, Expression<Func<T, object>> propertySelector, Action action)
             where T : ValidatableModel
         {
-            if (observable == null) { throw new ArgumentNullException("observable"); }
-            if (propertySelector == null) { throw new ArgumentNullException("propertySelector"); }
-            if (action == null) { throw new ArgumentNullException("action"); }
+            Preconditions.NotNull(observable, "observable");
+            Preconditions.NotNull(propertySelector, "propertySelector");
+            Preconditions.NotNull(action, "action");
 
             string propertyName = GetProperty(propertySelector).Name;
             int errorChangedCount = 0;

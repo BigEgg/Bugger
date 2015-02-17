@@ -41,6 +41,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BigEgg.Framework\BigEgg.Framework\BigEgg.Framework.csproj">
+      <Project>{86969290-3921-4d3e-9168-0380d55b547a}</Project>
+      <Name>BigEgg.Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BigEgg.Framework.Application\BigEgg.Framework.Application.csproj">
       <Project>{ac6ad921-828c-484f-b746-bacfec5cd856}</Project>
       <Name>BigEgg.Framework.Application</Name>
