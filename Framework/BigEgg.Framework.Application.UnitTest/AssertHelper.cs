@@ -29,7 +29,7 @@ namespace BigEgg.Framework.Application.UnitTesting
 
             PropertyChangedEventHandler handler = (sender, e) =>
             {
-                if (observable != sender) { throw new AssertException("The sender object of the event isn't the observable"); }
+                if (observable != sender) { throw new SenderObservableNotSameException(); }
                 if (e.PropertyName == propertyName)
                 {
                     propertyChangedCount++;
@@ -42,12 +42,12 @@ namespace BigEgg.Framework.Application.UnitTesting
 
             if (propertyChangedCount < 1)
             {
-                throw new AssertException(string.Format(
+                throw new NoEventRaiseException(string.Format(
                     "The PropertyChanged event for the property '{0}' wasn't raised.", propertyName));
             }
             if (propertyChangedCount > 1)
             {
-                throw new AssertException(string.Format(
+                throw new EventRaiseMoreThanOnceException(string.Format(
                     "The PropertyChanged event for the property '{0}' was raised more than once.", propertyName));
             }
         }
@@ -69,7 +69,7 @@ namespace BigEgg.Framework.Application.UnitTesting
             int errorChangedCount = 0;
             EventHandler<DataErrorsChangedEventArgs> handler = (sender, e) =>
             {
-                if (observable != sender) { throw new AssertException("The sender object of the event isn't the observable"); }
+                if (observable != sender) { throw new SenderObservableNotSameException(); }
                 errorChangedCount++;
             };
 
@@ -79,11 +79,11 @@ namespace BigEgg.Framework.Application.UnitTesting
 
             if (errorChangedCount < 1)
             {
-                throw new AssertException("The ErrorsChanged event for the entity wasn't raised.");
+                throw new NoEventRaiseException("The ErrorsChanged event for the entity wasn't raised.");
             }
             if (errorChangedCount > 1)
             {
-                throw new AssertException("The ErrorsChanged event for the entity was raised more than once.");
+                throw new EventRaiseMoreThanOnceException("The ErrorsChanged event for the entity was raised more than once.");
             }
         }
 
@@ -108,7 +108,7 @@ namespace BigEgg.Framework.Application.UnitTesting
 
             EventHandler<DataErrorsChangedEventArgs> handler = (sender, e) =>
             {
-                if (observable != sender) { throw new AssertException("The sender object of the event isn't the observable"); }
+                if (observable != sender) { throw new SenderObservableNotSameException(); }
                 if (e.PropertyName == propertyName)
                 {
                     errorChangedCount++;
@@ -121,12 +121,12 @@ namespace BigEgg.Framework.Application.UnitTesting
 
             if (errorChangedCount < 1)
             {
-                throw new AssertException(string.Format(
+                throw new NoEventRaiseException(string.Format(
                     "The ErrorsChanged event for the property '{0}' wasn't raised.", propertyName));
             }
             if (errorChangedCount > 1)
             {
-                throw new AssertException(string.Format(
+                throw new EventRaiseMoreThanOnceException(string.Format(
                     "The ErrorsChanged event for the property '{0}' was raised more than once.", propertyName));
             }
         }
@@ -154,7 +154,7 @@ namespace BigEgg.Framework.Application.UnitTesting
 
             EventHandler<DataErrorsChangedEventArgs> errorChangedHandler = (sender, e) =>
             {
-                if (observable != sender) { throw new AssertException("The sender object of the event isn't the observable"); }
+                if (observable != sender) { throw new SenderObservableNotSameException(); }
                 if (e.PropertyName == propertyName)
                 {
                     errorChangedCount++;
@@ -162,7 +162,7 @@ namespace BigEgg.Framework.Application.UnitTesting
             };
             PropertyChangedEventHandler propertyChangedHandler = (sender, e) =>
             {
-                if (observable != sender) { throw new AssertException("The sender object of the event isn't the observable"); }
+                if (observable != sender) { throw new SenderObservableNotSameException(); }
                 if (e.PropertyName == propertyName)
                 {
                     propertyChangedCount++;
@@ -177,22 +177,22 @@ namespace BigEgg.Framework.Application.UnitTesting
 
             if (propertyChangedCount < 1)
             {
-                throw new AssertException(string.Format(
+                throw new NoEventRaiseException(string.Format(
                     "The PropertyChanged event for the property '{0}' wasn't raised.", propertyName));
             }
             if (propertyChangedCount > 1)
             {
-                throw new AssertException(string.Format(
+                throw new EventRaiseMoreThanOnceException(string.Format(
                     "The PropertyChanged event for the property '{0}' was raised more than once.", propertyName));
             }
             if (errorChangedCount < 1)
             {
-                throw new AssertException(string.Format(
+                throw new NoEventRaiseException(string.Format(
                     "The ErrorsChanged event for the property '{0}' wasn't raised.", propertyName));
             }
             if (errorChangedCount > 1)
             {
-                throw new AssertException(string.Format(
+                throw new EventRaiseMoreThanOnceException(string.Format(
                     "The ErrorsChanged event for the property '{0}' was raised more than once.", propertyName));
             }
         }

@@ -43,4 +43,51 @@ namespace BigEgg.Framework.Application.UnitTesting
         {
         }
     }
+
+    /// <summary>
+    /// Represents event sender and obserable not same assertion errors that occur at runtime.
+    /// </summary>
+    [Serializable]
+    public class SenderObservableNotSameException : AssertException
+    {
+        public SenderObservableNotSameException()
+            : base("The sender object of the event isn't the observable")
+        { }
+    }
+
+    /// <summary>
+    /// Represents no event raise assertion error that occur at runtime.
+    /// </summary>
+    [Serializable]
+    public class NoEventRaiseException : AssertException
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NoEventRaiseException"/> class.
+        /// </summary>
+        public NoEventRaiseException() { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NoEventRaiseException"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        public NoEventRaiseException(string message) : base(message) { }
+    }
+
+    /// <summary>
+    /// Represents event raise more than once assertion error that occur at runtime.
+    /// </summary>
+    [Serializable]
+    public class EventRaiseMoreThanOnceException : AssertException
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventRaiseMoreThanOnceException"/> class.
+        /// </summary>
+        public EventRaiseMoreThanOnceException() { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventRaiseMoreThanOnceException"/> class.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        public EventRaiseMoreThanOnceException(string message) : base(message) { }
+    }
 }

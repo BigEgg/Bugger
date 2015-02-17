@@ -47,7 +47,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AssertException))]
+        [ExpectedException(typeof(NoEventRaiseException))]
         public void RiseWrongPropertyName()
         {
             WrongPerson wrongPerson = new WrongPerson();
@@ -55,7 +55,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AssertException))]
+        [ExpectedException(typeof(NoEventRaiseException))]
         public void NotRisePropertyName()
         {
             WrongPerson wrongPerson = new WrongPerson();
@@ -63,7 +63,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AssertException))]
+        [ExpectedException(typeof(EventRaiseMoreThanOnceException))]
         public void PropertyNameRaise2Times()
         {
             WrongPerson wrongPerson = new WrongPerson();
@@ -79,7 +79,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         }
 
         [TestMethod]
-        [ExpectedException(typeof(AssertException))]
+        [ExpectedException(typeof(SenderObservableNotSameException))]
         public void WrongEventSenderTest()
         {
             WrongPerson person = new WrongPerson();
