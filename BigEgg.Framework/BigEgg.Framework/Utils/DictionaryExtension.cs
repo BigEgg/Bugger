@@ -4,27 +4,43 @@ namespace BigEgg.Framework.Utils
 {
     public static class DictionaryExtension
     {
-        public static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> list, TKey key, TValue value)
+        /// <summary>
+        /// Add or update the value in a dictionary.
+        /// </summary>
+        /// <typeparam name="TKey">The type of keys in the dictionary.</typeparam>
+        /// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
+        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="key">The object to use as the key of the element to add or update.</param>
+        /// <param name="value">The object to use as the value of the element to add or update.</param>
+        public static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
         {
-            if (!list.ContainsKey(key))
+            if (!dictionary.ContainsKey(key))
             {
-                list.Add(key, value);
+                dictionary.Add(key, value);
             }
             else
             {
-                list[key] = value;
+                dictionary[key] = value;
             }
         }
 
-        public static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, IList<TValue>> list, TKey key, TValue value)
+        /// <summary>
+        /// Add or update the value in a dictionary which value is a list.
+        /// </summary>
+        /// <typeparam name="TKey">The type of keys in the dictionary.</typeparam>
+        /// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
+        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="key">The object to use as the key of the element to add or update.</param>
+        /// <param name="value">The object to use as the value of the element to add or update.</param>
+        public static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, IList<TValue>> dictionary, TKey key, TValue value)
         {
-            if (!list.ContainsKey(key))
+            if (!dictionary.ContainsKey(key))
             {
-                list.Add(key, new List<TValue>() { value });
+                dictionary.Add(key, new List<TValue>() { value });
             }
             else
             {
-                list[key].Add(value);
+                dictionary[key].Add(value);
             }
         }
     }
