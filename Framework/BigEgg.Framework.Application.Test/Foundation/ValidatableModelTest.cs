@@ -1,17 +1,15 @@
 ﻿using BigEgg.Framework.Application.Foundation;
 using BigEgg.Framework.Application.UnitTesting;
+using BigEgg.Framework.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using BigEgg.Framework.Utils;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
-using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace BigEgg.Framework.Application.Test.Foundation
 {
