@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Foundation\ModelTest.cs" />
     <Compile Include="Foundation\ValidatableModelTest.cs" />
+    <Compile Include="Foundation\Validations\RequiredIfAttributeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTesting\AssertExceptionTest.cs" />
     <Compile Include="UnitTesting\IsRaiseErrorsChangedEventTest_Entity.cs" />
