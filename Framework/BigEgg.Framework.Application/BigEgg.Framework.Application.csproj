@@ -46,6 +46,7 @@
     <Compile Include="Foundation\Model.cs" />
     <Compile Include="Foundation\ValidatableModel.cs" />
     <Compile Include="Foundation\Validations\RequiredIfAttribute.cs" />
+    <Compile Include="Foundation\Validations\SameAsAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
