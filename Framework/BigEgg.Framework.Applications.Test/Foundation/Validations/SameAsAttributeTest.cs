@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.ComponentModel.DataAnnotations;
-using BigEgg.Framework.Application.Foundation.Validations;
-using BigEgg.Framework.Application.Foundation;
+using BigEgg.Framework.Applications.Foundation.Validations;
+using BigEgg.Framework.Applications.Foundation;
 using System.Linq;
 
-namespace BigEgg.Framework.Application.Test.Foundation.Validations
+namespace BigEgg.Framework.Applications.Test.Foundation.Validations
 {
     [TestClass]
     public class SameAsAttributeTest

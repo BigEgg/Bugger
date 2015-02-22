@@ -1,5 +1,5 @@
-﻿using BigEgg.Framework.Application.Foundation;
-using BigEgg.Framework.Application.UnitTesting;
+﻿using BigEgg.Framework.Applications.Foundation;
+using BigEgg.Framework.Applications.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace BigEgg.Framework.Application.Test.Foundation
+namespace BigEgg.Framework.Applications.Test.Foundation
 {
     [TestClass]
     public class ModelTest

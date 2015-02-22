@@ -1,12 +1,12 @@
-﻿using BigEgg.Framework.Application.Foundation;
-using BigEgg.Framework.Application.UnitTesting;
+﻿using BigEgg.Framework.Applications.Foundation;
+using BigEgg.Framework.Applications.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
 
-namespace BigEgg.Framework.Application.Test.UnitTesting
+namespace BigEgg.Framework.Applications.Test.UnitTesting
 {
     [TestClass]
     public class IsRaiseErrorsChangedEventTest_Entity

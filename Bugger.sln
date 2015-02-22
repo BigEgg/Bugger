@@ -65,15 +65,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Base", "Bugger.Base\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Base.Test", "Bugger.Base.Test\Bugger.Base.Test.csproj", "{01329142-F933-4811-A40D-20D1DDEDAD14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Application", "Framework\BigEgg.Framework.Application\BigEgg.Framework.Application.csproj", "{AC6AD921-828C-484F-B746-BACFEC5CD856}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework", "Framework\BigEgg.Framework\BigEgg.Framework.csproj", "{86969290-3921-4D3E-9168-0380D55B547A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Application.UnitTesting", "Framework\BigEgg.Framework.Application.UnitTest\BigEgg.Framework.Application.UnitTesting.csproj", "{9C8D53DD-FE21-4142-802B-25FCE61CD2A5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Test", "Framework\BigEgg.Framework.Test\BigEgg.Framework.Test.csproj", "{6EB11F48-D4B9-4492-83FA-C413728AC0A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Application.Test", "Framework\BigEgg.Framework.Application.Test\BigEgg.Framework.Application.Test.csproj", "{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Applications", "Framework\BigEgg.Framework.Applications\BigEgg.Framework.Applications.csproj", "{AC6AD921-828C-484F-B746-BACFEC5CD856}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework", "BigEgg.Framework\BigEgg.Framework\BigEgg.Framework.csproj", "{86969290-3921-4D3E-9168-0380D55B547A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Applications.UnitTesting", "Framework\BigEgg.Framework.Applications.UnitTest\BigEgg.Framework.Applications.UnitTesting.csproj", "{9C8D53DD-FE21-4142-802B-25FCE61CD2A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Test", "Framwork\BigEgg.Framework.Test\BigEgg.Framework.Test.csproj", "{6EB11F48-D4B9-4492-83FA-C413728AC0A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Applications.Test", "Framework\BigEgg.Framework.Applications.Test\BigEgg.Framework.Applications.Test.csproj", "{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -137,6 +137,14 @@ Global
 		{01329142-F933-4811-A40D-20D1DDEDAD14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01329142-F933-4811-A40D-20D1DDEDAD14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01329142-F933-4811-A40D-20D1DDEDAD14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86969290-3921-4D3E-9168-0380D55B547A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86969290-3921-4D3E-9168-0380D55B547A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86969290-3921-4D3E-9168-0380D55B547A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86969290-3921-4D3E-9168-0380D55B547A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EB11F48-D4B9-4492-83FA-C413728AC0A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EB11F48-D4B9-4492-83FA-C413728AC0A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EB11F48-D4B9-4492-83FA-C413728AC0A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EB11F48-D4B9-4492-83FA-C413728AC0A3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC6AD921-828C-484F-B746-BACFEC5CD856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC6AD921-828C-484F-B746-BACFEC5CD856}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC6AD921-828C-484F-B746-BACFEC5CD856}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -149,14 +157,6 @@ Global
 		{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{86969290-3921-4D3E-9168-0380D55B547A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86969290-3921-4D3E-9168-0380D55B547A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86969290-3921-4D3E-9168-0380D55B547A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86969290-3921-4D3E-9168-0380D55B547A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6EB11F48-D4B9-4492-83FA-C413728AC0A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6EB11F48-D4B9-4492-83FA-C413728AC0A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6EB11F48-D4B9-4492-83FA-C413728AC0A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6EB11F48-D4B9-4492-83FA-C413728AC0A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -182,10 +182,10 @@ Global
 		{4873D525-DFD0-4FB7-8416-8DA7B21C3DCB} = {6E99D59A-35B2-44BD-B270-8AEE9DE07B87}
 		{A5CD06A3-28F5-4D2F-8DFD-62BE4808AF5A} = {823D2174-AA3F-411B-B01C-1E4E23D7EA74}
 		{01329142-F933-4811-A40D-20D1DDEDAD14} = {823D2174-AA3F-411B-B01C-1E4E23D7EA74}
+		{86969290-3921-4D3E-9168-0380D55B547A} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
+		{6EB11F48-D4B9-4492-83FA-C413728AC0A3} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
 		{AC6AD921-828C-484F-B746-BACFEC5CD856} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
 		{9C8D53DD-FE21-4142-802B-25FCE61CD2A5} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
 		{002F1AE2-64D0-40B3-9BE8-337C1C8944B1} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
-		{86969290-3921-4D3E-9168-0380D55B547A} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
-		{6EB11F48-D4B9-4492-83FA-C413728AC0A3} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
 	EndGlobalSection
 EndGlobal

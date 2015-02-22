@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace BigEgg.Framework.Application.UnitTesting
+namespace BigEgg.Framework.Applications.UnitTesting
 {
     /// <summary>
     /// Represents assertion errors that occur at runtime.

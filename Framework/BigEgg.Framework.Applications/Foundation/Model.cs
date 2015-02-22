@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace BigEgg.Framework.Application.Foundation
+namespace BigEgg.Framework.Applications.Foundation
 {
     /// <summary>
     /// Defines the base class for a model.

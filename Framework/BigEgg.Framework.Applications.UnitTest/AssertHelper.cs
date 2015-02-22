@@ -1,10 +1,10 @@
-﻿using BigEgg.Framework.Application.Foundation;
+﻿using BigEgg.Framework.Applications.Foundation;
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace BigEgg.Framework.Application.UnitTesting
+namespace BigEgg.Framework.Applications.UnitTesting
 {
     public class AssertHelper
     {

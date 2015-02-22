@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BigEgg.Framework.Application.Foundation.Validations
+namespace BigEgg.Framework.Applications.Foundation.Validations
 {
     /// <summary>
     /// Specifies that a data field value should be same as another property's value.

@@ -1,25 +1,22 @@
-﻿using BigEgg.Framework.Application.Foundation;
-using BigEgg.Framework.Application.UnitTesting;
+﻿using BigEgg.Framework.Applications.Foundation;
+using BigEgg.Framework.Applications.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
-using System.Collections;
-using System.ComponentModel.DataAnnotations;
 
-namespace BigEgg.Framework.Application.Test.UnitTesting
+namespace BigEgg.Framework.Applications.Test.UnitTesting
 {
     [TestClass]
-    public class IsRaiseErrorsChangedEventTest_SpecificProperty
+    public class IsRaisePropertyChangedEventTest
     {
         public TestContext TestContext { get; set; }
 
 
         [TestMethod]
-        public void SuccessRiseErrorsChangedEvent()
+        public void SuccessRisePropertyChange()
         {
             Person person = new Person();
-            person.Validate();
-            AssertHelper.IsRaiseErrorChangedEvent(person, x => x.Name, () => person.Name = "Luke");
+            AssertHelper.IsRaisePropertyChangedEvent(person, x => x.Name, () => person.Name = "Luke");
         }
 
         [TestMethod]
@@ -27,7 +24,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         public void Precondition_Observable_Null()
         {
             Person person = new Person();
-            AssertHelper.IsRaiseErrorChangedEvent((Person)null, x => x.Name, () => person.Name = "Han");
+            AssertHelper.IsRaisePropertyChangedEvent((Person)null, x => x.Name, () => person.Name = "Han");
         }
 
         [TestMethod]
@@ -35,7 +32,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         public void Precondition_PropertySelector_Null()
         {
             Person person = new Person();
-            AssertHelper.IsRaiseErrorChangedEvent(person, null, () => person.Name = "Han");
+            AssertHelper.IsRaisePropertyChangedEvent(person, null, () => person.Name = "Han");
         }
 
         [TestMethod]
@@ -43,7 +40,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         public void Precondition_Action_Null()
         {
             Person person = new Person();
-            AssertHelper.IsRaiseErrorChangedEvent(person, x => x.Name, null);
+            AssertHelper.IsRaisePropertyChangedEvent(person, x => x.Name, null);
         }
 
         [TestMethod]
@@ -51,7 +48,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         public void RiseWrongPropertyName()
         {
             WrongPerson wrongPerson = new WrongPerson();
-            AssertHelper.IsRaiseErrorChangedEvent(wrongPerson, x => x.Name, () => wrongPerson.Name = "Luke");
+            AssertHelper.IsRaisePropertyChangedEvent(wrongPerson, x => x.Name, () => wrongPerson.Name = "Luke");
         }
 
         [TestMethod]
@@ -59,7 +56,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         public void NotRisePropertyName()
         {
             WrongPerson wrongPerson = new WrongPerson();
-            AssertHelper.IsRaiseErrorChangedEvent(wrongPerson, x => x.Age, () => wrongPerson.Age = 31);
+            AssertHelper.IsRaisePropertyChangedEvent(wrongPerson, x => x.Age, () => wrongPerson.Age = 31);
         }
 
         [TestMethod]
@@ -67,7 +64,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         public void PropertyNameRaise2Times()
         {
             WrongPerson wrongPerson = new WrongPerson();
-            AssertHelper.IsRaiseErrorChangedEvent(wrongPerson, x => x.Weight, () => wrongPerson.Weight = 80);
+            AssertHelper.IsRaisePropertyChangedEvent(wrongPerson, x => x.Weight, () => wrongPerson.Weight = 80);
         }
 
         [TestMethod]
@@ -75,7 +72,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         public void CheckWrongProperty()
         {
             Person person = new Person();
-            AssertHelper.IsRaiseErrorChangedEvent(person, x => x.Name.Length, () => person.Name = "Luke");
+            AssertHelper.IsRaisePropertyChangedEvent(person, x => x.Name.Length, () => person.Name = "Luke");
         }
 
         [TestMethod]
@@ -83,7 +80,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         public void WrongEventSenderTest()
         {
             WrongPerson person = new WrongPerson();
-            AssertHelper.IsRaiseErrorChangedEvent(person, x => x.Name, () => person.RaiseWrongNameErrorsChanged());
+            AssertHelper.IsRaisePropertyChangedEvent(person, x => x.Name, () => person.RaiseWrongNamePropertyChanged());
         }
 
         [TestMethod]
@@ -91,7 +88,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         public void WrongExpressionTest1()
         {
             Person person = new Person();
-            AssertHelper.IsRaiseErrorChangedEvent(person, x => x, () => person.Name = "Luke");
+            AssertHelper.IsRaisePropertyChangedEvent(person, x => x, () => person.Name = "Luke");
         }
 
         [TestMethod]
@@ -99,7 +96,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         public void WrongExpressionTest2()
         {
             Person person = new Person();
-            AssertHelper.IsRaiseErrorChangedEvent(person, x => x.ToString(), () => person.Name = "Luke");
+            AssertHelper.IsRaisePropertyChangedEvent(person, x => x.ToString(), () => person.Name = "Luke");
         }
 
         [TestMethod]
@@ -107,28 +104,27 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
         public void WrongExpressionTest3()
         {
             Person person = new Person();
-            AssertHelper.IsRaiseErrorChangedEvent(person, x => Math.Abs(1), () => person.Name = "Luke");
+            AssertHelper.IsRaisePropertyChangedEvent(person, x => Math.Abs(1), () => person.Name = "Luke");
         }
 
 
-        private class Person : ValidatableModel
+        private class Person : Model
         {
             private string name;
 
-            [Required]
             public string Name
             {
                 get { return name; }
-                set { SetPropertyAndValidate(ref name, value); }
+                set { SetProperty(ref name, value); }
             }
         }
 
-        private class WrongPerson : INotifyDataErrorInfo
+        private class WrongPerson : INotifyPropertyChanged
         {
             private string name;
             private double weight;
 
-            public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+            public event PropertyChangedEventHandler PropertyChanged;
 
             public string Name
             {
@@ -138,7 +134,7 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
                     if (name != value)
                     {
                         name = value;
-                        OnErrorsChanged(new DataErrorsChangedEventArgs("WrongName"));
+                        OnPropertyChanged(new PropertyChangedEventArgs("WrongName"));
                     }
                 }
             }
@@ -153,31 +149,21 @@ namespace BigEgg.Framework.Application.Test.UnitTesting
                     if (weight != value)
                     {
                         weight = value;
-                        OnErrorsChanged(new DataErrorsChangedEventArgs("Weight"));
-                        OnErrorsChanged(new DataErrorsChangedEventArgs("Weight"));
+                        OnPropertyChanged(new PropertyChangedEventArgs("Weight"));
+                        OnPropertyChanged(new PropertyChangedEventArgs("Weight"));
                     }
                 }
             }
 
-            public bool HasErrors { get; set; }
 
-            IEnumerable INotifyDataErrorInfo.GetErrors(string propertyName)
+            public void RaiseWrongNamePropertyChanged()
             {
-                throw new NotImplementedException();
+                if (PropertyChanged != null) { PropertyChanged(null, new PropertyChangedEventArgs("Name")); }
             }
 
-            protected virtual void OnErrorsChanged(DataErrorsChangedEventArgs e)
+            protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
             {
-                EventHandler<DataErrorsChangedEventArgs> handler = ErrorsChanged;
-                if (handler != null)
-                {
-                    handler(this, e);
-                }
-            }
-
-            public void RaiseWrongNameErrorsChanged()
-            {
-                if (ErrorsChanged != null) { ErrorsChanged(null, new DataErrorsChangedEventArgs("Name")); }
+                if (PropertyChanged != null) { PropertyChanged(this, e); }
             }
         }
     }

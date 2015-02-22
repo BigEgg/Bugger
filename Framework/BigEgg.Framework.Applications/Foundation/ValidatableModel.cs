@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace BigEgg.Framework.Application.Foundation
+namespace BigEgg.Framework.Applications.Foundation
 {
     /// <summary>
     /// Defines a base class for a model that supports validation.

@@ -60,7 +60,7 @@
     <Compile Include="Utils\XmlSerializeExtensionTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BigEgg.Framework\BigEgg.Framework\BigEgg.Framework.csproj">
+    <ProjectReference Include="..\BigEgg.Framework\BigEgg.Framework.csproj">
       <Project>{86969290-3921-4d3e-9168-0380d55b547a}</Project>
       <Name>BigEgg.Framework</Name>
     </ProjectReference>

@@ -1,10 +1,10 @@
-﻿using BigEgg.Framework.Application.Foundation;
-using BigEgg.Framework.Application.Foundation.Validations;
+﻿using BigEgg.Framework.Applications.Foundation;
+using BigEgg.Framework.Applications.Foundation.Validations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace BigEgg.Framework.Application.Test.Foundation.Validations
+namespace BigEgg.Framework.Applications.Test.Foundation.Validations
 {
     [TestClass]
     public class RequiredIfAttributeTest

@@ -1,9 +1,9 @@
-﻿using BigEgg.Framework.Application.UnitTesting;
+﻿using BigEgg.Framework.Applications.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace BigEgg.Framework.Application.Test.UnitTesting
+namespace BigEgg.Framework.Applications.Test.UnitTesting
 {
     [TestClass]
     public class AssertExceptionTest

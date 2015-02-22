@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9C8D53DD-FE21-4142-802B-25FCE61CD2A5}</ProjectGuid>
+    <ProjectGuid>{AC6AD921-828C-484F-B746-BACFEC5CD856}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BigEgg.Framework.Application.UnitTesting</RootNamespace>
-    <AssemblyName>BigEgg.Framework.Application.UnitTesting</AssemblyName>
+    <RootNamespace>BigEgg.Framework.Applications</RootNamespace>
+    <AssemblyName>BigEgg.Framework.Applications</AssemblyName>
     <TargetFrameworkVersion>v4.5.3</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -32,23 +32,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssertException.cs" />
-    <Compile Include="AssertHelper.cs" />
+    <Compile Include="Foundation\Model.cs" />
+    <Compile Include="Foundation\ValidatableModel.cs" />
+    <Compile Include="Foundation\Validations\RequiredIfAttribute.cs" />
+    <Compile Include="Foundation\Validations\SameAsAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BigEgg.Framework\BigEgg.Framework\BigEgg.Framework.csproj">
+    <ProjectReference Include="..\BigEgg.Framework\BigEgg.Framework.csproj">
       <Project>{86969290-3921-4d3e-9168-0380d55b547a}</Project>
       <Name>BigEgg.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BigEgg.Framework.Application\BigEgg.Framework.Application.csproj">
-      <Project>{ac6ad921-828c-484f-b746-bacfec5cd856}</Project>
-      <Name>BigEgg.Framework.Application</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Applications\Commands\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
