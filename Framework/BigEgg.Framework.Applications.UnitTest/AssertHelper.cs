@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Windows.Input;
 
 namespace BigEgg.Framework.Applications.UnitTesting
 {
@@ -196,6 +197,40 @@ namespace BigEgg.Framework.Applications.UnitTesting
                     "The ErrorsChanged event for the property '{0}' was raised more than once.", propertyName));
             }
         }
+
+
+        /// <summary>
+        /// Asserts that the execution of the provided action raises the CanExecuteChanged event of the command.
+        /// </summary>
+        /// <param name="command">The command.</param>
+        /// <param name="raiseCanExecuteChanged">An action that results in a CanExecuteChanged event of the command.</param>
+        /// <exception cref="AssertException">This exception is thrown when no or more than one CanExecuteChanged event was 
+        /// raised by the command or the sender object of the event was not the command object.</exception>
+        public static void CanExecuteChangedEvent(ICommand command, Action raiseCanExecuteChanged)
+        {
+            Preconditions.NotNull(command, "command");
+            Preconditions.NotNull(raiseCanExecuteChanged, "raiseCanExecuteChanged");
+
+            int canExecuteChangedCount = 0;
+
+            command.CanExecuteChanged += (object sender, EventArgs e) =>
+            {
+                if (command != sender) { throw new SenderCommandNotSameException(); }
+                canExecuteChangedCount++;
+            };
+
+            raiseCanExecuteChanged();
+
+            if (canExecuteChangedCount < 1)
+            {
+                throw new NoEventRaiseException("The CanExecuteChanged event wasn't raised.");
+            }
+            if (canExecuteChangedCount > 1)
+            {
+                throw new EventRaiseMoreThanOnceException("The CanExecuteChanged event was raised more than once.");
+            }
+        }
+
 
 
         /// <summary>

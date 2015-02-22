@@ -90,4 +90,15 @@ namespace BigEgg.Framework.Applications.UnitTesting
         /// <param name="message">The message.</param>
         public EventRaiseMoreThanOnceException(string message) : base(message) { }
     }
+
+    /// <summary>
+    /// Represents event sender and command not same assertion errors that occur at runtime.
+    /// </summary>
+    [Serializable]
+    public class SenderCommandNotSameException : AssertException
+    {
+        public SenderCommandNotSameException()
+            : base("The sender object of the event isn't the command")
+        { }
+    }
 }
