@@ -57,6 +57,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Applications\ApplicationInfoTest.cs" />
     <Compile Include="Applications\Commands\DelegateCommandTest.cs" />
     <Compile Include="Applications\Commands\GenericDelegateCommandTest.cs" />
     <Compile Include="Foundation\ModelTest.cs" />

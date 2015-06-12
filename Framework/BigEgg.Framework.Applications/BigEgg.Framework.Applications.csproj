@@ -43,6 +43,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Applications\ApplicationInfo.cs" />
     <Compile Include="Applications\Commands\DelegateCommand.cs" />
     <Compile Include="Applications\Commands\DelegateCommand.Generic.cs" />
     <Compile Include="Applications\Commands\DelegateCommandBase.cs" />
