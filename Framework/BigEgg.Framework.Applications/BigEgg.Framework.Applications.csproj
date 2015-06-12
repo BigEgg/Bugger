@@ -48,6 +48,9 @@
     <Compile Include="Applications\Commands\DelegateCommand.Generic.cs" />
     <Compile Include="Applications\Commands\DelegateCommandBase.cs" />
     <Compile Include="Applications\Commands\WeakEventHandlerManager.cs" />
+    <Compile Include="Applications\ViewModels\ViewModel.cs" />
+    <Compile Include="Applications\ViewModels\ViewModel.Generic.cs" />
+    <Compile Include="Applications\Views\IView.cs" />
     <Compile Include="Foundation\Model.cs" />
     <Compile Include="Foundation\ValidatableModel.cs" />
     <Compile Include="Foundation\Validations\RequiredIfAttribute.cs" />

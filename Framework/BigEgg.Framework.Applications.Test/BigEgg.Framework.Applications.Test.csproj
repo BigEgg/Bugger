@@ -43,6 +43,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -60,6 +61,8 @@
     <Compile Include="Applications\ApplicationInfoTest.cs" />
     <Compile Include="Applications\Commands\DelegateCommandTest.cs" />
     <Compile Include="Applications\Commands\GenericDelegateCommandTest.cs" />
+    <Compile Include="Applications\ViewModels\ViewModelGenericTest.cs" />
+    <Compile Include="Applications\ViewModels\ViewModelTest.cs" />
     <Compile Include="Foundation\ModelTest.cs" />
     <Compile Include="Foundation\ValidatableModelTest.cs" />
     <Compile Include="Foundation\Validations\RequiredIfAttributeTest.cs" />
