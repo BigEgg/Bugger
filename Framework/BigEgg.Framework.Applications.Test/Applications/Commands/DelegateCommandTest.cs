@@ -52,7 +52,7 @@ namespace BigEgg.Framework.Applications.Test.Applications.Commands
         {
             bool executed = false;
             bool canExecute = true;
-            DelegateCommand command = new DelegateCommand(() => executed = true, () => true);
+            DelegateCommand command = new DelegateCommand(() => executed = true, () => canExecute);
 
             command.Execute();
             Assert.IsTrue(executed);
