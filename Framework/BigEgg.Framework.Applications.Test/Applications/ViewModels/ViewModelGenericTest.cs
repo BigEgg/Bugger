@@ -1,6 +1,7 @@
 ﻿using BigEgg.Framework.Applications.Applications.ViewModels;
 using BigEgg.Framework.Applications.Applications.Views;
 using BigEgg.Framework.Applications.Foundation;
+using BigEgg.Framework.Applications.UnitTesting.Views;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.ComponentModel;
 
@@ -46,10 +47,8 @@ namespace BigEgg.Framework.Applications.Test.Applications.ViewModels
             }
         }
 
-        public class PeopleView : IPeopleView
-        {
-            public object DataContext { get; set; }
-        }
+        public class PeopleView : MockView, IPeopleView
+        { }
 
         public interface IPeopleView : IView
         { }

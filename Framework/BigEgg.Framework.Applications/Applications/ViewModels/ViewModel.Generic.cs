@@ -18,7 +18,9 @@ namespace BigEgg.Framework.Applications.Applications.ViewModels
         /// <param name="view">The view.</param>
         protected ViewModel(TView view)
             : base(view)
-        { }
+        {
+            this.view = view;
+        }
 
 
         /// <summary>
