@@ -1,6 +1,8 @@
 ﻿Bugger change log
 
 Alpha 4 (v0.4.0) <----- Currently Working
+    Framework:
+        Use .NET Framework 4.6
     Application:
         Add extension manager to manage the proxies.
         Add the Task Bar progress status.
