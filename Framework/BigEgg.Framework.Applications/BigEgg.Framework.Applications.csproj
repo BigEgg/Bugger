@@ -59,6 +59,7 @@
     <Compile Include="Foundation\ValidatableModel.cs" />
     <Compile Include="Foundation\Validations\RequiredIfAttribute.cs" />
     <Compile Include="Foundation\Validations\SameAsAttribute.cs" />
+    <Compile Include="Presentation\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

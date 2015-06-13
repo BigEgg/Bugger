@@ -69,6 +69,7 @@
     <Compile Include="Foundation\ValidatableModelTest.cs" />
     <Compile Include="Foundation\Validations\RequiredIfAttributeTest.cs" />
     <Compile Include="Foundation\Validations\SameAsAttributeTest.cs" />
+    <Compile Include="Presentation\Converters\BoolToVisibilityConverterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTesting\AssertExceptionTest.cs" />
     <Compile Include="UnitTesting\CanExecuteChangedEventTest.cs" />
@@ -90,6 +91,7 @@
       <Name>BigEgg.Framework.Applications.UnitTesting</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
