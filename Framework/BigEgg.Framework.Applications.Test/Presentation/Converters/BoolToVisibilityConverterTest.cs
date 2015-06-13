@@ -19,6 +19,12 @@ namespace BigEgg.Framework.Applications.Test.Presentation.Converters
             Assert.AreEqual(Visibility.Collapsed, converter.Convert(true, null, "Invert", null));
             Assert.AreEqual(Visibility.Visible, converter.Convert(false, null, "invert", null));
             Assert.AreEqual(Visibility.Visible, converter.Convert(null, null, "InVerT", null));
+        }
+
+        [TestMethod]
+        public void ConvertBackTest()
+        {
+            var converter = BoolToVisibilityConverter.Default;
 
             Assert.IsTrue((bool)converter.ConvertBack(Visibility.Visible, null, null, null));
             Assert.IsFalse((bool)converter.ConvertBack(Visibility.Collapsed, null, null, null));

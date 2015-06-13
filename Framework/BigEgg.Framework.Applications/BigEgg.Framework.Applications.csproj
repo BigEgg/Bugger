@@ -60,6 +60,8 @@
     <Compile Include="Foundation\Validations\RequiredIfAttribute.cs" />
     <Compile Include="Foundation\Validations\SameAsAttribute.cs" />
     <Compile Include="Presentation\Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Presentation\Converters\InvertBoolConverter.cs" />
+    <Compile Include="Presentation\Converters\StringFormatConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
