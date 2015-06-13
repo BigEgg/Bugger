@@ -1,10 +1,5 @@
 ﻿using BigEgg.Framework.Applications.Applications;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BigEgg.Framework.Applications.Test.Applications
 {
