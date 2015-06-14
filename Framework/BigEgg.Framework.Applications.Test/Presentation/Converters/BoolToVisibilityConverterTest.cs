@@ -8,6 +8,13 @@ namespace BigEgg.Framework.Applications.Test.Presentation.Converters
     public class BoolToVisibilityConverterTest
     {
         [TestMethod]
+        public void DefaultTest()
+        {
+            var converter = BoolToVisibilityConverter.Default;
+            Assert.AreEqual(converter, BoolToVisibilityConverter.Default);
+        }
+
+        [TestMethod]
         public void ConvertTest()
         {
             var converter = BoolToVisibilityConverter.Default;

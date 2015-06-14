@@ -7,6 +7,13 @@ namespace BigEgg.Framework.Applications.Test.Presentation.Converters
     public class InvertBooleanConverterTest
     {
         [TestMethod]
+        public void DefaultTest()
+        {
+            var converter = InvertBooleanConverter.Default;
+            Assert.AreEqual(converter, InvertBooleanConverter.Default);
+        }
+
+        [TestMethod]
         public void ConvertTest()
         {
             var converter = InvertBooleanConverter.Default;

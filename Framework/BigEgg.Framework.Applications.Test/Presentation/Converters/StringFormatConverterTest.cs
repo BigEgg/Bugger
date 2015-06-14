@@ -8,6 +8,13 @@ namespace BigEgg.Framework.Applications.Test.Presentation.Converters
     public class StringFormatConverterTest
     {
         [TestMethod]
+        public void DefaultTest()
+        {
+            var converter = StringFormatConverter.Default;
+            Assert.AreEqual(converter, StringFormatConverter.Default);
+        }
+
+        [TestMethod]
         public void ConverteTest()
         {
             var username = "John Reese";
@@ -26,5 +33,4 @@ namespace BigEgg.Framework.Applications.Test.Presentation.Converters
             converter.ConvertBack(null, null, null, null);
         }
     }
-
 }
