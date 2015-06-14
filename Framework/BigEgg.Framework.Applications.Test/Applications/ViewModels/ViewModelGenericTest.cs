@@ -26,7 +26,7 @@ namespace BigEgg.Framework.Applications.Test.Applications.ViewModels
         }
 
 
-        public class SchoolViewModel : ViewModel<IPeopleView>
+        private class SchoolViewModel : ViewModel<IPeopleView>
         {
             private readonly School school;
 
@@ -47,13 +47,13 @@ namespace BigEgg.Framework.Applications.Test.Applications.ViewModels
             }
         }
 
-        public class PeopleView : MockView, IPeopleView
+        private class PeopleView : MockView, IPeopleView
         { }
 
-        public interface IPeopleView : IView
+        private interface IPeopleView : IView
         { }
 
-        public class School : Model
+        private class School : Model
         {
             private string name;
 
