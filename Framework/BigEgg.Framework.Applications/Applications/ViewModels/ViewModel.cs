@@ -20,7 +20,7 @@ namespace BigEgg.Framework.Applications.Applications.ViewModels
         /// <param name="view">The view.</param>
         public ViewModel(IView view)
         {
-            if (view == null) { throw new ArgumentNullException("view"); }
+            Preconditions.NotNull(view, "view");
             this.view = view;
 
             // Check if the code is running within the WPF application model

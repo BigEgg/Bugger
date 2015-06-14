@@ -18,12 +18,12 @@ namespace BigEgg.Framework.Applications.Applications.Views
         /// <exception cref="ArgumentNullException">view must not be <c>null</c>.</exception>
         public static ViewModel GetViewModel(this IView view)
         {
-            if (view == null) { throw new ArgumentNullException(); }
+            Preconditions.NotNull(view, "view");
 
             object dataContent = view.DataContext;
             // When the DataContext is null then it might be that the ViewModel hasn't set it yet.
             // Enforce it by executing the event queue of the Dispatcher.
-            if (dataContent== null && SynchronizationContext.Current is DispatcherSynchronizationContext)
+            if (dataContent == null && SynchronizationContext.Current is DispatcherSynchronizationContext)
             {
                 DispatcherHelper.DoEvents();
                 dataContent = view.DataContext;

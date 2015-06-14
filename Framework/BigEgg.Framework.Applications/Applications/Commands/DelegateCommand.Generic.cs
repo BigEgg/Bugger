@@ -49,8 +49,8 @@ namespace BigEgg.Framework.Applications.Applications.Commands
         public DelegateCommand(Action<object> execute, Func<object, bool> canExecute)
             : base((o) => execute((T)o), (o) => canExecute((T)o))
         {
-            if (execute == null) { throw new ArgumentNullException("execute"); }
-            if (canExecute == null) { throw new ArgumentNullException("canExecute"); }
+            Preconditions.NotNull(execute, "execute");
+            Preconditions.NotNull(canExecute, "canExecute");
 
             Type genericType = typeof(T);
 

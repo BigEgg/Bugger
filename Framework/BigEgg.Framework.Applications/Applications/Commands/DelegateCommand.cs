@@ -27,8 +27,8 @@ namespace BigEgg.Framework.Applications.Applications.Commands
         public DelegateCommand(Action execute, Func<bool> canExecute)
             : base((o) => execute(), (o) => canExecute())
         {
-            if (execute == null) { throw new ArgumentNullException("execute"); }
-            if (canExecute == null) { throw new ArgumentNullException("canExecute"); }
+            Preconditions.NotNull(execute, "execute");
+            Preconditions.NotNull(canExecute, "canExecute");
         }
 
 
