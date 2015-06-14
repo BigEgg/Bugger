@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22310.1
+VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bugger.Applications", "Bugger.Applications\Bugger.Applications.csproj", "{398D1756-2C56-454A-A7EC-E996BB146C2E}"
 EndProject
@@ -74,6 +74,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Applications.UnitTesting", "Framework\BigEgg.Framework.Applications.UnitTest\BigEgg.Framework.Applications.UnitTesting.csproj", "{9C8D53DD-FE21-4142-802B-25FCE61CD2A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Applications.Test", "Framework\BigEgg.Framework.Applications.Test\BigEgg.Framework.Applications.Test.csproj", "{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Applications.Extensions", "Framework\BigEgg.Framework.Applications.Extensions\BigEgg.Framework.Applications.Extensions.csproj", "{1E1D74D2-0A2F-4C10-A3E3-B9F1F6D8E3E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigEgg.Framework.Applications.Extensions.Test", "Framework\BigEgg.Framework.Applications.Extensions.Test\BigEgg.Framework.Applications.Extensions.Test.csproj", "{4164FEBA-40CF-43C8-B055-AB13A78AD1A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -157,6 +161,14 @@ Global
 		{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{002F1AE2-64D0-40B3-9BE8-337C1C8944B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E1D74D2-0A2F-4C10-A3E3-B9F1F6D8E3E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E1D74D2-0A2F-4C10-A3E3-B9F1F6D8E3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E1D74D2-0A2F-4C10-A3E3-B9F1F6D8E3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E1D74D2-0A2F-4C10-A3E3-B9F1F6D8E3E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4164FEBA-40CF-43C8-B055-AB13A78AD1A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4164FEBA-40CF-43C8-B055-AB13A78AD1A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4164FEBA-40CF-43C8-B055-AB13A78AD1A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4164FEBA-40CF-43C8-B055-AB13A78AD1A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -187,5 +199,7 @@ Global
 		{AC6AD921-828C-484F-B746-BACFEC5CD856} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
 		{9C8D53DD-FE21-4142-802B-25FCE61CD2A5} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
 		{002F1AE2-64D0-40B3-9BE8-337C1C8944B1} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
+		{1E1D74D2-0A2F-4C10-A3E3-B9F1F6D8E3E1} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
+		{4164FEBA-40CF-43C8-B055-AB13A78AD1A4} = {F61D2D43-8B41-42FF-8F70-A06BFEA61FFD}
 	EndGlobalSection
 EndGlobal
