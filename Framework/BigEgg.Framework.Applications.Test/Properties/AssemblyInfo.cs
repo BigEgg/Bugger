@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BigEgg")]
-[assembly: AssemblyProduct("BigEgg.Framework")]
+[assembly: AssemblyProduct("BigEgg.Core")]
 [assembly: AssemblyCopyright("Copyright © BigEgg 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
