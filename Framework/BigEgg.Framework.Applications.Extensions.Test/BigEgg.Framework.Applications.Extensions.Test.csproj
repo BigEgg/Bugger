@@ -60,6 +60,8 @@
     <Compile Include="Applications\Services\FileDialogs\MockFileDialogService.cs" />
     <Compile Include="Applications\Services\FileDialogs\SaveFileDialogServiceExtensionsTest.cs" />
     <Compile Include="Applications\Services\FileDialogs\OpenFileDialogServiceExtensionsTest.cs" />
+    <Compile Include="Applications\Services\Messages\MessageServiceExtensionsTest.cs" />
+    <Compile Include="Applications\Services\Messages\MockMessageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

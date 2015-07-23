@@ -45,6 +45,8 @@
     <Compile Include="Applications\Services\FileDialogs\IFileDialogService.cs" />
     <Compile Include="Applications\Services\FileDialogs\OpenFileDialogServiceExtensions.cs" />
     <Compile Include="Applications\Services\FileDialogs\SaveFileDialogServiceExtensions.cs" />
+    <Compile Include="Applications\Services\Messages\IMessageService.cs" />
+    <Compile Include="Applications\Services\Messages\MessageServiceExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
