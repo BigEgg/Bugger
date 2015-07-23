@@ -35,6 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Xml" />
@@ -63,6 +65,7 @@
     <Compile Include="Applications\Services\Messages\MessageServiceExtensionsTest.cs" />
     <Compile Include="Applications\Services\Messages\MockMessageService.cs" />
     <Compile Include="Presentation\Services\FileDialogServiceTest.cs" />
+    <Compile Include="Presentation\Services\MessageServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
