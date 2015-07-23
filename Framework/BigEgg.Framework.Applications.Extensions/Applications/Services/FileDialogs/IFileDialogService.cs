@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BigEgg.Framework.Applications.Extensions.Applications.Services.FileDialog
+namespace BigEgg.Framework.Applications.Extensions.Applications.Services.FileDialogs
 {
     /// <summary>
     /// This service allows a user to specify a filename to open or save a file.

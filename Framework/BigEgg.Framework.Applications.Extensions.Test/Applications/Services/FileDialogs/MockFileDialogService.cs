@@ -1,7 +1,7 @@
-using BigEgg.Framework.Applications.Extensions.Applications.Services.FileDialog;
+using BigEgg.Framework.Applications.Extensions.Applications.Services.FileDialogs;
 using System.Collections.Generic;
 
-namespace BigEgg.Framework.Applications.Extensions.Test.Applications.Services.FileDialog
+namespace BigEgg.Framework.Applications.Extensions.Test.Applications.Services.FileDialogs
 {
     public class MockFileDialogService : IFileDialogService
     {

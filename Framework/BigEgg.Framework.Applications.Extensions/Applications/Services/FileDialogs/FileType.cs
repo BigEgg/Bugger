@@ -1,4 +1,4 @@
-﻿namespace BigEgg.Framework.Applications.Extensions.Applications.Services.FileDialog
+﻿namespace BigEgg.Framework.Applications.Extensions.Applications.Services.FileDialogs
 {
     /// <summary>
     /// Represents the file type

@@ -1,10 +1,10 @@
-using BigEgg.Framework.Applications.Extensions.Applications.Services.FileDialog;
+using BigEgg.Framework.Applications.Extensions.Applications.Services.FileDialogs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BigEgg.Framework.Applications.Extensions.Test.Applications.Services.FileDialog
+namespace BigEgg.Framework.Applications.Extensions.Test.Applications.Services.FileDialogs
 {
     [TestClass]
     public class SaveFileDialogServiceExtensionsTest

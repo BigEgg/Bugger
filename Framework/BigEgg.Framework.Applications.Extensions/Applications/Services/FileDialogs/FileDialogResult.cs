@@ -1,4 +1,4 @@
-﻿namespace BigEgg.Framework.Applications.Extensions.Applications.Services.FileDialog
+﻿namespace BigEgg.Framework.Applications.Extensions.Applications.Services.FileDialogs
 {
     /// <summary>
     /// Contains the result information about the work with the file dialog box.
@@ -11,7 +11,7 @@
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileDialogResult"/> class with null values.
-        /// Use this constructor when the user cancelled the file dialog box.
+        /// Use this constructor when the user canceled the file dialog box.
         /// </summary>
         protected FileDialogResult()
             : this(null, null)
@@ -30,24 +30,24 @@
 
 
         /// <summary>
-        /// Gets the filename entered by the user or <c>null</c> when the user cancelled the dialog box.
+        /// Gets the filename entered by the user or <c>null</c> when the user canceled the dialog box.
         /// </summary>
         public string FileName { get { return fileName; } }
 
         /// <summary>
-        /// Gets the file type selected by the user or <c>null</c> when the user cancelled the dialog box.
+        /// Gets the file type selected by the user or <c>null</c> when the user canceled the dialog box.
         /// </summary>
         public FileType SelectedFileType { get { return selectedFileType; } }
 
         /// <summary>
         /// Gets a value indicating whether this instance contains valid data. This property returns <c>false</c>
-        /// when the user cancelled the file dialog box.
+        /// when the user canceled the file dialog box.
         /// </summary>
         public bool IsValid { get { return FileName != null && SelectedFileType != null; } }
 
 
         /// <summary>
-        /// Get the filename with extension entered by the user or <c>null</c> when the user cancelled the dialog box.
+        /// Get the filename with extension entered by the user or <c>null</c> when the user canceled the dialog box.
         /// </summary>
         public string GetFullFileName()
         {
