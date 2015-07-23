@@ -40,6 +40,11 @@
   <ItemGroup>
     <Compile Include="Applications\RecentFile.cs" />
     <Compile Include="Applications\RecentFileList.cs" />
+    <Compile Include="Applications\Services\FileDialog\FileDialogResult.cs" />
+    <Compile Include="Applications\Services\FileDialog\FileType.cs" />
+    <Compile Include="Applications\Services\FileDialog\IFileDialogService.cs" />
+    <Compile Include="Applications\Services\FileDialog\OpenFileDialogServiceExtensions.cs" />
+    <Compile Include="Applications\Services\FileDialog\SaveFileDialogServiceExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

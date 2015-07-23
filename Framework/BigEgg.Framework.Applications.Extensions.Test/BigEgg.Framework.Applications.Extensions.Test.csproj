@@ -55,6 +55,11 @@
   <ItemGroup>
     <Compile Include="Applications\RecentFileListTest.cs" />
     <Compile Include="Applications\RecentFileTest.cs" />
+    <Compile Include="Applications\Services\FileDialog\FileDialogResultTest.cs" />
+    <Compile Include="Applications\Services\FileDialog\FileTypeTest.cs" />
+    <Compile Include="Applications\Services\FileDialog\MockFileDialogService.cs" />
+    <Compile Include="Applications\Services\FileDialog\SaveFileDialogServiceExtensionsTest.cs" />
+    <Compile Include="Applications\Services\FileDialog\OpenFileDialogServiceExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
