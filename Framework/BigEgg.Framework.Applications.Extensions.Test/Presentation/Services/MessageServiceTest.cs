@@ -1,5 +1,8 @@
-﻿using BigEgg.Framework.Applications.Extensions.Presentation.Services;
+﻿using BigEgg.Framework.Applications.Extensions.Applications.Services.Messages;
+using BigEgg.Framework.Applications.Extensions.Presentation.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.Globalization;
 using System.Reflection;
 using System.Threading;
@@ -10,6 +13,23 @@ namespace BigEgg.Framework.Applications.Extensions.Test.Presentation.Services
     [TestClass]
     public class MessageServiceTest
     {
+        [TestMethod]
+        public void InjectionTest()
+        {
+            AggregateCatalog catalog = new AggregateCatalog();
+            catalog.Catalogs.Add(new TypeCatalog(
+                typeof(MessageService)
+            ));
+
+            var container = new CompositionContainer(catalog);
+            CompositionBatch batch = new CompositionBatch();
+            batch.AddExportedValue(container);
+            container.Compose(batch);
+
+            var service = container.GetExportedValue<IMessageService>();
+            Assert.IsNotNull(service);
+        }
+
         [TestMethod]
         public void MessageBoxResultTest()
         {

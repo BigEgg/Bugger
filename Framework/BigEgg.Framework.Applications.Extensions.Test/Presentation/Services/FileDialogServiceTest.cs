@@ -3,6 +3,8 @@ using BigEgg.Framework.Applications.Extensions.Presentation.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 
 namespace BigEgg.Framework.Applications.Extensions.Test.Presentation.Services
@@ -10,6 +12,23 @@ namespace BigEgg.Framework.Applications.Extensions.Test.Presentation.Services
     [TestClass]
     public class FileDialogServiceTest
     {
+        [TestMethod]
+        public void InjectionTest()
+        {
+            AggregateCatalog catalog = new AggregateCatalog();
+            catalog.Catalogs.Add(new TypeCatalog(
+                typeof(FileDialogService)
+            ));
+
+            var container = new CompositionContainer(catalog);
+            CompositionBatch batch = new CompositionBatch();
+            batch.AddExportedValue(container);
+            container.Compose(batch);
+
+            var service = container.GetExportedValue<IFileDialogService>();
+            Assert.IsNotNull(service);
+        }
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void ShowOpenFileDialogTest_FileTypesNull()
