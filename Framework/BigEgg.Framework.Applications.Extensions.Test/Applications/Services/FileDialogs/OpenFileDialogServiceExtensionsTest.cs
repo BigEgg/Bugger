@@ -13,8 +13,6 @@ namespace BigEgg.Framework.Applications.Extensions.Test.Applications.Services.Fi
         private readonly FileType xpsFileType = new FileType("XPS Document", ".xps");
         private readonly string defaultFileName = "Document 1.rtf";
         private readonly object owner = new object();
-        private readonly MockFileDialogService service = new MockFileDialogService();
-
         private readonly IEnumerable<FileType> fileTypes;
         private readonly FileDialogResult result;
 
@@ -22,13 +20,15 @@ namespace BigEgg.Framework.Applications.Extensions.Test.Applications.Services.Fi
         {
             fileTypes = new FileType[] { rtfFileType, xpsFileType };
             result = new FileDialogResult("Document 2.rtf", rtfFileType);
-
-            service.Result = result;
         }
+
 
         [TestMethod]
         public void ShowOpenFileDialogExtensionTest()
         {
+            var service = new MockFileDialogService();
+            service.Result = result;
+
             Assert.AreEqual(result, service.ShowOpenFileDialog(rtfFileType));
             Assert.AreEqual(FileDialogType.OpenFileDialog, service.FileDialogType);
             Assert.AreEqual(rtfFileType, service.FileTypes.Single());
@@ -45,12 +45,18 @@ namespace BigEgg.Framework.Applications.Extensions.Test.Applications.Services.Fi
         [ExpectedException(typeof(ArgumentNullException))]
         public void ShowOpenFileDialogExtensionTest_FileTypeNull()
         {
+            var service = new MockFileDialogService();
+            service.Result = result;
+
             service.ShowOpenFileDialog((FileType)null);
         }
 
         [TestMethod]
         public void ShowOpenFileDialogExtensionTest_WithOwner()
         {
+            var service = new MockFileDialogService();
+            service.Result = result;
+
             Assert.AreEqual(result, service.ShowOpenFileDialog(owner, rtfFileType));
             Assert.AreEqual(FileDialogType.OpenFileDialog, service.FileDialogType);
             Assert.AreEqual(owner, service.Owner);
@@ -68,12 +74,18 @@ namespace BigEgg.Framework.Applications.Extensions.Test.Applications.Services.Fi
         [ExpectedException(typeof(ArgumentNullException))]
         public void ShowOpenFileDialogExtensionTest_WithOwner_OwnerNull()
         {
+            var service = new MockFileDialogService();
+            service.Result = result;
+
             service.ShowOpenFileDialog(owner, (FileType)null);
         }
 
         [TestMethod]
         public void ShowOpenFileDialogExtensionTest_WithDefaultFileName()
         {
+            var service = new MockFileDialogService();
+            service.Result = result;
+
             Assert.AreEqual(result, service.ShowOpenFileDialog(rtfFileType, defaultFileName));
             Assert.AreEqual(FileDialogType.OpenFileDialog, service.FileDialogType);
             Assert.AreEqual(rtfFileType, service.FileTypes.Single());
@@ -91,12 +103,18 @@ namespace BigEgg.Framework.Applications.Extensions.Test.Applications.Services.Fi
         [ExpectedException(typeof(ArgumentNullException))]
         public void ShowOpenFileDialogExtensionTest_WithDefaultFileName_FileTypeNull()
         {
+            var service = new MockFileDialogService();
+            service.Result = result;
+
             service.ShowOpenFileDialog(null, defaultFileName);
         }
 
         [TestMethod]
         public void ShowOpenFileDialogExtensionTest_WithOwner_WithDefaultFileName()
         {
+            var service = new MockFileDialogService();
+            service.Result = result;
+
             Assert.AreEqual(result, service.ShowOpenFileDialog(owner, rtfFileType, defaultFileName));
             Assert.AreEqual(FileDialogType.OpenFileDialog, service.FileDialogType);
             Assert.AreEqual(owner, service.Owner);
@@ -115,12 +133,18 @@ namespace BigEgg.Framework.Applications.Extensions.Test.Applications.Services.Fi
         [ExpectedException(typeof(ArgumentNullException))]
         public void ShowOpenFileDialogExtensionTest_WithOwner_WithDefaultFileName_FileTypeNull()
         {
+            var service = new MockFileDialogService();
+            service.Result = result;
+
             service.ShowOpenFileDialog(owner, null, defaultFileName);
         }
 
         [TestMethod]
         public void ShowOpenFileDialogExtensionTest_WithMultipleFileTypes()
         {
+            var service = new MockFileDialogService();
+            service.Result = result;
+
             Assert.AreEqual(result, service.ShowOpenFileDialog(fileTypes));
             Assert.AreEqual(FileDialogType.OpenFileDialog, service.FileDialogType);
             Assert.IsTrue(service.FileTypes.SequenceEqual(new FileType[] { rtfFileType, xpsFileType }));
@@ -136,6 +160,9 @@ namespace BigEgg.Framework.Applications.Extensions.Test.Applications.Services.Fi
         [TestMethod]
         public void ShowOpenFileDialogExtensionTest_WithMultipleFileTypes_WithOwner()
         {
+            var service = new MockFileDialogService();
+            service.Result = result;
+
             Assert.AreEqual(result, service.ShowOpenFileDialog(owner, fileTypes));
             Assert.AreEqual(FileDialogType.OpenFileDialog, service.FileDialogType);
             Assert.AreEqual(owner, service.Owner);
@@ -152,6 +179,9 @@ namespace BigEgg.Framework.Applications.Extensions.Test.Applications.Services.Fi
         [TestMethod]
         public void ShowOpenFileDialogExtensionTest_WithMultipleFileTypes_WithOwner_WithDefaultFileName()
         {
+            var service = new MockFileDialogService();
+            service.Result = result;
+
             Assert.AreEqual(result, service.ShowOpenFileDialog(fileTypes, rtfFileType, defaultFileName));
             Assert.AreEqual(FileDialogType.OpenFileDialog, service.FileDialogType);
             Assert.IsTrue(service.FileTypes.SequenceEqual(new FileType[] { rtfFileType, xpsFileType }));
