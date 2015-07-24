@@ -41,6 +41,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\BugModelTest.cs" />
     <Compile Include="Models\BugTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -48,6 +49,10 @@
     <ProjectReference Include="..\..\Core\Framework\BigEgg.Framework.Applications.UnitTest\BigEgg.Framework.Applications.UnitTesting.csproj">
       <Project>{9c8d53dd-fe21-4142-802b-25fce61cd2a5}</Project>
       <Name>BigEgg.Framework.Applications.UnitTesting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Framework\BigEgg.Framework.Applications\BigEgg.Framework.Applications.csproj">
+      <Project>{ac6ad921-828c-484f-b746-bacfec5cd856}</Project>
+      <Name>BigEgg.Framework.Applications</Name>
     </ProjectReference>
     <ProjectReference Include="..\Bugger.Base\Bugger.Base.csproj">
       <Project>{a5cd06a3-28f5-4d2f-8dfd-62be4808af5a}</Project>

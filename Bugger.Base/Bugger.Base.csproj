@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Bug.cs" />
+    <Compile Include="Models\BugModifyState.cs" />
+    <Compile Include="Models\BugPriorityLevel.cs" />
+    <Compile Include="Models\BugModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
