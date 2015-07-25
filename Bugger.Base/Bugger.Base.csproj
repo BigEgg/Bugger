@@ -37,12 +37,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Documents\IDocument.cs" />
+    <Compile Include="Documents\IDocumentType.cs" />
     <Compile Include="Models\Bug.cs" />
     <Compile Include="Models\BugModifyState.cs" />
     <Compile Include="Models\BugPriorityLevel.cs" />
     <Compile Include="Models\BugModel.cs" />
     <Compile Include="PlugIns\Configs\PlugInAuthor.cs" />
+    <Compile Include="PlugIns\Configs\PlugInConfigDocument.cs" />
     <Compile Include="PlugIns\Configs\PlugInInfo.cs" />
+    <Compile Include="PlugIns\PlugInType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -64,6 +64,7 @@
     <Compile Include="Models\BugTest.cs" />
     <Compile Include="PlugIns\Configs\PlugInAuthorTest.cs" />
     <Compile Include="PlugIns\Configs\PlugInInfoTest.cs" />
+    <Compile Include="PlugIns\Configs\PlugInConfigDocumentTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
