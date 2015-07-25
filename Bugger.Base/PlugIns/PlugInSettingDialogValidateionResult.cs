@@ -1,6 +1,6 @@
 ﻿namespace Bugger.Base.PlugIns
 {
-    public enum SettingDialogValidateionResult
+    public enum PlugInSettingDialogValidationResult
     {
         Valid,
         Busy,

@@ -48,7 +48,10 @@
     <Compile Include="PlugIns\Configs\PlugInConfigDocument.cs" />
     <Compile Include="PlugIns\Configs\PlugInConfigDocumentType.cs" />
     <Compile Include="PlugIns\Configs\PlugInInfo.cs" />
+    <Compile Include="PlugIns\IPlugInSettingDialogView.cs" />
     <Compile Include="PlugIns\PlugInType.cs" />
+    <Compile Include="PlugIns\PlugInSettingDialogViewModel.cs" />
+    <Compile Include="PlugIns\PlugInSettingDialogValidateionResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
