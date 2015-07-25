@@ -42,6 +42,7 @@
     <Compile Include="Models\BugPriorityLevel.cs" />
     <Compile Include="Models\BugModel.cs" />
     <Compile Include="PlugIns\Configs\PlugInAuthor.cs" />
+    <Compile Include="PlugIns\Configs\PlugInInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
