@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Bugger.Base.PlugIns.Proxies
+namespace Bugger.Base.PlugIns.TrackingSystem
 {
     public interface ITrackingSystemPlugIn
     {
+        /// <summary>
+        /// Get the status of this tracking system.
+        /// </summary>
+        /// <returns>The status of this tracking system Plug-in.</returns>
+        TrackingSystemStatus GetStatus();
+
         /// <summary>
         /// Query the bugs with the specified user name which the bug assign to.
         /// </summary>

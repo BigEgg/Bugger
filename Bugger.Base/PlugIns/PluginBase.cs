@@ -74,6 +74,6 @@ namespace Bugger.Base.PlugIns
         /// <summary>
         /// The core function to initializes the Plug-in.
         /// </summary>
-        protected abstract void OnInitialize();
+        protected virtual void OnInitialize() { }
     }
 }
