@@ -1,5 +1,5 @@
 ﻿using BigEgg.Framework.Applications.UnitTesting;
-using Bugger.Base.Models;
+using Bugger.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 

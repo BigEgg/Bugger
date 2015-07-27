@@ -1,9 +1,9 @@
-﻿using Bugger.Base.Documents;
+﻿using Bugger.Documents;
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace Bugger.Base.PlugIns.Configs
+namespace Bugger.PlugIns.Configs
 {
     /// <summary>
     /// The document store all configuration information about the Plug-in

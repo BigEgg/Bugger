@@ -1,6 +1,6 @@
 ﻿using BigEgg.Framework.Applications.Applications.Views;
 
-namespace Bugger.Base.PlugIns
+namespace Bugger.PlugIns
 {
     /// <summary>
     /// Plug-in setting dialog view

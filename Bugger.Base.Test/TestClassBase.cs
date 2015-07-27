@@ -1,4 +1,4 @@
-﻿using Bugger.Base.PlugIns.Configs;
+﻿using Bugger.PlugIns.Configs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;

@@ -1,5 +1,5 @@
 ﻿using BigEgg.Framework.Utils;
-using Bugger.Base.PlugIns.Configs;
+using Bugger.PlugIns.Configs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

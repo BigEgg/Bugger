@@ -2,7 +2,7 @@
 using BigEgg.Framework.Applications.Foundation;
 using System;
 
-namespace Bugger.Base.Models
+namespace Bugger.Models
 {
     /// <summary>
     /// The bug model class used to show in UI

@@ -1,4 +1,4 @@
-﻿using Bugger.Base.PlugIns;
+﻿using Bugger.PlugIns;
 using System;
 
 namespace Bugger.Domain.Test.PlugIns

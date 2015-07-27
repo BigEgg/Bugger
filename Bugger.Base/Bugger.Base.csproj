@@ -7,7 +7,7 @@
     <ProjectGuid>{A5CD06A3-28F5-4D2F-8DFD-62BE4808AF5A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bugger.Base</RootNamespace>
+    <RootNamespace>Bugger</RootNamespace>
     <AssemblyName>Bugger.Base</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -53,8 +53,9 @@
     <Compile Include="PlugIns\PluginBase.cs" />
     <Compile Include="PlugIns\PlugInType.cs" />
     <Compile Include="PlugIns\PlugInSettingDialogViewModel.cs" />
-    <Compile Include="PlugIns\PlugInSettingDialogValidateionResult.cs" />
+    <Compile Include="PlugIns\PlugInSettingDialogValidationResult.cs" />
     <Compile Include="PlugIns\TrackingSystem\ITrackingSystemPlugIn.cs" />
+    <Compile Include="PlugIns\TrackingSystem\TrackingSystemStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

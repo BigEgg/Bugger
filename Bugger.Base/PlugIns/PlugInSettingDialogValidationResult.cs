@@ -1,4 +1,4 @@
-﻿namespace Bugger.Base.PlugIns
+﻿namespace Bugger.PlugIns
 {
     /// <summary>
     /// The validation result for Plug-in's setting dialog

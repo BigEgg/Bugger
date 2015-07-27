@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace Bugger.Base.PlugIns.Configs
+namespace Bugger.PlugIns.Configs
 {
     /// <summary>
     /// The Plug-in's author's basic information.

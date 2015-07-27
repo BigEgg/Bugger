@@ -1,4 +1,4 @@
-﻿namespace Bugger.Base.PlugIns.TrackingSystem
+﻿namespace Bugger.PlugIns.TrackingSystem
 {
     public enum TrackingSystemStatus
     {

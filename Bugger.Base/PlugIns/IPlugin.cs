@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bugger.Base.PlugIns
+namespace Bugger.PlugIns
 {
     /// <summary>
     /// The Plug-in interface

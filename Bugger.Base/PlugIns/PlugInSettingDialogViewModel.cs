@@ -1,7 +1,7 @@
 ﻿using BigEgg.Framework.Applications.Applications.ViewModels;
 using System;
 
-namespace Bugger.Base.PlugIns
+namespace Bugger.PlugIns
 {
     /// <summary>
     /// The view model used to show settings of the Plug-in.

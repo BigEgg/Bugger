@@ -1,4 +1,4 @@
-﻿namespace Bugger.Base.Models
+﻿namespace Bugger.Models
 {
     /// <summary>
     /// The level of bug's priority shows in the application

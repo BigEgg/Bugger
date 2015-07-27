@@ -1,6 +1,6 @@
-﻿using Bugger.Base.Documents;
-using Bugger.Base.PlugIns;
-using Bugger.Base.PlugIns.Configs;
+﻿using Bugger.Documents;
+using Bugger.PlugIns;
+using Bugger.PlugIns.Configs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using Bugger.Base.PlugIns;
+﻿using Bugger.PlugIns;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 

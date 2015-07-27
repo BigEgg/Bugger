@@ -1,8 +1,8 @@
-﻿using Bugger.Base.Models;
+﻿using Bugger.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Bugger.Base.PlugIns.TrackingSystem
+namespace Bugger.PlugIns.TrackingSystem
 {
     public interface ITrackingSystemPlugIn
     {

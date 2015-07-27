@@ -1,4 +1,4 @@
-﻿namespace Bugger.Base.Documents
+﻿namespace Bugger.Documents
 {
     /// <summary>
     /// The document's interface

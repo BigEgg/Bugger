@@ -1,4 +1,4 @@
-﻿namespace Bugger.Base.Models
+﻿namespace Bugger.Models
 {
     /// <summary>
     /// The state to indicate whether the bug is new created or modified.

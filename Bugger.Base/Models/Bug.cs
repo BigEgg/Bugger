@@ -1,7 +1,7 @@
 ﻿using BigEgg.Framework;
 using System;
 
-namespace Bugger.Base.Models
+namespace Bugger.Models
 {
 
     /// <summary>

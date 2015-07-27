@@ -1,5 +1,5 @@
 ﻿using BigEgg.Framework.Applications.UnitTesting.Views;
-using Bugger.Base.PlugIns;
+using Bugger.PlugIns;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -35,18 +35,6 @@ namespace Bugger.Domain.Test.PlugIns
             var view = new MockPlugInSettingDialogView();
             var viewModel = new MockPlugInSettingDialogViewModel(view);
             viewModel.ValidationResult = PlugInSettingDialogValidationResult.Busy;
-
-            Assert.IsFalse(viewModel.SubmitSettingChangesCoreCalled);
-            viewModel.SubmitSettingChanges();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void SubmitSettingChangesTest_ConnectFailed()
-        {
-            var view = new MockPlugInSettingDialogView();
-            var viewModel = new MockPlugInSettingDialogViewModel(view);
-            viewModel.ValidationResult = PlugInSettingDialogValidationResult.ConnectFailed;
 
             Assert.IsFalse(viewModel.SubmitSettingChangesCoreCalled);
             viewModel.SubmitSettingChanges();

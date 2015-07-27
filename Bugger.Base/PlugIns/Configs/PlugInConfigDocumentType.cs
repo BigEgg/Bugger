@@ -1,9 +1,9 @@
-﻿using Bugger.Base.Documents;
+﻿using Bugger.Documents;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace Bugger.Base.PlugIns.Configs
+namespace Bugger.PlugIns.Configs
 {
     /// <summary>
     /// The document type to pen and save the Plug-in's configuration document.
