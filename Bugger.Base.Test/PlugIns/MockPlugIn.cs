@@ -15,7 +15,10 @@ namespace Bugger.Domain.Test.PlugIns
         }
 
 
-        public override PlugInSettingDialogViewModel<IPlugInSettingDialogView> SettingViewModel { get { return settingViewModel; } }
+        public override PlugInSettingDialogViewModel<IPlugInSettingDialogView> OpenSettingDialog()
+        {
+            return settingViewModel;
+        }
 
         public Action InitializeCoreAction { get; set; }
 

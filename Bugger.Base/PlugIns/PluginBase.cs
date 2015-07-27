@@ -44,12 +44,12 @@ namespace Bugger.Base.PlugIns
         public bool IsInitialized { get; private set; }
 
         /// <summary>
-        /// Gets the Plug-in setting view model.
+        /// Gets the Plug-in setting view model when open setting dialog.
         /// </summary>
         /// <value>
         /// The Plug-in setting view model.
         /// </value>
-        public abstract PlugInSettingDialogViewModel<IPlugInSettingDialogView> SettingViewModel { get; }
+        public abstract PlugInSettingDialogViewModel<IPlugInSettingDialogView> OpenSettingDialog();
 
 
         /// <summary>

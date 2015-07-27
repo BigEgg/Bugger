@@ -28,19 +28,18 @@ namespace Bugger.Base.PlugIns
         /// </summary>
         bool IsInitialized { get; }
 
+
         /// <summary>
-        /// Gets the Plug-in setting view model.
+        /// Gets the Plug-in setting view model when open setting dialog.
         /// </summary>
         /// <value>
         /// The Plug-in setting view model.
         /// </value>
-        PlugInSettingDialogViewModel<IPlugInSettingDialogView> SettingViewModel { get; }
+        PlugInSettingDialogViewModel<IPlugInSettingDialogView> OpenSettingDialog();
 
-        #region Plug-in Methods
         /// <summary>
         /// Initializes the Plug-in.
         /// </summary>
         void Initialize();
-        #endregion
     }
 }

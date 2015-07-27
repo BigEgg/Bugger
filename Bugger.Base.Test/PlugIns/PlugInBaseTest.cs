@@ -8,13 +8,14 @@ namespace Bugger.Domain.Test.PlugIns
     public class PlugInBaseTest
     {
         [TestMethod]
-        public void ConstructorTest()
+        public void GeneralTest()
         {
             var plugIn = new MockPlugIn(new Guid("1dc425b3-c27b-46ba-9623-a046d1acc754"), PlugInType.TrackingSystem);
 
             Assert.AreEqual("1dc425b3-c27b-46ba-9623-a046d1acc754", plugIn.Guid.ToString());
             Assert.AreEqual(PlugInType.TrackingSystem, plugIn.PlugInType);
             Assert.IsFalse(plugIn.IsInitialized);
+            Assert.IsNotNull(plugIn.OpenSettingDialog());
         }
 
         [TestMethod]

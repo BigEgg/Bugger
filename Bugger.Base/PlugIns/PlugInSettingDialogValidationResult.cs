@@ -7,7 +7,6 @@
     {
         Valid,
         Busy,
-        ConnectFailed,
         UnValid
     }
 }
