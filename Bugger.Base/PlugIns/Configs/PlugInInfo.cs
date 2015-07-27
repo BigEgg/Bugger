@@ -99,7 +99,7 @@ namespace Bugger.PlugIns.Configs
         }
 
         /// <summary>
-        /// Gets the Plug-in's  maximum support bugger version.
+        /// Gets the Plug-in's maximum support bugger version.
         /// </summary>
         /// <value>
         /// The Plug-in's maximum support bugger version.
@@ -110,7 +110,7 @@ namespace Bugger.PlugIns.Configs
             get { return maximumSupportBuggerVersion; }
         }
 
-        [XmlElement("MaximumSupportBuggerVersion")]
+        [XmlElement("MaximumSupportBuggerVersion", IsNullable = true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string MaximumSupportBuggerVersionStr
         {
@@ -120,7 +120,14 @@ namespace Bugger.PlugIns.Configs
             }
             set
             {
-                maximumSupportBuggerVersion = new Version(value);
+                if (value == null)
+                {
+                    maximumSupportBuggerVersion = null;
+                }
+                else
+                {
+                    maximumSupportBuggerVersion = new Version(value);
+                }
             }
         }
     }
