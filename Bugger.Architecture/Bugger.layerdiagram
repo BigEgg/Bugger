@@ -1,13 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="cac020b5-a577-4d3d-8d08-4e21a676c93c" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="586c6e02-810b-46dc-929f-5a91ef2428ea" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
   <layers>
-    <layer Id="0550101b-1f0a-488f-b5f1-29e0e1c1f2a9" name="Bugger.Base">
+    <layer Id="45274330-4c91-4e6f-91de-b04978efa2df" name="BigEgg.Framework">
       <references>
-        <reference Id="8641bb2c-80e6-4240-a116-810efe6c8ea4" name="Bugger.Domain">
-          <ArtifactNode Label="Bugger.Domain" Category="CodeSchema_Project" Id="(Assembly=../Bugger.Domain/Bugger.Base.csproj)">
+        <reference Id="45e7cfd2-4713-48b3-aad5-ba37adae566f" name="BigEgg.Framework">
+          <ArtifactNode Label="BigEgg.Framework" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/Visual Studio 2015/Projects/Core/Framework/BigEgg.Framework/BigEgg.Framework.csproj&quot;)">
             <Category Ref="File" />
           </ArtifactNode>
-          <ExpandedNode Id="(Assembly=Bugger.Domain)" Label="Bugger.Base.dll" Category="CodeSchema_Assembly">
+          <ExpandedNode Id="(Assembly=BigEgg.Framework)" Label="BigEgg.Framework.dll" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.dll" />
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="53c475dd-da23-49ee-a129-0ef8439056fd" name="BigEgg.Framework.Applications">
+          <ArtifactNode Label="BigEgg.Framework.Applications" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/Visual Studio 2015/Projects/Core/Framework/BigEgg.Framework.Applications/BigEgg.Framework.Applications.csproj&quot;)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=BigEgg.Framework.Applications)" Label="BigEgg.Framework.Applications.dll" Category="CodeSchema_Assembly">
             <Category Ref="FileSystem.Category.FileOfType.dll" />
             <LinkCategory Ref="Produces" />
             <LinkCategory Ref="Represents" />
@@ -15,172 +25,22 @@
         </reference>
       </references>
     </layer>
-    <layer Id="d0622a99-9747-455c-a38f-f6c2a64e849e" name="Bugger.Proxy">
-      <dependencyToLayers>
-        <dependencyFromLayerToLayer Id="9f35269d-83de-43b8-a361-9109405023ba" direction="Forward">
-          <layerMoniker Id="0550101b-1f0a-488f-b5f1-29e0e1c1f2a9" />
-        </dependencyFromLayerToLayer>
-      </dependencyToLayers>
-      <references>
-        <reference Id="3d81bd1a-eef3-47bd-a2bc-28e3de1e12ce" name="Bugger.Proxy">
-          <ArtifactNode Label="Bugger.Proxy" Category="CodeSchema_Project" Id="(Assembly=../Bugger.Proxies/Bugger.Proxys/Bugger.Proxy.csproj)">
-            <Category Ref="File" />
-          </ArtifactNode>
-          <ExpandedNode Id="(Assembly=Bugger.Proxy)" Label="Bugger.Proxy.dll" Category="CodeSchema_Assembly">
-            <Category Ref="FileSystem.Category.FileOfType.dll" />
-            <LinkCategory Ref="Produces" />
-            <LinkCategory Ref="Represents" />
-          </ExpandedNode>
-        </reference>
-      </references>
-    </layer>
-    <layer Id="612b1f68-5516-47f2-a29f-7c75635eb221" name="Bugger.Applications&#xD;&#xA;">
-      <dependencyToLayers>
-        <dependencyFromLayerToLayer Id="eadc8aa4-4e8e-4d97-af90-3001e0cba508" direction="Forward">
-          <layerMoniker Id="0550101b-1f0a-488f-b5f1-29e0e1c1f2a9" />
-        </dependencyFromLayerToLayer>
-        <dependencyFromLayerToLayer Id="63c3092a-bb5a-4364-b19b-d80af1e62020" direction="Forward">
-          <layerMoniker Id="d0622a99-9747-455c-a38f-f6c2a64e849e" />
-        </dependencyFromLayerToLayer>
-      </dependencyToLayers>
+    <layer Id="0d6c7449-036d-4ba3-8fb1-df3f14e6f373" name="Base Layer">
       <childLayers>
-        <layer Id="97997d1a-7ac8-4d59-85f6-67e9e86370d9" name="Controllers">
+        <layer Id="de385467-3385-43ea-97eb-7f7740ce6dcb" name="Bugger.Base">
           <dependencyToLayers>
-            <dependencyFromLayerToLayer Id="0928064b-ed0c-4aae-bb97-5e5088ddf095" direction="Forward">
-              <layerMoniker Id="dda41257-6a43-44c1-9cd7-c22fdb2148d7" />
-            </dependencyFromLayerToLayer>
-            <dependencyFromLayerToLayer Id="4513c94e-c926-4c39-97ed-2a3da8925528" direction="Forward">
-              <layerMoniker Id="a3a02d3a-6d4a-439f-a449-c4ff22117a0e" />
-            </dependencyFromLayerToLayer>
-            <dependencyFromLayerToLayer Id="652e7a9a-2eb2-49be-8fb7-d7d29a2ffa57" direction="Forward">
-              <layerMoniker Id="e44de508-c898-4f0f-a5d1-cb8a1ed75d68" />
+            <dependencyFromLayerToLayer Id="af6692e6-b16f-4200-98b0-32b8e09d5eb0" direction="Forward">
+              <layerMoniker Id="45274330-4c91-4e6f-91de-b04978efa2df" />
             </dependencyFromLayerToLayer>
           </dependencyToLayers>
           <references>
-            <reference Id="9a6a421f-6a8a-4c48-aca4-0890f90d630d" name="Controllers">
-              <ArtifactNode Label="Controllers" Category="CodeSchema_ProjectItem" Id="(Assembly=../Bugger.Applications/Bugger.Applications.csproj File=../Bugger.Applications/Controllers/)">
-                <Category Ref="ProjectFolder" />
+            <reference Id="7f27dcd3-6634-4452-8188-d8b6d904eb4f" name="Bugger.Base">
+              <ArtifactNode Label="Bugger.Base" Category="CodeSchema_Project" Id="(Assembly=&quot;$(PersonalUri)/Visual Studio 2015/Projects/Bugger/Bugger.Base/Bugger.Base.csproj&quot;)">
+                <Category Ref="File" />
               </ArtifactNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Controllers Type=ApplicationController)" Label="ApplicationController" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Controllers Type=DataController)" Label="DataController" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Controllers Type=IApplicationController)" Label="IApplicationController" Category="CodeSchema_Interface">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Controllers Type=ProxyController)" Label="ProxyController" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-            </reference>
-          </references>
-        </layer>
-        <layer Id="dda41257-6a43-44c1-9cd7-c22fdb2148d7" name="ViewModels">
-          <dependencyToLayers>
-            <dependencyFromLayerToLayer Id="045ab225-ed9d-4a2c-adef-84472f845f92" direction="Forward">
-              <layerMoniker Id="3ebc46b7-ef6e-46cb-8fd5-4550b734d828" />
-            </dependencyFromLayerToLayer>
-            <dependencyFromLayerToLayer Id="d9b591fe-828e-4d65-b8ef-a74325f9d5db" direction="Forward">
-              <layerMoniker Id="e44de508-c898-4f0f-a5d1-cb8a1ed75d68" />
-            </dependencyFromLayerToLayer>
-          </dependencyToLayers>
-          <references>
-            <reference Id="8d517747-529c-420e-8640-c3e653decc3b" name="ViewModels">
-              <ArtifactNode Label="ViewModels" Category="CodeSchema_ProjectItem" Id="(Assembly=../Bugger.Applications/Bugger.Applications.csproj File=../Bugger.Applications/ViewModels/)">
-                <Category Ref="ProjectFolder" />
-              </ArtifactNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.ViewModels Type=AboutDialogViewModel)" Label="AboutDialogViewModel" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.ViewModels Type=FloatingViewModel)" Label="FloatingViewModel" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.ViewModels Type=MainViewModel)" Label="MainViewModel" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.ViewModels Type=SettingDialogViewModel)" Label="SettingDialogViewModel" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.ViewModels Type=SettingsViewModel)" Label="SettingsViewModel" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.ViewModels Type=TeamBugsViewModel)" Label="TeamBugsViewModel" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.ViewModels Type=UserBugsViewModel)" Label="UserBugsViewModel" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-            </reference>
-          </references>
-        </layer>
-        <layer Id="a3a02d3a-6d4a-439f-a449-c4ff22117a0e" name="Views&#xD;&#xA;">
-          <references>
-            <reference Id="85035914-c181-4829-b1c3-4265abced41c" name="Views">
-              <ArtifactNode Label="Views" Category="CodeSchema_ProjectItem" Id="(Assembly=../Bugger.Applications/Bugger.Applications.csproj File=../Bugger.Applications/Views/)">
-                <Category Ref="ProjectFolder" />
-              </ArtifactNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Views Type=IAboutDialogView)" Label="IAboutDialogView" Category="CodeSchema_Interface">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Views Type=IFloatingView)" Label="IFloatingView" Category="CodeSchema_Interface">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Views Type=IMainView)" Label="IMainView" Category="CodeSchema_Interface">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Views Type=ISettingDialogView)" Label="ISettingDialogView" Category="CodeSchema_Interface">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Views Type=ISettingsView)" Label="ISettingsView" Category="CodeSchema_Interface">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Views Type=ITeamBugsView)" Label="ITeamBugsView" Category="CodeSchema_Interface">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Views Type=IUserBugsView)" Label="IUserBugsView" Category="CodeSchema_Interface">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-            </reference>
-          </references>
-        </layer>
-        <layer Id="e44de508-c898-4f0f-a5d1-cb8a1ed75d68" name="Services">
-          <references>
-            <reference Id="25e2b7f3-2f72-4680-8605-d0c174d0c32b" name="Services">
-              <ArtifactNode Label="Services" Category="CodeSchema_ProjectItem" Id="(Assembly=../Bugger.Applications/Bugger.Applications.csproj File=../Bugger.Applications/Services/)">
-                <Category Ref="ProjectFolder" />
-              </ArtifactNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Services Type=DataService)" Label="DataService" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Services Type=IDataService)" Label="IDataService" Category="CodeSchema_Interface">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Services Type=IPresentationService)" Label="IPresentationService" Category="CodeSchema_Interface">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Services Type=IProxyService)" Label="IProxyService" Category="CodeSchema_Interface">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Services Type=IShellService)" Label="IShellService" Category="CodeSchema_Interface">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Services Type=ProxyService)" Label="ProxyService" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Services Type=ShellService)" Label="ShellService" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-            </reference>
-          </references>
-        </layer>
-        <layer Id="3ebc46b7-ef6e-46cb-8fd5-4550b734d828" name="Models">
-          <references>
-            <reference Id="f16797a1-cab7-42c4-a637-4c799be968cb" name="Models">
-              <ArtifactNode Label="Models" Category="CodeSchema_ProjectItem" Id="(Assembly=../Bugger.Applications/Bugger.Applications.csproj File=../Bugger.Applications/Models/)">
-                <Category Ref="ProjectFolder" />
-              </ArtifactNode>
-              <ExpandedNode Id="(Assembly=Bugger.Applications Namespace=Bugger.Applications.Models Type=CheckString)" Label="CheckString" Category="CodeSchema_Class">
+              <ExpandedNode Id="(Assembly=Bugger.Base)" Label="Bugger.Base.dll" Category="CodeSchema_Assembly">
+                <Category Ref="FileSystem.Category.FileOfType.dll" />
+                <LinkCategory Ref="Produces" />
                 <LinkCategory Ref="Represents" />
               </ExpandedNode>
             </reference>
@@ -188,81 +48,13 @@
         </layer>
       </childLayers>
     </layer>
-    <layer Id="f64f3fe7-a26c-4bba-b0ae-041aca75b97f" name="Bugger.Presentation">
-      <dependencyToLayers>
-        <dependencyFromLayerToLayer Id="f6629b17-fff6-4d7e-9737-e471c476978b" direction="Forward">
-          <layerMoniker Id="612b1f68-5516-47f2-a29f-7c75635eb221" />
-        </dependencyFromLayerToLayer>
-        <dependencyFromLayerToLayer Id="71e8b06e-2449-4547-95a2-20ffaec0e342" direction="Forward">
-          <layerMoniker Id="0550101b-1f0a-488f-b5f1-29e0e1c1f2a9" />
-        </dependencyFromLayerToLayer>
-      </dependencyToLayers>
+    <layer Id="9d4487ae-ed22-4280-a163-65ced03eb568" name="Business Layer" />
+    <layer Id="03eee534-a81a-4361-9707-2538b80f50ee" name="PlugIns">
       <childLayers>
-        <layer Id="5b928aef-8176-46d1-9b46-1dc88e34a8fe" name="Converters">
-          <references>
-            <reference Id="31996b2b-f272-41dd-9bb3-aa9cebaffdfe" name="Converters">
-              <ArtifactNode Label="Converters" Category="CodeSchema_ProjectItem" Id="(Assembly=../Bugger.Presentation/Bugger.Presentation.csproj File=../Bugger.Presentation/Converters/)">
-                <Category Ref="ProjectFolder" />
-              </ArtifactNode>
-              <ExpandedNode Id="(Assembly=Bugger Namespace=Bugger.Presentation.Converters Type=BugTypeToImageConverter)" Label="BugTypeToImageConverter" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-            </reference>
-          </references>
-        </layer>
-        <layer Id="dd2ecba4-5ea4-4a4e-90b5-76d6761bb41c" name="Services">
-          <dependencyToLayers>
-            <dependencyFromLayerToLayer Id="6447149a-c1e9-41c6-870c-ea8906527b78" direction="Forward">
-              <layerMoniker Id="e44de508-c898-4f0f-a5d1-cb8a1ed75d68" />
-            </dependencyFromLayerToLayer>
-          </dependencyToLayers>
-          <references>
-            <reference Id="07e0ab7c-80ac-43b7-8dc2-1fad636705e1" name="Services">
-              <ArtifactNode Label="Services" Category="CodeSchema_ProjectItem" Id="(Assembly=../Bugger.Presentation/Bugger.Presentation.csproj File=../Bugger.Presentation/Services/)">
-                <Category Ref="ProjectFolder" />
-              </ArtifactNode>
-              <ExpandedNode Id="(Assembly=Bugger Namespace=Bugger.Presentation.Services Type=PresentationService)" Label="PresentationService" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-            </reference>
-          </references>
-        </layer>
-        <layer Id="5540830f-2d94-4063-99d6-db22c4396e1b" name="Views">
-          <dependencyToLayers>
-            <dependencyFromLayerToLayer Id="2ef40bb0-2a7c-41c1-a08c-95bc6df9c86c" direction="Forward">
-              <layerMoniker Id="a3a02d3a-6d4a-439f-a449-c4ff22117a0e" />
-            </dependencyFromLayerToLayer>
-          </dependencyToLayers>
-          <references>
-            <reference Id="0f8980b4-08ea-4a28-b901-95af5aec6dc1" name="Views">
-              <ArtifactNode Label="Views" Category="CodeSchema_ProjectItem" Id="(Assembly=../Bugger.Presentation/Bugger.Presentation.csproj File=../Bugger.Presentation/Views/)">
-                <Category Ref="ProjectFolder" />
-              </ArtifactNode>
-              <ExpandedNode Id="(Assembly=Bugger Namespace=Bugger.Presentation.Views Type=AboutDialogWindow)" Label="AboutDialogWindow" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger Namespace=Bugger.Presentation.Views Type=FloatingWindow)" Label="FloatingWindow" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger Namespace=Bugger.Presentation.Views Type=MainWindow)" Label="MainWindow" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger Namespace=Bugger.Presentation.Views Type=SettingDialogWindow)" Label="SettingDialogWindow" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger Namespace=Bugger.Presentation.Views Type=SettingsView)" Label="SettingsView" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger Namespace=Bugger.Presentation.Views Type=TeamBugsView)" Label="TeamBugsView" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-              <ExpandedNode Id="(Assembly=Bugger Namespace=Bugger.Presentation.Views Type=UserBugsView)" Label="UserBugsView" Category="CodeSchema_Class">
-                <LinkCategory Ref="Represents" />
-              </ExpandedNode>
-            </reference>
-          </references>
-        </layer>
+        <layer Id="4d4f19e4-7e03-41a8-aacd-64ed0cba2493" name="Tracking System" />
+        <layer Id="eaa48189-36e0-4c49-8ff3-d2f000dfc9ad" name="Click" />
       </childLayers>
     </layer>
+    <layer Id="0e71d96d-cb88-4d21-99ee-3aa00361193a" name="Presentation Layer" />
   </layers>
 </layerModel>
