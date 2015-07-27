@@ -1,83 +1,42 @@
-﻿using Bugger.Base.PlugIns;
-using System;
+﻿using System;
 
-namespace Bugger.Base.Plugins
+namespace Bugger.Base.PlugIns
 {
+    /// <summary>
+    /// The Plug-in interface
+    /// </summary>
     public interface IPlugIn
     {
-        #region Plug-in Properties
         /// <summary>
-        /// Gets the Plug-in's unique name.
+        /// Gets the Plug-in's unique id.
         /// </summary>
         /// <value>
-        /// The Plug-in's unique name.
+        /// The Plug-in's unique id.
         /// </value>
-        Guid UniqueName { get; }
+        Guid Guid { get; }
 
         /// <summary>
-        /// Gets the Plug-in name.
+        /// Gets the type of the Plug-in.
         /// </summary>
         /// <value>
-        /// The Plug-in name.
+        /// The type of the Plug-in.
         /// </value>
-        string Name { get; }
-
-        /// <summary>
-        /// Gets the description of the Plug-in.
-        /// </summary>
-        /// <value>
-        /// The description of the Plug-in.
-        /// </value>
-        string Description { get; }
-
-        /// <summary>
-        /// Gets the Plug-in's version.
-        /// </summary>
-        /// <value>
-        /// The Plug-in's version.
-        /// </value>
-        Version Version { get; }
-
-        /// <summary>
-        /// Gets the Plug-in's minimum support bugger version.
-        /// </summary>
-        /// <value>
-        /// The Plug-in's minimum support bugger version.
-        /// </value>
-        Version MinimumSupportBuggerVersion { get; }
-
-        /// <summary>
-        /// Gets the Plug-in's  maximum support bugger version.
-        /// </summary>
-        /// <value>
-        /// The Plug-in's maximum support bugger version.
-        /// </value>
-        Version MaximumSupportBuggerVersion { get; }
+        PlugInType PlugInType { get; }
 
         /// <summary>
         /// Get the flag of the Initialization of the Plug-in.
         /// </summary>
         bool IsInitialized { get; }
 
-        #region Setting View Model
         /// <summary>
         /// Gets the Plug-in setting view model.
         /// </summary>
         /// <value>
         /// The Plug-in setting view model.
         /// </value>
-        ProxySettingViewModel<IPlugInSettingView> SettingViewModel { get; }
-        #endregion
-        #endregion
+        PlugInSettingDialogViewModel<IPlugInSettingDialogView> SettingViewModel { get; }
 
         #region Plug-in Methods
-        /// <summary>
-        /// Determines whether the specified bugger version is support.
-        /// </summary>
-        /// <param name="buggerVersion">The bugger version.</param>
-        /// <returns><c>True</c> if the specified Bugger version can support this Plug-in, otherwise, <c>false</c>.</returns>
-        bool isSupport(Version buggerVersion);
-
         /// <summary>
         /// Initializes the Plug-in.
         /// </summary>

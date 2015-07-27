@@ -67,6 +67,8 @@
     <Compile Include="PlugIns\Configs\PlugInConfigDocumentTypeTest.cs" />
     <Compile Include="PlugIns\Configs\PlugInInfoTest.cs" />
     <Compile Include="PlugIns\Configs\PlugInConfigDocumentTest.cs" />
+    <Compile Include="PlugIns\MockPlugIn.cs" />
+    <Compile Include="PlugIns\PlugInBaseTest.cs" />
     <Compile Include="PlugIns\PlugInSettingDialogViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestClassBase.cs" />
