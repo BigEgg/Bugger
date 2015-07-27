@@ -54,6 +54,7 @@
     <Compile Include="PlugIns\PlugInType.cs" />
     <Compile Include="PlugIns\PlugInSettingDialogViewModel.cs" />
     <Compile Include="PlugIns\PlugInSettingDialogValidateionResult.cs" />
+    <Compile Include="PlugIns\TrackingSystem\ITrackingSystemPlugIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
