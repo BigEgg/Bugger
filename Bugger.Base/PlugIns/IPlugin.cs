@@ -41,5 +41,11 @@ namespace Bugger.PlugIns
         /// Initializes the Plug-in.
         /// </summary>
         void Initialize();
+
+        /// <summary>
+        /// Gets the Plug-in's shared data.
+        /// </summary>
+        /// <returns>The Plug-in's shared data.</returns>
+        IPlugInSharedData GetSharedData();
     }
 }

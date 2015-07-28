@@ -16,6 +16,10 @@ namespace Bugger.Domain.Test.PlugIns
             Assert.AreEqual(PlugInType.TrackingSystem, plugIn.PlugInType);
             Assert.IsFalse(plugIn.IsInitialized);
             Assert.IsNotNull(plugIn.OpenSettingDialog());
+
+            var sharedData = plugIn.GetSharedData();
+            Assert.IsNotNull(sharedData);
+            Assert.IsInstanceOfType(sharedData, typeof(EmptyPlugInSharedData));
         }
 
         [TestMethod]

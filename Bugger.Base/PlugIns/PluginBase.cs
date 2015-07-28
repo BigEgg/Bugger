@@ -43,6 +43,7 @@ namespace Bugger.PlugIns
         /// </summary>
         public bool IsInitialized { get; private set; }
 
+
         /// <summary>
         /// Gets the Plug-in setting view model when open setting dialog.
         /// </summary>
@@ -50,7 +51,6 @@ namespace Bugger.PlugIns
         /// The Plug-in setting view model.
         /// </value>
         public abstract PlugInSettingDialogViewModel<IPlugInSettingDialogView> OpenSettingDialog();
-
 
         /// <summary>
         /// Initializes the Plug-in.
@@ -70,6 +70,18 @@ namespace Bugger.PlugIns
                 throw;
             }
         }
+
+        /// <summary>
+        /// Gets the Plug-in's shared data.
+        /// </summary>
+        /// <returns>
+        /// The Plug-in's shared data.
+        /// </returns>
+        public virtual IPlugInSharedData GetSharedData()
+        {
+            return new EmptyPlugInSharedData(Guid);
+        }
+
 
         /// <summary>
         /// The core function to initializes the Plug-in.
