@@ -1,5 +1,4 @@
 ﻿using Bugger.Documents;
-using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
@@ -46,7 +45,7 @@ namespace Bugger.PlugIns.Configs
         /// The Plug-in's dependency Plug-ins.
         /// </value>
         [XmlArray("Dependencies")]
-        [XmlArrayItem("PlugIn")]
-        public List<Guid> DependencyPlugIns { get; set; }
+        [XmlArrayItem("Dependency")]
+        public List<DependencyPlugIn> DependencyPlugIns { get; set; }
     }
 }

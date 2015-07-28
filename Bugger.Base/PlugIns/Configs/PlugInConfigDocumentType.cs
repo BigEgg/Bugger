@@ -19,6 +19,7 @@ namespace Bugger.PlugIns.Configs
         /// </summary>
         /// <param name="fileName">The file name.</param>
         /// <returns>The Plug-in's configuration document.</returns>
+        /// <exception cref="FileNotFoundException">The file specified in path was not found.</exception>
         public PlugInConfigDocument Open(string fileName)
         {
             fileName = GetFileNameWithExtension(fileName);

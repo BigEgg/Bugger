@@ -44,6 +44,8 @@
     <Compile Include="Models\BugModifyState.cs" />
     <Compile Include="Models\BugPriorityLevel.cs" />
     <Compile Include="Models\BugModel.cs" />
+    <Compile Include="PlugIns\Configs\DependencyPlugIn.cs" />
+    <Compile Include="PlugIns\Configs\DependencyType.cs" />
     <Compile Include="PlugIns\Configs\PlugInAuthor.cs" />
     <Compile Include="PlugIns\Configs\PlugInConfigDocument.cs" />
     <Compile Include="PlugIns\Configs\PlugInConfigDocumentType.cs" />
