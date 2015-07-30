@@ -1,5 +1,6 @@
 ﻿using Bugger.PlugIns;
 using System;
+using System.Collections.Generic;
 
 namespace Bugger.Domain.Test.PlugIns
 {
@@ -21,6 +22,8 @@ namespace Bugger.Domain.Test.PlugIns
         }
 
         public Action InitializeCoreAction { get; set; }
+
+        public IDictionary<Guid, IPlugInSharedData> EnviromentSharedData { get { return environmentSharedData; } }
 
         protected override void OnInitialize()
         {

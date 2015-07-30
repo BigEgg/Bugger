@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BigEgg.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bugger.PlugIns
 {
@@ -7,6 +10,9 @@ namespace Bugger.PlugIns
     /// </summary>
     public abstract class PlugInBase : IPlugIn
     {
+        protected IDictionary<Guid, IPlugInSharedData> environmentSharedData;
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PlugInBase" /> class.
         /// </summary>
@@ -19,6 +25,7 @@ namespace Bugger.PlugIns
             PlugInType = plugInType;
 
             IsInitialized = false;
+            environmentSharedData = new Dictionary<Guid, IPlugInSharedData>();
         }
 
 
@@ -80,6 +87,18 @@ namespace Bugger.PlugIns
         public virtual IPlugInSharedData GetSharedData()
         {
             return new EmptyPlugInSharedData(Guid);
+        }
+
+        /// <summary>
+        /// Sets the environment's shared data.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <exception cref="ArgumentNullException">data</exception>
+        public virtual void SetSharedData(IEnumerable<IPlugInSharedData> data)
+        {
+            Preconditions.NotNull(data);
+
+            environmentSharedData = data.ToDictionary(sharedData => sharedData.PlugInGuid, sharedData => sharedData);
         }
 
 

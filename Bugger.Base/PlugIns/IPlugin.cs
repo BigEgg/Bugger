@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Bugger.PlugIns
 {
@@ -47,5 +48,11 @@ namespace Bugger.PlugIns
         /// </summary>
         /// <returns>The Plug-in's shared data.</returns>
         IPlugInSharedData GetSharedData();
+
+        /// <summary>
+        /// Sets the environment's shared data.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        void SetSharedData(IEnumerable<IPlugInSharedData> data);
     }
 }
