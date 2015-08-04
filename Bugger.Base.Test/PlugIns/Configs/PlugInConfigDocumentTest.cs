@@ -30,10 +30,10 @@ namespace Bugger.Domain.Test.PlugIns.Configs
                 MinimumSupportBuggerVersionStr = "0.5.0.0",
                 MaximumSupportBuggerVersionStr = "0.5.0.0"
             };
-            var dependencyPlugIn = new DependencyPlugIn()
+            var dependencyPlugIn = new DependentPlugIn()
             {
                 PlugInGuid = new Guid("1dc425b3-c27b-46ba-9623-a046d1acc754"),
-                DependencyType = DependencyType.Mandatory,
+                DependentType = DependentType.Mandatory,
                 MinimumSupportPlugInVersionStr = "0.5.0.0",
                 MaximumSupportPlugInVersionStr = "0.5.0.0"
             };
@@ -42,7 +42,7 @@ namespace Bugger.Domain.Test.PlugIns.Configs
                 PlugInInfo = info,
                 PlugInType = PlugInType.Click,
                 AssemblyNames = new List<string>() { "Bugger.PlugIn.Click.TFSClick" },
-                DependencyPlugIns = new List<DependencyPlugIn>() { dependencyPlugIn }
+                DependentPlugIns = new List<DependentPlugIn>() { dependencyPlugIn }
             };
             var xml = document.ObjectToXElement();
 
@@ -78,7 +78,7 @@ namespace Bugger.Domain.Test.PlugIns.Configs
                 PlugInInfo = info,
                 PlugInType = PlugInType.Click,
                 AssemblyNames = new List<string>() { "Bugger.PlugIn.Click.TFSClick" },
-                DependencyPlugIns = new List<DependencyPlugIn>() { }
+                DependentPlugIns = new List<DependentPlugIn>() { }
             };
             var xml = document.ObjectToXElement();
 
@@ -162,8 +162,8 @@ namespace Bugger.Domain.Test.PlugIns.Configs
             Assert.AreEqual("26e54ac9-6286-4991-a687-c8c6b7c50289", document.PlugInInfo.PlugInGuid.ToString());
             Assert.AreEqual(PlugInType.Click, document.PlugInType);
             Assert.AreEqual("Bugger.PlugIn.Click.TFSClick", document.AssemblyNames.First());
-            Assert.AreEqual(1, document.DependencyPlugIns.Count);
-            Assert.AreEqual("1dc425b3-c27b-46ba-9623-a046d1acc754", document.DependencyPlugIns.First().PlugInGuid.ToString());
+            Assert.AreEqual(1, document.DependentPlugIns.Count);
+            Assert.AreEqual("1dc425b3-c27b-46ba-9623-a046d1acc754", document.DependentPlugIns.First().PlugInGuid.ToString());
         }
 
         [TestMethod]
@@ -197,7 +197,7 @@ namespace Bugger.Domain.Test.PlugIns.Configs
             Assert.AreEqual("26e54ac9-6286-4991-a687-c8c6b7c50289", document.PlugInInfo.PlugInGuid.ToString());
             Assert.AreEqual(PlugInType.Click, document.PlugInType);
             Assert.AreEqual("Bugger.PlugIn.Click.TFSClick", document.AssemblyNames.First());
-            Assert.AreEqual(0, document.DependencyPlugIns.Count);
+            Assert.AreEqual(0, document.DependentPlugIns.Count);
         }
 
         [TestMethod]
@@ -230,7 +230,7 @@ namespace Bugger.Domain.Test.PlugIns.Configs
             Assert.AreEqual("26e54ac9-6286-4991-a687-c8c6b7c50289", document.PlugInInfo.PlugInGuid.ToString());
             Assert.AreEqual(PlugInType.Click, document.PlugInType);
             Assert.AreEqual("Bugger.PlugIn.Click.TFSClick", document.AssemblyNames.First());
-            Assert.AreEqual(0, document.DependencyPlugIns.Count);
+            Assert.AreEqual(0, document.DependentPlugIns.Count);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Bugger.PlugIns.Configs
 {
     [XmlRoot("Dependency")]
-    public class DependencyPlugIn
+    public class DependentPlugIn
     {
         private Version minimumSupportPlugInVersion;
         private Version maximumSupportBuggerVersion;
@@ -20,28 +20,28 @@ namespace Bugger.PlugIns.Configs
         public Guid PlugInGuid { get; set; }
 
         /// <summary>
-        /// Gets or sets the dependency type.
+        /// Gets or sets the dependent type.
         /// </summary>
         /// <value>
-        /// The dependency type.
+        /// The dependent type.
         /// </value>
         [XmlElement("Type")]
-        public DependencyType DependencyType { get; set; }
+        public DependentType DependentType { get; set; }
 
         /// <summary>
-        /// Gets or sets the group id when the dependency type is OneOfGroup.
+        /// Gets or sets the group id when the dependent type is OneOfGroup.
         /// </summary>
         /// <value>
-        /// The group id when the dependency type is OneOfGroup.
+        /// The group id when the dependent type is OneOfGroup.
         /// </value>
         [XmlElement("Group", IsNullable = true)]
         public int? GroupId { get; set; }
 
         /// <summary>
-        /// Gets the Plug-in's minimum support dependency Plug-in's version.
+        /// Gets the Plug-in's minimum support dependent Plug-in's version.
         /// </summary>
         /// <value>
-        /// The Plug-in's minimum support dependency Plug-in's version.
+        /// The Plug-in's minimum support dependent Plug-in's version.
         /// </value>
         [XmlIgnore]
         public Version MinimumSupportPlugInVersion { get { return minimumSupportPlugInVersion; } }
@@ -61,10 +61,10 @@ namespace Bugger.PlugIns.Configs
         }
 
         /// <summary>
-        /// Gets the Plug-in's maximum support Plug-in's version.
+        /// Gets the Plug-in's maximum support dependent Plug-in's version.
         /// </summary>
         /// <value>
-        /// The Plug-in's maximum support Plug-in's version.
+        /// The Plug-in's maximum support dependent Plug-in's version.
         /// </value>
         [XmlIgnore]
         public Version MaximumSupportPlugInVersion

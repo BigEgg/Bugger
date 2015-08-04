@@ -1,6 +1,9 @@
 ﻿namespace Bugger.PlugIns.Configs
 {
-    public enum DependencyType
+    /// <summary>
+    /// The dependent type
+    /// </summary>
+    public enum DependentType
     {
         Mandatory,
         OneOfGroup,

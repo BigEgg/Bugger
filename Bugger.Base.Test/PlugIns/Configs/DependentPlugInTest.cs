@@ -7,15 +7,15 @@ using System.Xml.Linq;
 namespace Bugger.Base.Test.PlugIns.Configs
 {
     [TestClass]
-    public class DependencyPlugInTest
+    public class DependentPlugInTest
     {
         [TestMethod]
         public void SerializeTest()
         {
-            var dependencyPlugIn = new DependencyPlugIn()
+            var dependencyPlugIn = new DependentPlugIn()
             {
                 PlugInGuid = new Guid("1dc425b3-c27b-46ba-9623-a046d1acc754"),
-                DependencyType = DependencyType.Mandatory,
+                DependentType = DependentType.Mandatory,
                 MinimumSupportPlugInVersionStr = "0.5.0.0",
                 MaximumSupportPlugInVersionStr = "0.5.0.0"
             };
@@ -32,10 +32,10 @@ namespace Bugger.Base.Test.PlugIns.Configs
         [TestMethod]
         public void SerializeTest_WithGroupId()
         {
-            var dependencyPlugIn = new DependencyPlugIn()
+            var dependencyPlugIn = new DependentPlugIn()
             {
                 PlugInGuid = new Guid("1dc425b3-c27b-46ba-9623-a046d1acc754"),
-                DependencyType = DependencyType.OneOfGroup,
+                DependentType = DependentType.OneOfGroup,
                 GroupId = 1,
                 MinimumSupportPlugInVersionStr = "0.5.0.0",
                 MaximumSupportPlugInVersionStr = "0.5.0.0"
@@ -53,10 +53,10 @@ namespace Bugger.Base.Test.PlugIns.Configs
         [TestMethod]
         public void SerializeTest_WithoutMaximumSuportPlugInVersion()
         {
-            var dependencyPlugIn = new DependencyPlugIn()
+            var dependencyPlugIn = new DependentPlugIn()
             {
                 PlugInGuid = new Guid("1dc425b3-c27b-46ba-9623-a046d1acc754"),
-                DependencyType = DependencyType.Mandatory,
+                DependentType = DependentType.Mandatory,
                 MinimumSupportPlugInVersionStr = "0.5.0.0"
             };
             var xml = dependencyPlugIn.ObjectToXElement();
@@ -78,11 +78,11 @@ namespace Bugger.Base.Test.PlugIns.Configs
                 new XElement("MinimumSupportPlugInVersion", "0.5.0.0"),
                 new XElement("MaximumSupportPlugInVersion", "0.5.0.0")
             );
-            var dependencyPlugIn = xml.XElementToObject<DependencyPlugIn>();
+            var dependencyPlugIn = xml.XElementToObject<DependentPlugIn>();
 
             Assert.IsNotNull(dependencyPlugIn);
             Assert.AreEqual("1dc425b3-c27b-46ba-9623-a046d1acc754", dependencyPlugIn.PlugInGuid.ToString());
-            Assert.AreEqual(DependencyType.Mandatory, dependencyPlugIn.DependencyType);
+            Assert.AreEqual(DependentType.Mandatory, dependencyPlugIn.DependentType);
             Assert.IsFalse(dependencyPlugIn.GroupId.HasValue);
             Assert.AreEqual("0.5.0.0", dependencyPlugIn.MinimumSupportPlugInVersion.ToString());
             Assert.AreEqual("0.5.0.0", dependencyPlugIn.MaximumSupportPlugInVersion.ToString());
@@ -98,11 +98,11 @@ namespace Bugger.Base.Test.PlugIns.Configs
                 new XElement("MinimumSupportPlugInVersion", "0.5.0.0"),
                 new XElement("MaximumSupportPlugInVersion", "0.5.0.0")
             );
-            var dependencyPlugIn = xml.XElementToObject<DependencyPlugIn>();
+            var dependencyPlugIn = xml.XElementToObject<DependentPlugIn>();
 
             Assert.IsNotNull(dependencyPlugIn);
             Assert.AreEqual("1dc425b3-c27b-46ba-9623-a046d1acc754", dependencyPlugIn.PlugInGuid.ToString());
-            Assert.AreEqual(DependencyType.OneOfGroup, dependencyPlugIn.DependencyType);
+            Assert.AreEqual(DependentType.OneOfGroup, dependencyPlugIn.DependentType);
             Assert.IsTrue(dependencyPlugIn.GroupId.HasValue);
             Assert.AreEqual(1, dependencyPlugIn.GroupId.Value);
             Assert.AreEqual("0.5.0.0", dependencyPlugIn.MinimumSupportPlugInVersion.ToString());
@@ -117,11 +117,11 @@ namespace Bugger.Base.Test.PlugIns.Configs
                 new XElement("Type", "Mandatory"),
                 new XElement("MinimumSupportPlugInVersion", "0.5.0.0")
             );
-            var dependencyPlugIn = xml.XElementToObject<DependencyPlugIn>();
+            var dependencyPlugIn = xml.XElementToObject<DependentPlugIn>();
 
             Assert.IsNotNull(dependencyPlugIn);
             Assert.AreEqual("1dc425b3-c27b-46ba-9623-a046d1acc754", dependencyPlugIn.PlugInGuid.ToString());
-            Assert.AreEqual(DependencyType.Mandatory, dependencyPlugIn.DependencyType);
+            Assert.AreEqual(DependentType.Mandatory, dependencyPlugIn.DependentType);
             Assert.IsFalse(dependencyPlugIn.GroupId.HasValue);
             Assert.AreEqual("0.5.0.0", dependencyPlugIn.MinimumSupportPlugInVersion.ToString());
             Assert.IsNull(dependencyPlugIn.MaximumSupportPlugInVersion);

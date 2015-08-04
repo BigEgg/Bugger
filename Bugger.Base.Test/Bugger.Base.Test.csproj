@@ -63,7 +63,7 @@
   <ItemGroup>
     <Compile Include="Models\BugModelTest.cs" />
     <Compile Include="Models\BugTest.cs" />
-    <Compile Include="PlugIns\Configs\DependencyPlugInTest.cs" />
+    <Compile Include="PlugIns\Configs\DependentPlugInTest.cs" />
     <Compile Include="PlugIns\Configs\PlugInAuthorTest.cs" />
     <Compile Include="PlugIns\Configs\PlugInConfigDocumentTest.cs" />
     <Compile Include="PlugIns\Configs\PlugInConfigDocumentTypeTest.cs" />

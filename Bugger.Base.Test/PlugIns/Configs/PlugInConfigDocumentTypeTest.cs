@@ -61,11 +61,11 @@ namespace Bugger.Domain.Test.PlugIns.Configs
             Assert.AreEqual("0.5.0.0", newDocument.PlugInInfo.MaximumSupportBuggerVersion.ToString());
             Assert.AreEqual(PlugInType.Click, newDocument.PlugInType);
             Assert.AreEqual("Bugger.PlugIn.Click.TFSClick", newDocument.AssemblyNames.First());
-            Assert.AreEqual(1, newDocument.DependencyPlugIns.Count);
+            Assert.AreEqual(1, newDocument.DependentPlugIns.Count);
 
-            var firstDependency = newDocument.DependencyPlugIns.First();
+            var firstDependency = newDocument.DependentPlugIns.First();
             Assert.AreEqual("1dc425b3-c27b-46ba-9623-a046d1acc754", firstDependency.PlugInGuid.ToString());
-            Assert.AreEqual(DependencyType.Mandatory, firstDependency.DependencyType);
+            Assert.AreEqual(DependentType.Mandatory, firstDependency.DependentType);
             Assert.AreEqual("0.5.0.0", firstDependency.MinimumSupportPlugInVersion.ToString());
             Assert.AreEqual("0.5.0.0", firstDependency.MaximumSupportPlugInVersion.ToString());
         }
@@ -93,11 +93,11 @@ namespace Bugger.Domain.Test.PlugIns.Configs
             Assert.AreEqual("0.5.0.0", newDocument.PlugInInfo.MaximumSupportBuggerVersion.ToString());
             Assert.AreEqual(PlugInType.Click, newDocument.PlugInType);
             Assert.AreEqual("Bugger.PlugIn.Click.TFSClick", newDocument.AssemblyNames.First());
-            Assert.AreEqual(1, newDocument.DependencyPlugIns.Count);
+            Assert.AreEqual(1, newDocument.DependentPlugIns.Count);
 
-            var firstDependency = newDocument.DependencyPlugIns.First();
+            var firstDependency = newDocument.DependentPlugIns.First();
             Assert.AreEqual("1dc425b3-c27b-46ba-9623-a046d1acc754", firstDependency.PlugInGuid.ToString());
-            Assert.AreEqual(DependencyType.Mandatory, firstDependency.DependencyType);
+            Assert.AreEqual(DependentType.Mandatory, firstDependency.DependentType);
             Assert.AreEqual("0.5.0.0", firstDependency.MinimumSupportPlugInVersion.ToString());
             Assert.AreEqual("0.5.0.0", firstDependency.MaximumSupportPlugInVersion.ToString());
         }
@@ -120,10 +120,10 @@ namespace Bugger.Domain.Test.PlugIns.Configs
                 MinimumSupportBuggerVersionStr = "0.5.0.0",
                 MaximumSupportBuggerVersionStr = "0.5.0.0"
             };
-            var dependencyPlugIn = new DependencyPlugIn()
+            var dependencyPlugIn = new DependentPlugIn()
             {
                 PlugInGuid = new Guid("1dc425b3-c27b-46ba-9623-a046d1acc754"),
-                DependencyType = DependencyType.Mandatory,
+                DependentType = DependentType.Mandatory,
                 MinimumSupportPlugInVersionStr = "0.5.0.0",
                 MaximumSupportPlugInVersionStr = "0.5.0.0"
             };
@@ -132,7 +132,7 @@ namespace Bugger.Domain.Test.PlugIns.Configs
                 PlugInInfo = info,
                 PlugInType = PlugInType.Click,
                 AssemblyNames = new List<string>() { "Bugger.PlugIn.Click.TFSClick" },
-                DependencyPlugIns = new List<DependencyPlugIn>() { dependencyPlugIn }
+                DependentPlugIns = new List<DependentPlugIn>() { dependencyPlugIn }
             };
         }
     }

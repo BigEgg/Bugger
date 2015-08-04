@@ -39,13 +39,13 @@ namespace Bugger.PlugIns.Configs
         public List<string> AssemblyNames { get; set; }
 
         /// <summary>
-        /// Gets or sets the Plug-in's dependency Plug-ins.
+        /// Gets or sets the Plug-in's dependent Plug-ins.
         /// </summary>
         /// <value>
-        /// The Plug-in's dependency Plug-ins.
+        /// The Plug-in's dependent Plug-ins.
         /// </value>
         [XmlArray("Dependencies")]
         [XmlArrayItem("Dependency")]
-        public List<DependencyPlugIn> DependencyPlugIns { get; set; }
+        public List<DependentPlugIn> DependentPlugIns { get; set; }
     }
 }
