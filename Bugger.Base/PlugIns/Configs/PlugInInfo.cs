@@ -61,6 +61,12 @@ namespace Bugger.PlugIns.Configs
         [XmlIgnore]
         public Version Version { get { return version; } }
 
+        /// <summary>
+        /// Gets or sets the string of Plug-in's version.
+        /// </summary>
+        /// <value>
+        /// The string of Plug-in's version.
+        /// </value>
         [XmlElement("Version")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string VersionStr
@@ -76,14 +82,20 @@ namespace Bugger.PlugIns.Configs
         }
 
         /// <summary>
-        /// Gets the Plug-in's minimum support bugger version.
+        /// Gets the Plug-in's minimum support Bugger version.
         /// </summary>
         /// <value>
-        /// The Plug-in's minimum support bugger version.
+        /// The Plug-in's minimum support Bugger version.
         /// </value>
         [XmlIgnore]
         public Version MinimumSupportBuggerVersion { get { return minimumSupportBuggerVersion; } }
 
+        /// <summary>
+        /// Gets or sets the string of minimum support Bugger's version. (For serialize only)
+        /// </summary>
+        /// <value>
+        /// The string of minimum support Bugger's version.
+        /// </value>
         [XmlElement("MinimumSupportBuggerVersion")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string MinimumSupportBuggerVersionStr
@@ -99,10 +111,10 @@ namespace Bugger.PlugIns.Configs
         }
 
         /// <summary>
-        /// Gets the Plug-in's maximum support bugger version.
+        /// Gets the Plug-in's maximum support Bugger version.
         /// </summary>
         /// <value>
-        /// The Plug-in's maximum support bugger version.
+        /// The Plug-in's maximum support Bugger version.
         /// </value>
         [XmlIgnore]
         public Version MaximumSupportBuggerVersion
@@ -110,6 +122,12 @@ namespace Bugger.PlugIns.Configs
             get { return maximumSupportBuggerVersion; }
         }
 
+        /// <summary>
+        /// Gets or sets the string of maximum support Bugger's version. (For serialize only)
+        /// </summary>
+        /// <value>
+        /// The string of maximum support Bugger's version.
+        /// </value>
         [XmlElement("MaximumSupportBuggerVersion", IsNullable = true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string MaximumSupportBuggerVersionStr

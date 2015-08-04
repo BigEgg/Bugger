@@ -10,6 +10,9 @@ namespace Bugger.PlugIns
     /// </summary>
     public abstract class PlugInBase : IPlugIn
     {
+        /// <summary>
+        /// The environment's shared data
+        /// </summary>
         protected IDictionary<Guid, IPlugInSharedData> environmentSharedData;
 
 

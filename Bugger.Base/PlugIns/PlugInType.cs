@@ -5,7 +5,13 @@
     /// </summary>
     public enum PlugInType
     {
+        /// <summary>
+        /// The tracking system Plug-in
+        /// </summary>
         TrackingSystem,
+        /// <summary>
+        /// The click Plug-in
+        /// </summary>
         Click
     }
 }

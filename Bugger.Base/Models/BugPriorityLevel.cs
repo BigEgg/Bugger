@@ -5,7 +5,13 @@
     /// </summary>
     public enum BugPriorityLevel
     {
+        /// <summary>
+        /// The red bug priority level in Bugger application
+        /// </summary>
         Red,
+        /// <summary>
+        /// The yellow bug priority level in Bugger application
+        /// </summary>
         Yellow
     }
 }

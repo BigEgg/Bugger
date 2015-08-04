@@ -5,8 +5,17 @@
     /// </summary>
     public enum BugModifyState
     {
+        /// <summary>
+        /// The bug is not changed
+        /// </summary>
         Normal,
+        /// <summary>
+        /// The bug is a new one
+        /// </summary>
         New,
+        /// <summary>
+        /// The bug is different from last time
+        /// </summary>
         Modified
     }
 }

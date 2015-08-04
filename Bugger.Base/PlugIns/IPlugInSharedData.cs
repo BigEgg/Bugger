@@ -2,6 +2,9 @@
 
 namespace Bugger.PlugIns
 {
+    /// <summary>
+    /// The interface of Plug-in's shared data
+    /// </summary>
     public interface IPlugInSharedData
     {
         /// <summary>

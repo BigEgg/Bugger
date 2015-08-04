@@ -5,8 +5,13 @@
     /// </summary>
     public enum DependentType
     {
+        /// <summary>
+        /// This dependency is mandatory 
+        /// </summary>
         Mandatory,
-        OneOfGroup,
+        /// <summary>
+        /// Thus dependency is optional
+        /// </summary>
         Optional
     }
 }

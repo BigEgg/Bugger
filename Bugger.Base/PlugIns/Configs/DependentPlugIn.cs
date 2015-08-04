@@ -4,6 +4,9 @@ using System.Xml.Serialization;
 
 namespace Bugger.PlugIns.Configs
 {
+    /// <summary>
+    /// The dependent Plug-in
+    /// </summary>
     [XmlRoot("Dependency")]
     public class DependentPlugIn
     {
@@ -46,6 +49,12 @@ namespace Bugger.PlugIns.Configs
         [XmlIgnore]
         public Version MinimumSupportPlugInVersion { get { return minimumSupportPlugInVersion; } }
 
+        /// <summary>
+        /// Gets or sets the string of minimum support dependent Plug-in version. (For serialize only)
+        /// </summary>
+        /// <value>
+        /// The string of minimum support dependent Plug-in version.
+        /// </value>
         [XmlElement("MinimumSupportPlugInVersion")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string MinimumSupportPlugInVersionStr
@@ -72,6 +81,12 @@ namespace Bugger.PlugIns.Configs
             get { return maximumSupportBuggerVersion; }
         }
 
+        /// <summary>
+        /// Gets or sets the string of maximum support dependent Plug-in version. (For serialize only)
+        /// </summary>
+        /// <value>
+        /// The string of maximum support dependent Plug-in version.
+        /// </value>
         [XmlElement("MaximumSupportPlugInVersion", IsNullable = true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string MaximumSupportPlugInVersionStr

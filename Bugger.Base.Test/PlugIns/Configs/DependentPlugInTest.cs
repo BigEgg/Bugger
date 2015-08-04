@@ -30,27 +30,6 @@ namespace Bugger.Base.Test.PlugIns.Configs
         }
 
         [TestMethod]
-        public void SerializeTest_WithGroupId()
-        {
-            var dependencyPlugIn = new DependentPlugIn()
-            {
-                PlugInGuid = new Guid("1dc425b3-c27b-46ba-9623-a046d1acc754"),
-                DependentType = DependentType.OneOfGroup,
-                GroupId = 1,
-                MinimumSupportPlugInVersionStr = "0.5.0.0",
-                MaximumSupportPlugInVersionStr = "0.5.0.0"
-            };
-            var xml = dependencyPlugIn.ObjectToXElement();
-
-            Assert.AreEqual("Dependency", xml.Name);
-            Assert.AreEqual("1dc425b3-c27b-46ba-9623-a046d1acc754", xml.Attribute("Guid").Value.ToString());
-            Assert.AreEqual("OneOfGroup", xml.Element("Type").Value);
-            Assert.AreEqual("1", xml.Element("Group").Value);
-            Assert.AreEqual("0.5.0.0", xml.Element("MinimumSupportPlugInVersion").Value);
-            Assert.AreEqual("0.5.0.0", xml.Element("MaximumSupportPlugInVersion").Value);
-        }
-
-        [TestMethod]
         public void SerializeTest_WithoutMaximumSuportPlugInVersion()
         {
             var dependencyPlugIn = new DependentPlugIn()
@@ -84,27 +63,6 @@ namespace Bugger.Base.Test.PlugIns.Configs
             Assert.AreEqual("1dc425b3-c27b-46ba-9623-a046d1acc754", dependencyPlugIn.PlugInGuid.ToString());
             Assert.AreEqual(DependentType.Mandatory, dependencyPlugIn.DependentType);
             Assert.IsFalse(dependencyPlugIn.GroupId.HasValue);
-            Assert.AreEqual("0.5.0.0", dependencyPlugIn.MinimumSupportPlugInVersion.ToString());
-            Assert.AreEqual("0.5.0.0", dependencyPlugIn.MaximumSupportPlugInVersion.ToString());
-        }
-
-        [TestMethod]
-        public void DeserializeTest_WithGroupId()
-        {
-            var xml = new XElement("Dependency",
-                new XAttribute("Guid", "1dc425b3-c27b-46ba-9623-a046d1acc754"),
-                new XElement("Type", "OneOfGroup"),
-                new XElement("Group", "1"),
-                new XElement("MinimumSupportPlugInVersion", "0.5.0.0"),
-                new XElement("MaximumSupportPlugInVersion", "0.5.0.0")
-            );
-            var dependencyPlugIn = xml.XElementToObject<DependentPlugIn>();
-
-            Assert.IsNotNull(dependencyPlugIn);
-            Assert.AreEqual("1dc425b3-c27b-46ba-9623-a046d1acc754", dependencyPlugIn.PlugInGuid.ToString());
-            Assert.AreEqual(DependentType.OneOfGroup, dependencyPlugIn.DependentType);
-            Assert.IsTrue(dependencyPlugIn.GroupId.HasValue);
-            Assert.AreEqual(1, dependencyPlugIn.GroupId.Value);
             Assert.AreEqual("0.5.0.0", dependencyPlugIn.MinimumSupportPlugInVersion.ToString());
             Assert.AreEqual("0.5.0.0", dependencyPlugIn.MaximumSupportPlugInVersion.ToString());
         }
