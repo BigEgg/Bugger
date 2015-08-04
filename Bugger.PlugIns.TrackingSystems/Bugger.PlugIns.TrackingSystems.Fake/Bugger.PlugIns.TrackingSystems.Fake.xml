@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Info PlugInGuid="868CC6F0-8332-4A6B-8669-7B1881811AA1">
+    <Name>Fake Proxy</Name>
+    <Description>Random create some bugs for Bugger application test.</Description>
+    <Authors>
+      <Author Name="BigEgg">bigegg@bigegg.com</Author>
+    </Authors>
+    <Version>0.5.0.0</Version>
+    <MinimumSupportBuggerVersion>0.5.0.0</MinimumSupportBuggerVersion>
+  </Info>
+  <Type>TrackingSystem</Type>
+  <Assemblies>
+    <Name>Bugger.PlugIns.TrackingSystem.Fake</Name>
+  </Assemblies>
+</Configuration>
