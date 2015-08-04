@@ -11,12 +11,12 @@ namespace Bugger.Domain.Test.PlugIns
         public MockPlugIn(Guid guid, PlugInType plugInType)
             : base(guid, plugInType)
         {
-            var view = new MockPlugInSettingDialogView();
-            settingViewModel = new MockPlugInSettingDialogViewModel(view);
+            var view = new MockPlugInSettingView();
+            settingViewModel = new MockPlugInSettingViewModel(view);
         }
 
 
-        public override PlugInSettingViewModel<IPlugInSettingView> OpenSettingDialog()
+        public override PlugInSettingViewModel<IPlugInSettingView> GetSettingViewModel()
         {
             return settingViewModel;
         }

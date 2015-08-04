@@ -11,8 +11,8 @@ namespace Bugger.Domain.Test.PlugIns
         [TestMethod]
         public void ValidateSettingsTest()
         {
-            var view = new MockPlugInSettingDialogView();
-            var viewModel = new MockPlugInSettingDialogViewModel(view);
+            var view = new MockPlugInSettingView();
+            var viewModel = new MockPlugInSettingViewModel(view);
 
             Assert.AreEqual(PlugInSettingValidationResult.Valid, viewModel.ValidateSettings());
         }
@@ -20,8 +20,8 @@ namespace Bugger.Domain.Test.PlugIns
         [TestMethod]
         public void SubmitSettingChangesTest()
         {
-            var view = new MockPlugInSettingDialogView();
-            var viewModel = new MockPlugInSettingDialogViewModel(view);
+            var view = new MockPlugInSettingView();
+            var viewModel = new MockPlugInSettingViewModel(view);
 
             Assert.IsFalse(viewModel.SubmitSettingChangesCoreCalled);
             viewModel.SubmitSettingChanges();
@@ -32,8 +32,8 @@ namespace Bugger.Domain.Test.PlugIns
         [ExpectedException(typeof(InvalidOperationException))]
         public void SubmitSettingChangesTest_Busy()
         {
-            var view = new MockPlugInSettingDialogView();
-            var viewModel = new MockPlugInSettingDialogViewModel(view);
+            var view = new MockPlugInSettingView();
+            var viewModel = new MockPlugInSettingViewModel(view);
             viewModel.ValidationResult = PlugInSettingValidationResult.Busy;
 
             Assert.IsFalse(viewModel.SubmitSettingChangesCoreCalled);
@@ -44,8 +44,8 @@ namespace Bugger.Domain.Test.PlugIns
         [ExpectedException(typeof(InvalidOperationException))]
         public void SubmitSettingChangesTest_UnValid()
         {
-            var view = new MockPlugInSettingDialogView();
-            var viewModel = new MockPlugInSettingDialogViewModel(view);
+            var view = new MockPlugInSettingView();
+            var viewModel = new MockPlugInSettingViewModel(view);
             viewModel.ValidationResult = PlugInSettingValidationResult.UnValid;
 
             Assert.IsFalse(viewModel.SubmitSettingChangesCoreCalled);
@@ -53,13 +53,13 @@ namespace Bugger.Domain.Test.PlugIns
         }
     }
 
-    public class MockPlugInSettingDialogView : MockView, IPlugInSettingView
+    public class MockPlugInSettingView : MockView, IPlugInSettingView
     {
     }
 
-    public class MockPlugInSettingDialogViewModel : PlugInSettingViewModel<IPlugInSettingView>
+    public class MockPlugInSettingViewModel : PlugInSettingViewModel<IPlugInSettingView>
     {
-        public MockPlugInSettingDialogViewModel(IPlugInSettingView view)
+        public MockPlugInSettingViewModel(IPlugInSettingView view)
             : base(view)
         {
             CleanUp();

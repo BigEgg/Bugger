@@ -52,12 +52,12 @@ namespace Bugger.PlugIns
 
 
         /// <summary>
-        /// Gets the Plug-in setting view model when open setting dialog.
+        /// Gets the Plug-in setting view model when open setting.
         /// </summary>
         /// <value>
         /// The Plug-in setting view model.
         /// </value>
-        public abstract PlugInSettingViewModel<IPlugInSettingView> OpenSettingDialog();
+        public abstract PlugInSettingViewModel<IPlugInSettingView> GetSettingViewModel();
 
         /// <summary>
         /// Initializes the Plug-in.

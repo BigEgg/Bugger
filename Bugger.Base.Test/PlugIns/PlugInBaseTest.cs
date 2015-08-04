@@ -16,7 +16,7 @@ namespace Bugger.Domain.Test.PlugIns
             Assert.AreEqual("1dc425b3-c27b-46ba-9623-a046d1acc754", plugIn.Guid.ToString());
             Assert.AreEqual(PlugInType.TrackingSystem, plugIn.PlugInType);
             Assert.IsFalse(plugIn.IsInitialized);
-            Assert.IsNotNull(plugIn.OpenSettingDialog());
+            Assert.IsNotNull(plugIn.GetSettingViewModel());
 
             var sharedData = plugIn.GetSharedData();
             Assert.IsNotNull(sharedData);
