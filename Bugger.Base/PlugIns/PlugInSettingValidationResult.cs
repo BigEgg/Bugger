@@ -16,6 +16,6 @@
         /// <summary>
         /// The Plug-in's settings have some invalid data
         /// </summary>
-        UnValid
+        Invalid
     }
 }

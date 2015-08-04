@@ -46,5 +46,17 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Properties {
                 this["BugsForEveryone"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int BugsCacheMinutes {
+            get {
+                return ((int)(this["BugsCacheMinutes"]));
+            }
+            set {
+                this["BugsCacheMinutes"] = value;
+            }
+        }
     }
 }

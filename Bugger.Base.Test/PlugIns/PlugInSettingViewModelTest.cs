@@ -46,7 +46,7 @@ namespace Bugger.Domain.Test.PlugIns
         {
             var view = new MockPlugInSettingView();
             var viewModel = new MockPlugInSettingViewModel(view);
-            viewModel.ValidationResult = PlugInSettingValidationResult.UnValid;
+            viewModel.ValidationResult = PlugInSettingValidationResult.Invalid;
 
             Assert.IsFalse(viewModel.SubmitSettingChangesCoreCalled);
             viewModel.SubmitSettingChanges();

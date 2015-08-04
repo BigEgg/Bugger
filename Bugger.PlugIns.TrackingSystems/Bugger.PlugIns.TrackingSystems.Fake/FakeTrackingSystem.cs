@@ -1,16 +1,23 @@
 ﻿using Bugger.Models;
 using Bugger.PlugIns.TrackingSystem;
+using Bugger.PlugIns.TrackingSystems.Fake.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
 
 namespace Bugger.PlugIns.TrackingSystems.Fake
 {
+    [Export(typeof(ITrackingSystemPlugIn))]
     public class FakeTrackingSystem : PlugInBase, ITrackingSystemPlugIn
     {
-        public FakeTrackingSystem()
-            : base(new Guid("868CC6F0-8332-4A6B-8669-7B1881811AA1"), PlugInType.TrackingSystem)
-        { }
+        private readonly IDataService dataService;
+
+        public FakeTrackingSystem(IDataService dataService)
+            : base(new Guid("41090009-10c1-447f-9189-a42cd9657c29"), PlugInType.TrackingSystem)
+        {
+            this.dataService = dataService;
+        }
 
 
         public override PlugInSettingViewModel<IPlugInSettingView> GetSettingViewModel()
@@ -25,12 +32,12 @@ namespace Bugger.PlugIns.TrackingSystems.Fake
 
         public ReadOnlyCollection<Bug> Query(List<string> teamMembers)
         {
-            throw new NotImplementedException();
+            return dataService.GetTeamBugs(teamMembers);
         }
 
         public ReadOnlyCollection<Bug> Query(string userName, bool isFilterCreatedBy = true)
         {
-            throw new NotImplementedException();
+            return dataService.GetBugs(userName, isFilterCreatedBy);
         }
     }
 }

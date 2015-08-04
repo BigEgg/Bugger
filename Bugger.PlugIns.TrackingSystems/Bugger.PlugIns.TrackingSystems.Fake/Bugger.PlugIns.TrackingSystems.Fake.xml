@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Info PlugInGuid="868CC6F0-8332-4A6B-8669-7B1881811AA1">
+  <Info PlugInGuid="41090009-10c1-447f-9189-a42cd9657c29">
     <Name>Fake Proxy</Name>
     <Description>Random create some bugs for Bugger application test.</Description>
     <Authors>
