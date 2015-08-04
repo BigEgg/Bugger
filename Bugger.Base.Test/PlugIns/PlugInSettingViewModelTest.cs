@@ -6,7 +6,7 @@ using System;
 namespace Bugger.Domain.Test.PlugIns
 {
     [TestClass]
-    public class PlugInSettingDialogViewModelTest
+    public class PlugInSettingViewModelTest
     {
         [TestMethod]
         public void ValidateSettingsTest()
@@ -14,7 +14,7 @@ namespace Bugger.Domain.Test.PlugIns
             var view = new MockPlugInSettingDialogView();
             var viewModel = new MockPlugInSettingDialogViewModel(view);
 
-            Assert.AreEqual(PlugInSettingDialogValidationResult.Valid, viewModel.ValidateSettings());
+            Assert.AreEqual(PlugInSettingValidationResult.Valid, viewModel.ValidateSettings());
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace Bugger.Domain.Test.PlugIns
         {
             var view = new MockPlugInSettingDialogView();
             var viewModel = new MockPlugInSettingDialogViewModel(view);
-            viewModel.ValidationResult = PlugInSettingDialogValidationResult.Busy;
+            viewModel.ValidationResult = PlugInSettingValidationResult.Busy;
 
             Assert.IsFalse(viewModel.SubmitSettingChangesCoreCalled);
             viewModel.SubmitSettingChanges();
@@ -46,32 +46,32 @@ namespace Bugger.Domain.Test.PlugIns
         {
             var view = new MockPlugInSettingDialogView();
             var viewModel = new MockPlugInSettingDialogViewModel(view);
-            viewModel.ValidationResult = PlugInSettingDialogValidationResult.UnValid;
+            viewModel.ValidationResult = PlugInSettingValidationResult.UnValid;
 
             Assert.IsFalse(viewModel.SubmitSettingChangesCoreCalled);
             viewModel.SubmitSettingChanges();
         }
     }
 
-    public class MockPlugInSettingDialogView : MockView, IPlugInSettingDialogView
+    public class MockPlugInSettingDialogView : MockView, IPlugInSettingView
     {
     }
 
-    public class MockPlugInSettingDialogViewModel : PlugInSettingDialogViewModel<IPlugInSettingDialogView>
+    public class MockPlugInSettingDialogViewModel : PlugInSettingViewModel<IPlugInSettingView>
     {
-        public MockPlugInSettingDialogViewModel(IPlugInSettingDialogView view)
+        public MockPlugInSettingDialogViewModel(IPlugInSettingView view)
             : base(view)
         {
             CleanUp();
         }
 
 
-        public PlugInSettingDialogValidationResult ValidationResult { get; set; }
+        public PlugInSettingValidationResult ValidationResult { get; set; }
 
         public bool SubmitSettingChangesCoreCalled { get; set; }
 
 
-        public override PlugInSettingDialogValidationResult ValidateSettings()
+        public override PlugInSettingValidationResult ValidateSettings()
         {
             return ValidationResult;
         }
@@ -83,7 +83,7 @@ namespace Bugger.Domain.Test.PlugIns
 
         public void CleanUp()
         {
-            ValidationResult = PlugInSettingDialogValidationResult.Valid;
+            ValidationResult = PlugInSettingValidationResult.Valid;
             SubmitSettingChangesCoreCalled = false;
         }
     }

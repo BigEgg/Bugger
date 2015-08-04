@@ -57,7 +57,7 @@ namespace Bugger.PlugIns
         /// <value>
         /// The Plug-in setting view model.
         /// </value>
-        public abstract PlugInSettingDialogViewModel<IPlugInSettingDialogView> OpenSettingDialog();
+        public abstract PlugInSettingViewModel<IPlugInSettingView> OpenSettingDialog();
 
         /// <summary>
         /// Initializes the Plug-in.

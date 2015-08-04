@@ -3,9 +3,9 @@
 namespace Bugger.PlugIns
 {
     /// <summary>
-    /// Plug-in setting dialog view
+    /// Plug-in setting view
     /// </summary>
-    public interface IPlugInSettingDialogView : IView
+    public interface IPlugInSettingView : IView
     {
     }
 }

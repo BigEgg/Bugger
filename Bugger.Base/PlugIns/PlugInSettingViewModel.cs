@@ -7,13 +7,13 @@ namespace Bugger.PlugIns
     /// The view model used to show settings of the Plug-in.
     /// </summary>
     /// <typeparam name="TView">The type of the Plug-in setting view.</typeparam>
-    public abstract class PlugInSettingDialogViewModel<TView> : ViewModel<TView> where TView : IPlugInSettingDialogView
+    public abstract class PlugInSettingViewModel<TView> : ViewModel<TView> where TView : IPlugInSettingView
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlugInSettingDialogViewModel{TView}"/> class.
+        /// Initializes a new instance of the <see cref="PlugInSettingViewModel{TView}"/> class.
         /// </summary>
         /// <param name="view">The view.</param>
-        protected PlugInSettingDialogViewModel(TView view)
+        protected PlugInSettingViewModel(TView view)
             : base(view)
         { }
 
@@ -22,7 +22,7 @@ namespace Bugger.PlugIns
         /// Validates the settings.
         /// </summary>
         /// <returns></returns>
-        public abstract PlugInSettingDialogValidationResult ValidateSettings();
+        public abstract PlugInSettingValidationResult ValidateSettings();
 
         /// <summary>
         /// Submits the settings changes.
@@ -30,7 +30,7 @@ namespace Bugger.PlugIns
         /// <exception cref="System.InvalidOperationException">Cannot submit setting changes when validate is failed.</exception>
         public void SubmitSettingChanges()
         {
-            if (ValidateSettings() != PlugInSettingDialogValidationResult.Valid) { throw new InvalidOperationException("Cannot submit setting changes when validate is failed."); }
+            if (ValidateSettings() != PlugInSettingValidationResult.Valid) { throw new InvalidOperationException("Cannot submit setting changes when validate is failed."); }
 
             SubmitSettingChangesCore();
         }

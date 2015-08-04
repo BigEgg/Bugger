@@ -1,9 +1,9 @@
 ﻿namespace Bugger.PlugIns
 {
     /// <summary>
-    /// The validation result for Plug-in's setting dialog
+    /// The validation result for Plug-in's setting
     /// </summary>
-    public enum PlugInSettingDialogValidationResult
+    public enum PlugInSettingValidationResult
     {
         Valid,
         Busy,

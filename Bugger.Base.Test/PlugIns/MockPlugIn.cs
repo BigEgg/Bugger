@@ -6,7 +6,7 @@ namespace Bugger.Domain.Test.PlugIns
 {
     public class MockPlugIn : PlugInBase
     {
-        private PlugInSettingDialogViewModel<IPlugInSettingDialogView> settingViewModel;
+        private PlugInSettingViewModel<IPlugInSettingView> settingViewModel;
 
         public MockPlugIn(Guid guid, PlugInType plugInType)
             : base(guid, plugInType)
@@ -16,7 +16,7 @@ namespace Bugger.Domain.Test.PlugIns
         }
 
 
-        public override PlugInSettingDialogViewModel<IPlugInSettingDialogView> OpenSettingDialog()
+        public override PlugInSettingViewModel<IPlugInSettingView> OpenSettingDialog()
         {
             return settingViewModel;
         }
