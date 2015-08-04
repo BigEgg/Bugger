@@ -27,4 +27,17 @@
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Validate Include="Bugger.layerdiagram">
+      <SubType>Content</SubType>
+    </Validate>
+    <Validate Include="Bugger.layerdiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>Bugger.layerdiagram</DependentUpon>
+    </Validate>
+    <Validate Include="Bugger.layerdiagram.suppressions">
+      <SubType>Content</SubType>
+      <DependentUpon>Bugger.layerdiagram</DependentUpon>
+    </Validate>
+  </ItemGroup>
 </Project>
