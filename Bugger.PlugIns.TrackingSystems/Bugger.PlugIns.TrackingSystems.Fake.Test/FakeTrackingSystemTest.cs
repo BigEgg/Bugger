@@ -1,9 +1,8 @@
-﻿using Bugger.Models;
-using Bugger.PlugIns.TrackingSystem;
+﻿using Bugger.PlugIns.TrackingSystem;
 using Bugger.PlugIns.TrackingSystems.Fake.Services;
+using Bugger.PlugIns.TrackingSystems.Fake.Test.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 
@@ -72,34 +71,6 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Test
             Assert.IsFalse(dataService.GetTeamBugsCalled);
             fakeTrackingSystem.Query(new List<string> { "username" });
             Assert.IsTrue(dataService.GetTeamBugsCalled);
-        }
-
-
-        [Export(typeof(IDataService))]
-        public class MockDataService : IDataService
-        {
-            public bool GetBugsCalled { get; private set; }
-
-            public bool GetTeamBugsCalled { get; private set; }
-
-
-            public ReadOnlyCollection<Bug> GetBugs(string userName, bool isFilterCreatedBy)
-            {
-                GetBugsCalled = true;
-                return null;
-            }
-
-            public ReadOnlyCollection<Bug> GetTeamBugs(List<string> teamMembers)
-            {
-                GetTeamBugsCalled = true;
-                return null;
-            }
-
-            public void Clear()
-            {
-                GetBugsCalled = false;
-                GetTeamBugsCalled = false;
-            }
         }
     }
 }
