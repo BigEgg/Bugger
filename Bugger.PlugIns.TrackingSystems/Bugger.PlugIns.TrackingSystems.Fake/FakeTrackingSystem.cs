@@ -8,11 +8,12 @@ using System.ComponentModel.Composition;
 
 namespace Bugger.PlugIns.TrackingSystems.Fake
 {
-    [Export(typeof(ITrackingSystemPlugIn))]
+    [Export(typeof(ITrackingSystemPlugIn)), Export(typeof(IPlugIn))]
     public class FakeTrackingSystem : PlugInBase, ITrackingSystemPlugIn
     {
         private readonly IDataService dataService;
 
+        [ImportingConstructor]
         public FakeTrackingSystem(IDataService dataService)
             : base(new Guid("41090009-10c1-447f-9189-a42cd9657c29"), PlugInType.TrackingSystem)
         {

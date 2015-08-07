@@ -6,8 +6,6 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Services
 {
     public interface IDataService
     {
-        void ReGenereateBugs();
-
         ReadOnlyCollection<Bug> GetTeamBugs(List<string> teamMembers);
 
         ReadOnlyCollection<Bug> GetBugs(string userName, bool isFilterCreatedBy);

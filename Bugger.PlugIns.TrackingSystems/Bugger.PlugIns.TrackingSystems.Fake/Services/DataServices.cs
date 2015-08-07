@@ -18,10 +18,5 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Services
         {
             throw new NotImplementedException();
         }
-
-        public void ReGenereateBugs()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

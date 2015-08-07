@@ -7,7 +7,7 @@ namespace Bugger.PlugIns.TrackingSystem
     /// <summary>
     /// The interface of tracking system Plug-In
     /// </summary>
-    public interface ITrackingSystemPlugIn
+    public interface ITrackingSystemPlugIn : IPlugIn
     {
         /// <summary>
         /// Get the status of this tracking system.
