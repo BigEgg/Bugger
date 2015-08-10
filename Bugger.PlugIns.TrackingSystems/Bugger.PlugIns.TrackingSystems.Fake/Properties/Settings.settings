@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Bugger.PlugIns.TrackingSystems.Fake.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Users" Type="System.String" Scope="User">
+    <Setting Name="UsersName" Type="System.String" Scope="User">
       <Value Profile="(Default)">BigEgg; Feifeisu; Pupil; SmallEgg</Value>
     </Setting>
     <Setting Name="BugsForEveryone" Type="System.Int32" Scope="User">

@@ -26,12 +26,12 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("BigEgg; Feifeisu; Pupil; SmallEgg")]
-        public string Users {
+        public string UsersName {
             get {
-                return ((string)(this["Users"]));
+                return ((string)(this["UsersName"]));
             }
             set {
-                this["Users"] = value;
+                this["UsersName"] = value;
             }
         }
         

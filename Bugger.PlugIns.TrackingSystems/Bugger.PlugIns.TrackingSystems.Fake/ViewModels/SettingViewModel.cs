@@ -1,10 +1,11 @@
 ﻿using Bugger.PlugIns.TrackingSystems.Fake.Properties;
 using Bugger.PlugIns.TrackingSystems.Fake.Views;
-using System;
+using System.ComponentModel.Composition;
 using System.ComponentModel.DataAnnotations;
 
 namespace Bugger.PlugIns.TrackingSystems.Fake.ViewModels
 {
+    [Export]
     public class SettingViewModel : PlugInSettingViewModel<ISettingView>
     {
         private string usersName;
@@ -12,11 +13,10 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.ViewModels
         private int bugsCacheMinutes;
 
 
+        [ImportingConstructor]
         public SettingViewModel(ISettingView view)
             : base(view)
-        {
-
-        }
+        { }
 
 
         [Required(ErrorMessageResourceName = "UsersNameMandatory", ErrorMessageResourceType = typeof(Resources))]
@@ -25,7 +25,7 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.ViewModels
             get { return usersName; }
             set
             {
-                SetProperty(ref usersName, value);
+                SetPropertyAndValidate(ref usersName, value);
             }
         }
 
@@ -35,7 +35,7 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.ViewModels
             get { return bugsCountForEveryone; }
             set
             {
-                SetProperty(ref bugsCountForEveryone, value);
+                SetPropertyAndValidate(ref bugsCountForEveryone, value);
             }
         }
 
@@ -45,19 +45,23 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.ViewModels
             get { return bugsCacheMinutes; }
             set
             {
-                SetProperty(ref bugsCacheMinutes, value);
+                SetPropertyAndValidate(ref bugsCacheMinutes, value);
             }
         }
 
 
         public override PlugInSettingValidationResult ValidateSettings()
         {
-            return HasErrors ? PlugInSettingValidationResult.Invalid : PlugInSettingValidationResult.Valid;
+            return Validate() ? PlugInSettingValidationResult.Valid : PlugInSettingValidationResult.Invalid;
         }
 
         protected override void SubmitSettingChangesCore()
         {
-            throw new NotImplementedException();
+            Settings.Default.BugsCacheMinutes = bugsCacheMinutes;
+            Settings.Default.BugsForEveryone = BugsCountForEveryone;
+            Settings.Default.UsersName = UsersName;
+
+            Settings.Default.Save();
         }
     }
 }
