@@ -7,7 +7,7 @@ using System.ComponentModel.Composition;
 namespace Bugger.PlugIns.TrackingSystems.Fake.Services
 {
     [Export(typeof(IDataService))]
-    public class DataServices : IDataService
+    public class DataService : IDataService
     {
         public ReadOnlyCollection<Bug> GetBugs(string userName, bool isFilterCreatedBy)
         {
