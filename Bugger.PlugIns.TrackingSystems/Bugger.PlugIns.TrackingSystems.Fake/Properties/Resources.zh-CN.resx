@@ -117,11 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BugsCacheMinutes" xml:space="preserve">
-    <value>Bug缓存时间是应该在{1}到{2}之间。</value>
-  </data>
   <data name="BugsCountRange" xml:space="preserve">
     <value>每人创建的Bug数量应该在{1}到{2}之间。</value>
+  </data>
+  <data name="BugsRefreshMinutes" xml:space="preserve">
+    <value>Bug刷新时间应该在{1}到{2}之间。</value>
   </data>
   <data name="UsersNameMandatory" xml:space="preserve">
     <value>用户名称是必须的，用‘;’来分割不同的用户。</value>

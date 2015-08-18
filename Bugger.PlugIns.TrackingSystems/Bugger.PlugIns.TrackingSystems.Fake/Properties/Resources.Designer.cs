@@ -61,20 +61,20 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The bugs cache minutes must be between {1} and {2}..
-        /// </summary>
-        internal static string BugsCacheMinutes {
-            get {
-                return ResourceManager.GetString("BugsCacheMinutes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The bugs count must be between {1} and {2}..
         /// </summary>
         internal static string BugsCountRange {
             get {
                 return ResourceManager.GetString("BugsCountRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The bugs&apos; refresh minutes must be between {1} and {2}..
+        /// </summary>
+        internal static string BugsRefreshMinutes {
+            get {
+                return ResourceManager.GetString("BugsRefreshMinutes", resourceCulture);
             }
         }
         

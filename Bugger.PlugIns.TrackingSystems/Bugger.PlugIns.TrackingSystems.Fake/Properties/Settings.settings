@@ -8,7 +8,7 @@
     <Setting Name="BugsForEveryone" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
-    <Setting Name="BugsCacheMinutes" Type="System.Int32" Scope="User">
+    <Setting Name="BugsRefreshMinutes" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
   </Settings>

@@ -23,7 +23,7 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Test.ViewModels
             Assert.AreEqual(PlugInSettingValidationResult.Invalid, viewModel.ValidateSettings());
 
             viewModel.UsersName = "BigEgg";
-            viewModel.BugsCacheMinutes = 10;
+            viewModel.BugsRefreshMinutes = 10;
             viewModel.BugsCountForEveryone = 5;
 
             Assert.AreEqual(PlugInSettingValidationResult.Valid, viewModel.ValidateSettings());
@@ -48,21 +48,21 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Test.ViewModels
         }
 
         [TestMethod]
-        public void BugsCacheMinutesPropertyChangedTest()
+        public void BugsRefreshMinutesPropertyChangedTest()
         {
             var viewModel = Container.GetExportedValue<SettingViewModel>();
 
             viewModel.Validate();
-            Assert.IsTrue(viewModel.GetErrors("BugsCacheMinutes").Any());
+            Assert.IsTrue(viewModel.GetErrors("BugsRefreshMinutes").Any());
 
-            AssertHelper.IsRaiseBothErrorChangedEventAndPropertyChangedEvent(viewModel, vm => vm.BugsCacheMinutes, () => viewModel.BugsCacheMinutes = 1);
-            Assert.IsFalse(viewModel.GetErrors("BugsCacheMinutes").Any());
+            AssertHelper.IsRaiseBothErrorChangedEventAndPropertyChangedEvent(viewModel, vm => vm.BugsRefreshMinutes, () => viewModel.BugsRefreshMinutes = 1);
+            Assert.IsFalse(viewModel.GetErrors("BugsRefreshMinutes").Any());
 
-            AssertHelper.IsRaisePropertyChangedEvent(viewModel, vm => vm.BugsCacheMinutes, () => viewModel.BugsCacheMinutes = 30);
-            Assert.IsFalse(viewModel.GetErrors("BugsCacheMinutes").Any());
+            AssertHelper.IsRaisePropertyChangedEvent(viewModel, vm => vm.BugsRefreshMinutes, () => viewModel.BugsRefreshMinutes = 30);
+            Assert.IsFalse(viewModel.GetErrors("BugsRefreshMinutes").Any());
 
-            AssertHelper.IsRaiseBothErrorChangedEventAndPropertyChangedEvent(viewModel, vm => vm.BugsCacheMinutes, () => viewModel.BugsCacheMinutes = 31);
-            Assert.IsTrue(viewModel.GetErrors("BugsCacheMinutes").Any());
+            AssertHelper.IsRaiseBothErrorChangedEventAndPropertyChangedEvent(viewModel, vm => vm.BugsRefreshMinutes, () => viewModel.BugsRefreshMinutes = 31);
+            Assert.IsTrue(viewModel.GetErrors("BugsRefreshMinutes").Any());
         }
 
         [TestMethod]
@@ -88,18 +88,18 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Test.ViewModels
         {
             var viewModel = Container.GetExportedValue<SettingViewModel>();
 
-            var originalBugsCacheMinutes = Settings.Default.BugsCacheMinutes;
+            var originalBugsRefreshMinutes = Settings.Default.BugsRefreshMinutes;
             var originalBugsForEveryone = Settings.Default.BugsForEveryone;
             var originalUsersName = Settings.Default.UsersName;
 
             viewModel.UsersName = originalUsersName + ";abc";
             viewModel.BugsCountForEveryone = originalBugsForEveryone + 1;
-            viewModel.BugsCacheMinutes = originalBugsCacheMinutes + 1;
+            viewModel.BugsRefreshMinutes = originalBugsRefreshMinutes + 1;
 
             viewModel.SubmitSettingChanges();
 
             Settings.Default.Reload();
-            Assert.AreNotEqual(originalBugsCacheMinutes, Settings.Default.BugsCacheMinutes);
+            Assert.AreNotEqual(originalBugsRefreshMinutes, Settings.Default.BugsRefreshMinutes);
             Assert.AreNotEqual(originalBugsForEveryone, Settings.Default.BugsForEveryone);
             Assert.AreNotEqual(originalUsersName, Settings.Default.UsersName);
 

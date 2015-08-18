@@ -10,7 +10,7 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.ViewModels
     {
         private string usersName;
         private int bugsCountForEveryone;
-        private int bugsCacheMinutes;
+        private int bugsRefreshMinutes;
 
 
         [ImportingConstructor]
@@ -39,13 +39,13 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.ViewModels
             }
         }
 
-        [Range(1, 30, ErrorMessageResourceName = "BugsCacheMinutes", ErrorMessageResourceType = typeof(Resources))]
-        public int BugsCacheMinutes
+        [Range(1, 30, ErrorMessageResourceName = "BugsRefreshMinutes", ErrorMessageResourceType = typeof(Resources))]
+        public int BugsRefreshMinutes
         {
-            get { return bugsCacheMinutes; }
+            get { return bugsRefreshMinutes; }
             set
             {
-                SetPropertyAndValidate(ref bugsCacheMinutes, value);
+                SetPropertyAndValidate(ref bugsRefreshMinutes, value);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.ViewModels
 
         protected override void SubmitSettingChangesCore()
         {
-            Settings.Default.BugsCacheMinutes = bugsCacheMinutes;
+            Settings.Default.BugsRefreshMinutes = bugsRefreshMinutes;
             Settings.Default.BugsForEveryone = BugsCountForEveryone;
             Settings.Default.UsersName = UsersName;
 

@@ -117,11 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BugsCacheMinutes" xml:space="preserve">
-    <value>The bugs cache minutes must be between {1} and {2}.</value>
-  </data>
   <data name="BugsCountRange" xml:space="preserve">
     <value>The bugs count must be between {1} and {2}.</value>
+  </data>
+  <data name="BugsRefreshMinutes" xml:space="preserve">
+    <value>The bugs' refresh minutes must be between {1} and {2}.</value>
   </data>
   <data name="UsersNameMandatory" xml:space="preserve">
     <value>The users' name is mandatory. Please use ';' for spliting.</value>

@@ -50,12 +50,12 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public int BugsCacheMinutes {
+        public int BugsRefreshMinutes {
             get {
-                return ((int)(this["BugsCacheMinutes"]));
+                return ((int)(this["BugsRefreshMinutes"]));
             }
             set {
-                this["BugsCacheMinutes"] = value;
+                this["BugsRefreshMinutes"] = value;
             }
         }
     }
