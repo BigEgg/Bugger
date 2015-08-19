@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\IDataService.cs" />
+    <Compile Include="Utils\RandomNumberHelper.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="Views\ISettingView.cs" />
   </ItemGroup>
