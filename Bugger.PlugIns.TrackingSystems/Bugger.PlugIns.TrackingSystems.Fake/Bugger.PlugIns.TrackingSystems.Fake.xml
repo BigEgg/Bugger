@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<Configuration>
   <Info PlugInGuid="41090009-10c1-447f-9189-a42cd9657c29">
     <Name>Fake Proxy</Name>
-    <Description>Random create some bugs for Bugger application test.</Description>
+    <Description>Random create some bugs for Bugger application testing purpose.</Description>
     <Authors>
-      <Author Name="BigEgg">bigegg@bigegg.com</Author>
+      <Author Name="BigEgg">cd_bigegg@hotmail.com</Author>
     </Authors>
     <Version>0.5.0.0</Version>
     <MinimumSupportBuggerVersion>0.5.0.0</MinimumSupportBuggerVersion>

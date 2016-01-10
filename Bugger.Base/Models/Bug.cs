@@ -3,9 +3,8 @@ using System;
 
 namespace Bugger.Models
 {
-
     /// <summary>
-    /// 
+    /// The bug class to hold all the bug information
     /// </summary>
     public class Bug : IEquatable<Bug>
     {
