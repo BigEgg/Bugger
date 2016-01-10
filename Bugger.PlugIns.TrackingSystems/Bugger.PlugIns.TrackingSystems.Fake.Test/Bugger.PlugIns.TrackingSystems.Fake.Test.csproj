@@ -36,9 +36,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BigEgg.Framework, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BigEgg.Core.UnitTesting.2.0.2.2\lib\net46\BigEgg.Framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="BigEgg.Framework.Applications, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BigEgg.Core.UnitTesting.2.0.2.2\lib\net46\BigEgg.Framework.Applications.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="BigEgg.Framework.Applications.UnitTesting, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BigEgg.Core.UnitTesting.2.0.2.2\lib\net46\BigEgg.Framework.Applications.UnitTesting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -64,18 +79,6 @@
     <Compile Include="Views\MockSettingView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\Framework\BigEgg.Framework.Applications.UnitTest\BigEgg.Framework.Applications.UnitTesting.csproj">
-      <Project>{9c8d53dd-fe21-4142-802b-25fce61cd2a5}</Project>
-      <Name>BigEgg.Framework.Applications.UnitTesting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Core\Framework\BigEgg.Framework.Applications\BigEgg.Framework.Applications.csproj">
-      <Project>{ac6ad921-828c-484f-b746-bacfec5cd856}</Project>
-      <Name>BigEgg.Framework.Applications</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Core\Framework\BigEgg.Framework\BigEgg.Framework.csproj">
-      <Project>{86969290-3921-4d3e-9168-0380d55b547a}</Project>
-      <Name>BigEgg.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Bugger.Base\Bugger.Base.csproj">
       <Project>{a5cd06a3-28f5-4d2f-8dfd-62be4808af5a}</Project>
       <Name>Bugger.Base</Name>
@@ -85,7 +88,9 @@
       <Name>Bugger.PlugIns.TrackingSystems.Fake</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
