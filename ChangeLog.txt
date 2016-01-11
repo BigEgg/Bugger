@@ -1,21 +1,52 @@
 ﻿Bugger change log
 
-Alpha 4 (v0.4.0) <----- Currently Working
-    Framework:
-        Use .NET Framework 4.6
+Alpha 7 (v0.7.0)
     Application:
-        Add extension manager to manage the proxies.
+    Plug-ins:
+        Click:
+            Click for Fake:
+                Open a dialog to demonstrate this function.
+            Click for TFS:
+                Open TFS site or Open Visual Studio when double-click the bug.
+            Click for JIRA:
+                Open JIRA site when double-click the bug.
+
+Alpha 6 (v0.6.0)
+    Application:
+        Show icon for bugs to indicate the tracking system.
         Add the Task Bar progress status.
         Check application open status:
             When first time open the application, show demo.
             When open the application, show setting dialog if the settings is not valid.
+    Plug-ins:
+        TrackingSystem:
+            TFS:
+                Use XML file to save the default automation fill logic.
+
+Alpha 5 (v0.5.0) <----- Currently Working
+    Framework:
+        Use .NET Framework 4.6.
+    Application:
+        Add extension manager to manage the plug-ins.
+        Redesign the application to support plug-ins.
     Proxies:
-        TFS Proxy:
-            Use XML file to save the default automation fill logic.
+        Rename the proxies to plug-ins.
+    Plug-ins:
+        TrackingSystem:
+            Right now, all tracking system plug-ins can be used at same time.
+            TFS:
+                Rewrite with new logic.
+            Fake:
+                Rewrite with new logic.
+            JIRA:
+                Rewrite with new logic.
+                Support multi-lingual (English, Chinese).
+
+Alpha 4 (v0.4.0) <----- Skipped, complete by others
+    Proxies:
         JIRA Proxy:
-            Complete all main functions.
-            Complete all views.
-            Support multi-lingual (English, Chinese).
+            Complete all main functions. (✓)
+            Complete all views. (✓)
 
 Alpha 3 (v0.3.0) <----- Currently Release
     Application:
@@ -29,7 +60,7 @@ Alpha 3 (v0.3.0) <----- Currently Release
         Show progress and out come when query bugs. (✓)
         Optimized the startup time. (✓)
     Proxies:
-        Support cancel event for proxy restore data when setting dialog cancelled. (✓)
+        Support cancel event for proxy restore data when setting dialog canceled. (✓)
         Support validate event before the submit, to valid the settings. (✓)
         TFS Proxy:
             Use multi-threading to avoid UI hang when test connection. (✓)
