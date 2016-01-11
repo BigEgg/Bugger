@@ -14,6 +14,8 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Test.Services
 
         public bool GetTeamBugsCalled { get; private set; }
 
+        public bool ClearCalled { get; private set; }
+
 
         public ReadOnlyCollection<Bug> GetBugs(string userName, bool isFilterCreatedBy)
         {
@@ -29,8 +31,14 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Test.Services
 
         public void Clear()
         {
+            ClearCalled = true;
+        }
+
+        public void Reset()
+        {
             GetBugsCalled = false;
             GetTeamBugsCalled = false;
+            ClearCalled = false;
         }
     }
 }

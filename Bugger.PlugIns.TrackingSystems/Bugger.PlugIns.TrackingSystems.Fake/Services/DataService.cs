@@ -40,6 +40,11 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Services
                                .ToList());
         }
 
+        public void Clear()
+        {
+            bugs.Clear();
+        }
+
 
         private IList<FakeBug> GetCachedBugs()
         {

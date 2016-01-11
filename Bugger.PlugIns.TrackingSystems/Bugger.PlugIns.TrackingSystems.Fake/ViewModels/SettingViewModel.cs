@@ -2,6 +2,7 @@
 using Bugger.PlugIns.TrackingSystems.Fake.Views;
 using System.ComponentModel.Composition;
 using System.ComponentModel.DataAnnotations;
+using System.Windows.Input;
 
 namespace Bugger.PlugIns.TrackingSystems.Fake.ViewModels
 {
@@ -11,6 +12,7 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.ViewModels
         private string usersName;
         private int bugsCountForEveryone;
         private int bugsRefreshMinutes;
+        private ICommand clearBugsCommand;
 
 
         [ImportingConstructor]
@@ -46,6 +48,15 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.ViewModels
             set
             {
                 SetPropertyAndValidate(ref bugsRefreshMinutes, value);
+            }
+        }
+
+        public ICommand ClearBugsCommand
+        {
+            get { return clearBugsCommand; }
+            set
+            {
+                SetProperty(ref clearBugsCommand, value);
             }
         }
 

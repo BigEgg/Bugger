@@ -9,5 +9,7 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Services
         ReadOnlyCollection<Bug> GetTeamBugs(IList<string> teamMembers);
 
         ReadOnlyCollection<Bug> GetBugs(string userName, bool isFilterCreatedBy);
+
+        void Clear();
     }
 }

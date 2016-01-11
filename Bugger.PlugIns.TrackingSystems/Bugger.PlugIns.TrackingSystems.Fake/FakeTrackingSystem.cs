@@ -1,4 +1,5 @@
-﻿using Bugger.Models;
+﻿using BigEgg.Framework.Applications.Applications.Commands;
+using Bugger.Models;
 using Bugger.PlugIns.TrackingSystem;
 using Bugger.PlugIns.TrackingSystems.Fake.Services;
 using System;
@@ -12,12 +13,16 @@ namespace Bugger.PlugIns.TrackingSystems.Fake
     public class FakeTrackingSystem : PlugInBase, ITrackingSystemPlugIn
     {
         private readonly IDataService dataService;
+        private readonly DelegateCommand clearBugsCommand;
+
 
         [ImportingConstructor]
         public FakeTrackingSystem(IDataService dataService)
             : base(new Guid("41090009-10c1-447f-9189-a42cd9657c29"), PlugInType.TrackingSystem)
         {
             this.dataService = dataService;
+
+            clearBugsCommand = new DelegateCommand(() => dataService.Clear());
         }
 
 
