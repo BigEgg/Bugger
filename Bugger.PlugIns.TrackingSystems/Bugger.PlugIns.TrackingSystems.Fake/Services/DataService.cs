@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.Linq;
 
 namespace Bugger.PlugIns.TrackingSystems.Fake.Services
 {
@@ -25,12 +26,18 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Services
 
         public ReadOnlyCollection<Bug> GetBugs(string userName, bool isFilterCreatedBy)
         {
-            throw new NotImplementedException();
+            return new ReadOnlyCollection<Bug>(
+                GetCachedBugs().Where(b => userName == b.AssignedTo || (isFilterCreatedBy && b.CreatedBy == userName))
+                               .Select(b => b.ToBug())
+                               .ToList());
         }
 
-        public ReadOnlyCollection<Bug> GetTeamBugs(List<string> teamMembers)
+        public ReadOnlyCollection<Bug> GetTeamBugs(IList<string> teamMembers)
         {
-            throw new NotImplementedException();
+            return new ReadOnlyCollection<Bug>(
+                GetCachedBugs().Where(b => teamMembers.Contains(b.AssignedTo))
+                               .Select(b => b.ToBug())
+                               .ToList());
         }
 
 
@@ -38,6 +45,12 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Services
         {
             if (DateTime.Now > nextRefreshTime)
             {
+                var users = Settings.Default.UsersName.Split(';').Select(u => u.Trim()).ToList();
+                if (bugs.Any())
+                    foreach (var bug in bugs)
+                        RandomUpdateBug(bug, users);
+                else
+                    bugs.Add(RandomCreateBug(users));
 
                 nextRefreshTime = DateTime.Now.AddMinutes(Settings.Default.BugsRefreshMinutes);
             }

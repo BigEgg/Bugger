@@ -21,7 +21,7 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Test.Services
             return null;
         }
 
-        public ReadOnlyCollection<Bug> GetTeamBugs(List<string> teamMembers)
+        public ReadOnlyCollection<Bug> GetTeamBugs(IList<string> teamMembers)
         {
             GetTeamBugsCalled = true;
             return null;
