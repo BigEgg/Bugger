@@ -45,6 +45,8 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Test
             var fakeTrackingSystem = container.GetExportedValue<ITrackingSystemPlugIn>();
             Assert.AreEqual("41090009-10c1-447f-9189-a42cd9657c29", fakeTrackingSystem.Guid.ToString());
             Assert.AreEqual(PlugInType.TrackingSystem, fakeTrackingSystem.PlugInType);
+
+            Assert.AreEqual(TrackingSystemStatus.Unknown, fakeTrackingSystem.GetStatus());
         }
 
         [TestMethod]
@@ -56,8 +58,14 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Test
             dataService.Clear();
 
             Assert.IsFalse(dataService.GetBugsCalled);
-            fakeTrackingSystem.Query("username");
-            Assert.IsTrue(dataService.GetBugsCalled);
+            fakeTrackingSystem.QueryAsync("username")
+                .ContinueWith(task =>
+                {
+                    Assert.IsNull(task.Result);
+                    Assert.IsTrue(dataService.GetBugsCalled);
+                    Assert.AreEqual(TrackingSystemStatus.CanConnect, fakeTrackingSystem.GetStatus());
+                });
+            Assert.AreEqual(TrackingSystemStatus.Querying, fakeTrackingSystem.GetStatus());
         }
 
         [TestMethod]
@@ -69,8 +77,14 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Test
             dataService.Clear();
 
             Assert.IsFalse(dataService.GetTeamBugsCalled);
-            fakeTrackingSystem.Query(new List<string> { "username" });
-            Assert.IsTrue(dataService.GetTeamBugsCalled);
+            fakeTrackingSystem.QueryAsync(new List<string> { "username" })
+                .ContinueWith(task =>
+                 {
+                     Assert.IsNull(task.Result);
+                     Assert.IsTrue(dataService.GetTeamBugsCalled);
+                     Assert.AreEqual(TrackingSystemStatus.CanConnect, fakeTrackingSystem.GetStatus());
+                 });
+            Assert.AreEqual(TrackingSystemStatus.Querying, fakeTrackingSystem.GetStatus());
         }
     }
 }

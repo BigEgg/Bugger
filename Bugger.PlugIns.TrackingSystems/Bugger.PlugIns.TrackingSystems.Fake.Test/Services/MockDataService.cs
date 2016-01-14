@@ -3,6 +3,7 @@ using Bugger.PlugIns.TrackingSystems.Fake.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.Threading;
 
 namespace Bugger.PlugIns.TrackingSystems.Fake.Test.Services
 {
@@ -20,12 +21,14 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Test.Services
         public ReadOnlyCollection<Bug> GetBugs(string userName, bool isFilterCreatedBy)
         {
             GetBugsCalled = true;
+            Thread.Sleep(500 * 1000);
             return null;
         }
 
         public ReadOnlyCollection<Bug> GetTeamBugs(IList<string> teamMembers)
         {
             GetTeamBugsCalled = true;
+            Thread.Sleep(500 * 1000);
             return null;
         }
 

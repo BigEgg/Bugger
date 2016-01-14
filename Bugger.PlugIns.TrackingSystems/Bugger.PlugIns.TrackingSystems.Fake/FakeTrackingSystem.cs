@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.Threading.Tasks;
 
 namespace Bugger.PlugIns.TrackingSystems.Fake
 {
@@ -14,6 +15,7 @@ namespace Bugger.PlugIns.TrackingSystems.Fake
     {
         private readonly IDataService dataService;
         private readonly DelegateCommand clearBugsCommand;
+        private TrackingSystemStatus status;
 
 
         [ImportingConstructor]
@@ -23,6 +25,8 @@ namespace Bugger.PlugIns.TrackingSystems.Fake
             this.dataService = dataService;
 
             clearBugsCommand = new DelegateCommand(() => dataService.Clear());
+
+            status = TrackingSystemStatus.Unknown;
         }
 
 
@@ -33,17 +37,29 @@ namespace Bugger.PlugIns.TrackingSystems.Fake
 
         public TrackingSystemStatus GetStatus()
         {
-            throw new NotImplementedException();
+            return status;
         }
 
-        public ReadOnlyCollection<Bug> Query(List<string> teamMembers)
+        public async Task<ReadOnlyCollection<Bug>> QueryAsync(List<string> teamMembers)
         {
-            return dataService.GetTeamBugs(teamMembers);
+            status = TrackingSystemStatus.Querying;
+            return await Task.Factory.StartNew(() =>
+            {
+                var bugs = dataService.GetTeamBugs(teamMembers);
+                status = TrackingSystemStatus.CanConnect;
+                return bugs;
+            });
         }
 
-        public ReadOnlyCollection<Bug> Query(string userName, bool isFilterCreatedBy = true)
+        public async Task<ReadOnlyCollection<Bug>> QueryAsync(string userName, bool isFilterCreatedBy = true)
         {
-            return dataService.GetBugs(userName, isFilterCreatedBy);
+            status = TrackingSystemStatus.Querying;
+            return await Task.Factory.StartNew(() =>
+            {
+                var bugs = dataService.GetBugs(userName, isFilterCreatedBy);
+                status = TrackingSystemStatus.CanConnect;
+                return bugs;
+            });
         }
     }
 }

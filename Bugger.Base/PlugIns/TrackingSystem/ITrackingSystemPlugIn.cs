@@ -1,6 +1,7 @@
 ﻿using Bugger.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace Bugger.PlugIns.TrackingSystem
 {
@@ -23,7 +24,7 @@ namespace Bugger.PlugIns.TrackingSystem
         /// <returns>
         /// The bugs.
         /// </returns>
-        ReadOnlyCollection<Bug> Query(string userName, bool isFilterCreatedBy = true);
+        Task<ReadOnlyCollection<Bug>> QueryAsync(string userName, bool isFilterCreatedBy = true);
 
         /// <summary>
         /// Query the bugs with the specified team members name list which the bug assign to.
@@ -32,6 +33,6 @@ namespace Bugger.PlugIns.TrackingSystem
         /// <returns>
         /// The bugs.
         /// </returns>
-        ReadOnlyCollection<Bug> Query(List<string> teamMembers);
+        Task<ReadOnlyCollection<Bug>> QueryAsync(List<string> teamMembers);
     }
 }
