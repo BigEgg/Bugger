@@ -7,7 +7,7 @@ using System.Windows.Input;
 namespace Bugger.PlugIns.TrackingSystems.Fake.ViewModels
 {
     [Export]
-    public class SettingViewModel : PlugInSettingViewModel<ISettingView>
+    public class SettingViewModel : PlugInSettingViewModel<IPlugInSettingView>
     {
         private string usersName;
         private int bugsCountForEveryone;

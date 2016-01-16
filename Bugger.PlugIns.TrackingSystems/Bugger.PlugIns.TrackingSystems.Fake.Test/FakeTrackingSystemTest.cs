@@ -1,6 +1,9 @@
 ﻿using Bugger.PlugIns.TrackingSystem;
+using Bugger.PlugIns.TrackingSystems.Fake.Properties;
 using Bugger.PlugIns.TrackingSystems.Fake.Services;
 using Bugger.PlugIns.TrackingSystems.Fake.Test.Services;
+using Bugger.PlugIns.TrackingSystems.Fake.Test.Views;
+using Bugger.PlugIns.TrackingSystems.Fake.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -20,7 +23,11 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Test
                 typeof(FakeTrackingSystem)
             ));
             catalog.Catalogs.Add(new TypeCatalog(
-                typeof(MockDataService)
+                typeof(MockDataService),
+                typeof(SettingViewModel)
+            ));
+            catalog.Catalogs.Add(new TypeCatalog(
+                typeof(MockSettingView)
             ));
             container = new CompositionContainer(catalog);
             CompositionBatch batch = new CompositionBatch();
@@ -47,6 +54,38 @@ namespace Bugger.PlugIns.TrackingSystems.Fake.Test
             Assert.AreEqual(PlugInType.TrackingSystem, fakeTrackingSystem.PlugInType);
 
             Assert.AreEqual(TrackingSystemStatus.Unknown, fakeTrackingSystem.GetStatus());
+        }
+
+        [TestMethod]
+        public void InitializeTest()
+        {
+            var fakeTrackingSystem = container.GetExportedValue<ITrackingSystemPlugIn>();
+            Assert.IsFalse(fakeTrackingSystem.IsInitialized);
+
+            fakeTrackingSystem.Initialize();
+
+            Assert.IsTrue(fakeTrackingSystem.IsInitialized);
+            Assert.AreEqual(TrackingSystemStatus.CanConnect, fakeTrackingSystem.GetStatus());
+        }
+
+        [TestMethod]
+        public void InitializeTest_NotValidSettings()
+        {
+            var fakeTrackingSystem = container.GetExportedValue<ITrackingSystemPlugIn>();
+            Assert.IsFalse(fakeTrackingSystem.IsInitialized);
+
+            Settings.Default.UsersName = "";
+            fakeTrackingSystem.Initialize();
+
+            Assert.IsTrue(fakeTrackingSystem.IsInitialized);
+            Assert.AreEqual(TrackingSystemStatus.ConfigurationNotValid, fakeTrackingSystem.GetStatus());
+        }
+
+        [TestMethod]
+        public void GetSettingViewModelTest()
+        {
+            var fakeTrackingSystem = container.GetExportedValue<ITrackingSystemPlugIn>();
+            Assert.IsNotNull(fakeTrackingSystem.GetSettingViewModel());
         }
 
         [TestMethod]
