@@ -38,6 +38,9 @@ Alpha 5 (v0.5.0) <----- Currently Working
                 Rewrite with new logic.
             Fake:
                 Rewrite with new logic.
+                Random create the initialize bugs.
+                Random update the initialize bugs.
+                Add the setting view model and view.
             JIRA:
                 Rewrite with new logic.
                 Support multi-lingual (English, Chinese).
